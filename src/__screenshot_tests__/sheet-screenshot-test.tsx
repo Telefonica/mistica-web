@@ -1,71 +1,76 @@
+import {test, expectScreenshot} from '../test-utils/playwright';
 import {openStoryPage, screen} from '../test-utils';
 
 const TESTABLE_DEVICES = ['MOBILE_IOS', 'DESKTOP'] as const;
 const TESTABLE_DEVICES_WITH_LARGE_DESKTOP = [...TESTABLE_DEVICES, 'LARGE_DESKTOP'] as const;
 
-test.each(TESTABLE_DEVICES_WITH_LARGE_DESKTOP)('Sheet in %s', async (device) => {
-    const page = await openStoryPage({
-        id: 'components-modals-sheet--default',
-        device,
+for (const testCase of TESTABLE_DEVICES_WITH_LARGE_DESKTOP) {
+    const device = testCase;
+    test(`Sheet in ${testCase}`, async () => {
+        const page = await openStoryPage({
+            id: 'components-modals-sheet--default',
+            device,
+        });
+
+        const button = await screen.findByRole('button', {name: 'Open'});
+        await button.click();
+
+        await screen.findByRole('dialog');
+
+        await expectScreenshot(page);
     });
+}
 
-    const button = await screen.findByRole('button', {name: 'Open'});
-    await button.click();
+for (const testCase of TESTABLE_DEVICES) {
+    const device = testCase;
+    test(`ActionsListSheet in ${testCase}`, async () => {
+        const page = await openStoryPage({
+            id: 'private-sheet-presets--actions-list',
+            device,
+        });
 
-    await screen.findByRole('dialog');
+        const button = await screen.findByRole('button', {name: 'Open'});
+        await button.click();
 
-    const image = await page.screenshot();
+        await screen.findByRole('dialog');
 
-    expect(image).toMatchImageSnapshot();
-});
-
-test.each(TESTABLE_DEVICES)('ActionsListSheet in %s', async (device) => {
-    const page = await openStoryPage({
-        id: 'private-sheet-presets--actions-list',
-        device,
+        await expectScreenshot(page);
     });
+}
 
-    const button = await screen.findByRole('button', {name: 'Open'});
-    await button.click();
+for (const testCase of TESTABLE_DEVICES) {
+    const device = testCase;
+    test(`RadioListSheet in ${testCase}`, async () => {
+        const page = await openStoryPage({
+            id: 'private-sheet-presets--radio-list',
+            device,
+        });
 
-    await screen.findByRole('dialog');
+        const button = await screen.findByRole('button', {name: 'Open'});
+        await button.click();
 
-    const image = await page.screenshot();
+        await screen.findByRole('dialog');
 
-    expect(image).toMatchImageSnapshot();
-});
-
-test.each(TESTABLE_DEVICES)('RadioListSheet in %s', async (device) => {
-    const page = await openStoryPage({
-        id: 'private-sheet-presets--radio-list',
-        device,
+        await expectScreenshot(page);
     });
+}
 
-    const button = await screen.findByRole('button', {name: 'Open'});
-    await button.click();
+for (const testCase of TESTABLE_DEVICES) {
+    const device = testCase;
+    test(`InfoSheet in ${testCase}`, async () => {
+        const page = await openStoryPage({
+            id: 'private-sheet-presets--info',
+            device,
+        });
 
-    await screen.findByRole('dialog');
+        const button = await screen.findByRole('button', {name: 'Open'});
+        await button.click();
 
-    const image = await page.screenshot();
+        await screen.findByRole('dialog');
 
-    expect(image).toMatchImageSnapshot();
-});
-
-test.each(TESTABLE_DEVICES)('InfoSheet in %s', async (device) => {
-    const page = await openStoryPage({
-        id: 'private-sheet-presets--info',
-        device,
+        await expectScreenshot(page);
     });
-
-    const button = await screen.findByRole('button', {name: 'Open'});
-    await button.click();
-
-    await screen.findByRole('dialog');
-
-    const image = await page.screenshot();
-
-    expect(image).toMatchImageSnapshot();
-});
+}
 
 test('InfoSheet with multiple description paragraphs', async () => {
     const page = await openStoryPage({
@@ -82,62 +87,63 @@ test('InfoSheet with multiple description paragraphs', async () => {
 
     await screen.findByRole('dialog');
 
-    const image = await page.screenshot();
-
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(page);
 });
 
-test.each(TESTABLE_DEVICES)('InfoSheet with dismiss button in %s', async (device) => {
-    const page = await openStoryPage({
-        id: 'private-sheet-presets--info',
-        device,
-        args: {buttonText: 'Dismiss'},
+for (const testCase of TESTABLE_DEVICES) {
+    const device = testCase;
+    test(`InfoSheet with dismiss button in ${testCase}`, async () => {
+        const page = await openStoryPage({
+            id: 'private-sheet-presets--info',
+            device,
+            args: {buttonText: 'Dismiss'},
+        });
+
+        const button = await screen.findByRole('button', {name: 'Open'});
+        await button.click();
+
+        await screen.findByRole('dialog');
+
+        await expectScreenshot(page);
     });
+}
 
-    const button = await screen.findByRole('button', {name: 'Open'});
-    await button.click();
+for (const testCase of TESTABLE_DEVICES) {
+    const device = testCase;
+    test(`InfoSheet after scrolling in ${testCase}`, async () => {
+        const page = await openStoryPage({
+            id: 'private-sheet-presets--info',
+            device,
+            args: {buttonText: 'Dismiss', numItems: 10},
+        });
 
-    await screen.findByRole('dialog');
+        const button = await screen.findByRole('button', {name: 'Open'});
+        await button.click();
 
-    const image = await page.screenshot();
+        await screen.findByRole('dialog');
+        const listItems = await screen.findAllByRole('listitem');
+        await listItems[2].evaluate((el) => el.scrollIntoView());
 
-    expect(image).toMatchImageSnapshot();
-});
-
-test.each(TESTABLE_DEVICES)('InfoSheet after scrolling in %s', async (device) => {
-    const page = await openStoryPage({
-        id: 'private-sheet-presets--info',
-        device,
-        args: {buttonText: 'Dismiss', numItems: 10},
+        await expectScreenshot(page);
     });
+}
 
-    const button = await screen.findByRole('button', {name: 'Open'});
-    await button.click();
+for (const testCase of TESTABLE_DEVICES_WITH_LARGE_DESKTOP) {
+    const device = testCase;
+    test(`ActionsSheet in ${testCase}`, async () => {
+        const page = await openStoryPage({
+            id: 'private-sheet-presets--actions',
+            device,
+        });
 
-    await screen.findByRole('dialog');
-    const listItems = await screen.findAllByRole('listitem');
-    await listItems[2].evaluate((el) => el.scrollIntoView());
+        const button = await screen.findByRole('button', {name: 'Open'});
+        await button.click();
 
-    const image = await page.screenshot();
+        await screen.findByRole('dialog');
 
-    expect(image).toMatchImageSnapshot();
-});
-
-test.each(TESTABLE_DEVICES_WITH_LARGE_DESKTOP)('ActionsSheet in %s', async (device) => {
-    const page = await openStoryPage({
-        id: 'private-sheet-presets--actions',
-        device,
+        await expectScreenshot(page);
     });
-
-    const button = await screen.findByRole('button', {name: 'Open'});
-    await button.click();
-
-    await screen.findByRole('dialog');
-
-    const image = await page.screenshot();
-
-    expect(image).toMatchImageSnapshot();
-});
+}
 
 test('ActionsSheet with safe inset at the bottom', async () => {
     const page = await openStoryPage({
@@ -150,7 +156,5 @@ test('ActionsSheet with safe inset at the bottom', async () => {
 
     await screen.findByRole('dialog');
 
-    const image = await page.screenshot();
-
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(page);
 });

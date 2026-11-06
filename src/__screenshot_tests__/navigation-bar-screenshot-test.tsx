@@ -1,53 +1,54 @@
+import {test, expectScreenshot} from '../test-utils/playwright';
 import {openStoryPage, screen} from '../test-utils';
 import {normalizeVariant} from '../theme-variant-context';
 
 const DEVICES = ['MOBILE_IOS', 'DESKTOP'] as const;
 
-test.each`
-    variant          | isDarkMode
-    ${'default'}     | ${false}
-    ${'default'}     | ${true}
-    ${'inverse'}     | ${false}
-    ${'inverse'}     | ${true}
-    ${'alternative'} | ${false}
-    ${'alternative'} | ${true}
-`('MainNavigationBar desktop. variant={$variant} isDarkMode={$isDarkMode}', async ({variant, isDarkMode}) => {
-    const page = await openStoryPage({
-        id: 'components-navigation-bars-mainnavigationbar--default',
-        device: 'DESKTOP',
-        args: {variant: normalizeVariant(variant)},
-        isDarkMode,
+for (const testCase of [
+    {variant: 'default', isDarkMode: false},
+    {variant: 'default', isDarkMode: true},
+    {variant: 'inverse', isDarkMode: false},
+    {variant: 'inverse', isDarkMode: true},
+    {variant: 'alternative', isDarkMode: false},
+    {variant: 'alternative', isDarkMode: true},
+] as const) {
+    const {variant, isDarkMode} = testCase;
+    test(`MainNavigationBar desktop. variant={${testCase.variant}} isDarkMode={${testCase.isDarkMode}}`, async () => {
+        const page = await openStoryPage({
+            id: 'components-navigation-bars-mainnavigationbar--default',
+            device: 'DESKTOP',
+            args: {variant: normalizeVariant(variant)},
+            isDarkMode,
+        });
+
+        await expectScreenshot(page, {...{maxDiffPixelRatio: 0.00002}});
     });
+}
 
-    const image = await page.screenshot();
+for (const testCase of [
+    {variant: 'default', isDarkMode: false},
+    {variant: 'default', isDarkMode: true},
+    {variant: 'inverse', isDarkMode: false},
+    {variant: 'inverse', isDarkMode: true},
+    {variant: 'alternative', isDarkMode: false},
+    {variant: 'alternative', isDarkMode: true},
+] as const) {
+    const {variant, isDarkMode} = testCase;
+    test(`MainNavigationBar mobile. variant={${testCase.variant}} isDarkMode={${testCase.isDarkMode}}`, async () => {
+        const page = await openStoryPage({
+            id: 'components-navigation-bars-mainnavigationbar--default',
+            device: 'MOBILE_IOS',
+            args: {variant: normalizeVariant(variant)},
+            isDarkMode,
+        });
 
-    expect(image).toMatchImageSnapshot({failureThreshold: 0.00002});
-});
+        await expectScreenshot(page);
 
-test.each`
-    variant          | isDarkMode
-    ${'default'}     | ${false}
-    ${'default'}     | ${true}
-    ${'inverse'}     | ${false}
-    ${'inverse'}     | ${true}
-    ${'alternative'} | ${false}
-    ${'alternative'} | ${true}
-`('MainNavigationBar mobile. variant={$variant} isDarkMode={$isDarkMode}', async ({variant, isDarkMode}) => {
-    const page = await openStoryPage({
-        id: 'components-navigation-bars-mainnavigationbar--default',
-        device: 'MOBILE_IOS',
-        args: {variant: normalizeVariant(variant)},
-        isDarkMode,
+        await (await screen.findByRole('button', {name: 'Abrir menú de navegación'})).click();
+
+        await expectScreenshot(page);
     });
-
-    const menuCloseImage = await page.screenshot();
-    expect(menuCloseImage).toMatchImageSnapshot();
-
-    await page.click(await screen.findByRole('button', {name: 'Abrir menú de navegación'}));
-
-    const menuOpenImage = await page.screenshot();
-    expect(menuOpenImage).toMatchImageSnapshot();
-});
+}
 
 test('MainNavigationBar mobile with burger menu slot', async () => {
     const page = await openStoryPage({
@@ -56,10 +57,9 @@ test('MainNavigationBar mobile with burger menu slot', async () => {
         args: {burgerMenuSlot: true},
     });
 
-    await page.click(await screen.findByRole('button', {name: 'Abrir menú de navegación'}));
+    await (await screen.findByRole('button', {name: 'Abrir menú de navegación'})).click();
 
-    const menuOpenImage = await page.screenshot();
-    expect(menuOpenImage).toMatchImageSnapshot();
+    await expectScreenshot(page);
 });
 
 test('MainNavigationBar large', async () => {
@@ -69,9 +69,7 @@ test('MainNavigationBar large', async () => {
         args: {large: true},
     });
 
-    const image = await page.screenshot();
-
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(page);
 });
 
 test('MainNavigationBar wide', async () => {
@@ -81,11 +79,11 @@ test('MainNavigationBar wide', async () => {
         args: {wide: true, desktopLargeMenu: true, menu: 'default'},
     });
 
-    expect(await page.screenshot()).toMatchImageSnapshot();
+    await expectScreenshot(page);
 
     // Open menu
-    await page.click(await screen.findByRole('button', {name: 'Start'}));
-    expect(await page.screenshot()).toMatchImageSnapshot();
+    await (await screen.findByRole('button', {name: 'Start'})).click();
+    await expectScreenshot(page);
 });
 
 test('MainNavigationBar desktop with topSlot', async () => {
@@ -95,10 +93,10 @@ test('MainNavigationBar desktop with topSlot', async () => {
         args: {topSlot: true, desktopLargeMenu: true, menu: 'default'},
     });
 
-    expect(await page.screenshot()).toMatchImageSnapshot();
+    await expectScreenshot(page);
 
-    await page.click(await screen.findByRole('button', {name: 'Start'}));
-    expect(await page.screenshot()).toMatchImageSnapshot();
+    await (await screen.findByRole('button', {name: 'Start'})).click();
+    await expectScreenshot(page);
 });
 
 test('MainNavigationBar mobile with topSlot', async () => {
@@ -108,10 +106,10 @@ test('MainNavigationBar mobile with topSlot', async () => {
         args: {topSlot: true},
     });
 
-    expect(await page.screenshot()).toMatchImageSnapshot();
+    await expectScreenshot(page);
 
-    await page.click(await screen.findByRole('button', {name: 'Abrir menú de navegación'}));
-    expect(await page.screenshot()).toMatchImageSnapshot();
+    await (await screen.findByRole('button', {name: 'Abrir menú de navegación'})).click();
+    await expectScreenshot(page);
 });
 
 test('MainNavigationBar desktop with topSlot and custom background', async () => {
@@ -121,26 +119,25 @@ test('MainNavigationBar desktop with topSlot and custom background', async () =>
         args: {topSlot: true, topSlotBackgroundColor: '#FABADA'},
     });
 
-    expect(await page.screenshot()).toMatchImageSnapshot();
+    await expectScreenshot(page);
 });
 
-test.each`
-    variant          | isDarkMode | device
-    ${'default'}     | ${false}   | ${'DESKTOP'}
-    ${'default'}     | ${true}    | ${'DESKTOP'}
-    ${'inverse'}     | ${false}   | ${'DESKTOP'}
-    ${'inverse'}     | ${true}    | ${'DESKTOP'}
-    ${'alternative'} | ${false}   | ${'DESKTOP'}
-    ${'alternative'} | ${true}    | ${'DESKTOP'}
-    ${'default'}     | ${false}   | ${'MOBILE_IOS'}
-    ${'default'}     | ${true}    | ${'MOBILE_IOS'}
-    ${'inverse'}     | ${false}   | ${'MOBILE_IOS'}
-    ${'inverse'}     | ${true}    | ${'MOBILE_IOS'}
-    ${'alternative'} | ${false}   | ${'MOBILE_IOS'}
-    ${'alternative'} | ${true}    | ${'MOBILE_IOS'}
-`(
-    'NavigationBar. variant={$variant} isDarkMode={$isDarkMode} device={$device}',
-    async ({variant, isDarkMode, device}) => {
+for (const testCase of [
+    {variant: 'default', isDarkMode: false, device: 'DESKTOP'},
+    {variant: 'default', isDarkMode: true, device: 'DESKTOP'},
+    {variant: 'inverse', isDarkMode: false, device: 'DESKTOP'},
+    {variant: 'inverse', isDarkMode: true, device: 'DESKTOP'},
+    {variant: 'alternative', isDarkMode: false, device: 'DESKTOP'},
+    {variant: 'alternative', isDarkMode: true, device: 'DESKTOP'},
+    {variant: 'default', isDarkMode: false, device: 'MOBILE_IOS'},
+    {variant: 'default', isDarkMode: true, device: 'MOBILE_IOS'},
+    {variant: 'inverse', isDarkMode: false, device: 'MOBILE_IOS'},
+    {variant: 'inverse', isDarkMode: true, device: 'MOBILE_IOS'},
+    {variant: 'alternative', isDarkMode: false, device: 'MOBILE_IOS'},
+    {variant: 'alternative', isDarkMode: true, device: 'MOBILE_IOS'},
+] as const) {
+    const {variant, isDarkMode, device} = testCase;
+    test(`NavigationBar. variant={${testCase.variant}} isDarkMode={${testCase.isDarkMode}} device={${testCase.device}}`, async () => {
         const page = await openStoryPage({
             id: 'components-navigation-bars-navigationbar--default',
             device,
@@ -148,29 +145,26 @@ test.each`
             isDarkMode,
         });
 
-        const image = await page.screenshot();
+        await expectScreenshot(page);
+    });
+}
 
-        expect(image).toMatchImageSnapshot();
-    }
-);
-
-test.each`
-    variant          | isDarkMode | device
-    ${'default'}     | ${false}   | ${'DESKTOP'}
-    ${'default'}     | ${true}    | ${'DESKTOP'}
-    ${'inverse'}     | ${false}   | ${'DESKTOP'}
-    ${'inverse'}     | ${true}    | ${'DESKTOP'}
-    ${'alternative'} | ${false}   | ${'DESKTOP'}
-    ${'alternative'} | ${true}    | ${'DESKTOP'}
-    ${'default'}     | ${false}   | ${'MOBILE_IOS'}
-    ${'default'}     | ${true}    | ${'MOBILE_IOS'}
-    ${'inverse'}     | ${false}   | ${'MOBILE_IOS'}
-    ${'inverse'}     | ${true}    | ${'MOBILE_IOS'}
-    ${'alternative'} | ${false}   | ${'MOBILE_IOS'}
-    ${'alternative'} | ${true}    | ${'MOBILE_IOS'}
-`(
-    'FunnelNavigationBar. variant={$variant} isDarkMode={$isDarkMode} device={$device}',
-    async ({variant, isDarkMode, device}) => {
+for (const testCase of [
+    {variant: 'default', isDarkMode: false, device: 'DESKTOP'},
+    {variant: 'default', isDarkMode: true, device: 'DESKTOP'},
+    {variant: 'inverse', isDarkMode: false, device: 'DESKTOP'},
+    {variant: 'inverse', isDarkMode: true, device: 'DESKTOP'},
+    {variant: 'alternative', isDarkMode: false, device: 'DESKTOP'},
+    {variant: 'alternative', isDarkMode: true, device: 'DESKTOP'},
+    {variant: 'default', isDarkMode: false, device: 'MOBILE_IOS'},
+    {variant: 'default', isDarkMode: true, device: 'MOBILE_IOS'},
+    {variant: 'inverse', isDarkMode: false, device: 'MOBILE_IOS'},
+    {variant: 'inverse', isDarkMode: true, device: 'MOBILE_IOS'},
+    {variant: 'alternative', isDarkMode: false, device: 'MOBILE_IOS'},
+    {variant: 'alternative', isDarkMode: true, device: 'MOBILE_IOS'},
+] as const) {
+    const {variant, isDarkMode, device} = testCase;
+    test(`FunnelNavigationBar. variant={${testCase.variant}} isDarkMode={${testCase.isDarkMode}} device={${testCase.device}}`, async () => {
         const page = await openStoryPage({
             id: 'components-navigation-bars-funnelnavigationbar--default',
             device,
@@ -178,113 +172,120 @@ test.each`
             isDarkMode,
         });
 
-        const image = await page.screenshot();
-
-        expect(image).toMatchImageSnapshot();
-    }
-);
-
-test.each`
-    type                     | device
-    ${'NavigationBar'}       | ${'DESKTOP'}
-    ${'MainNavigationBar'}   | ${'DESKTOP'}
-    ${'FunnelNavigationBar'} | ${'DESKTOP'}
-    ${'NavigationBar'}       | ${'MOBILE_IOS'}
-    ${'MainNavigationBar'}   | ${'MOBILE_IOS'}
-    ${'FunnelNavigationBar'} | ${'MOBILE_IOS'}
-`('$type without border. device={$device}', async ({type, device}) => {
-    const page = await openStoryPage({
-        id: `components-navigation-bars-${type.toLowerCase()}--default`,
-        device,
-        args: {border: false},
+        await expectScreenshot(page);
     });
+}
 
-    const image = await page.screenshot();
+for (const testCase of [
+    {type: 'NavigationBar', device: 'DESKTOP'},
+    {type: 'MainNavigationBar', device: 'DESKTOP'},
+    {type: 'FunnelNavigationBar', device: 'DESKTOP'},
+    {type: 'NavigationBar', device: 'MOBILE_IOS'},
+    {type: 'MainNavigationBar', device: 'MOBILE_IOS'},
+    {type: 'FunnelNavigationBar', device: 'MOBILE_IOS'},
+] as const) {
+    const {type, device} = testCase;
+    test(`${testCase.type} without border. device={${testCase.device}}`, async () => {
+        const page = await openStoryPage({
+            id: `components-navigation-bars-${type.toLowerCase()}--default`,
+            device,
+            args: {border: false},
+        });
 
-    expect(image).toMatchImageSnapshot();
-});
-
-test.each(DEVICES)('MainNavigationBar without sections (%s)', async (device) => {
-    const page = await openStoryPage({
-        id: 'components-navigation-bars-mainnavigationbar--default',
-        device,
-        args: {sections: false},
+        await expectScreenshot(page);
     });
+}
 
-    const image = await page.screenshot();
+for (const testCase of DEVICES) {
+    const device = testCase;
+    test(`MainNavigationBar without sections (${testCase})`, async () => {
+        const page = await openStoryPage({
+            id: 'components-navigation-bars-mainnavigationbar--default',
+            device,
+            args: {sections: false},
+        });
 
-    expect(image).toMatchImageSnapshot();
-});
+        await expectScreenshot(page);
+    });
+}
 
 // These test cases have been skipped because they produce different results in UI and headless mode.
 // In headless mode, the menu gets rendered in an unexpected position
 // https://jira.tid.es/browse/WEB-2365
 // ${'small'} | ${'default'}
 // ${'small'} | ${'custom'}
-test.each`
-    menuType   | content
-    ${'large'} | ${'default'}
-    ${'large'} | ${'custom'}
-`('MainNavigationBar with $menuType menu and $content content in DESKTOP', async ({menuType, content}) => {
-    const page = await openStoryPage({
-        id: 'components-navigation-bars-mainnavigationbar--default',
-        device: 'DESKTOP',
-        args: {sections: true, desktopLargeMenu: menuType === 'large', menu: content},
+for (const testCase of [
+    {menuType: 'large', content: 'default'},
+    {menuType: 'large', content: 'custom'},
+] as const) {
+    const {menuType, content} = testCase;
+    test(`MainNavigationBar with ${testCase.menuType} menu and ${testCase.content} content in DESKTOP`, async () => {
+        const page = await openStoryPage({
+            id: 'components-navigation-bars-mainnavigationbar--default',
+            device: 'DESKTOP',
+            args: {sections: true, desktopLargeMenu: menuType === 'large', menu: content},
+        });
+
+        // first section opened
+        await (await screen.findByRole('button', {name: 'Start'})).click();
+        await expectScreenshot(page);
+
+        // second section opened
+        await (await screen.findByRole('button', {name: 'Account'})).click();
+        await expectScreenshot(page);
+
+        // close menu with ESC key
+        await page.keyboard.press('Escape');
+        await expectScreenshot(page);
     });
+}
 
-    // first section opened
-    await page.click(await screen.findByRole('button', {name: 'Start'}));
-    expect(await page.screenshot()).toMatchImageSnapshot();
+for (const testCase of ['default', 'custom']) {
+    const menu = testCase;
+    test(`MainNavigationBar with menu and ${testCase} content in MOBILE_IOS`, async () => {
+        const page = await openStoryPage({
+            id: 'components-navigation-bars-mainnavigationbar--default',
+            device: 'MOBILE_IOS',
+            args: {sections: true, menu},
+        });
 
-    // second section opened
-    await page.click(await screen.findByRole('button', {name: 'Account'}));
-    expect(await page.screenshot()).toMatchImageSnapshot();
+        await (await screen.findByRole('button', {name: 'Abrir menú de navegación'})).click();
 
-    // close menu with ESC key
-    await page.keyboard.press('Escape');
-    expect(await page.screenshot()).toMatchImageSnapshot();
-});
+        // open first section
+        await (await screen.findByRole('button', {name: 'Start'})).click();
+        await expectScreenshot(page);
 
-test.each(['default', 'custom'])('MainNavigationBar with menu and %s content in MOBILE_IOS', async (menu) => {
-    const page = await openStoryPage({
-        id: 'components-navigation-bars-mainnavigationbar--default',
-        device: 'MOBILE_IOS',
-        args: {sections: true, menu},
+        // go back
+        await (await screen.findByRole('button', {name: 'Atrás'})).click();
+        await expectScreenshot(page);
+
+        // open second section
+        await (await screen.findByRole('button', {name: 'Account'})).click();
+        await expectScreenshot(page);
+
+        // close menu
+        await (await screen.findByRole('button', {name: 'Cerrar menú de navegación'})).click();
+        await expectScreenshot(page);
     });
-
-    await page.click(await screen.findByRole('button', {name: 'Abrir menú de navegación'}));
-
-    // open first section
-    await page.click(await screen.findByRole('button', {name: 'Start'}));
-    expect(await page.screenshot()).toMatchImageSnapshot();
-
-    // go back
-    await page.click(await screen.findByRole('button', {name: 'Atrás'}));
-    expect(await page.screenshot()).toMatchImageSnapshot();
-
-    // open second section
-    await page.click(await screen.findByRole('button', {name: 'Account'}));
-    expect(await page.screenshot()).toMatchImageSnapshot();
-
-    // close menu
-    await page.click(await screen.findByRole('button', {name: 'Cerrar menú de navegación'}));
-    expect(await page.screenshot()).toMatchImageSnapshot();
-});
+}
 
 // Test case skipped because it produces different results in UI and headless mode.
 // In headless mode, the menu gets rendered in an unexpected position
 // https://jira.tid.es/browse/WEB-2365
-test.each(['large' /* 'small' */])('MainNavigationBar inverse with %s menu in DESKTOP', async (menuType) => {
-    const page = await openStoryPage({
-        id: 'components-navigation-bars-mainnavigationbar--default',
-        device: 'DESKTOP',
-        args: {sections: true, desktopLargeMenu: menuType === 'large', menu: 'default', variant: 'brand'},
-    });
+for (const testCase of ['large' /* 'small' */]) {
+    const menuType = testCase;
+    test(`MainNavigationBar inverse with ${testCase} menu in DESKTOP`, async () => {
+        const page = await openStoryPage({
+            id: 'components-navigation-bars-mainnavigationbar--default',
+            device: 'DESKTOP',
+            args: {sections: true, desktopLargeMenu: menuType === 'large', menu: 'default', variant: 'brand'},
+        });
 
-    const startButton = await screen.findByRole('button', {name: 'Start'});
-    await page.click(startButton);
-    expect(await page.screenshot()).toMatchImageSnapshot({failureThreshold: 0.00002});
-});
+        const startButton = await screen.findByRole('button', {name: 'Start'});
+        await startButton.click();
+        await expectScreenshot(page, {...{maxDiffPixelRatio: 0.00002}});
+    });
+}
 
 test('MainNavigationBar large with expanded right slot', async () => {
     const page = await openStoryPage({
@@ -296,7 +297,5 @@ test('MainNavigationBar large with expanded right slot', async () => {
         },
     });
 
-    const image = await page.screenshot();
-
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(page);
 });

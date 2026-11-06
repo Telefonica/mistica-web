@@ -1,26 +1,25 @@
+import {test, expect, expectScreenshot} from '../test-utils/playwright';
 import path from 'path';
 import {openStoryPage, screen} from '../test-utils';
-import {prepareFile} from '@telefonica/acceptance-testing';
 
 const variants = ['default', 'brand', 'alternative', 'negative', 'media'] as const;
 
-test.each(variants)('FileUpload - with drop zone (%s)', async (variantOutside) => {
-    await openStoryPage({
-        id: 'components-input-fields-fileupload--default',
-        device: 'DESKTOP',
-        args: {withDropZone: true, withAsset: true, variantOutside},
+for (const testCase of variants) {
+    const variantOutside = testCase;
+    test(`FileUpload - with drop zone (${testCase})`, async () => {
+        await openStoryPage({
+            id: 'components-input-fields-fileupload--default',
+            device: 'DESKTOP',
+            args: {withDropZone: true, withAsset: true, variantOutside},
+        });
+
+        const fileUploader = await screen.findByTestId('FileUpload');
+        await expectScreenshot(fileUploader);
+
+        await fileUploader.hover();
+        await expectScreenshot(fileUploader);
     });
-
-    const fileUploader = await screen.findByTestId('FileUpload');
-    const image = await fileUploader.screenshot();
-
-    expect(image).toMatchImageSnapshot();
-
-    await fileUploader.hover();
-    const hoverImage = await fileUploader.screenshot();
-
-    expect(hoverImage).toMatchImageSnapshot();
-});
+}
 
 test('FileUpload - without drop zone', async () => {
     await openStoryPage({
@@ -30,9 +29,7 @@ test('FileUpload - without drop zone', async () => {
     });
 
     const fileUploader = await screen.findByTestId('FileUpload');
-    const image = await fileUploader.screenshot();
-
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(fileUploader);
 });
 
 test('FileUpload - with error', async () => {
@@ -47,9 +44,7 @@ test('FileUpload - with error', async () => {
     });
 
     const fileUploader = await screen.findByTestId('FileUpload');
-    const image = await fileUploader.screenshot();
-
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(fileUploader);
 });
 
 test('FileUpload - upload multiple files and remove', async () => {
@@ -63,21 +58,19 @@ test('FileUpload - upload multiple files and remove', async () => {
 
     // Upload first file
     const fileInput = await screen.findByLabelText('Drag or upload your file');
-    const firstFixturePath = prepareFile(path.join(__dirname, '__fixtures__', 'file-upload-1.txt'));
-    const secondFixturePath = prepareFile(path.join(__dirname, '__fixtures__', 'file-upload-2.png'));
-    await fileInput.uploadFile(firstFixturePath);
+    const firstFixturePath = path.join(__dirname, '__fixtures__', 'file-upload-1.txt');
+    const secondFixturePath = path.join(__dirname, '__fixtures__', 'file-upload-2.png');
+    await fileInput.setInputFiles(firstFixturePath);
     await screen.findByText('file-upload-1.txt');
 
-    const imageWithOneFile = await fileUploader.screenshot();
-    expect(imageWithOneFile).toMatchImageSnapshot();
+    await expectScreenshot(fileUploader);
 
     // Upload second file
-    await fileInput.uploadFile(secondFixturePath);
+    await fileInput.setInputFiles(secondFixturePath);
     await screen.findByText('file-upload-2.png');
     await screen.findAllByRole('button', {name: /^Eliminar archivo/});
 
-    const imageWithTwoFiles = await fileUploader.screenshot();
-    expect(imageWithTwoFiles).toMatchImageSnapshot();
+    await expectScreenshot(fileUploader);
 
     // Remove one file
     const removeButtons = await screen.findAllByRole('button', {name: /^Eliminar archivo/});
@@ -85,8 +78,7 @@ test('FileUpload - upload multiple files and remove', async () => {
     await screen.findByText('file-upload-2.png');
     await expect(screen.findByText('file-upload-1.txt')).rejects.toThrow();
 
-    const imageAfterRemoval = await fileUploader.screenshot();
-    expect(imageAfterRemoval).toMatchImageSnapshot();
+    await expectScreenshot(fileUploader);
 });
 
 test('FileUpload - custom gallery', async () => {
@@ -97,14 +89,13 @@ test('FileUpload - custom gallery', async () => {
 
     const fileUploader = await screen.findByTestId('FileUpload');
     const fileInput = await screen.findByLabelText('Gallery');
-    const firstFixturePath = prepareFile(path.join(__dirname, '__fixtures__', 'file-upload-2.png'));
-    const secondFixturePath = prepareFile(path.join(__dirname, '__fixtures__', 'file-upload-3.png'));
+    const firstFixturePath = path.join(__dirname, '__fixtures__', 'file-upload-2.png');
+    const secondFixturePath = path.join(__dirname, '__fixtures__', 'file-upload-3.png');
 
-    await fileInput.uploadFile(firstFixturePath);
+    await fileInput.setInputFiles(firstFixturePath);
     await screen.findByLabelText('Remove file-upload-2.png');
-    await fileInput.uploadFile(secondFixturePath);
+    await fileInput.setInputFiles(secondFixturePath);
     await screen.findByLabelText('Remove file-upload-3.png');
 
-    const image = await fileUploader.screenshot();
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(fileUploader);
 });

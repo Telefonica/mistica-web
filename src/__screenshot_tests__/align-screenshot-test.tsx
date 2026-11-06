@@ -1,3 +1,4 @@
+import {test, expectScreenshot} from '../test-utils/playwright';
 import {openStoryPage, screen} from '../test-utils';
 
 const ALIGN_OPTIONS = ['start', 'center', 'end'];
@@ -12,13 +13,16 @@ const getCases = () => {
     return cases;
 };
 
-test.each(getCases())('Align x="%s" and y="%s" (%s)', async (x, y) => {
-    await openStoryPage({
-        id: 'layout-align--default',
-        device: 'MOBILE_IOS',
-        args: {x, y},
-    });
+for (const testCase of getCases()) {
+    const [x, y] = testCase;
+    test(`Align x="${testCase[0]}" and y="${testCase[1]}" (${testCase[2]})`, async () => {
+        await openStoryPage({
+            id: 'layout-align--default',
+            device: 'MOBILE_IOS',
+            args: {x, y},
+        });
 
-    const element = await screen.findByTestId('story');
-    expect(await element.screenshot()).toMatchImageSnapshot();
-});
+        const element = await screen.findByTestId('story');
+        await expectScreenshot(element);
+    });
+}

@@ -1,3 +1,4 @@
+import {test, expectScreenshot} from '../test-utils/playwright';
 import {openStoryPage, screen} from '../test-utils';
 
 const sizes = [24, 40, 64, 96];
@@ -12,7 +13,7 @@ test('Avatar with image and badge', async () => {
         });
 
         const element = await screen.findByTestId('avatar');
-        expect(await element.screenshot()).toMatchImageSnapshot();
+        await expectScreenshot(element);
     }
 
     // numeric badge
@@ -24,7 +25,7 @@ test('Avatar with image and badge', async () => {
         });
 
         const element = await screen.findByTestId('avatar');
-        expect(await element.screenshot()).toMatchImageSnapshot();
+        await expectScreenshot(element);
     }
 });
 
@@ -37,7 +38,7 @@ test('Avatar with initials', async () => {
         });
 
         const element = await screen.findByTestId('avatar');
-        expect(await element.screenshot()).toMatchImageSnapshot();
+        await expectScreenshot(element);
     }
 
     // over brand
@@ -48,7 +49,7 @@ test('Avatar with initials', async () => {
     });
 
     const element = await screen.findByTestId('avatar');
-    expect(await element.screenshot()).toMatchImageSnapshot();
+    await expectScreenshot(element);
 });
 
 test('Avatar with icon', async () => {
@@ -61,7 +62,7 @@ test('Avatar with icon', async () => {
         });
 
         const element = await screen.findByTestId('avatar');
-        expect(await element.screenshot()).toMatchImageSnapshot();
+        await expectScreenshot(element);
     }
 
     // custom icon
@@ -73,7 +74,7 @@ test('Avatar with icon', async () => {
         });
 
         const element = await screen.findByTestId('avatar');
-        expect(await element.screenshot()).toMatchImageSnapshot();
+        await expectScreenshot(element);
     }
 
     // over brand
@@ -92,6 +93,6 @@ test('Avatar with icon', async () => {
         });
 
         const element = await screen.findByTestId('avatar');
-        expect(await element.screenshot()).toMatchImageSnapshot();
+        await expectScreenshot(element);
     }
 });

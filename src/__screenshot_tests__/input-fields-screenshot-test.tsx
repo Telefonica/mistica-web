@@ -1,5 +1,5 @@
-import {openStoryPage, screen, setRootFontSize} from '../test-utils';
-import {within} from '@telefonica/acceptance-testing';
+import {test, expectScreenshot} from '../test-utils/playwright';
+import {openStoryPage, screen, setRootFontSize, within} from '../test-utils';
 
 test('TextField - appears properly on desktop', async () => {
     await openStoryPage({
@@ -8,9 +8,7 @@ test('TextField - appears properly on desktop', async () => {
     });
 
     const field = await screen.findByTestId('text-field');
-    const image = await field.screenshot();
-
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(field);
 });
 
 test('TextField - label', async () => {
@@ -21,9 +19,7 @@ test('TextField - label', async () => {
     });
 
     const fieldWrapper = await screen.findByTestId('text-field');
-    const image = await fieldWrapper.screenshot();
-
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(fieldWrapper);
 });
 
 test('TextField - optional', async () => {
@@ -34,9 +30,7 @@ test('TextField - optional', async () => {
     });
 
     const fieldWrapper = await screen.findByTestId('text-field');
-    const image = await fieldWrapper.screenshot();
-
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(fieldWrapper);
 });
 
 test('TextField - optional showOptionalLabel=false', async () => {
@@ -47,9 +41,7 @@ test('TextField - optional showOptionalLabel=false', async () => {
     });
 
     const fieldWrapper = await screen.findByTestId('text-field');
-    const image = await fieldWrapper.screenshot();
-
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(fieldWrapper);
 });
 
 test('TextField - multiline and optional', async () => {
@@ -60,9 +52,7 @@ test('TextField - multiline and optional', async () => {
     });
 
     const fieldWrapper = await screen.findByTestId('text-field');
-    const image = await fieldWrapper.screenshot();
-
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(fieldWrapper);
 });
 
 test('TextField - multiline and maxLength', async () => {
@@ -73,9 +63,7 @@ test('TextField - multiline and maxLength', async () => {
     });
 
     const fieldWrapper = await screen.findByTestId('text-field');
-    const image = await fieldWrapper.screenshot();
-
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(fieldWrapper);
 });
 
 test('TextField - multiline and maxLength with long helperText', async () => {
@@ -91,9 +79,7 @@ test('TextField - multiline and maxLength with long helperText', async () => {
     });
 
     const fieldWrapper = await screen.findByTestId('text-field');
-    const image = await fieldWrapper.screenshot();
-
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(fieldWrapper);
 });
 
 test('TextField - long label', async () => {
@@ -110,11 +96,11 @@ test('TextField - long label', async () => {
     const field = await screen.findByLabelText(
         'This TextField has a very long label and should display ellipsis'
     );
-    await field.type('Some text');
+    await field.pressSequentially('Some text');
 
-    expect(await fieldWrapper.screenshot()).toMatchImageSnapshot();
+    await expectScreenshot(fieldWrapper);
 
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(image);
 });
 
 test('TextField - long value', async () => {
@@ -125,9 +111,7 @@ test('TextField - long value', async () => {
     });
 
     const fieldWrapper = await screen.findByTestId('text-field');
-    const image = await fieldWrapper.screenshot();
-
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(fieldWrapper);
 });
 
 test('TextField - label and default value', async () => {
@@ -137,9 +121,7 @@ test('TextField - label and default value', async () => {
     });
 
     const fieldWrapper = await screen.findByTestId('text-field');
-    const image = await fieldWrapper.screenshot();
-
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(fieldWrapper);
 });
 
 test('TextField - helper text', async () => {
@@ -150,9 +132,7 @@ test('TextField - helper text', async () => {
     });
 
     const fieldWrapper = await screen.findByTestId('text-field');
-    const image = await fieldWrapper.screenshot();
-
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(fieldWrapper);
 });
 
 test('TextField - error', async () => {
@@ -163,9 +143,7 @@ test('TextField - error', async () => {
     });
 
     const fieldWrapper = await screen.findByTestId('text-field');
-    const image = await fieldWrapper.screenshot();
-
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(fieldWrapper);
 });
 
 test('TextField - prefix', async () => {
@@ -176,9 +154,7 @@ test('TextField - prefix', async () => {
     });
 
     const fieldWrapper = await screen.findByTestId('text-field');
-    const image = await fieldWrapper.screenshot();
-
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(fieldWrapper);
 });
 
 test('TextField - end icon', async () => {
@@ -189,9 +165,7 @@ test('TextField - end icon', async () => {
     });
 
     const fieldWrapper = await screen.findByTestId('text-field');
-    const image = await fieldWrapper.screenshot();
-
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(fieldWrapper);
 });
 
 test('TextField - prefix and end icon focus-ring', async () => {
@@ -207,9 +181,7 @@ test('TextField - prefix and end icon focus-ring', async () => {
     } while ((await page.evaluate(() => document.activeElement?.tagName)) !== 'INPUT');
 
     const fieldWrapper = await screen.findByTestId('text-field');
-    const image = await fieldWrapper.screenshot();
-
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(fieldWrapper);
 });
 
 test('TextField - disabled', async () => {
@@ -220,9 +192,7 @@ test('TextField - disabled', async () => {
     });
 
     const fieldWrapper = await screen.findByTestId('text-field');
-    const image = await fieldWrapper.screenshot();
-
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(fieldWrapper);
 });
 
 test('TextField - read only', async () => {
@@ -235,14 +205,10 @@ test('TextField - read only', async () => {
     const fieldWrapper = await screen.findByTestId('text-field');
     const field = await screen.findByTestId('text-field');
 
-    const image = await fieldWrapper.screenshot();
-
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(fieldWrapper);
 
     field.click();
-    const focused = await fieldWrapper.screenshot();
-
-    expect(focused).toMatchImageSnapshot();
+    await expectScreenshot(fieldWrapper);
 });
 
 test('TextField - inverse and helper text', async () => {
@@ -253,9 +219,7 @@ test('TextField - inverse and helper text', async () => {
     });
 
     const fieldWrapper = await screen.findByTestId('text-field');
-    const image = await fieldWrapper.screenshot();
-
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(fieldWrapper);
 });
 
 test('TextField - inverse and prefix', async () => {
@@ -266,9 +230,7 @@ test('TextField - inverse and prefix', async () => {
     });
 
     const fieldWrapper = await screen.findByTestId('text-field');
-    const image = await fieldWrapper.screenshot();
-
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(fieldWrapper);
 });
 
 test('TextField - inverse and error', async () => {
@@ -279,9 +241,7 @@ test('TextField - inverse and error', async () => {
     });
 
     const fieldWrapper = await screen.findByTestId('text-field');
-    const image = await fieldWrapper.screenshot();
-
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(fieldWrapper);
 });
 
 test('TextField - collapses its label when autofill fills out the form', async () => {
@@ -292,9 +252,7 @@ test('TextField - collapses its label when autofill fills out the form', async (
     });
 
     const fieldWrapper = await screen.findByTestId('text-field');
-    const image = await fieldWrapper.screenshot();
-
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(fieldWrapper);
 
     // it simulates a data autofill
     await page.evaluate(() => {
@@ -303,22 +261,19 @@ test('TextField - collapses its label when autofill fills out the form', async (
         input?.dispatchEvent(new Event('input', {bubbles: true}));
     });
 
-    const secondImage = await fieldWrapper.screenshot();
-    expect(secondImage).toMatchImageSnapshot();
+    await expectScreenshot(fieldWrapper);
 });
 
 test('TextField - appears properly (focus)', async () => {
-    const page = await openStoryPage({
+    await openStoryPage({
         id: 'components-input-fields-textfield--uncontrolled',
         device: 'MOBILE_IOS',
         args: {defaultValue: ''},
     });
 
     const fieldWrapper = await screen.findByTestId('text-field');
-    await page.click(await screen.findByLabelText('Label'));
-    const image = await fieldWrapper.screenshot();
-
-    expect(image).toMatchImageSnapshot();
+    await (await screen.findByLabelText('Label')).click();
+    await expectScreenshot(fieldWrapper);
 });
 
 test('TextField - appears properly (typing)', async () => {
@@ -330,10 +285,8 @@ test('TextField - appears properly (typing)', async () => {
 
     const fieldWrapper = await screen.findByTestId('text-field');
     const field = await screen.findByLabelText('Label');
-    await field.type('hello moto');
-    const image = await fieldWrapper.screenshot();
-
-    expect(image).toMatchImageSnapshot();
+    await field.pressSequentially('hello moto');
+    await expectScreenshot(fieldWrapper);
 });
 
 test('TextField - appears properly (typing and blur)', async () => {
@@ -345,16 +298,14 @@ test('TextField - appears properly (typing and blur)', async () => {
 
     const fieldWrapper = await screen.findByTestId('text-field');
     const field = await screen.findByLabelText('Label');
-    await field.type('hello moto');
+    await field.pressSequentially('hello moto');
 
     await field.evaluate((el) => (el as HTMLInputElement).blur());
-    const image = await fieldWrapper.screenshot();
-
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(fieldWrapper);
 });
 
 test('TextField - multiline', async () => {
-    const page = await openStoryPage({
+    await openStoryPage({
         id: 'components-input-fields-textfield--uncontrolled',
         device: 'MOBILE_IOS',
         args: {defaultValue: '', multiline: true},
@@ -363,42 +314,41 @@ test('TextField - multiline', async () => {
     const fieldWrapper = await screen.findByTestId('text-field');
     const field = await screen.findByLabelText('Label');
 
-    const emptyScreenshot = await fieldWrapper.screenshot();
-    expect(emptyScreenshot).toMatchImageSnapshot();
+    await expectScreenshot(fieldWrapper);
 
     const lines = ['1111111111', '2222222222', '3333333333', '4444444444', '5555555555', '6666666666'].join(
         '\n'
     );
 
-    await field.type(lines);
+    await field.pressSequentially(lines);
 
-    const afterWriteScreenshot = await fieldWrapper.screenshot();
-    expect(afterWriteScreenshot).toMatchImageSnapshot();
+    await expectScreenshot(fieldWrapper);
 
     await field.evaluate((el) => (el as HTMLInputElement).blur());
-    const filledBlurScreenshot = await fieldWrapper.screenshot();
-    expect(filledBlurScreenshot).toMatchImageSnapshot();
+    await expectScreenshot(fieldWrapper);
 
-    await page.click(field);
-    const filledFocusScreenshot = await fieldWrapper.screenshot();
-    expect(filledFocusScreenshot).toMatchImageSnapshot();
+    await field.click();
+    await expectScreenshot(fieldWrapper);
 });
 
-test.each(['top', 'bottom'])('Autocomplete menu renders on %s', async (verticalPosition) => {
-    await openStoryPage({
-        id: 'components-input-fields-autocomplete--controlled',
-        device: 'MOBILE_IOS',
-        args: {verticalPosition},
+for (const testCase of ['top', 'bottom']) {
+    const verticalPosition = testCase;
+    test(`Autocomplete menu renders on ${testCase}`, async () => {
+        const page = await openStoryPage({
+            id: 'components-input-fields-autocomplete--controlled',
+            device: 'MOBILE_IOS',
+            args: {verticalPosition},
+        });
+
+        const field = await screen.findByRole('combobox', {name: 'Label'});
+        await field.focus();
+
+        await expectScreenshot(page, {...{fullPage: true}});
     });
-
-    const field = await screen.findByRole('combobox', {name: 'Label'});
-    await field.focus();
-
-    expect(await page.screenshot({fullPage: true})).toMatchImageSnapshot();
-});
+}
 
 test('Autocomplete scrolls to active option on keyboard navigation', async () => {
-    await openStoryPage({
+    const page = await openStoryPage({
         id: 'components-input-fields-autocomplete--controlled',
         device: 'MOBILE_IOS',
         viewport: {width: 375, height: 200},
@@ -412,7 +362,7 @@ test('Autocomplete scrolls to active option on keyboard navigation', async () =>
     await page.keyboard.press('ArrowDown');
     await page.keyboard.press('ArrowDown');
 
-    expect(await page.screenshot()).toMatchImageSnapshot();
+    await expectScreenshot(page);
 });
 
 test('SearchField', async () => {
@@ -424,44 +374,36 @@ test('SearchField', async () => {
     const fieldWrapper = await screen.findByTestId('search-field');
     const field = await screen.findByLabelText('Label');
 
-    const emptyScreenshot = await fieldWrapper.screenshot();
+    await expectScreenshot(fieldWrapper);
 
-    expect(emptyScreenshot).toMatchImageSnapshot();
-
-    await field.type('hello moto');
-    const filledScreenshot = await fieldWrapper.screenshot();
-
-    expect(filledScreenshot).toMatchImageSnapshot();
+    await field.pressSequentially('hello moto');
+    await expectScreenshot(fieldWrapper);
 });
 
 test('SearchField with suggestions', async () => {
-    await openStoryPage({
+    const page = await openStoryPage({
         id: 'components-input-fields-searchfield--controlled',
         device: 'MOBILE_IOS',
         args: {suggestions: true},
     });
 
     const field = await screen.findByLabelText('Label');
-    await field.type('a');
+    await field.pressSequentially('a');
 
-    const screenshot = await page.screenshot({fullPage: true});
-
-    expect(screenshot).toMatchImageSnapshot();
+    await expectScreenshot(page, {...{fullPage: true}});
 });
 
 test('SearchField without suggestions', async () => {
-    await openStoryPage({
+    const page = await openStoryPage({
         id: 'components-input-fields-searchfield--controlled',
         device: 'MOBILE_IOS',
         args: {suggestions: true, withSuggestionsEmptyCase: true},
     });
 
     const field = await screen.findByLabelText('Label');
-    await field.type('merry xmas');
+    await field.pressSequentially('merry xmas');
 
-    const screenshot = await page.screenshot({fullPage: true});
-
-    expect(screenshot).toMatchImageSnapshot();
+    await expectScreenshot(page, {...{fullPage: true}});
 });
 
 test('DateField', async () => {
@@ -474,16 +416,12 @@ test('DateField', async () => {
     const fieldWrapper = await screen.findByTestId('date-field');
     const field = await screen.findByLabelText('Label');
 
-    const emptyScreenshot = await fieldWrapper.screenshot();
-
-    expect(emptyScreenshot).toMatchImageSnapshot();
+    await expectScreenshot(fieldWrapper);
 
     await field.focus();
-    await field.type('06' + '10' + '1980');
+    await field.pressSequentially('06' + '10' + '1980');
 
-    const filledScreenshot = await fieldWrapper.screenshot();
-
-    expect(filledScreenshot).toMatchImageSnapshot();
+    await expectScreenshot(fieldWrapper);
 });
 
 test('DateField - disabled', async () => {
@@ -495,9 +433,7 @@ test('DateField - disabled', async () => {
 
     const fieldWrapper = await screen.findByTestId('date-field');
 
-    const image = await fieldWrapper.screenshot();
-
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(fieldWrapper);
 });
 
 test('DateField - readOnly', async () => {
@@ -509,9 +445,7 @@ test('DateField - readOnly', async () => {
 
     const fieldWrapper = await screen.findByTestId('date-field');
 
-    const image = await fieldWrapper.screenshot();
-
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(fieldWrapper);
 });
 
 test('DateTimeField', async () => {
@@ -524,16 +458,12 @@ test('DateTimeField', async () => {
     const fieldWrapper = await screen.findByTestId('datetime-field');
     const field = await screen.findByLabelText('Label');
 
-    const emptyScreenshot = await fieldWrapper.screenshot();
-
-    expect(emptyScreenshot).toMatchImageSnapshot();
+    await expectScreenshot(fieldWrapper);
 
     await field.focus();
-    await field.type('06' + '10' + '1980' + '13' + '14');
+    await field.pressSequentially('06' + '10' + '1980' + '13' + '14');
 
-    const filledScreenshot = await fieldWrapper.screenshot();
-
-    expect(filledScreenshot).toMatchImageSnapshot();
+    await expectScreenshot(fieldWrapper);
 });
 
 test('TimeField', async () => {
@@ -546,16 +476,12 @@ test('TimeField', async () => {
     const fieldWrapper = await screen.findByTestId('time-field');
     const field = await screen.findByLabelText('Label');
 
-    const emptyScreenshot = await fieldWrapper.screenshot();
-
-    expect(emptyScreenshot).toMatchImageSnapshot();
+    await expectScreenshot(fieldWrapper);
 
     await field.focus();
-    await field.type('09' + '00');
+    await field.pressSequentially('09' + '00');
 
-    const filledScreenshot = await fieldWrapper.screenshot();
-
-    expect(filledScreenshot).toMatchImageSnapshot();
+    await expectScreenshot(fieldWrapper);
 });
 
 test('MonthField', async () => {
@@ -568,18 +494,14 @@ test('MonthField', async () => {
     const fieldWrapper = await screen.findByTestId('month-field');
     const field = await screen.findByLabelText('Label');
 
-    const emptyScreenshot = await fieldWrapper.screenshot();
-
-    expect(emptyScreenshot).toMatchImageSnapshot();
+    await expectScreenshot(fieldWrapper);
 
     await field.focus();
-    await field.type('10');
+    await field.pressSequentially('10');
     page.keyboard.press('Tab');
-    await field.type('2021');
+    await field.pressSequentially('2021');
 
-    const filledScreenshot = await fieldWrapper.screenshot();
-
-    expect(filledScreenshot).toMatchImageSnapshot();
+    await expectScreenshot(fieldWrapper);
 });
 
 test('PinField', async () => {
@@ -589,14 +511,14 @@ test('PinField', async () => {
     });
 
     const fieldGroup = await screen.findByTestId('pin-field');
-    expect(await fieldGroup.screenshot()).toMatchImageSnapshot();
+    await expectScreenshot(fieldGroup);
 
     const firstDigitField = await within(fieldGroup).findByLabelText('Dígito 1 de 6');
     await firstDigitField.focus();
-    expect(await fieldGroup.screenshot()).toMatchImageSnapshot();
+    await expectScreenshot(fieldGroup);
 
-    await firstDigitField.type('1');
-    expect(await fieldGroup.screenshot()).toMatchImageSnapshot();
+    await firstDigitField.pressSequentially('1');
+    await expectScreenshot(fieldGroup);
 });
 
 test('PinField - hideCode', async () => {
@@ -609,53 +531,57 @@ test('PinField - hideCode', async () => {
     const fieldGroup = await screen.findByTestId('pin-field');
 
     const firstDigitField = await within(fieldGroup).findByLabelText('Dígito 1 de 6');
-    await firstDigitField.type('1');
-    expect(await fieldGroup.screenshot()).toMatchImageSnapshot();
+    await firstDigitField.pressSequentially('1');
+    await expectScreenshot(fieldGroup);
 });
 
-test.each`
-    skin          | number
-    ${'Vivo'}     | ${'2145678901'}
-    ${'Vivo'}     | ${'+34654834455'}
-    ${'Movistar'} | ${'654834455'}
-`('PhoneNumberField - $number in $skin skin', async ({skin, number}) => {
-    await openStoryPage({
-        id: 'components-input-fields-phonenumberfield--uncontrolled',
-        device: 'MOBILE_IOS',
-        skin,
-        args: {defaultValue: number},
+for (const testCase of [
+    {skin: 'Vivo', number: '2145678901'},
+    {skin: 'Vivo', number: '+34654834455'},
+    {skin: 'Movistar', number: '654834455'},
+] as const) {
+    const {skin, number} = testCase;
+    test(`PhoneNumberField - ${testCase.number} in ${testCase.skin} skin`, async () => {
+        await openStoryPage({
+            id: 'components-input-fields-phonenumberfield--uncontrolled',
+            device: 'MOBILE_IOS',
+            skin,
+            args: {defaultValue: number},
+        });
+
+        const fieldWrapper = await screen.findByTestId('phone-number-field');
+        const field = await screen.findByLabelText('Label');
+
+        await field.click({clickCount: 3});
+        await field.pressSequentially(number);
+
+        await expectScreenshot(fieldWrapper);
     });
+}
 
-    const fieldWrapper = await screen.findByTestId('phone-number-field');
-    const field = await screen.findByLabelText('Label');
+for (const testCase of [
+    {skin: 'Vivo', number: '2145678901'},
+    {skin: 'Vivo', number: '+34654834455'},
+    {skin: 'Movistar', number: '654834455'},
+] as const) {
+    const {skin, number} = testCase;
+    test(`PhoneNumberFieldLite - ${testCase.number} in ${testCase.skin} skin`, async () => {
+        await openStoryPage({
+            id: 'components-input-fields-phonenumberfieldlite--uncontrolled',
+            device: 'MOBILE_IOS',
+            skin,
+            args: {defaultValue: number},
+        });
 
-    await field.click({clickCount: 3});
-    await field.type(number);
+        const fieldWrapper = await screen.findByTestId('phone-number-field-lite');
+        const field = await screen.findByLabelText('Label');
 
-    expect(await fieldWrapper.screenshot()).toMatchImageSnapshot();
-});
+        await field.click({clickCount: 3});
+        await field.pressSequentially(number);
 
-test.each`
-    skin          | number
-    ${'Vivo'}     | ${'2145678901'}
-    ${'Vivo'}     | ${'+34654834455'}
-    ${'Movistar'} | ${'654834455'}
-`('PhoneNumberFieldLite - $number in $skin skin', async ({skin, number}) => {
-    await openStoryPage({
-        id: 'components-input-fields-phonenumberfieldlite--uncontrolled',
-        device: 'MOBILE_IOS',
-        skin,
-        args: {defaultValue: number},
+        await expectScreenshot(fieldWrapper);
     });
-
-    const fieldWrapper = await screen.findByTestId('phone-number-field-lite');
-    const field = await screen.findByLabelText('Label');
-
-    await field.click({clickCount: 3});
-    await field.type(number);
-
-    expect(await fieldWrapper.screenshot()).toMatchImageSnapshot();
-});
+}
 
 test('CreditCardExpirationField', async () => {
     await openStoryPage({
@@ -667,14 +593,10 @@ test('CreditCardExpirationField', async () => {
     const fieldWrapper = await screen.findByTestId('credit-card-expiration-field');
     const field = await screen.findByLabelText('Label');
 
-    const emptyScreenshot = await fieldWrapper.screenshot();
+    await expectScreenshot(fieldWrapper);
 
-    expect(emptyScreenshot).toMatchImageSnapshot();
-
-    await field.type('a10b25c');
-    const filledScreenshot = await fieldWrapper.screenshot();
-
-    expect(filledScreenshot).toMatchImageSnapshot();
+    await field.pressSequentially('a10b25c');
+    await expectScreenshot(fieldWrapper);
 });
 
 test('CreditCardNumberField', async () => {
@@ -687,14 +609,10 @@ test('CreditCardNumberField', async () => {
     const fieldWrapper = await screen.findByTestId('credit-card-number-field');
     const field = await screen.findByLabelText('Label');
 
-    const emptyScreenshot = await fieldWrapper.screenshot();
+    await expectScreenshot(fieldWrapper);
 
-    expect(emptyScreenshot).toMatchImageSnapshot();
-
-    await field.type('d1234567812ab345678c');
-    const filledScreenshot = await fieldWrapper.screenshot();
-
-    expect(filledScreenshot).toMatchImageSnapshot();
+    await field.pressSequentially('d1234567812ab345678c');
+    await expectScreenshot(fieldWrapper);
 });
 
 test('CvvField', async () => {
@@ -707,14 +625,10 @@ test('CvvField', async () => {
     const fieldWrapper = await screen.findByTestId('cvv-field');
     const field = await screen.findByLabelText('Label');
 
-    const emptyScreenshot = await fieldWrapper.screenshot();
+    await expectScreenshot(fieldWrapper);
 
-    expect(emptyScreenshot).toMatchImageSnapshot();
-
-    await field.type('1234abc123');
-    const filledScreenshot = await fieldWrapper.screenshot();
-
-    expect(filledScreenshot).toMatchImageSnapshot();
+    await field.pressSequentially('1234abc123');
+    await expectScreenshot(fieldWrapper);
 });
 
 test('DecimalField', async () => {
@@ -727,14 +641,10 @@ test('DecimalField', async () => {
     const fieldWrapper = await screen.findByTestId('decimal-field');
     const field = await screen.findByLabelText('Label');
 
-    const emptyScreenshot = await fieldWrapper.screenshot();
+    await expectScreenshot(fieldWrapper);
 
-    expect(emptyScreenshot).toMatchImageSnapshot();
-
-    await field.type('123a,456bc,.3');
-    const filledScreenshot = await fieldWrapper.screenshot();
-
-    expect(filledScreenshot).toMatchImageSnapshot();
+    await field.pressSequentially('123a,456bc,.3');
+    await expectScreenshot(fieldWrapper);
 });
 
 test('EmailField', async () => {
@@ -747,14 +657,10 @@ test('EmailField', async () => {
     const fieldWrapper = await screen.findByTestId('email-field');
     const field = await screen.findByLabelText('Label');
 
-    const emptyScreenshot = await fieldWrapper.screenshot();
+    await expectScreenshot(fieldWrapper);
 
-    expect(emptyScreenshot).toMatchImageSnapshot();
-
-    await field.type('aitor.menta@gmail.com');
-    const filledScreenshot = await fieldWrapper.screenshot();
-
-    expect(filledScreenshot).toMatchImageSnapshot();
+    await field.pressSequentially('aitor.menta@gmail.com');
+    await expectScreenshot(fieldWrapper);
 });
 
 test('IbanField', async () => {
@@ -767,14 +673,10 @@ test('IbanField', async () => {
     const fieldWrapper = await screen.findByTestId('iban-field');
     const field = await screen.findByLabelText('Label');
 
-    const emptyScreenshot = await fieldWrapper.screenshot();
+    await expectScreenshot(fieldWrapper);
 
-    expect(emptyScreenshot).toMatchImageSnapshot();
-
-    await field.type('ES2114650100722030876293');
-    const filledScreenshot = await fieldWrapper.screenshot();
-
-    expect(filledScreenshot).toMatchImageSnapshot();
+    await field.pressSequentially('ES2114650100722030876293');
+    await expectScreenshot(fieldWrapper);
 });
 
 test('IntegerField', async () => {
@@ -787,18 +689,14 @@ test('IntegerField', async () => {
     const fieldWrapper = await screen.findByTestId('integer-field');
     const field = await screen.findByLabelText('Label');
 
-    const emptyScreenshot = await fieldWrapper.screenshot();
+    await expectScreenshot(fieldWrapper);
 
-    expect(emptyScreenshot).toMatchImageSnapshot();
-
-    await field.type('123abc123');
-    const filledScreenshot = await fieldWrapper.screenshot();
-
-    expect(filledScreenshot).toMatchImageSnapshot();
+    await field.pressSequentially('123abc123');
+    await expectScreenshot(fieldWrapper);
 });
 
 test('PasswordField', async () => {
-    const page = await openStoryPage({
+    await openStoryPage({
         id: 'components-input-fields-passwordfield--uncontrolled',
         device: 'MOBILE_IOS',
         args: {defaultValue: ''},
@@ -807,20 +705,14 @@ test('PasswordField', async () => {
     const fieldWrapper = await screen.findByTestId('password-field');
     const field = await screen.findByLabelText('Label');
 
-    const emptyScreenshot = await fieldWrapper.screenshot();
+    await expectScreenshot(fieldWrapper);
 
-    expect(emptyScreenshot).toMatchImageSnapshot();
+    await field.pressSequentially('password123');
+    await expectScreenshot(fieldWrapper);
 
-    await field.type('password123');
-    const filledScreenshot = await fieldWrapper.screenshot();
+    await (await screen.findByLabelText('Mostrar contraseña')).click();
 
-    expect(filledScreenshot).toMatchImageSnapshot();
-
-    await page.click(await screen.findByLabelText('Mostrar contraseña'));
-
-    const visibleScreenshot = await fieldWrapper.screenshot();
-
-    expect(visibleScreenshot).toMatchImageSnapshot();
+    await expectScreenshot(fieldWrapper);
 });
 
 test("PasswordField - long label doesn't collide with icon", async () => {
@@ -832,9 +724,7 @@ test("PasswordField - long label doesn't collide with icon", async () => {
 
     const fieldWrapper = await screen.findByTestId('password-field');
 
-    const image = await fieldWrapper.screenshot();
-
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(fieldWrapper);
 });
 
 test('TextField - increased font size', async () => {
@@ -847,9 +737,7 @@ test('TextField - increased font size', async () => {
     await setRootFontSize(32);
 
     const fieldWrapper = await screen.findByTestId('text-field');
-    const image = await fieldWrapper.screenshot();
-
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(fieldWrapper);
 });
 
 test('PasswordField - increased font size', async () => {
@@ -861,9 +749,7 @@ test('PasswordField - increased font size', async () => {
     await setRootFontSize(32);
 
     const fieldWrapper = await screen.findByTestId('password-field');
-    const image = await fieldWrapper.screenshot();
-
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(fieldWrapper);
 });
 
 test('SearchField - increased font size', async () => {
@@ -878,16 +764,12 @@ test('SearchField - increased font size', async () => {
     const fieldWrapper = await screen.findByTestId('search-field');
     const field = await screen.findByLabelText('Label');
 
-    const image = await fieldWrapper.screenshot();
+    await expectScreenshot(fieldWrapper);
 
-    expect(image).toMatchImageSnapshot();
-
-    await field.type('a long text to cause overflow');
+    await field.pressSequentially('a long text to cause overflow');
     await field.evaluate((el) => (el as HTMLInputElement).blur());
 
-    const withLongValue = await fieldWrapper.screenshot();
-
-    expect(withLongValue).toMatchImageSnapshot();
+    await expectScreenshot(fieldWrapper);
 });
 
 test('DateField - increased font size', async () => {
@@ -899,9 +781,7 @@ test('DateField - increased font size', async () => {
     await setRootFontSize(32);
 
     const fieldWrapper = await screen.findByTestId('date-field');
-    const image = await fieldWrapper.screenshot();
-
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(fieldWrapper);
 });
 
 test('CreditCardNumberField - increased font size', async () => {
@@ -913,9 +793,7 @@ test('CreditCardNumberField - increased font size', async () => {
     await setRootFontSize(32);
 
     const fieldWrapper = await screen.findByTestId('credit-card-number-field');
-    const image = await fieldWrapper.screenshot();
-
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(fieldWrapper);
 });
 
 test('CvvField - increased font size', async () => {
@@ -927,9 +805,7 @@ test('CvvField - increased font size', async () => {
     await setRootFontSize(32);
 
     const fieldWrapper = await screen.findByTestId('cvv-field');
-    const image = await fieldWrapper.screenshot();
-
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(fieldWrapper);
 });
 
 test('PinField- increased font size', async () => {
@@ -943,7 +819,7 @@ test('PinField- increased font size', async () => {
     const fieldGroup = await screen.findByTestId('pin-field');
 
     const firstDigitField = await within(fieldGroup).findByLabelText('Dígito 1 de 6');
-    await firstDigitField.type('1');
+    await firstDigitField.pressSequentially('1');
 
-    expect(await fieldGroup.screenshot()).toMatchImageSnapshot();
+    await expectScreenshot(fieldGroup);
 });

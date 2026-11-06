@@ -1,10 +1,9 @@
+import {test, expectScreenshot} from '../../test-utils/playwright';
 import {openStoryPage, screen} from '../../test-utils';
 
 const expectAiCardSnapshot = async () => {
     const element = await screen.findByTestId('ai-card');
-    const image = await element.screenshot();
-
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(element);
 };
 
 test('AiCard static text', async () => {

@@ -1,3 +1,4 @@
+import {test, expectScreenshot} from '../test-utils/playwright';
 import {openStoryPage} from '../test-utils';
 
 const TEST_CASES = [
@@ -11,11 +12,12 @@ const TEST_CASES = [
     {id: 'layout-responsive-layout--nested', device: 'DESKTOP', viewport: {width: 1512, height: 770}},
 ] as const;
 
-test.each(TEST_CASES)('ResponsiveLayout', async (testCase) => {
-    const page = await openStoryPage({
-        ...testCase,
-    });
+for (const testCase of TEST_CASES) {
+    test(`ResponsiveLayout (${JSON.stringify(testCase)})`, async () => {
+        const page = await openStoryPage({
+            ...testCase,
+        });
 
-    const image = await page.screenshot();
-    expect(image).toMatchImageSnapshot();
-});
+        await expectScreenshot(page);
+    });
+}

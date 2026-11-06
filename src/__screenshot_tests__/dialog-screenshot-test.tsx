@@ -1,31 +1,32 @@
+import {test, expectScreenshot} from '../test-utils/playwright';
 import {openStoryPage, screen} from '../test-utils';
 
-test.each`
-    device          | action
-    ${'MOBILE_IOS'} | ${'alert'}
-    ${'DESKTOP'}    | ${'alert'}
-    ${'MOBILE_IOS'} | ${'confirm'}
-    ${'DESKTOP'}    | ${'confirm'}
-    ${'MOBILE_IOS'} | ${'confirm destructive'}
-    ${'DESKTOP'}    | ${'confirm destructive'}
-    ${'MOBILE_IOS'} | ${'dialog'}
-    ${'DESKTOP'}    | ${'dialog'}
-`('Dialog - device: $device, action: $action', async ({device, action}) => {
-    const type = (action as string).split(' ')[0];
+for (const testCase of [
+    {device: 'MOBILE_IOS', action: 'alert'},
+    {device: 'DESKTOP', action: 'alert'},
+    {device: 'MOBILE_IOS', action: 'confirm'},
+    {device: 'DESKTOP', action: 'confirm'},
+    {device: 'MOBILE_IOS', action: 'confirm destructive'},
+    {device: 'DESKTOP', action: 'confirm destructive'},
+    {device: 'MOBILE_IOS', action: 'dialog'},
+    {device: 'DESKTOP', action: 'dialog'},
+] as const) {
+    const {device, action} = testCase;
+    test(`Dialog - device: ${testCase.device}, action: ${testCase.action}`, async () => {
+        const type = (action as string).split(' ')[0];
 
-    const page = await openStoryPage({
-        id: `components-modals--${type}`,
-        device,
-        args: {destructive: action.includes('destructive')},
+        const page = await openStoryPage({
+            id: `components-modals--${type}`,
+            device,
+            args: {destructive: action.includes('destructive')},
+        });
+
+        await (await screen.findByRole('button', {name: 'Open'})).click();
+
+        await screen.findByRole('dialog');
+        await expectScreenshot(page, {fullPage: true});
     });
-
-    await (await screen.findByRole('button', {name: 'Open'})).click();
-
-    const image = await page.screenshot({fullPage: true});
-
-    await screen.findByRole('dialog');
-    expect(image).toMatchImageSnapshot();
-});
+}
 
 test('Select options are correctly positioned inside a dialog', async () => {
     const page = await openStoryPage({
@@ -35,10 +36,9 @@ test('Select options are correctly positioned inside a dialog', async () => {
 
     await (await screen.findByRole('button', {name: 'Open'})).click();
     await screen.findByRole('dialog');
-    await (await screen.findByLabelText('Select')).click();
+    await (await screen.findByRole('button', {name: 'Select Orange'})).click();
 
-    const image = await page.screenshot({fullPage: true});
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(page, {...{fullPage: true}});
 });
 
 test('Dialog optional elements are not displayed if not provided', async () => {
@@ -60,6 +60,5 @@ test('Dialog optional elements are not displayed if not provided', async () => {
     await (await screen.findByRole('button', {name: 'Open'})).click();
     await screen.findByRole('dialog');
 
-    const image = await page.screenshot({fullPage: true});
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(page, {...{fullPage: true}});
 });

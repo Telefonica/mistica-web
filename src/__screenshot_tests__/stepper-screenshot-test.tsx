@@ -1,32 +1,36 @@
+import {test, expectScreenshot} from '../test-utils/playwright';
 import {openStoryPage, screen, setRootFontSize} from '../test-utils';
 
 import type {Device} from '../test-utils';
 
 const TESTABLE_DEVICES: Array<Device> = ['MOBILE_IOS', 'DESKTOP'];
 
-test.each(TESTABLE_DEVICES)('Stepper in %s', async (device) => {
-    await openStoryPage({
-        id: 'components-stepper--default',
-        device,
+for (const testCase of TESTABLE_DEVICES) {
+    const device = testCase;
+    test(`Stepper in ${testCase}`, async () => {
+        await openStoryPage({
+            id: 'components-stepper--default',
+            device,
+        });
+
+        const stepper = await screen.findByTestId('stepper');
+
+        await expectScreenshot(stepper);
     });
+}
 
-    const stepper = await screen.findByTestId('stepper');
+for (const testCase of TESTABLE_DEVICES) {
+    const device = testCase;
+    test(`Stepper with large fontSize in ${testCase}`, async () => {
+        await openStoryPage({
+            id: 'components-stepper--default',
+            device,
+        });
 
-    const image = await stepper.screenshot();
-    expect(image).toMatchImageSnapshot();
-});
+        await setRootFontSize(32);
 
-test.each(TESTABLE_DEVICES)('Stepper with large fontSize in %s', async (device) => {
-    await openStoryPage({
-        id: 'components-stepper--default',
-        device,
+        const stepper = await screen.findByTestId('stepper');
+
+        await expectScreenshot(stepper);
     });
-
-    await setRootFontSize(32);
-
-    const stepper = await screen.findByTestId('stepper');
-
-    const image = await stepper.screenshot();
-
-    expect(image).toMatchImageSnapshot();
-});
+}
