@@ -24,6 +24,7 @@ export default defineConfig({
             maxDiffPixels: 0,
             animations: 'allow',
             caret: 'initial',
+            scale: 'device',
         },
         toMatchSnapshot: {threshold: 0.01, maxDiffPixels: 0},
     },
