@@ -698,7 +698,7 @@ test('SidenavBar double panel moves to the parent of a child selected outside of
     mount,
     page,
 }) => {
-    await mount('sidenav-bar/Scenario61', {});
+    await mount('sidenav-bar/ExternalSelection');
     const getPanel = (name: string) => page.getByRole('list', {name, exact: true});
 
     await expect(getPanel('Projects')).toHaveCount(1);
@@ -708,9 +708,28 @@ test('SidenavBar double panel moves to the parent of a child selected outside of
 
     await expect(getPanel('Projects')).toHaveCount(0);
 
+    await expect(page.getByRole('button', {name: 'Documents', exact: true})).toHaveAttribute(
+        'aria-expanded',
+        'true'
+    );
     const panel = getPanel('Documents');
     await expect(panel).toHaveCount(1);
     await expect(panel.locator(page.getByRole('button', {name: 'Shared'}))).toHaveCount(1);
+});
+test('SidenavBar opens a closed double panel for a child selected outside the bar', async ({mount, page}) => {
+    await mount('sidenav-bar/ExternalSelection', {initialSelection: 'home'});
+    await expect(page.getByRole('list', {name: 'Documents', exact: true})).toHaveCount(0);
+
+    await page.getByRole('button', {name: 'Select from the app'}).click();
+
+    await expect(page.getByRole('button', {name: 'Documents', exact: true})).toHaveAttribute(
+        'aria-expanded',
+        'true'
+    );
+    await expect(page.getByRole('button', {name: 'Shared', exact: true})).toHaveAttribute(
+        'aria-current',
+        'page'
+    );
 });
 test('SidenavBar collapsed double panel keeps the tooltips of the other items while a column is open', async ({
     mount,
