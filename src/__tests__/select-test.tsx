@@ -95,3 +95,46 @@ test('select with default value', async () => {
     expect((screen.getByRole('option', {name: 'text2'}) as HTMLOptionElement).selected).toBe(false);
     expect((screen.getByRole('option', {name: 'text3'}) as HTMLOptionElement).selected).toBe(true);
 });
+
+test('ignores selection when an open desktop select becomes disabled', async () => {
+    // The unit test environment otherwise uses the native select.
+    const previous = process.env.SSR_TEST;
+    process.env.SSR_TEST = 'true';
+    try {
+        const onChangeValue = jest.fn();
+        const props = {
+            label: 'Fruit',
+            name: 'fruit',
+            options: [
+                {value: 'apple', text: 'Apple'},
+                {value: 'orange', text: 'Orange'},
+            ],
+            defaultValue: 'apple',
+            onChangeValue,
+        };
+        const theme = makeTheme();
+        const {rerender} = render(
+            <ThemeContextProvider theme={theme}>
+                <Select {...props} />
+            </ThemeContextProvider>
+        );
+
+        await userEvent.click(screen.getByRole('button'));
+        rerender(
+            <ThemeContextProvider theme={theme}>
+                <Select {...props} disabled />
+            </ThemeContextProvider>
+        );
+        expect(screen.getByLabelText('Fruit')).toBeDisabled();
+        await userEvent.click(screen.getByRole('option', {name: 'Orange'}));
+
+        expect(onChangeValue).not.toHaveBeenCalled();
+        expect(screen.getByRole('button')).toHaveTextContent('Apple');
+    } finally {
+        if (previous === undefined) {
+            delete process.env.SSR_TEST;
+        } else {
+            process.env.SSR_TEST = previous;
+        }
+    }
+});

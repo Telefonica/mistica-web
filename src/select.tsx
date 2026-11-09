@@ -188,6 +188,9 @@ const Select = ({
         // @ts-expect-error current is typed as read-only
         lastElementSelectionScrollTop.current = optionsMenuRef.current?.scrollTop;
         toggleOptions(false);
+        if (disabled) {
+            return;
+        }
         if (onChangeValue && typeof val === 'string') {
             onChangeValue(val);
         }
