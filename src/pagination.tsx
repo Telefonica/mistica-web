@@ -159,6 +159,11 @@ const getResponsivePaginationItems = ({
 
 const clamp = (value: number, min: number, max: number): number => Math.min(Math.max(value, min), max);
 
+const getNavigationAriaLabel = (visibleLabel: string, ariaLabel: string): string =>
+    ariaLabel.toLowerCase().includes(visibleLabel.toLowerCase())
+        ? ariaLabel
+        : `${visibleLabel}: ${ariaLabel}`;
+
 const PaginationLabel = ({children}: {children: React.ReactNode}): JSX.Element => {
     return (
         <Text3 as="span" medium color="currentColor" wordBreak={false}>
@@ -332,7 +337,7 @@ export const Pagination = ({
                         small
                         className={styles.navigationButtonLinkVariants[variant]}
                         disabled={disabled || isPrevDisabled}
-                        aria-label={resolvedPrevAriaLabel}
+                        aria-label={getNavigationAriaLabel(resolvedPrevLabel, resolvedPrevAriaLabel)}
                         onPress={() => goToPage(activePage - 1)}
                         bleedLeft
                         StartIcon={IconChevronLeftRegular}
@@ -359,7 +364,7 @@ export const Pagination = ({
                         small
                         className={styles.navigationButtonLinkVariants[variant]}
                         disabled={disabled || isNextDisabled}
-                        aria-label={resolvedNextAriaLabel}
+                        aria-label={getNavigationAriaLabel(resolvedNextLabel, resolvedNextAriaLabel)}
                         onPress={() => goToPage(activePage + 1)}
                         bleedRight
                         EndIcon={IconChevronRightRegular}
