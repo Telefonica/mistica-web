@@ -27,9 +27,9 @@ const getBorderStyle = (variant: NonDeprecatedVariant): React.CSSProperties => {
     const borderColor = {
         default: vars.colors.tooltipBorder,
         alternative: vars.colors.tooltipBorder,
-        brand: vars.colors.backgroundContainer,
-        negative: vars.colors.backgroundContainer,
-        media: vars.colors.backgroundContainer,
+        brand: vars.colors.popupBorder,
+        negative: vars.colors.popupBorder,
+        media: vars.colors.popupBorder,
     }[variant];
     return {border: `1px solid ${borderColor}`};
 };
