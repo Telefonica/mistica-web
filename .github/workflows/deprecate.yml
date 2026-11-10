@@ -1,0 +1,63 @@
+name: Deprecate
+on:
+    workflow_dispatch:
+        inputs:
+            version:
+                description: 'version to deprecate'
+                required: true
+            message:
+                description: 'deprecation message shown on install'
+                required: true
+                default: 'This version has a bug, please update to the latest version'
+
+permissions:
+    contents: read
+
+jobs:
+    release:
+        name: Deprecate
+        runs-on: ubuntu-latest
+        # Requires manual approval - protects NPM_PUBLISH_TOKEN
+        environment: production
+        steps:
+            - uses: actions/checkout@v6
+              with:
+                  token: ${{ secrets.GH_TOKEN_MISTICA }}
+                  persist-credentials: false
+
+            - name: Install dependencies
+              env:
+                  PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: 'true'
+              run: yarn install --immutable --immutable-cache
+
+            - name: 'Set npm token'
+              uses: './.github/actions/set-npm-token'
+              with:
+                  npm-token: ${{ secrets.NPM_PUBLISH_TOKEN }}
+
+            - name: Validate inputs
+              env:
+                  VERSION_INPUT: ${{ github.event.inputs.version }}
+                  MESSAGE_INPUT: ${{ github.event.inputs.message }}
+              run: |
+                  # Strict validation: semver format (x.y.z with optional -alpha.1, -beta.2, etc.)
+                  if ! echo "$VERSION_INPUT" | grep -qE '^[0-9]+\.[0-9]+\.[0-9]+(-[a-zA-Z0-9]+(\.[0-9]+)?)?$'; then
+                    echo "Error: Invalid version format. Must be semver (e.g., 1.2.3 or 1.2.3-alpha.1)"
+                    exit 1
+                  fi
+                  # An empty message undeprecates the version, which is not the purpose of this workflow
+                  if [ -z "$(echo "$MESSAGE_INPUT" | tr -d '[:space:]')" ]; then
+                    echo "Error: The deprecation message must not be empty"
+                    exit 1
+                  fi
+
+            # Unpublish fails once other packages depend on the version, deprecation always works.
+            # One release publishes both packages, so both need the same treatment here
+            - name: Deprecate npm package version
+              env:
+                  NPM_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
+                  VERSION_INPUT: ${{ github.event.inputs.version }}
+                  MESSAGE_INPUT: ${{ github.event.inputs.message }}
+              run: |
+                  npm deprecate "@telefonica/mistica@$VERSION_INPUT" "$MESSAGE_INPUT"
+                  npm deprecate "@telefonica/mistica-icons@$VERSION_INPUT" "$MESSAGE_INPUT"
