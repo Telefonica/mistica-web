@@ -27,7 +27,7 @@ yarn test
 
 On Linux, use `yarn playwright install --with-deps chromium` to install system dependencies too.
 
-Component tests live in `src/__component_tests__`. The runner starts a Vite gallery with real React components
+Component tests live in `src/__tests__`. The runner starts a Vite gallery with real React components
 and CSS. Each `*.story.tsx` module exports the scenarios used by the matching test file. Mount a scenario with
 `mount('button/Accessible', props)` and interact through semantic Playwright locators. The gallery wraps
 scenarios in `ThemeContextProvider` with `makeTheme()` by default. Scenarios that test the provider itself can
