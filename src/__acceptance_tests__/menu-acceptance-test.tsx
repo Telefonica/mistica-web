@@ -115,15 +115,23 @@ for (const testCase of placements.flatMap((placement) =>
     });
 }
 
-for (const testCase of [
-    {placement: 'top', horizontalPosition: 'center', verticalPosition: 'top', expectedPlacement: 'bottom'},
-    {placement: 'bottom', horizontalPosition: 'center', verticalPosition: 'bottom', expectedPlacement: 'top'},
-    {placement: 'left', horizontalPosition: 'left', verticalPosition: 'center', expectedPlacement: 'right'},
-    {placement: 'right', horizontalPosition: 'right', verticalPosition: 'center', expectedPlacement: 'left'},
-] as const) {
-    const {expectedPlacement, ...args} = testCase;
-    test(`Menu flips from ${testCase.placement} to ${testCase.expectedPlacement}`, async () => {
-        const {getBounds} = await openMenu({...args, alignment: 'middle'});
+// prettier-ignore
+const flipCases = [
+    // placement, horizontalPosition, verticalPosition, expectedPlacement
+    ['top',       'center',           'top',            'bottom'],
+    ['bottom',    'center',           'bottom',         'top'],
+    ['left',      'left',             'center',         'right'],
+    ['right',     'right',            'center',         'left'],
+] as const;
+
+for (const [placement, horizontalPosition, verticalPosition, expectedPlacement] of flipCases) {
+    test(`Menu flips from ${placement} to ${expectedPlacement}`, async () => {
+        const {getBounds} = await openMenu({
+            placement,
+            horizontalPosition,
+            verticalPosition,
+            alignment: 'middle',
+        });
         await waitFor(async () => {
             const {target, menu} = await getBounds();
             expectPlacement(expectedPlacement, target, menu);
