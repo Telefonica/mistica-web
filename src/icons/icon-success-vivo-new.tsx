@@ -7,6 +7,7 @@ type Props = {
     size?: number | string;
 };
 
+/** @deprecated This legacy Vivo icon is kept for backwards compatibility. */
 const IconSuccessVivoNew = ({size = 48}: Props): JSX.Element => {
     const {platformOverrides} = useTheme();
     const gradientId = React.useId();

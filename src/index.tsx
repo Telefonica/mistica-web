@@ -17,6 +17,8 @@ export {default as ButtonLayout} from './button-layout';
 export {default as Counter} from './counter';
 export {default as FixedFooterLayout} from './fixed-footer-layout';
 export {default as ButtonFixedFooterLayout} from './button-fixed-footer-layout';
+export {default as Message} from './message';
+export type {MessageProps} from './message';
 export {default as Snackbar} from './snackbar';
 export {useSnackbar} from './snackbar-context';
 export {Portal} from './portal';
@@ -168,7 +170,9 @@ export {default as IconInfo} from './icons/icon-info';
 export {default as IconChevron} from './icons/icon-chevron';
 export {default as IconError} from './icons/icon-error';
 export {default as IconSuccess} from './icons/icon-success';
+/** @deprecated This legacy Vivo icon is kept for backwards compatibility. */
 export {default as IconSuccessVivo} from './icons/icon-success-vivo';
+/** @deprecated This legacy Vivo icon is kept for backwards compatibility. */
 export {default as IconSuccessVivoNew} from './icons/icon-success-vivo-new';
 
 export {SkeletonCircle, SkeletonRow, SkeletonLine, SkeletonRectangle, SkeletonText} from './skeletons';

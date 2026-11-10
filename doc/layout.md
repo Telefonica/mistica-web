@@ -329,6 +329,36 @@ sections or card-like containers without card semantics.
 </Boxed>
 ```
 
+Use `borderRadius` (number in pixels, or any CSS value) to override the skin radius, for example to follow the
+inner/outer radius rule in nested containers (`outer = inner + padding`):
+
+```tsx
+<Boxed borderRadius={24}>
+  <Box padding={16}>
+    <Boxed borderRadius={8} variant="alternative">
+      <Box padding={16}>
+        <Text2 regular>Nested content</Text2>
+      </Box>
+    </Boxed>
+  </Box>
+</Boxed>
+```
+
+Skin tokens are CSS variables, so combine them with `calc()` instead of `+`:
+
+```tsx
+<Boxed borderRadius={`calc(${skinVars.borderRadii.container} + 16px)`}>...</Boxed>
+```
+
+To compute the radius in JS, read it from the theme:
+
+```tsx
+const {borderRadii} = useTheme();
+const containerRadius = parseInt(borderRadii.container, 10);
+
+<Boxed borderRadius={containerRadius + 16}>...</Boxed>;
+```
+
 ## Overlay
 
 A full-screen fixed overlay that covers the viewport. Used internally by dialogs, drawers, and sheets, but
@@ -436,7 +466,7 @@ A 12-column grid with predefined templates for common page layouts. Must be used
 
 Available templates:
 
-- Split layouts (use `left`/`right` props): `'6+6'`, `'8+4'`, `'5+4'`, `'4+6'`, `'3+9'`
+- Split layouts (use `left`/`right` props): `'6+6'`, `'8+4'`, `'7+5'`, `'5+4'`, `'4+6'`, `'3+9'`
 - Centered single-column layouts (use `children`): `'10'`, `'8'`
 - No template (raw 12-column grid, use `children`)
 

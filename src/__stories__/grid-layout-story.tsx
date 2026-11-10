@@ -87,6 +87,22 @@ EightAndFour.storyName = 'Template 8+4';
 EightAndFour.args = args;
 EightAndFour.argTypes = argTypes;
 
+export const SevenAndFive: StoryComponent<Args> = ({collapseBreakpoint, verticalSpace}) => (
+    <ResponsiveLayout>
+        <GridLayout
+            collapseBreakpoint={collapseBreakpoint}
+            verticalSpace={verticalSpace}
+            template="7+5"
+            left={<Placeholder />}
+            right={<Placeholder />}
+        />
+    </ResponsiveLayout>
+);
+
+SevenAndFive.storyName = 'Template 7+5';
+SevenAndFive.args = args;
+SevenAndFive.argTypes = argTypes;
+
 export const FourAndSix: StoryComponent<Args> = ({collapseBreakpoint, verticalSpace}) => (
     <ResponsiveLayout>
         <GridLayout

@@ -5,11 +5,13 @@ import {Text, Text1, getTextSizes} from './text';
 import {useElementDimensions, useTheme} from './hooks';
 import * as tokens from './text-tokens';
 import IconSuccess from './icons/icon-success';
+import IconStepperSuccessVivo from './icons/icon-stepper-success-vivo';
 import * as styles from './stepper.css';
 import {pxToRem, applyCssVars} from './utils/css';
 import {vars} from './skins/skin-contract.css';
 import {getPrefixedDataAttributes} from './utils/dom';
 import ScreenReaderOnly from './screen-reader-only';
+import {VIVO_SKIN, VIVO_EVOLUTION_SKIN} from './skins/constants';
 
 import type {DataAttributes} from './utils/types';
 
@@ -32,7 +34,7 @@ const Stepper = ({
     'aria-describedby': ariaDescribedby,
     dataAttributes,
 }: StepperProps): JSX.Element => {
-    const {texts, t, textPresets} = useTheme();
+    const {texts, t, textPresets, skinName} = useTheme();
     const {height, ref} = useElementDimensions();
     const textContainerHeight = height;
 
@@ -87,11 +89,19 @@ const Stepper = ({
                                     })}
                                     aria-hidden="true"
                                 >
-                                    <IconSuccess
-                                        color={vars.colors.controlActivated}
-                                        size="100%"
-                                        skipAnimation={!hasAnimation || isBack}
-                                    />
+                                    {skinName === VIVO_SKIN || skinName === VIVO_EVOLUTION_SKIN ? (
+                                        <IconStepperSuccessVivo
+                                            color={vars.colors.controlActivated}
+                                            size="100%"
+                                            skipAnimation={!hasAnimation || isBack}
+                                        />
+                                    ) : (
+                                        <IconSuccess
+                                            color={vars.colors.controlActivated}
+                                            size="100%"
+                                            skipAnimation={!hasAnimation || isBack}
+                                        />
+                                    )}
                                 </div>
                             ) : (
                                 <div

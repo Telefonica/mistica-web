@@ -85,6 +85,9 @@ export const previewBorder = style([
         border: '1px solid',
         borderColor: skinVars.colors.divider,
         borderRadius: 12,
+        // paint the area outside the rounded corners white, so the content does not show through them.
+        // The background is always clipped to the border radius, so an outer shadow is needed instead
+        boxShadow: '0 0 0 12px #fff',
         pointerEvents: 'none',
         zIndex: 3,
     },

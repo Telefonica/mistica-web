@@ -136,6 +136,16 @@
     line-height: var(--mistica-line-height-headerPretitle);
     font-weight: var(--mistica-font-weight-headerPretitle);
 }
+.mistica-text-feedbackScreenTitle {
+    font-size: var(--mistica-font-size-feedbackScreenTitle);
+    line-height: var(--mistica-line-height-feedbackScreenTitle);
+    font-weight: var(--mistica-font-weight-feedbackScreenTitle);
+}
+.mistica-text-feedbackScreenDescription {
+    font-size: var(--mistica-font-size-feedbackScreenDescription);
+    line-height: var(--mistica-line-height-feedbackScreenDescription);
+    font-weight: var(--mistica-font-weight-feedbackScreenDescription);
+}
 .mistica-text-cardPretitleSnap {
     font-size: var(--mistica-font-size-cardPretitleSnap);
     line-height: var(--mistica-line-height-cardPretitleSnap);

@@ -3,6 +3,7 @@ import * as React from 'react';
 import {useTheme} from '../hooks';
 import {O2_SKIN, VIVO_SKIN, VIVO_EVOLUTION_SKIN} from '../skins/constants';
 import {vars} from '../skins/skin-contract.css';
+import {useThemeVariant} from '../theme-variant-context';
 
 type Props = {
     size?: number | string;
@@ -34,6 +35,25 @@ const IconInfoVivo = ({size = 48}: Props): JSX.Element => {
     );
 };
 
+const IconInfoVivoEvolution = ({size = 48}: Props): JSX.Element => {
+    const themeVariant = useThemeVariant();
+    const isAlternative = themeVariant === 'alternative';
+
+    return (
+        <svg role="presentation" width={size} height={size} viewBox="0 0 48 48" fill="none">
+            <path
+                d="M0 18C0 8.05888 8.05888 0 18 0H30C39.9411 0 48 8.05888 48 18V30C48 39.9411 39.9411 48 30 48H18C8.05888 48 0 39.9411 0 30V18Z"
+                fill={isAlternative ? vars.colors.neutralLowAlternative : vars.colors.neutralLow}
+            />
+            <g fill={vars.colors.neutralHigh}>
+                <path d="M24 21.0453C24.5178 21.0453 24.9375 21.465 24.9375 21.9828V29.8075C24.9375 30.3253 24.5178 30.745 24 30.745C23.4822 30.745 23.0625 30.3253 23.0625 29.8075V21.9828C23.0625 21.465 23.4822 21.0453 24 21.0453Z" />
+                <path d="M24 20.0675C24.5178 20.0675 24.9375 19.6478 24.9375 19.13C24.9375 18.6122 24.5178 18.1925 24 18.1925C23.4822 18.1925 23.0625 18.6122 23.0625 19.13C23.0625 19.6478 23.4822 20.0675 24 20.0675Z" />
+                <path d="M11.5 21.8125C11.5 16.1171 16.1171 11.5 21.8125 11.5H26.1875C31.8829 11.5 36.5 16.1171 36.5 21.8125V26.1875C36.5 31.8829 31.8829 36.5 26.1875 36.5H21.8125C16.1171 36.5 11.5 31.8829 11.5 26.1875V21.8125ZM21.8125 13.375C17.1526 13.375 13.375 17.1526 13.375 21.8125V26.1875C13.375 30.8474 17.1526 34.625 21.8125 34.625H26.1875C30.8474 34.625 34.625 30.8474 34.625 26.1875V21.8125C34.625 17.1526 30.8474 13.375 26.1875 13.375H21.8125Z" />
+            </g>
+        </svg>
+    );
+};
+
 const IconInfoDefault = ({size = 48}: Props): JSX.Element => {
     return (
         <svg role="presentation" width={size} height={size} viewBox="0 0 64 64">
@@ -53,8 +73,9 @@ const IconInfo = (props: Props): JSX.Element => {
         case O2_SKIN:
             return <IconInfoO2 {...props} />;
         case VIVO_SKIN:
-        case VIVO_EVOLUTION_SKIN:
             return <IconInfoVivo {...props} />;
+        case VIVO_EVOLUTION_SKIN:
+            return <IconInfoVivoEvolution {...props} />;
         default:
             return <IconInfoDefault {...props} />;
     }

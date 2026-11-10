@@ -2,7 +2,6 @@
 import * as React from 'react';
 import {useTheme, useScreenSize} from './hooks';
 import ButtonFixedFooterLayout from './button-fixed-footer-layout';
-import {VIVO_EVOLUTION_SKIN, VIVO_SKIN} from './skins/constants';
 import {useSetOverscrollColor} from './overscroll-color-context';
 import IconSuccess from './icons/icon-success';
 import IconError from './icons/icon-error';
@@ -12,7 +11,7 @@ import {
     requestVibration as requestVibrationNative,
 } from '@tef-novum/webview-bridge';
 import {isRunningAcceptanceTest} from './utils/platform';
-import {Text6, Text2, Text3} from './text';
+import {getTextSizesWithWeight, Text, Text2} from './text';
 import Box from './box';
 import {InternalBoxed} from './boxed';
 import ResponsiveLayout, {ResetResponsiveLayout} from './responsive-layout';
@@ -21,7 +20,7 @@ import classnames from 'classnames';
 import ButtonGroup from './button-group';
 import {vars} from './skins/skin-contract.css';
 import * as styles from './feedback.css';
-import IconSuccessVivoNew from './icons/icon-success-vivo-new';
+import {ThemeVariant, useThemeVariant} from './theme-variant-context';
 
 import type {Theme} from './theme';
 import type {DataAttributes, IconProps} from './utils/types';
@@ -34,6 +33,8 @@ const checkHasButtons = ({primaryButton, secondaryButton}: FeedbackButtonsProps)
     !!primaryButton || !!secondaryButton;
 
 type HapticFeedback = 'error' | 'success';
+
+const successFeedbackAsset = <IconSuccess size="100%" />;
 
 const requestVibration = (type: HapticFeedback) => {
     if (isWebViewBridgeAvailable()) {
@@ -60,7 +61,11 @@ const useHapticFeedback = (type?: HapticFeedback) => {
 
 const renderFeedbackBody = (
     {asset, title, description, slot}: Pick<FeedbackScreenProps, 'asset' | 'title' | 'description' | 'slot'>,
-    animateText: boolean
+    animateText: boolean,
+    {
+        feedbackScreenTitle: titlePreset,
+        feedbackScreenDescription: descriptionPreset,
+    }: Pick<Theme['textPresets'], 'feedbackScreenDescription' | 'feedbackScreenTitle'>
 ) => {
     const normalizedDescription =
         description && Array.isArray(description) ? (
@@ -73,13 +78,15 @@ const renderFeedbackBody = (
             description
         );
     return (
-        <Stack space={24}>
+        <Stack space={40}>
             <div className={styles.assetContainer} data-testid="icon">
                 {asset}
             </div>
             <Stack space={16} className={classnames(styles.feedbackData)}>
                 <div className={classnames(animateText && styles.feedbackTextAppearFast)} data-testid="title">
-                    <Text6 as="h1">{title}</Text6>
+                    <Text {...getTextSizesWithWeight({textPreset: titlePreset})} as="h1">
+                        {title}
+                    </Text>
                 </div>
 
                 {normalizedDescription && (
@@ -88,9 +95,14 @@ const renderFeedbackBody = (
                         data-testid="description"
                     >
                         {normalizedDescription && (
-                            <Text3 regular color={vars.colors.textSecondary}>
+                            <Text
+                                {...getTextSizesWithWeight({
+                                    textPreset: descriptionPreset,
+                                })}
+                                color={vars.colors.textSecondary}
+                            >
                                 {normalizedDescription}
-                            </Text3>
+                            </Text>
                         )}
                     </div>
                 )}
@@ -209,14 +221,15 @@ export const FeedbackScreen = ({
     dataAttributes,
 }: FeedbackScreenProps): JSX.Element => {
     useHapticFeedback(hapticFeedback);
-    const {platformOverrides, isDarkMode} = useTheme();
+    const {platformOverrides, isDarkMode, textPresets} = useTheme();
     const {isTabletOrSmaller} = useScreenSize();
 
     const hasButtons = checkHasButtons({primaryButton, secondaryButton, link});
 
     const feedbackBody = renderFeedbackBody(
         {asset, title, description, slot},
-        animateText && areAnimationsSupported(platformOverrides)
+        animateText && areAnimationsSupported(platformOverrides),
+        textPresets
     );
 
     if (!isTabletOrSmaller && unstable_inlineInDesktop) {
@@ -281,7 +294,7 @@ export const FeedbackScreen = ({
 
 export const SuccessFeedbackScreen = ({dataAttributes, ...props}: AssetFeedbackProps): JSX.Element => {
     const {isTabletOrSmaller} = useScreenSize();
-    const {skinName, themeVariants} = useTheme();
+    const {themeVariants} = useTheme();
 
     return (
         <FeedbackScreen
@@ -293,13 +306,7 @@ export const SuccessFeedbackScreen = ({dataAttributes, ...props}: AssetFeedbackP
                     : 'default'
             }
             hapticFeedback="success"
-            asset={
-                skinName === VIVO_SKIN || skinName === VIVO_EVOLUTION_SKIN ? (
-                    <IconSuccessVivoNew size="100%" />
-                ) : (
-                    <IconSuccess size="100%" />
-                )
-            }
+            asset={successFeedbackAsset}
             animateText
             imageUrl={props.imageUrl}
             imageFit={props.imageFit}
@@ -353,13 +360,19 @@ export const InfoFeedbackScreen = ({
     Icon = IconInfo,
     ...props
 }: InfoFeedbackScreenProps): JSX.Element => {
+    const themeVariant = useThemeVariant();
+
     return (
         <FeedbackScreen
             dataAttributes={{
                 testid: 'InfoFeedbackScreen',
                 ...dataAttributes,
             }}
-            asset={<Icon size="100%" color={vars.colors.brand} />}
+            asset={
+                <ThemeVariant variant={themeVariant}>
+                    <Icon size="100%" color={vars.colors.brand} />
+                </ThemeVariant>
+            }
             {...props}
         />
     );
@@ -377,17 +390,11 @@ export const SuccessFeedback = ({
     dataAttributes,
 }: AssetFeedbackProps): JSX.Element => {
     useHapticFeedback('success');
-    const {skinName, platformOverrides, themeVariants} = useTheme();
-
-    const asset =
-        skinName === VIVO_SKIN || skinName === VIVO_EVOLUTION_SKIN ? (
-            <IconSuccessVivoNew size="100%" />
-        ) : (
-            <IconSuccess size="100%" />
-        );
+    const {platformOverrides, themeVariants, textPresets} = useTheme();
     const feedbackBody = renderFeedbackBody(
-        {asset, title, description, slot},
-        areAnimationsSupported(platformOverrides)
+        {asset: successFeedbackAsset, title, description, slot},
+        areAnimationsSupported(platformOverrides),
+        textPresets
     );
     const inlineFeedbackBody = renderInlineFeedbackBody(feedbackBody, {
         primaryButton,

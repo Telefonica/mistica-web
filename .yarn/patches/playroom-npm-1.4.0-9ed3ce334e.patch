@@ -2,10 +2,9 @@ diff --git a/dist/app/assets/Preview.css.ts.vanilla-CarZ0KmT.css b/dist/app/asse
 index c31e2dfa13c906d125a9f91f190d2e67305f3985..8d5efb8bc777cb0eec5f8d8801c8c4845ed5f05f 100644
 --- a/dist/app/assets/Preview.css.ts.vanilla-CarZ0KmT.css
 +++ b/dist/app/assets/Preview.css.ts.vanilla-CarZ0KmT.css
-@@ -1,5 +1,5 @@
+@@ -1,5 +1,4 @@
  .svaajg3 {
 -  border: 1px solid var(--_1oi8mvos);
-+  border-radius: 12px;
  }
  .svaajg5 {
    background-color: var(--_1oi8mvoq);
