@@ -8,7 +8,7 @@ import * as testStyles from './styles';
 import '../../.storybook/css/main.css';
 import '../../.storybook/css/movistar-font.css';
 
-const stories = import.meta.glob('../../src/__component_tests__/*.story.tsx');
+const stories = import.meta.glob('../../src/__tests__/*.story.tsx');
 const element = document.getElementById('root');
 if (!element) {
     throw new Error('Component gallery root was not found');
@@ -25,7 +25,7 @@ Object.assign(window, {misticaTestStyles: testStyles});
 
 gallery.mount = async ({story, props}) => {
     const [file, name] = story.split('/');
-    const load = stories[`../../src/__component_tests__/${file}.story.tsx`];
+    const load = stories[`../../src/__tests__/${file}.story.tsx`];
     if (!load) {
         throw new Error(`Unknown component story: ${story}`);
     }
