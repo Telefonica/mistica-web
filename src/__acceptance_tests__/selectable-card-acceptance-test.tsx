@@ -13,9 +13,8 @@ const getOutline = async (index = 0) => {
     });
 };
 
-for (const testCase of ['checkbox', 'switch', 'radio']) {
-    const control = testCase;
-    test(`outline follows the ${testCase} prop`, async () => {
+for (const control of ['checkbox', 'switch', 'radio']) {
+    test(`card outline reflects selection through the ${control} control`, async () => {
         const page = await openStoryPage({
             id: 'components-cards-selection--selection',
             device: 'DESKTOP',
