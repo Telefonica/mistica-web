@@ -17,6 +17,7 @@ jobs:
     release:
         name: Deprecate
         runs-on: ubuntu-latest
+        timeout-minutes: 15
         # Requires manual approval - protects NPM_PUBLISH_TOKEN
         environment: production
         steps:
@@ -51,13 +52,84 @@ jobs:
                     exit 1
                   fi
 
+            # mistica-icons exists only since 18.0.0-beta.1, so older versions skip it. Any registry error
+            # other than a 404 stops the run before a change, as it could hide a version that exists
+            - name: Find the packages that have the version
+              id: packages
+              env:
+                  VERSION_INPUT: ${{ github.event.inputs.version }}
+              run: |
+                  packages=""
+                  for package in @telefonica/mistica @telefonica/mistica-icons; do
+                    if output=$(npm view "$package@$VERSION_INPUT" version 2>&1); then
+                      packages="$packages $package"
+                    elif echo "$output" | grep -q "E404"; then
+                      echo "$package@$VERSION_INPUT does not exist in the npm registry, skipped"
+                      echo "- ⏭️ \`$package@$VERSION_INPUT\` does not exist, skipped" >> "$GITHUB_STEP_SUMMARY"
+                    else
+                      echo "$output"
+                      echo "Error: Could not check $package@$VERSION_INPUT in the npm registry"
+                      exit 1
+                    fi
+                  done
+                  if [[ " $packages " != *" @telefonica/mistica "* ]]; then
+                    echo "Error: @telefonica/mistica@$VERSION_INPUT does not exist in the npm registry"
+                    exit 1
+                  fi
+                  echo "list=$packages" >> "$GITHUB_OUTPUT"
+
             # Unpublish fails once other packages depend on the version, deprecation always works.
-            # One release publishes both packages, so both need the same treatment here
+            # One release publishes both packages, so they must end in the same state: if one package
+            # fails, the packages already deprecated get back their previous deprecation message
             - name: Deprecate npm package version
               env:
                   NPM_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
                   VERSION_INPUT: ${{ github.event.inputs.version }}
                   MESSAGE_INPUT: ${{ github.event.inputs.message }}
+                  PACKAGES: ${{ steps.packages.outputs.list }}
               run: |
-                  npm deprecate "@telefonica/mistica@$VERSION_INPUT" "$MESSAGE_INPUT"
-                  npm deprecate "@telefonica/mistica-icons@$VERSION_INPUT" "$MESSAGE_INPUT"
+                  set_deprecation() {
+                    for attempt in 1 2 3; do
+                      if npm deprecate "$1@$VERSION_INPUT" "$2"; then
+                        return 0
+                      fi
+                      echo "Attempt $attempt to update the deprecation of $1@$VERSION_INPUT failed"
+                      sleep $((attempt * 10))
+                    done
+                    return 1
+                  }
+
+                  # Read before any change, so a failed read stops the run with nothing to roll back.
+                  # An empty previous message makes the rollback undeprecate the version
+                  declare -A previous
+                  for package in $PACKAGES; do
+                    previous[$package]=$(npm view "$package@$VERSION_INPUT" deprecated)
+                  done
+
+                  deprecated=()
+                  for package in $PACKAGES; do
+                    if set_deprecation "$package" "$MESSAGE_INPUT"; then
+                      deprecated+=("$package")
+                      continue
+                    fi
+                    echo "- ❌ \`$package@$VERSION_INPUT\` NOT deprecated" >> "$GITHUB_STEP_SUMMARY"
+                    echo "Error: Deprecation failed for $package@$VERSION_INPUT, rolling back"
+
+                    rollbackFailed=false
+                    for deprecatedPackage in "${deprecated[@]}"; do
+                      if set_deprecation "$deprecatedPackage" "${previous[$deprecatedPackage]}"; then
+                        echo "- ↩️ \`$deprecatedPackage@$VERSION_INPUT\` rolled back to its previous state" >> "$GITHUB_STEP_SUMMARY"
+                      else
+                        echo "- ⚠️ \`$deprecatedPackage@$VERSION_INPUT\` rollback FAILED, it stays deprecated" >> "$GITHUB_STEP_SUMMARY"
+                        rollbackFailed=true
+                      fi
+                    done
+                    if [ "$rollbackFailed" = true ]; then
+                      echo "Error: Rollback failed. Run this workflow again with the same inputs to align the packages"
+                    fi
+                    exit 1
+                  done
+
+                  for package in "${deprecated[@]}"; do
+                    echo "- ✅ \`$package@$VERSION_INPUT\` deprecated" >> "$GITHUB_STEP_SUMMARY"
+                  done
