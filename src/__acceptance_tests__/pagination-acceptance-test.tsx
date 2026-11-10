@@ -138,15 +138,15 @@ for (const testCase of [
 
         const expectAccessiblePages = async (items: Array<string>) => {
             const buttons = await within(list).findAllByRole('button');
-            expect(await Promise.all(buttons.map((button) => button.getAttribute('aria-label')))).toEqual(
-                items
-                    .filter((item) => item !== '...')
-                    .map((item) =>
-                        Number(item) === currentPage
-                            ? `Página ${item}, página actual`
-                            : `Ir a la página ${item}`
-                    )
-            );
+            const expectedNames = items
+                .filter((item) => item !== '...')
+                .map((item) =>
+                    Number(item) === currentPage ? `Página ${item}, página actual` : `Ir a la página ${item}`
+                );
+            expect(buttons).toHaveLength(expectedNames.length);
+            for (const [index, name] of expectedNames.entries()) {
+                await expect(buttons[index]).toHaveAccessibleName(name);
+            }
             expect(
                 await (
                     await within(list).findByRole('button', {name: `Página ${currentPage}, página actual`})
