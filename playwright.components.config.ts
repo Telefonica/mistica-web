@@ -1,7 +1,7 @@
 import {defineConfig} from '@playwright/test';
 
 export default defineConfig({
-    testDir: './src/__component_tests__',
+    testDir: './src/__tests__',
     testMatch: '*-test.tsx',
     outputDir: './reports/playwright-components',
     timeout: 40000,
