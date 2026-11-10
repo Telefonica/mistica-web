@@ -300,3 +300,18 @@ test('MainNavigationBar large with expanded right slot', async () => {
 
     expect(image).toMatchImageSnapshot();
 });
+
+test.each([true, false])(
+    'MainNavigationBar desktop menu open in dark mode. large menu = %s',
+    async (large) => {
+        const page = await openStoryPage({
+            id: 'components-navigation-bars-mainnavigationbar--default',
+            device: 'DESKTOP',
+            args: {wide: true, desktopLargeMenu: large, menu: 'default'},
+            isDarkMode: true,
+        });
+
+        await page.click(await screen.findByRole('button', {name: 'Start'}));
+        expect(await page.screenshot()).toMatchImageSnapshot();
+    }
+);

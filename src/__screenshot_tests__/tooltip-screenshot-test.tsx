@@ -184,3 +184,17 @@ test.each(['top', 'left'])('Tooltip - small content with Vivo corners in %s', as
     await (await screen.findByRole('button', {name: 'Tooltip target'})).click();
     expect(await page.screenshot()).toMatchImageSnapshot();
 });
+
+test.each(['default', 'brand'])('Tooltip - dark mode. variantOutside = %s', async (variantOutside) => {
+    const page = await openStoryPage({
+        id: 'components-tooltip--default',
+        device: 'MOBILE_IOS',
+        args: {variantOutside},
+        isDarkMode: true,
+    });
+
+    await page.click(await screen.findByTestId('target'));
+
+    const image = await page.screenshot();
+    expect(image).toMatchImageSnapshot();
+});
