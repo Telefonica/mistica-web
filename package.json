@@ -69,7 +69,7 @@
     "devDependencies": {
         "@actions/core": "^1.10.0",
         "@actions/github": "^5.0.0",
-        "@axe-core/playwright": "4.14.0",
+        "@axe-core/playwright": "4.7.2",
         "@azure/storage-blob": "^12.9.0",
         "@playwright/test": "1.64.1",
         "@semantic-release/changelog": "^6.0.1",
@@ -218,7 +218,8 @@
         "@types/react-dom": "19.2.3",
         "@testing-library/dom": "^8.19.1",
         "lottie-react@^2.4.0": "patch:lottie-react@npm%3A2.4.0#./.yarn/patches/lottie-react-npm-2.4.0-d4d95c55aa.patch",
-        "playroom@^1.4.0": "patch:playroom@npm%3A1.4.0#./.yarn/patches/playroom-npm-1.4.0-9ed3ce334e.patch"
+        "playroom@^1.4.0": "patch:playroom@npm%3A1.4.0#./.yarn/patches/playroom-npm-1.4.0-9ed3ce334e.patch",
+        "@axe-core/playwright/axe-core": "4.7.2"
     },
     "packageManager": "yarn@3.6.1",
     "workspaces": [

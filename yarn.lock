@@ -65,14 +65,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@axe-core/playwright@npm:4.14.0":
-  version: 4.14.0
-  resolution: "@axe-core/playwright@npm:4.14.0"
+"@axe-core/playwright@npm:4.7.2":
+  version: 4.7.2
+  resolution: "@axe-core/playwright@npm:4.7.2"
   dependencies:
-    axe-core: ~4.14.0
+    axe-core: ^4.7.0
   peerDependencies:
     playwright-core: ">= 1.0.0"
-  checksum: 7ef2f7a8697b9eb192848cecf7f4342442eb04bdd50366a11017e1cd18d4563f576e8cc7f3e5257e0fe588ac50919d8189baea633046f9e892043cdbb1ba0f38
+  checksum: 99606e6a215418e48dad097d8e0c76ffc2813137f2ab4ddbba97189fcc255881669656c7ab9135dc4af3786a504f823a144cc9a29bf4aa0e990c06e7e264abfd
   languageName: node
   linkType: hard
 
@@ -4473,7 +4473,7 @@ __metadata:
   dependencies:
     "@actions/core": ^1.10.0
     "@actions/github": ^5.0.0
-    "@axe-core/playwright": 4.14.0
+    "@axe-core/playwright": 4.7.2
     "@azure/storage-blob": ^12.9.0
     "@figma/code-connect": ^1.4.8
     "@juggle/resize-observer": ^3.3.1
@@ -6730,17 +6730,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"axe-core@npm:4.7.2":
+  version: 4.7.2
+  resolution: "axe-core@npm:4.7.2"
+  checksum: 5d86fa0f45213b0e54cbb5d713ce885c4a8fe3a72b92dd915a47aa396d6fd149c4a87fec53aa978511f6d941402256cfeb26f2db35129e370f25a453c688655a
+  languageName: node
+  linkType: hard
+
 "axe-core@npm:=4.7.0":
   version: 4.7.0
   resolution: "axe-core@npm:4.7.0"
   checksum: f086bcab42be1761ba2b0b127dec350087f4c3a853bba8dd58f69d898cefaac31a1561da23146f6f3c07954c76171d1f2ce460e555e052d2b02cd79af628fa4a
-  languageName: node
-  linkType: hard
-
-"axe-core@npm:~4.14.0":
-  version: 4.14.0
-  resolution: "axe-core@npm:4.14.0"
-  checksum: dd169d7970c4d97aa64fa8618afef278d30a6d4dbd33d50790e36ffbf1b1d2f7b3eb0f9704871da3807c438786a260d1b98367204d746c4b92c3232c3a561ef9
   languageName: node
   linkType: hard
 
