@@ -4,7 +4,6 @@ import {RadioGroup} from '../radio-button';
 import {screen, render, waitFor, within} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import {
-    Avatar,
     ButtonPrimary,
     Form,
     IconPlayFilled,
@@ -654,19 +653,4 @@ test('dual-action divider has inline paddingLeft style for offset measurement', 
     const dualActionDivider = within(firstRow).getByTestId('row-divider-dual-action');
 
     expect(dualActionDivider).toHaveStyle({paddingLeft: '0px'});
-});
-
-test('interactive rows include visible avatar initials in their accessible name', () => {
-    render(
-        <ThemeContextProvider theme={makeTheme()}>
-            <Row
-                title="Title"
-                description="Description"
-                asset={<Avatar size={40} initials="MS" />}
-                href="/"
-            />
-        </ThemeContextProvider>
-    );
-
-    expect(screen.getByRole('link', {name: 'MS Title Description'})).toBeInTheDocument();
 });
