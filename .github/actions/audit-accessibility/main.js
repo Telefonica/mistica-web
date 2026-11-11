@@ -73,6 +73,7 @@ const audit = async (browser, url, disabledRules = []) => {
     const context = await browser.newContext();
     try {
         const page = await context.newPage();
+        // Preserve the user-agent marker Mistica uses to detect the test environment.
         await page.addInitScript(() => {
             const userAgent = navigator.userAgent;
             Object.defineProperty(navigator, 'userAgent', {get: () => `${userAgent} acceptance-test`});
