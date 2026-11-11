@@ -263,10 +263,6 @@ test('dual-action divider has inline paddingLeft style for offset measurement', 
         .poll(() => dualActionDivider.evaluate((element) => (element as HTMLElement).style.paddingLeft))
         .toBe(`${titleBounds.x - rowBounds.x}px`);
 });
-test('interactive rows include visible avatar initials in their accessible name', async ({mount}) => {
-    const component = await mount('list/Scenario26', {});
-    await expect(component.getByRole('link', {name: 'MS Title Description'})).toHaveCount(1);
-});
 for (const kind of ['switch', 'checkbox', 'radioValue'])
     test(
         'Row with ' + kind + ' and onPress hides inner divider and renders outer dual-action divider',

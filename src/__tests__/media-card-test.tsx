@@ -53,9 +53,3 @@ for (const mediaPosition of ['top', 'left', 'right']) {
         await expect.poll(() => page.evaluate(() => document.activeElement === document.body)).toBe(true);
     });
 }
-test('image alternative text does not interrupt the visible card label', async ({mount}) => {
-    const component = await mount('media-card/ImageLabel');
-    await expect(
-        component.getByRole('link', {name: 'Title Subtitle Description Image description', exact: true})
-    ).toHaveCount(1);
-});

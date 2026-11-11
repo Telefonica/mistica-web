@@ -630,21 +630,6 @@ export const Scenario83 = ({step = 0}: {step?: number}): JSX.Element => {
 export const Scenario84 = ({step = 0}: {step?: number}): JSX.Element => {
     return [renderKeyboardSidenav()][step];
 };
-export const Scenario85 = ({step = 0}: {step?: number}): JSX.Element => {
-    return [
-        renderSidenav({
-            entries: [
-                {
-                    id: 'projects',
-                    label: 'Projects',
-                    asset: IconFolderRegular,
-                    rightSlot: <Text2 regular>3</Text2>,
-                    children: [{id: 'active', label: 'Active', href: '/active'}],
-                },
-            ],
-        }),
-    ][step];
-};
 
 export const DoublePanel = ({collapsed = false}: {collapsed?: boolean}): JSX.Element =>
     renderDoublePanelSidenav({defaultCollapsed: collapsed});
