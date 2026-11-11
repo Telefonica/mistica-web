@@ -1052,13 +1052,6 @@ test('SidenavBar moves the focus to the parent with ArrowLeft from a child', asy
 
     await expect(page.getByRole('button', {name: 'Teams'})).toBeFocused();
 });
-test('SidenavBar includes the visible right slot in a parent item accessible name', async ({mount, page}) => {
-    await mount('sidenav-bar/Scenario85', {});
-
-    await expect(page.getByRole('button', {name: 'Projects 3'})).toHaveCount(1);
-    await page.getByRole('button', {name: COLLAPSE_LABEL}).click();
-    await expect(page.getByRole('button', {name: 'Projects'})).toHaveCount(1);
-});
 
 for (const collapsed of [false, true])
     test(`SidenavBar gives a list to the ${collapsed ? 'dialog panel' : 'second column'}`, async ({

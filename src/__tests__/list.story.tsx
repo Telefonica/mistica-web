@@ -2,7 +2,6 @@ import * as React from 'react';
 import {RowList, Row, BoxedRowList, BoxedRow} from '../list';
 import {RadioGroup} from '../radio-button';
 import {
-    Avatar,
     ButtonPrimary,
     Form,
     IconPlayFilled,
@@ -413,18 +412,6 @@ export const Scenario25 = (): JSX.Element => {
                 <Row title="First" onPress={() => {}} switch={{defaultValue: false}} />
                 <Row title="Last" />
             </RowList>
-        </ThemeContextProvider>
-    );
-};
-export const Scenario26 = (): JSX.Element => {
-    return (
-        <ThemeContextProvider theme={makeTheme()}>
-            <Row
-                title="Title"
-                description="Description"
-                asset={<Avatar size={40} initials="MS" />}
-                href="/"
-            />
         </ThemeContextProvider>
     );
 };

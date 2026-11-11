@@ -94,13 +94,3 @@ export const VideoTabOrder = ({mediaPosition}: {mediaPosition: 'top' | 'left' | 
         </>
     );
 };
-export const ImageLabel = (): JSX.Element => (
-    <MediaCard
-        title="Title"
-        subtitle="Subtitle"
-        description="Description"
-        imageSrc="image.jpg"
-        imageAlt="Image description"
-        href="/"
-    />
-);

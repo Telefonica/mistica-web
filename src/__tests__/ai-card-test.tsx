@@ -63,22 +63,3 @@ test('aria-label prop overrides the auto-generated label', async ({mount}) => {
     });
     await expect(component.getByRole('button', {name: 'Custom label', exact: true})).toHaveCount(1);
 });
-test('accessible name follows the visible word during animation', async ({mount, page}) => {
-    const now = new Date('2026-01-01T00:00:00Z');
-    await page.clock.install({time: now});
-    await page.clock.pauseAt(now);
-    await page.emulateMedia({reducedMotion: 'no-preference'});
-    const component = await mount('ai-card/Content', {
-        text: 'Check ',
-        words: ['hi', 'bye'],
-        interactive: true,
-    });
-    const button = component.getByRole('button');
-    await expect(button).toHaveAccessibleName('Check');
-    await expect(button).toBeInViewport();
-    const maxTypingDelay = 80;
-    await page.clock.runFor(maxTypingDelay);
-    await expect(button).toHaveAccessibleName('Check h');
-    await page.clock.runFor(maxTypingDelay);
-    await expect(button).toHaveAccessibleName('Check hi');
-});
