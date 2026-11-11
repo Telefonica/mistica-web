@@ -27,9 +27,9 @@ afterEach(() => {
     jest.restoreAllMocks();
 });
 
-const mockPrefersReducedMotion = (prefersReducedMotion = true) => {
+const mockPrefersReducedMotion = () => {
     jest.spyOn(window, 'matchMedia').mockImplementation((query) => ({
-        matches: prefersReducedMotion && query === '(prefers-reduced-motion: reduce)',
+        matches: query === '(prefers-reduced-motion: reduce)',
         addListener: jest.fn(),
         removeListener: jest.fn(),
         addEventListener: jest.fn(),
@@ -161,20 +161,4 @@ test('aria-label prop overrides the auto-generated label', () => {
     );
 
     expect(screen.getByRole('button', {name: 'Custom label'})).toBeInTheDocument();
-});
-
-test('accessible name follows the visible word during animation', () => {
-    jest.useFakeTimers();
-    mockPrefersReducedMotion(false);
-    render(
-        <ThemeContextProvider theme={makeTheme()}>
-            <AiCard text="Check " words={['hi', 'bye']} onPress={() => {}} />
-        </ThemeContextProvider>
-    );
-
-    expect(screen.getByRole('button', {name: 'Check'})).toBeInTheDocument();
-    React.act(() => jest.runOnlyPendingTimers());
-    expect(screen.getByRole('button', {name: 'Check h'})).toBeInTheDocument();
-    React.act(() => jest.runOnlyPendingTimers());
-    expect(screen.getByRole('button', {name: 'Check hi'})).toBeInTheDocument();
 });

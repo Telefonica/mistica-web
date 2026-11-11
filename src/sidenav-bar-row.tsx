@@ -179,7 +179,7 @@ const SidenavRow = ({
                     onPress={toggle.onPress}
                     aria-expanded={toggle.expanded}
                     aria-controls={toggle.controls}
-                    aria-label={collapsed ? label : undefined}
+                    aria-label={label}
                     dataAttributes={{'parent-item': 'true'}}
                 >
                     {rowContent}

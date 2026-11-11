@@ -171,7 +171,8 @@ const AiCard = ({
         isInViewport,
     });
 
-    const autoAriaLabel = [text, dynamicText].filter(Boolean).join('') || undefined;
+    const lastWord = safeWords.at(-1) ?? '';
+    const autoAriaLabel = [text, lastWord].filter(Boolean).join('') || undefined;
 
     const textLineStyle: React.CSSProperties =
         typeof lineBreakAtChars === 'number'
