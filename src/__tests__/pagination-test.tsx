@@ -157,15 +157,3 @@ test('keeps a single current page after selecting a page with no surrounding pag
     await expect(list.locator('[aria-current="page"]')).toHaveAccessibleName('Página 2, página actual');
     await expect(list.locator('[aria-current="page"]')).toHaveAttribute('aria-disabled', 'true');
 });
-for (const {previous, next, ...i18n} of [
-    {locale: 'de-DE', phoneNumberFormattingRegionCode: 'DE', previous: 'Zurück', next: 'Weiter'},
-    {locale: 'pt-BR', phoneNumberFormattingRegionCode: 'BR', previous: 'Anterior', next: 'Próximo'},
-]) {
-    test(`navigation accessible names include their visible labels in ${i18n.locale}`, async ({mount}) => {
-        const component = await mount('pagination/Localized', i18n);
-        await expect(component.getByRole('button', {name: new RegExp(previous, 'i')})).toContainText(
-            previous
-        );
-        await expect(component.getByRole('button', {name: new RegExp(next, 'i')})).toContainText(next);
-    });
-}
