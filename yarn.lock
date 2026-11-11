@@ -65,6 +65,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@axe-core/playwright@npm:4.14.0":
+  version: 4.14.0
+  resolution: "@axe-core/playwright@npm:4.14.0"
+  dependencies:
+    axe-core: ~4.14.0
+  peerDependencies:
+    playwright-core: ">= 1.0.0"
+  checksum: 7ef2f7a8697b9eb192848cecf7f4342442eb04bdd50366a11017e1cd18d4563f576e8cc7f3e5257e0fe588ac50919d8189baea633046f9e892043cdbb1ba0f38
+  languageName: node
+  linkType: hard
+
 "@axe-core/puppeteer@npm:^4.4.2":
   version: 4.4.2
   resolution: "@axe-core/puppeteer@npm:4.4.2"
@@ -4556,6 +4567,7 @@ __metadata:
   dependencies:
     "@actions/core": ^1.10.0
     "@actions/github": ^5.0.0
+    "@axe-core/playwright": 4.14.0
     "@axe-core/puppeteer": ^4.4.2
     "@azure/storage-blob": ^12.9.0
     "@figma/code-connect": ^1.4.8
@@ -4622,6 +4634,8 @@ __metadata:
     moment: ^2.29.1
     node-fetch: ^2.6.7
     playroom: ^1.4.0
+    playwright: 1.64.1
+    playwright-core: 1.64.1
     postcss: ^8.4.18
     postcss-loader: ^4.2.0
     prettier: ^3.3.2
@@ -6871,6 +6885,13 @@ __metadata:
   version: 4.7.2
   resolution: "axe-core@npm:4.7.2"
   checksum: 5d86fa0f45213b0e54cbb5d713ce885c4a8fe3a72b92dd915a47aa396d6fd149c4a87fec53aa978511f6d941402256cfeb26f2db35129e370f25a453c688655a
+  languageName: node
+  linkType: hard
+
+"axe-core@npm:~4.14.0":
+  version: 4.14.0
+  resolution: "axe-core@npm:4.14.0"
+  checksum: dd169d7970c4d97aa64fa8618afef278d30a6d4dbd33d50790e36ffbf1b1d2f7b3eb0f9704871da3807c438786a260d1b98367204d746c4b92c3232c3a561ef9
   languageName: node
   linkType: hard
 
@@ -16805,6 +16826,26 @@ __metadata:
   bin:
     playroom: ./dist/cli.mjs
   checksum: d219eb6b857744393c56b149a1bd886c11492cbd932eab74a8f261d6e91004007342e49940dcf24d98a9091b99529a38e53ca476c9b44b4d2ac97c6092f0a043
+  languageName: node
+  linkType: hard
+
+"playwright-core@npm:1.64.1":
+  version: 1.64.1
+  resolution: "playwright-core@npm:1.64.1"
+  bin:
+    playwright-core: cli.js
+  checksum: 614007bcdeaad5c6ff46465b623a81e0dbcae060f04022ba37e325d10c2eb618a9b70c44da2eb7b0857c80f83fca6db73c53f0600dcdf1d922c7942af1e0b701
+  languageName: node
+  linkType: hard
+
+"playwright@npm:1.64.1":
+  version: 1.64.1
+  resolution: "playwright@npm:1.64.1"
+  dependencies:
+    playwright-core: 1.64.1
+  bin:
+    playwright: cli.js
+  checksum: 74861fdf4087b6d4c33dce1779c977390591d4e76bb590a904018b3823d35b20737b3b8f8bddf8bf32969953b1e9a37f72ab3e33b4b1cebed4b1bcc4a5e62738
   languageName: node
   linkType: hard
 
