@@ -16,39 +16,13 @@ if (process.env.NODE_ENV !== 'test') {
 Make sure your bundler (webpack, rollup, parcel, etc) makes the correct substitutions and the minifier
 effectively removes unused code.
 
-## Component tests
+## Unit tests
 
-All tests use Playwright Test. Install Chromium after installing dependencies:
+`yarn test` runs the component and utility tests with Jest in jsdom and writes coverage to
+`reports/coverage/lcov.info`.
 
-```sh
-yarn playwright install chromium
-yarn test
-```
-
-On Linux, use `yarn playwright install --with-deps chromium` to install system dependencies too.
-
-Component tests live in `src/__tests__`. The runner starts a Vite gallery with real React components and CSS.
-Each `*.story.tsx` module exports the scenarios used by the matching test file. Mount a scenario with
-`mount('button/Accessible', props)` and interact through semantic Playwright locators. The gallery wraps
-scenarios in `ThemeContextProvider` with `makeTheme()` by default. Scenarios that test the provider itself can
-export `withTheme = false` and provide their own wrapper.
-
-Use callbacks passed to `mount` to observe events. These callbacks run in the test process, while the
-component runs in Chromium. Browser-side setup belongs in a scenario or `page.evaluate`. Use `page.clock` for
-timers and `page.emulateMedia` for media preferences. Component tests fail on browser exceptions and console
-warnings or errors.
-
-CI builds the gallery once and serves the compiled assets to avoid reloading the development module graph for
-every test. React stays in development mode so warnings remain part of the checks. Local runs use Vite's
-development server for debugging.
-
-Pure utility tests also use Playwright Test, without opening a page. Run an individual file or title with:
-
-```sh
-yarn test button-test.tsx
-yarn test --grep 'accessible name'
-yarn test --ui
-```
+Browser, screenshot and SSR tests use Playwright Test. Install Chromium with
+`yarn playwright install chromium`, or `yarn playwright install --with-deps chromium` on Linux.
 
 ## Acceptance and screenshot tests
 

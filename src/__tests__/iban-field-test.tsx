@@ -1,30 +1,67 @@
-import {test, expect} from '../test-utils/component';
+import * as React from 'react';
+import {Form, IbanField, ButtonPrimary} from '..';
+import {render, screen, waitFor} from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import ThemeContextProvider from '../theme-context-provider';
+import {makeTheme} from './test-utils';
 
-test('IbanField', async ({mount}) => {
+test('IbanField', async () => {
+    const onSubmitSpy = jest.fn();
+    const onValidationErrorsSpy = jest.fn();
+    const formIbanError = 'invalid iban';
+
     const validIban = 'ES7921000813610123456789';
     const formattedIban = 'ES79 2100 0813 6101 2345 6789';
-    const component = await mount('iban-field/IbanForm');
-    const field = component.getByLabel('IBAN', {exact: true});
-    const submit = component.getByRole('button', {name: 'Submit'});
-    await field.pressSequentially(validIban.slice(0, -1));
-    await field.blur();
-    await submit.click();
-    await expect(component.getByTestId('errors')).toHaveValue(JSON.stringify([{iban: 'invalid iban'}]));
-    await field.fill('');
-    await field.pressSequentially(validIban.slice(0, -1) + '5');
-    await field.blur();
-    await submit.click();
-    await expect(component.getByTestId('errors')).toHaveValue(
-        JSON.stringify([{iban: 'invalid iban'}, {iban: 'invalid iban'}])
+    const wrongLengthIban = validIban.slice(0, -1);
+    const wrongChecksumIban = validIban.slice(0, -1) + '5';
+
+    render(
+        <ThemeContextProvider theme={makeTheme({texts: {formIbanError}})}>
+            <Form onSubmit={onSubmitSpy} onValidationErrors={onValidationErrorsSpy}>
+                <IbanField label="IBAN" name="iban" />
+                <ButtonPrimary submit>Submit</ButtonPrimary>
+            </Form>
+        </ThemeContextProvider>
     );
-    await field.fill('');
-    await field.pressSequentially(validIban);
-    await field.blur();
-    await submit.click();
-    await expect(component.getByTestId('submissions')).toHaveValue(
-        JSON.stringify([[{iban: validIban}, {iban: formattedIban}]])
-    );
-    await expect(component.getByTestId('errors')).toHaveValue(
-        JSON.stringify([{iban: 'invalid iban'}, {iban: 'invalid iban'}])
-    );
+
+    const ibanField = screen.getByLabelText('IBAN');
+    const submitButton = screen.getByRole('button', {name: 'Submit'});
+
+    await userEvent.type(ibanField, wrongLengthIban);
+    await userEvent.click(submitButton);
+
+    await waitFor(() => {
+        expect(onValidationErrorsSpy).toHaveBeenCalledWith({
+            iban: formIbanError,
+        });
+    });
+
+    onValidationErrorsSpy.mockClear();
+    await userEvent.clear(ibanField);
+    await userEvent.type(ibanField, wrongChecksumIban);
+    await userEvent.click(submitButton);
+
+    await waitFor(() => {
+        expect(onValidationErrorsSpy).toHaveBeenCalledWith({
+            iban: formIbanError,
+        });
+    });
+
+    onValidationErrorsSpy.mockClear();
+    await userEvent.clear(ibanField);
+    await userEvent.type(ibanField, validIban);
+    await userEvent.click(submitButton);
+
+    await waitFor(() => {
+        expect(onValidationErrorsSpy).not.toHaveBeenCalled();
+        expect(onSubmitSpy).toHaveBeenCalledTimes(1);
+        expect(onSubmitSpy).toHaveBeenCalledWith(
+            {
+                iban: validIban,
+            },
+            {
+                iban: formattedIban,
+            }
+        );
+    });
 });

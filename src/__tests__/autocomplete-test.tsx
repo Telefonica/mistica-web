@@ -1,120 +1,205 @@
-import {test, expect} from '../test-utils/component';
+import * as React from 'react';
+import {render, screen, fireEvent} from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import Autocomplete from '../autocomplete';
+import ThemeContextProvider from '../theme-context-provider';
+import {makeTheme} from './test-utils';
 
-const DEFAULT_SUGGESTIONS = ['Alpha', 'Bravo', 'Charlie'];
-test('shows options on focus and on input', async ({mount, page}) => {
-    await mount('autocomplete/Suggestions', {});
-    const listbox = page.getByRole('listbox', {includeHidden: true});
-    await expect(listbox).not.toBeVisible();
-    await page.getByRole('combobox', {name: 'City'}).click();
-    await expect(page.getByRole('listbox', {includeHidden: true})).toBeVisible();
-    await expect(page.getByRole('option')).toHaveCount(DEFAULT_SUGGESTIONS.length);
-    await page.getByRole('combobox', {name: 'City'}).pressSequentially('A');
-    await expect(page.getByRole('listbox', {includeHidden: true})).toBeVisible();
-    await expect(page.getByRole('option')).toHaveCount(DEFAULT_SUGGESTIONS.length);
-});
-test('keyboard navigation: ArrowDown/ArrowUp set active option and aria-activedescendant', async ({
-    mount,
-    page,
+type GetSuggestions = (value: string) => ReadonlyArray<string>;
+
+const DEFAULT_SUGGESTIONS = ['Alpha', 'Bravo', 'Charlie'] as const;
+
+const defaultGetSuggestions: GetSuggestions = (value) => {
+    if (value.toLowerCase().startsWith('no') || value.toLowerCase().startsWith('zzz')) return [];
+    return DEFAULT_SUGGESTIONS as unknown as Array<string>;
+};
+
+const AutocompleteWrapper = ({
+    getSuggestions = defaultGetSuggestions,
+    suggestionEmptyCase,
+    label = 'City',
+}: {
+    getSuggestions?: GetSuggestions;
+    suggestionEmptyCase?: string;
+    label?: string;
 }) => {
-    await mount('autocomplete/Suggestions', {});
-    await page.getByRole('combobox', {name: 'City'}).click();
-    await page.keyboard.press('ArrowDown');
-    const options1 = page.getByRole('option');
-    await expect(options1.nth(0)).toHaveAttribute('aria-selected', 'true');
-    const listbox = page.getByRole('listbox', {includeHidden: true});
-    const input = page.getByRole('combobox', {name: 'City'});
-    const firstOptionId = `${await listbox.getAttribute('id')}-option-0`;
-    await expect(input).toHaveAttribute('aria-activedescendant', firstOptionId);
-    await page.keyboard.press('ArrowDown');
-    const options2 = page.getByRole('option');
-    await expect(options2.nth(1)).toHaveAttribute('aria-selected', 'true');
-    await page.keyboard.press('ArrowUp');
-    const options3 = page.getByRole('option');
-    await expect(options3.nth(0)).toHaveAttribute('aria-selected', 'true');
+    const [value, setValue] = React.useState('');
+    return (
+        <Autocomplete
+            label={label}
+            value={value}
+            onChangeValue={(val) => setValue(val)}
+            getSuggestions={getSuggestions}
+            suggestionEmptyCase={suggestionEmptyCase}
+            name="city"
+        />
+    );
+};
+
+const renderWithTheme = (ui: React.ReactElement, themeOverrides?: Parameters<typeof makeTheme>[0]) => {
+    return render(<ThemeContextProvider theme={makeTheme(themeOverrides)}>{ui}</ThemeContextProvider>);
+};
+
+const getInput = () => screen.getByRole('combobox', {name: 'City'}) as HTMLInputElement;
+
+const getListbox = (opts?: {hidden?: boolean}) =>
+    screen.getByRole('listbox', {hidden: opts?.hidden ?? true}) as HTMLUListElement;
+
+const getOptions = () => screen.getAllByRole('option') as Array<HTMLLIElement>;
+
+beforeAll(() => {
+    (Element.prototype as any).scrollIntoView = () => {};
 });
-test('Enter selects focused option and hides list', async ({mount, page}) => {
-    await mount('autocomplete/Suggestions', {});
-    await page.getByRole('combobox', {name: 'City'}).click();
-    await page.keyboard.press('ArrowDown');
-    await page.keyboard.press('Enter');
-    await expect(page.getByRole('combobox', {name: 'City'})).toHaveValue(DEFAULT_SUGGESTIONS[0]);
-    await expect(page.getByRole('listbox', {includeHidden: true})).not.toBeVisible();
+
+test('shows options on focus and on input', async () => {
+    renderWithTheme(<AutocompleteWrapper />);
+
+    const listbox = getListbox({hidden: true});
+    expect(listbox).not.toBeVisible();
+
+    await userEvent.click(getInput());
+    expect(getListbox()).toBeVisible();
+    expect(getOptions()).toHaveLength(DEFAULT_SUGGESTIONS.length);
+
+    await userEvent.type(getInput(), 'A');
+    expect(getListbox()).toBeVisible();
+    expect(getOptions()).toHaveLength(DEFAULT_SUGGESTIONS.length);
 });
-test('Tab with focused option selects it and hides list', async ({mount, page}) => {
-    await mount('autocomplete/Suggestions', {});
-    await page.getByRole('combobox', {name: 'City'}).click();
-    await page.keyboard.press('ArrowDown');
-    await page.keyboard.press('Tab');
-    await expect(page.getByRole('combobox', {name: 'City'})).toHaveValue(DEFAULT_SUGGESTIONS[0]);
-    await expect(page.getByRole('listbox', {includeHidden: true})).not.toBeVisible();
+
+test('keyboard navigation: ArrowDown/ArrowUp set active option and aria-activedescendant', async () => {
+    renderWithTheme(<AutocompleteWrapper />);
+
+    await userEvent.click(getInput());
+
+    await userEvent.keyboard('{ArrowDown}');
+    const options1 = getOptions();
+    expect(options1[0]).toHaveAttribute('aria-selected', 'true');
+
+    const listbox = getListbox();
+    const input = getInput();
+    const firstOptionId = `${listbox.id}-option-0`;
+    expect(input).toHaveAttribute('aria-activedescendant', firstOptionId);
+
+    await userEvent.keyboard('{ArrowDown}');
+    const options2 = getOptions();
+    expect(options2[1]).toHaveAttribute('aria-selected', 'true');
+
+    await userEvent.keyboard('{ArrowUp}');
+    const options3 = getOptions();
+    expect(options3[0]).toHaveAttribute('aria-selected', 'true');
 });
-test('Tab with no focused option clears invalid input', async ({mount, page}) => {
-    await mount('autocomplete/Suggestions', {});
-    await page.getByRole('combobox', {name: 'City'}).click();
-    await page.getByRole('combobox', {name: 'City'}).pressSequentially('zzz');
-    await page.keyboard.press('Tab');
-    await expect(page.getByRole('combobox', {name: 'City'})).toHaveValue('');
-    await expect(page.getByRole('listbox', {includeHidden: true})).not.toBeVisible();
+
+test('Enter selects focused option and hides list', async () => {
+    renderWithTheme(<AutocompleteWrapper />);
+    await userEvent.click(getInput());
+    await userEvent.keyboard('{ArrowDown}');
+
+    await userEvent.keyboard('{Enter}');
+
+    expect(getInput()).toHaveValue(DEFAULT_SUGGESTIONS[0]);
+    expect(getListbox({hidden: true})).not.toBeVisible();
 });
-test('Escape hides list when open, clears when closed', async ({mount, page}) => {
-    await mount('autocomplete/Suggestions', {});
-    await page.getByRole('combobox', {name: 'City'}).click();
-    await page.getByRole('combobox', {name: 'City'}).pressSequentially('A');
-    await expect(page.getByRole('listbox', {includeHidden: true})).toBeVisible();
-    await page.keyboard.press('Escape');
-    await expect(page.getByRole('listbox', {includeHidden: true})).not.toBeVisible();
-    await expect(page.getByRole('combobox', {name: 'City'})).toHaveValue('A');
-    await page.keyboard.press('Escape');
-    await expect(page.getByRole('combobox', {name: 'City'})).toHaveValue('');
+
+test('Tab with focused option selects it and hides list', async () => {
+    renderWithTheme(<AutocompleteWrapper />);
+    await userEvent.click(getInput());
+    await userEvent.keyboard('{ArrowDown}');
+
+    await userEvent.keyboard('{Tab}');
+    expect(getInput()).toHaveValue(DEFAULT_SUGGESTIONS[0]);
+    expect(getListbox({hidden: true})).not.toBeVisible();
 });
-test('click outside hides list and clears invalid input', async ({mount, page}) => {
-    await mount('autocomplete/Suggestions', {});
-    await page.getByRole('combobox', {name: 'City'}).click();
-    await page.getByRole('combobox', {name: 'City'}).pressSequentially('zzz');
-    await expect(page.getByRole('combobox', {name: 'City'})).toHaveValue('zzz');
-    await page.mouse.click(0, 700);
-    await expect(page.getByRole('listbox', {includeHidden: true})).not.toBeVisible();
-    await expect(page.getByRole('combobox', {name: 'City'})).toHaveValue('');
+
+test('Tab with no focused option clears invalid input', async () => {
+    renderWithTheme(<AutocompleteWrapper />);
+    await userEvent.click(getInput());
+    await userEvent.type(getInput(), 'zzz');
+
+    await userEvent.keyboard('{Tab}');
+    expect(getInput()).toHaveValue('');
+    expect(getListbox({hidden: true})).not.toBeVisible();
 });
-test('clicking an option selects it and hides list', async ({mount, page}) => {
-    await mount('autocomplete/Suggestions', {});
-    await page.getByRole('combobox', {name: 'City'}).click();
-    const options = page.getByRole('option');
-    await expect(options).toHaveCount(DEFAULT_SUGGESTIONS.length);
-    await options.nth(1).click();
-    await expect(page.getByRole('combobox', {name: 'City'})).toHaveValue(DEFAULT_SUGGESTIONS[1]);
-    await expect(page.getByRole('listbox', {includeHidden: true})).not.toBeVisible();
+
+test('Escape hides list when open, clears when closed', async () => {
+    renderWithTheme(<AutocompleteWrapper />);
+    await userEvent.click(getInput());
+    await userEvent.type(getInput(), 'A');
+
+    expect(getListbox()).toBeVisible();
+    await userEvent.keyboard('{Escape}');
+    expect(getListbox({hidden: true})).not.toBeVisible();
+    expect(getInput()).toHaveValue('A');
+
+    await userEvent.keyboard('{Escape}');
+    expect(getInput()).toHaveValue('');
 });
-test('ARIA attributes: roles, controls and expanded/activedescendant toggling', async ({mount, page}) => {
-    await mount('autocomplete/Suggestions', {});
-    const input = page.getByRole('combobox', {name: 'City'});
-    const listbox = page.getByRole('listbox', {includeHidden: true});
-    await expect(input).toHaveAttribute('role', 'combobox');
-    await expect(listbox).toHaveAttribute('role', 'listbox');
-    const listboxId = await listbox.getAttribute('id');
-    if (!listboxId) {
-        throw new Error('The listbox must have an id');
-    }
-    await expect(input).toHaveAttribute('aria-controls', listboxId);
-    await expect(input).toHaveAttribute('aria-expanded', 'false');
-    await input.click();
-    await expect(input).toHaveAttribute('aria-expanded', 'true');
-    await page.keyboard.press('ArrowDown');
-    const expectedId = `${await page.getByRole('listbox', {includeHidden: true}).getAttribute('id')}-option-0`;
-    await expect(input).toHaveAttribute('aria-activedescendant', expectedId);
+
+test('click outside hides list and clears invalid input', async () => {
+    renderWithTheme(<AutocompleteWrapper />);
+    await userEvent.click(getInput());
+    await userEvent.type(getInput(), 'zzz');
+    expect(getInput()).toHaveValue('zzz');
+
+    fireEvent.pointerUp(document.body);
+
+    expect(getListbox({hidden: true})).not.toBeVisible();
+    expect(getInput()).toHaveValue('');
 });
-test('empty case message: uses prop suggestionEmptyCase when provided', async ({mount, page}) => {
-    await mount('autocomplete/Suggestions', {empty: true, suggestionEmptyCase: 'No results'});
-    await page.getByRole('combobox', {name: 'City'}).click();
-    await expect(page.getByRole('status', {name: 'No results'})).toHaveCount(1);
+
+test('clicking an option selects it and hides list', async () => {
+    renderWithTheme(<AutocompleteWrapper />);
+    await userEvent.click(getInput());
+
+    const options = getOptions();
+    expect(options).toHaveLength(DEFAULT_SUGGESTIONS.length);
+
+    await userEvent.click(options[1]);
+
+    expect(getInput()).toHaveValue(DEFAULT_SUGGESTIONS[1]);
+    expect(getListbox({hidden: true})).not.toBeVisible();
 });
-test('empty case message: falls back to theme texts.autocompleteEmptyCase', async ({mount, page}) => {
-    await mount('autocomplete/Suggestions', {empty: true, themeEmptyCase: 'FromTheme'});
-    await page.getByRole('combobox', {name: 'City'}).click();
-    await expect(page.getByText('FromTheme')).toHaveCount(1);
+
+test('ARIA attributes: roles, controls and expanded/activedescendant toggling', async () => {
+    renderWithTheme(<AutocompleteWrapper />);
+    const input = getInput();
+    const listbox = getListbox({hidden: true});
+
+    expect(input).toHaveAttribute('role', 'combobox');
+    expect(listbox).toHaveAttribute('role', 'listbox');
+
+    expect(input).toHaveAttribute('aria-controls', listbox.id);
+
+    expect(input).toHaveAttribute('aria-expanded', 'false');
+    await userEvent.click(input);
+    expect(input).toHaveAttribute('aria-expanded', 'true');
+
+    await userEvent.keyboard('{ArrowDown}');
+    const expectedId = `${getListbox().id}-option-0`;
+    expect(input).toHaveAttribute('aria-activedescendant', expectedId);
 });
-test('empty case message: falls back to tokens when theme text missing', async ({mount, page}) => {
-    await mount('autocomplete/Suggestions', {empty: true});
-    await page.getByRole('combobox', {name: 'City'}).click();
-    await expect(page.getByText('Sin opciones')).toHaveCount(1);
+
+test('empty case message: uses prop suggestionEmptyCase when provided', async () => {
+    const noSuggestions: GetSuggestions = () => [];
+    renderWithTheme(<AutocompleteWrapper getSuggestions={noSuggestions} suggestionEmptyCase="No results" />);
+
+    await userEvent.click(getInput());
+    expect(screen.getByRole('status', {name: 'No results'})).toBeInTheDocument();
+});
+
+test('empty case message: falls back to theme texts.autocompleteEmptyCase', async () => {
+    const noSuggestions: GetSuggestions = () => [];
+    renderWithTheme(<AutocompleteWrapper getSuggestions={noSuggestions} />, {
+        texts: {autocompleteEmptyCase: 'FromTheme'},
+    });
+
+    await userEvent.click(getInput());
+    expect(screen.getByText('FromTheme')).toBeInTheDocument();
+});
+
+test('empty case message: falls back to tokens when theme text missing', async () => {
+    const noSuggestions: GetSuggestions = () => [];
+    renderWithTheme(<AutocompleteWrapper getSuggestions={noSuggestions} />);
+
+    await userEvent.click(getInput());
+    expect(screen.getByText('Sin opciones')).toBeInTheDocument();
 });

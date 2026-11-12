@@ -1,28 +1,35 @@
-import {test, expect} from '../test-utils/component';
+import * as React from 'react';
+import {render, screen} from '@testing-library/react';
+import {ThemeContextProvider, Boxed, Text2} from '..';
+import {makeTheme} from './test-utils';
 
-import type {Container} from './boxed.story';
-import type {Locator} from '@playwright/test';
-
-const getRadiusVars = (element: Locator) =>
-    element.evaluate((node) =>
-        [...(node.getAttribute('style') ?? '').matchAll(/--[\w-]+:\s*([^;]+);?/g)].map((match) => match[1])
+const renderBoxed = (props: Partial<React.ComponentProps<typeof Boxed>> = {}) =>
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Boxed role="region" aria-label="boxed" {...props}>
+                <Text2 regular>Content</Text2>
+            </Boxed>
+        </ThemeContextProvider>
     );
 
-test('Boxed uses the skin container radius by default', async ({mount}) => {
-    const component = await mount<typeof Container>('boxed/Container');
-    await expect
-        .poll(() => getRadiusVars(component.getByRole('region', {name: 'boxed'})))
-        .toContainEqual(expect.stringMatching(/^var\(--borderRadii-container/));
+const getRadiusVar = (element: HTMLElement) => {
+    const match = /--[\w-]+:\s*([^;]+);?/g;
+    return [...(element.getAttribute('style') ?? '').matchAll(match)].map((m) => m[1]);
+};
+
+test('Boxed uses the skin container radius by default', () => {
+    renderBoxed();
+    expect(getRadiusVar(screen.getByRole('region', {name: 'boxed'}))).toContainEqual(
+        expect.stringMatching(/^var\(--borderRadii-container/)
+    );
 });
 
-test('Boxed converts numeric borderRadius to px', async ({mount}) => {
-    const component = await mount<typeof Container>('boxed/Container', {borderRadius: 24});
-    await expect.poll(() => getRadiusVars(component.getByRole('region', {name: 'boxed'}))).toContain('24px');
+test('Boxed converts numeric borderRadius to px', () => {
+    renderBoxed({borderRadius: 24});
+    expect(getRadiusVar(screen.getByRole('region', {name: 'boxed'}))).toContain('24px');
 });
 
-test('Boxed passes string borderRadius through', async ({mount}) => {
-    const component = await mount<typeof Container>('boxed/Container', {borderRadius: 'calc(8px + 16px)'});
-    await expect
-        .poll(() => getRadiusVars(component.getByRole('region', {name: 'boxed'})))
-        .toContain('calc(8px + 16px)');
+test('Boxed passes string borderRadius through', () => {
+    renderBoxed({borderRadius: 'calc(8px + 16px)'});
+    expect(getRadiusVar(screen.getByRole('region', {name: 'boxed'}))).toContain('calc(8px + 16px)');
 });

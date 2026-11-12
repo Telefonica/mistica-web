@@ -1,26 +1,97 @@
-import {test, expect} from '../test-utils/component';
+import * as React from 'react';
+import {render, screen} from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import Select from '../select';
+import ThemeContextProvider from '../theme-context-provider';
+import {makeTheme} from './test-utils';
 
-import type {Locator} from '@playwright/test';
+test('select happy case', async () => {
+    const onChangeSpy = jest.fn();
 
-const expectSelected = async (component: Locator, selected: number) => {
-    for (const index of [1, 2, 3]) {
-        await expect(component.getByRole('option', {name: `text${index}`})).toHaveJSProperty(
-            'selected',
-            index === selected
-        );
-    }
-};
-test('select happy case', async ({mount}) => {
-    const component = await mount('select/Selection');
-    await component.getByLabel('selectLabel').selectOption('value2');
-    await expectSelected(component, 2);
-    await expect(component.getByTestId('calls')).toHaveValue('["value2"]');
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Select
+                label="selectLabel"
+                name="selectName"
+                options={[
+                    {value: 'value1', text: 'text1'},
+                    {value: 'value2', text: 'text2'},
+                    {value: 'value3', text: 'text3'},
+                ]}
+                onChangeValue={onChangeSpy}
+            />
+        </ThemeContextProvider>
+    );
+
+    await userEvent.selectOptions(screen.getByLabelText('selectLabel'), 'value2');
+
+    expect((screen.getByRole('option', {name: 'text1'}) as HTMLOptionElement).selected).toBe(false);
+    expect((screen.getByRole('option', {name: 'text2'}) as HTMLOptionElement).selected).toBe(true);
+    expect((screen.getByRole('option', {name: 'text3'}) as HTMLOptionElement).selected).toBe(false);
+
+    expect(onChangeSpy).toHaveBeenCalledTimes(1);
+    expect(onChangeSpy).toHaveBeenCalledWith('value2');
 });
-for (const mode of ['controlled', 'default']) {
-    test(`select with ${mode} value`, async ({mount}) => {
-        const component = await mount('select/Selection', {mode});
-        await expectSelected(component, 2);
-        await component.getByLabel('selectLabel').selectOption('value3');
-        await expectSelected(component, 3);
-    });
-}
+
+test('select with controlled value', async () => {
+    const SelectWrapper = () => {
+        const [value, setValue] = React.useState<string>('value2');
+
+        return (
+            <Select
+                label="selectLabel"
+                name="selectName"
+                options={[
+                    {value: 'value1', text: 'text1'},
+                    {value: 'value2', text: 'text2'},
+                    {value: 'value3', text: 'text3'},
+                ]}
+                value={value}
+                onChangeValue={setValue}
+            />
+        );
+    };
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <SelectWrapper />
+        </ThemeContextProvider>
+    );
+
+    expect((screen.getByRole('option', {name: 'text1'}) as HTMLOptionElement).selected).toBe(false);
+    expect((screen.getByRole('option', {name: 'text2'}) as HTMLOptionElement).selected).toBe(true);
+    expect((screen.getByRole('option', {name: 'text3'}) as HTMLOptionElement).selected).toBe(false);
+
+    await userEvent.selectOptions(screen.getByLabelText('selectLabel'), 'value3');
+
+    expect((screen.getByRole('option', {name: 'text1'}) as HTMLOptionElement).selected).toBe(false);
+    expect((screen.getByRole('option', {name: 'text2'}) as HTMLOptionElement).selected).toBe(false);
+    expect((screen.getByRole('option', {name: 'text3'}) as HTMLOptionElement).selected).toBe(true);
+});
+
+test('select with default value', async () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Select
+                label="selectLabel"
+                name="selectName"
+                options={[
+                    {value: 'value1', text: 'text1'},
+                    {value: 'value2', text: 'text2'},
+                    {value: 'value3', text: 'text3'},
+                ]}
+                defaultValue="value2"
+            />
+        </ThemeContextProvider>
+    );
+
+    expect((screen.getByRole('option', {name: 'text1'}) as HTMLOptionElement).selected).toBe(false);
+    expect((screen.getByRole('option', {name: 'text2'}) as HTMLOptionElement).selected).toBe(true);
+    expect((screen.getByRole('option', {name: 'text3'}) as HTMLOptionElement).selected).toBe(false);
+
+    await userEvent.selectOptions(screen.getByLabelText('selectLabel'), 'value3');
+
+    expect((screen.getByRole('option', {name: 'text1'}) as HTMLOptionElement).selected).toBe(false);
+    expect((screen.getByRole('option', {name: 'text2'}) as HTMLOptionElement).selected).toBe(false);
+    expect((screen.getByRole('option', {name: 'text3'}) as HTMLOptionElement).selected).toBe(true);
+});

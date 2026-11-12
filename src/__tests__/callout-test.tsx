@@ -1,23 +1,70 @@
-import {test, expect} from '../test-utils/component';
+import * as React from 'react';
+import {render, screen, within} from '@testing-library/react';
+import {ThemeContextProvider, Callout} from '..';
+import userEvent from '@testing-library/user-event';
+import {makeTheme} from './test-utils';
 
-test('renders an accesible and closable Callout', async ({mount}) => {
-    const component = await mount('callout/Closable');
-    const callout = component.getByRole('region', {name: 'some label'});
-    await expect(callout).toHaveCount(1);
-    await expect(callout.getByRole('heading', {name: 'some title aria label'})).toHaveCount(1);
-    await callout.getByRole('button', {name: 'Cerrar'}).click();
-    await expect(component.getByTestId('calls')).toHaveValue('1');
+test('renders an accesible and closable Callout', async () => {
+    const handleCloseSpy = jest.fn();
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Callout
+                aria-label="some label"
+                title={{text: 'some title', 'aria-label': 'some title aria label'}}
+                description="some description"
+                onClose={handleCloseSpy}
+            />
+        </ThemeContextProvider>
+    );
+
+    const callout = screen.getByRole('region', {name: 'some label'});
+    expect(callout).toBeInTheDocument();
+
+    const title = within(callout).getByRole('heading', {name: 'some title aria label'});
+    expect(title).toBeInTheDocument();
+
+    const closeButton = within(callout).getByRole('button', {name: 'Cerrar'});
+    expect(closeButton).toBeInTheDocument();
+
+    await userEvent.click(closeButton);
+
+    expect(handleCloseSpy).toHaveBeenCalledTimes(1);
 });
-test('renders an accesible and closable Callout with custom close button label', async ({mount}) => {
-    const component = await mount('callout/Closable', {customLabel: true});
-    const callout = component.getByRole('region', {name: 'some label'});
-    await expect(callout).toHaveCount(1);
-    await callout.getByRole('button', {name: 'custom close label'}).click();
-    await expect(component.getByTestId('calls')).toHaveValue('1');
+
+test('renders an accesible and closable Callout with custom close button label', async () => {
+    const handleCloseSpy = jest.fn();
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Callout
+                aria-label="some label"
+                title="some title"
+                description="some description"
+                onClose={handleCloseSpy}
+                closeButtonLabel="custom close label"
+            />
+        </ThemeContextProvider>
+    );
+
+    const callout = screen.getByRole('region', {name: 'some label'});
+    expect(callout).toBeInTheDocument();
+
+    const closeButton = within(callout).getByRole('button', {name: 'custom close label'});
+    expect(closeButton).toBeInTheDocument();
+
+    await userEvent.click(closeButton);
+
+    expect(handleCloseSpy).toHaveBeenCalledTimes(1);
 });
-test('renders a small Callout', async ({mount}) => {
-    const component = await mount('callout/Small');
-    await expect(component.getByRole('region', {name: 'some label'})).toHaveCount(1);
-    await expect(component.getByTestId('title')).toContainText('some title');
-    await expect(component.getByTestId('description')).toContainText('some description');
+
+test('renders a small Callout', () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Callout aria-label="some label" title="some title" description="some description" small />
+        </ThemeContextProvider>
+    );
+
+    const callout = screen.getByRole('region', {name: 'some label'});
+    expect(callout).toBeInTheDocument();
+    expect(screen.getByTestId('title')).toHaveTextContent('some title');
+    expect(screen.getByTestId('description')).toHaveTextContent('some description');
 });

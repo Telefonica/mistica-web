@@ -1,165 +1,214 @@
-import {test, expect} from '../test-utils/component';
+import * as React from 'react';
+import {render, screen, waitFor} from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import {ButtonPrimary, Form, CreditCardFields} from '..';
+import ThemeContextProvider from '../theme-context-provider';
+import {makeTheme} from './test-utils';
 
-import type {Locator} from '@playwright/test';
+test('Credit card fields validation, all fields empty', async () => {
+    const onValidationErrorsSpy = jest.fn();
 
-const fillPayment = async (component: Locator, number: string, expiration: string, cvv: string) => {
-    await component.getByLabel('Número de tarjeta', {exact: true}).pressSequentially(number);
-    await component.getByLabel('Caducidad', {exact: true}).pressSequentially(expiration);
-    await component.getByLabel('CVV', {exact: true}).pressSequentially(cvv);
-    await component.getByLabel('CVV', {exact: true}).blur();
-    await component.getByRole('button', {name: 'Submit'}).click();
-};
-const readSubmissions = async (component: Locator) =>
-    JSON.parse(await component.getByTestId('submissions').inputValue());
-test('Credit card fields validation, all fields empty', async ({mount}) => {
-    const component = await mount('credit-card-fields/Payment');
-    await component.getByRole('button', {name: 'Submit'}).click();
-    await expect
-        .poll(async () => JSON.parse(await component.getByTestId('errors').inputValue()))
-        .toContainEqual({
-            ccCvv: 'Este campo es obligatorio',
-            ccExp: 'Este campo es obligatorio',
-            ccNum: 'Este campo es obligatorio',
-        });
-});
-for (const {creditCardNumber, isValid, cvv, description} of [
-    {creditCardNumber: '4321432143214321', isValid: true, cvv: '123', description: 'valid visa number'},
-    {creditCardNumber: '432143214321432', isValid: false, cvv: '123', description: 'too short visa number'},
-    {creditCardNumber: '5321432143214321', isValid: true, cvv: '123', description: 'valid mastercard number'},
-    {
-        creditCardNumber: '532143214321432',
-        isValid: false,
-        cvv: '123',
-        description: 'too short mastercard number',
-    },
-    {
-        creditCardNumber: '345634563456345',
-        isValid: true,
-        cvv: '1234',
-        description: 'valid american express number',
-    },
-    {
-        creditCardNumber: '34563456345634',
-        isValid: false,
-        cvv: '1234',
-        description: 'too short american express number',
-    },
-] as const) {
-    test(`Credit card fields validation, ${description}: ${creditCardNumber}`, async ({mount}) => {
-        const component = await mount('credit-card-fields/Payment');
-        await fillPayment(component, creditCardNumber, '11/50', cvv);
-        if (isValid) {
-            await expect
-                .poll(() => readSubmissions(component))
-                .toContainEqual([
-                    {ccNum: creditCardNumber, ccExp: {month: 11, year: 2050, raw: '11/50'}, ccCvv: cvv},
-                    {ccNum: expect.any(String), ccExp: '11/50', ccCvv: cvv},
-                ]);
-            await expect(component.getByTestId('errors')).toHaveValue('[]');
-        } else {
-            await expect
-                .poll(async () => JSON.parse(await component.getByTestId('errors').inputValue()))
-                .toContainEqual({ccNum: 'No es un número de tarjeta válido'});
-            await expect(component.getByTestId('submissions')).toHaveValue('[]');
-        }
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Form onValidationErrors={onValidationErrorsSpy} onSubmit={() => {}}>
+                <CreditCardFields />
+                <ButtonPrimary submit>Submit</ButtonPrimary>
+            </Form>
+        </ThemeContextProvider>
+    );
+
+    await userEvent.click(screen.getByRole('button', {name: 'Submit'}));
+
+    expect(onValidationErrorsSpy).toHaveBeenCalledWith({
+        ccCvv: 'Este campo es obligatorio',
+        ccExp: 'Este campo es obligatorio',
+        ccNum: 'Este campo es obligatorio',
     });
-}
-for (const {expirationDate, isValid, errorMessage, description} of [
-    {
-        expirationDate: ' ',
-        isValid: false,
-        errorMessage: 'Este campo es obligatorio',
-        description: 'empty expiration date',
-    },
-    {
-        expirationDate: '11',
-        isValid: false,
-        errorMessage: 'Fecha no válida',
-        description: 'only month expiration date',
-    },
-    {expirationDate: '11/18', isValid: false, errorMessage: 'Fecha no válida', description: 'expired date'},
-    {expirationDate: '11/50', isValid: true, errorMessage: 'Fecha no válida', description: 'future date'},
-] as const) {
-    test(`Credit card fields validation, ${description}: ${expirationDate}`, async ({mount}) => {
-        const component = await mount('credit-card-fields/Payment');
-        await fillPayment(component, '4321432143214321', expirationDate, '123');
+});
+
+test.each`
+    creditCardNumber      | isValid  | cvv       | description
+    ${'4321432143214321'} | ${true}  | ${'123'}  | ${'valid visa number'}
+    ${'432143214321432'}  | ${false} | ${'123'}  | ${'too short visa number'}
+    ${'5321432143214321'} | ${true}  | ${'123'}  | ${'valid mastercard number'}
+    ${'532143214321432'}  | ${false} | ${'123'}  | ${'too short mastercard number'}
+    ${'345634563456345'}  | ${true}  | ${'1234'} | ${'valid american express number'}
+    ${'34563456345634'}   | ${false} | ${'1234'} | ${'too short american express number'}
+`(
+    'Credit card fields validation, $description: $creditCardNumber',
+    async ({creditCardNumber, cvv, isValid}) => {
+        const onValidationErrorsSpy = jest.fn();
+        const onSubmitSpy = jest.fn();
+
+        render(
+            <ThemeContextProvider theme={makeTheme()}>
+                <Form onValidationErrors={onValidationErrorsSpy} onSubmit={onSubmitSpy}>
+                    <CreditCardFields />
+                    <ButtonPrimary submit>Submit</ButtonPrimary>
+                </Form>
+            </ThemeContextProvider>
+        );
+
+        await userEvent.type(screen.getByLabelText('Número de tarjeta'), creditCardNumber);
+        await userEvent.type(screen.getByLabelText('Caducidad'), '11/50');
+        await userEvent.type(screen.getByLabelText('CVV'), cvv);
+        await userEvent.click(screen.getByRole('button', {name: 'Submit'}));
+
+        if (isValid) {
+            await waitFor(() => {
+                expect(onSubmitSpy).toHaveBeenCalledWith(
+                    {
+                        ccNum: creditCardNumber,
+                        ccExp: {
+                            month: 11,
+                            year: 2050,
+                            raw: '11/50',
+                        },
+                        ccCvv: cvv,
+                    },
+                    {ccNum: expect.any(String), ccExp: '11/50', ccCvv: cvv}
+                );
+                expect(onValidationErrorsSpy).not.toHaveBeenCalled();
+            });
+        } else {
+            await waitFor(() => {
+                expect(onValidationErrorsSpy).toHaveBeenCalledWith({
+                    ccNum: 'No es un número de tarjeta válido',
+                });
+                expect(onSubmitSpy).not.toHaveBeenCalled();
+            });
+        }
+    }
+);
+
+test.each`
+    expirationDate | isValid  | errorMessage                   | description
+    ${' '}         | ${false} | ${'Este campo es obligatorio'} | ${'empty expiration date'}
+    ${'11'}        | ${false} | ${'Fecha no válida'}           | ${'only month expiration date'}
+    ${'11/18'}     | ${false} | ${'Fecha no válida'}           | ${'expired date'}
+    ${'11/50'}     | ${true}  | ${'Fecha no válida'}           | ${'future date'}
+`(
+    'Credit card fields validation, $description: $expirationDate',
+    async ({expirationDate, errorMessage, isValid}) => {
+        const onValidationErrorsSpy = jest.fn();
+        const onSubmitSpy = jest.fn();
+
+        render(
+            <ThemeContextProvider theme={makeTheme()}>
+                <Form onValidationErrors={onValidationErrorsSpy} onSubmit={onSubmitSpy}>
+                    <CreditCardFields />
+                    <ButtonPrimary submit>Submit</ButtonPrimary>
+                </Form>
+            </ThemeContextProvider>
+        );
+
+        await userEvent.type(screen.getByLabelText('Número de tarjeta'), '4321432143214321');
+        await userEvent.type(screen.getByLabelText('Caducidad'), expirationDate);
+        await userEvent.type(screen.getByLabelText('CVV'), '123');
+        await userEvent.click(screen.getByRole('button', {name: 'Submit'}));
+
         if (isValid) {
             const [month, year] = expirationDate.split('/');
-            await expect
-                .poll(() => readSubmissions(component))
-                .toContainEqual([
+            await waitFor(() => {
+                expect(onSubmitSpy).toHaveBeenCalledWith(
                     {
                         ccNum: '4321432143214321',
-                        ccExp: {month: Number(month), year: Number(`20${year}`), raw: expirationDate},
+                        ccExp: {
+                            month: Number(month),
+                            year: Number(`20${year}`),
+                            raw: expirationDate,
+                        },
                         ccCvv: '123',
                     },
-                    {ccNum: '4321 4321 4321 4321', ccExp: expirationDate, ccCvv: '123'},
-                ]);
-            await expect(component.getByTestId('errors')).toHaveValue('[]');
+                    {ccNum: '4321 4321 4321 4321', ccExp: expirationDate, ccCvv: '123'}
+                );
+                expect(onValidationErrorsSpy).not.toHaveBeenCalled();
+            });
         } else {
-            await expect
-                .poll(async () => JSON.parse(await component.getByTestId('errors').inputValue()))
-                .toContainEqual({ccExp: errorMessage});
-            await expect(component.getByTestId('submissions')).toHaveValue('[]');
+            await waitFor(() => {
+                expect(onValidationErrorsSpy).toHaveBeenCalledWith({
+                    ccExp: errorMessage,
+                });
+                expect(onSubmitSpy).not.toHaveBeenCalled();
+            });
         }
+    }
+);
+
+test('Credit card fields validation, clear expiration date', async () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Form onSubmit={() => {}}>
+                <CreditCardFields />
+                <ButtonPrimary submit>Submit</ButtonPrimary>
+            </Form>
+        </ThemeContextProvider>
+    );
+
+    const expirationDateField = screen.getByLabelText('Caducidad');
+
+    await userEvent.type(screen.getByLabelText('Número de tarjeta'), '4321432143214321');
+    await userEvent.type(expirationDateField, '11');
+    await userEvent.type(screen.getByLabelText('CVV'), '123');
+
+    expect(screen.getByText('Fecha no válida')).toBeInTheDocument();
+
+    await userEvent.clear(expirationDateField);
+    React.act(() => {
+        expirationDateField.blur();
     });
-}
-test('Credit card fields validation, clear expiration date', async ({mount}) => {
-    const component = await mount('credit-card-fields/Payment');
-    const expiration = component.getByLabel('Caducidad', {exact: true});
-    await component.getByLabel('Número de tarjeta', {exact: true}).pressSequentially('4321432143214321');
-    await expiration.pressSequentially('11');
-    await component.getByLabel('CVV', {exact: true}).pressSequentially('123');
-    await expect(component.getByText('Fecha no válida', {exact: true})).toHaveCount(1);
-    await expiration.fill('');
-    await expiration.blur();
-    await expect(component.getByText('Fecha no válida', {exact: true})).toHaveCount(0);
-    await expect(component.getByText('Este campo es obligatorio', {exact: true})).toHaveCount(1);
+    expect(screen.queryByText('Fecha no válida')).toBeNull();
+    expect(screen.getByText('Este campo es obligatorio')).toBeInTheDocument();
 });
-for (const {creditCardNumber, cvv, isValid, description} of [
-    {creditCardNumber: '4321432143214321', cvv: '123', isValid: true, description: '3 digits CVV for visa'},
-    {
-        creditCardNumber: '5321432143214321',
-        cvv: '123',
-        isValid: true,
-        description: '3 digits CVV for mastercard',
-    },
-    {
-        creditCardNumber: '342143214321432',
-        cvv: '1234',
-        isValid: true,
-        description: '4 digits CVV for american express',
-    },
-    {creditCardNumber: '4321432143214321', cvv: '12', isValid: false, description: 'too short CVV for visa'},
-    {
-        creditCardNumber: '5321432143214321',
-        cvv: '12',
-        isValid: false,
-        description: 'too short CVV for mastercard',
-    },
-    {
-        creditCardNumber: '342143214321432',
-        cvv: '123',
-        isValid: false,
-        description: 'too short CVV for american express',
-    },
-] as const) {
-    test(`Credit card fields validation, ${description}: ${cvv}`, async ({mount}) => {
-        const component = await mount('credit-card-fields/Payment');
-        await fillPayment(component, creditCardNumber, '11/50', cvv);
-        if (isValid) {
-            await expect
-                .poll(() => readSubmissions(component))
-                .toContainEqual([
-                    {ccNum: creditCardNumber, ccExp: {month: 11, year: 2050, raw: '11/50'}, ccCvv: cvv},
-                    {ccNum: expect.any(String), ccExp: '11/50', ccCvv: cvv},
-                ]);
-            await expect(component.getByTestId('errors')).toHaveValue('[]');
-        } else {
-            await expect
-                .poll(async () => JSON.parse(await component.getByTestId('errors').inputValue()))
-                .toContainEqual({ccCvv: 'CVV incorrecto'});
-            await expect(component.getByTestId('submissions')).toHaveValue('[]');
-        }
-    });
-}
+
+test.each`
+    creditCardNumber      | cvv       | isValid  | description
+    ${'4321432143214321'} | ${'123'}  | ${true}  | ${'3 digits CVV for visa'}
+    ${'5321432143214321'} | ${'123'}  | ${true}  | ${'3 digits CVV for mastercard'}
+    ${'342143214321432'}  | ${'1234'} | ${true}  | ${'4 digits CVV for american express'}
+    ${'4321432143214321'} | ${'12'}   | ${false} | ${'too short CVV for visa'}
+    ${'5321432143214321'} | ${'12'}   | ${false} | ${'too short CVV for mastercard'}
+    ${'342143214321432'}  | ${'123'}  | ${false} | ${'too short CVV for american express'}
+`('Credit card fields validation, $description: $cvv', async ({creditCardNumber, cvv, isValid}) => {
+    const onValidationErrorsSpy = jest.fn();
+    const onSubmitSpy = jest.fn();
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Form onValidationErrors={onValidationErrorsSpy} onSubmit={onSubmitSpy}>
+                <CreditCardFields />
+                <ButtonPrimary submit>Submit</ButtonPrimary>
+            </Form>
+        </ThemeContextProvider>
+    );
+
+    await userEvent.type(screen.getByLabelText('Número de tarjeta'), creditCardNumber);
+    await userEvent.type(screen.getByLabelText('Caducidad'), '11/50');
+    await userEvent.type(screen.getByLabelText('CVV'), cvv);
+    await userEvent.click(screen.getByRole('button', {name: 'Submit'}));
+
+    if (isValid) {
+        await waitFor(() => {
+            expect(onSubmitSpy).toHaveBeenCalledWith(
+                {
+                    ccNum: creditCardNumber,
+                    ccExp: {
+                        month: 11,
+                        year: 2050,
+                        raw: '11/50',
+                    },
+                    ccCvv: cvv,
+                },
+                {ccNum: expect.any(String), ccExp: '11/50', ccCvv: cvv}
+            );
+            expect(onValidationErrorsSpy).not.toHaveBeenCalled();
+        });
+    } else {
+        await waitFor(() => {
+            expect(onValidationErrorsSpy).toHaveBeenCalledWith({
+                ccCvv: 'CVV incorrecto',
+            });
+            expect(onSubmitSpy).not.toHaveBeenCalled();
+        });
+    }
+});

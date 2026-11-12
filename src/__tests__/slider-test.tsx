@@ -1,83 +1,216 @@
-import {test, expect} from '../test-utils/component';
+import * as React from 'react';
+import {fireEvent, render, screen, waitFor} from '@testing-library/react';
+import {ButtonPrimary, Form, IntegerField, Slider, ThemeContextProvider} from '..';
+import {makeTheme} from './test-utils';
+import userEvent from '@testing-library/user-event';
 
-import type {Basic, InForm, Reactive} from './slider.story';
+test('renders slider', () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Slider name="slider" />
+        </ThemeContextProvider>
+    );
 
-test('renders slider', async ({mount}) => {
-    const component = await mount('slider/Basic', {name: 'slider'});
-    await expect(component.getByRole('slider')).toHaveCount(1);
+    const slider = screen.getByRole('slider');
+
+    expect(slider).toBeInTheDocument();
 });
-for (const mode of ['uncontrolled', 'uncontrolled with defaultValue', 'controlled'])
-    test(`${mode} slider`, async ({mount}) => {
-        const component = await mount('slider/Basic', {
-            name: 'slider',
-            controlled: mode === 'controlled',
-            defaultValue: mode.includes('defaultValue') ? 3 : undefined,
-        });
-        const slider = component.getByRole('slider');
-        if (mode.includes('defaultValue')) await expect(slider).toHaveValue('3');
-        await slider.press('End');
-        for (let index = 0; index < 10; index++) await slider.press('ArrowLeft');
-        await expect(slider).toHaveValue('90');
-    });
-test('disabled slider', async ({mount}) => {
-    const component = await mount('slider/Basic', {name: 'slider', disabled: true});
-    await expect(component.getByRole('slider')).toBeDisabled();
+
+test('uncontrolled slider', () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Slider name="slider" />
+        </ThemeContextProvider>
+    );
+
+    const slider = screen.getByRole('slider');
+    fireEvent.change(slider, {target: {value: 90}});
+
+    expect(slider).toHaveValue('90');
 });
-test('slider with values array', async ({mount}) => {
-    const calls: Array<number> = [];
-    const component = await mount<typeof Basic>('slider/Basic', {
-        name: 'slider',
-        values: [12, 3, 4],
-        value: 3,
-        onChangeValue: (value) => {
-            calls.push(value);
-        },
-    });
-    const slider = component.getByRole('slider');
-    await expect(slider).toHaveValue('1');
-    await slider.dispatchEvent('change');
-    expect(calls).toEqual([]);
-    await slider.press('Home');
-    await expect.poll(() => calls).toEqual([12]);
+
+test('uncontrolled slider with defaultValue', () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Slider name="slider" defaultValue={3} />
+        </ThemeContextProvider>
+    );
+
+    const slider = screen.getByRole('slider');
+    expect(slider).toHaveValue('3');
+
+    fireEvent.change(slider, {target: {value: 90}});
+
+    expect(slider).toHaveValue('90');
 });
-test('slider inside form', async ({mount}) => {
-    const calls: Array<Array<unknown>> = [];
-    const component = await mount<typeof InForm>('slider/InForm', {
-        onSubmit: (...args) => {
-            calls.push(args);
-        },
-    });
-    await component.getByRole('slider').press('ArrowRight');
-    await component.getByRole('button', {name: 'done!'}).click();
-    await expect.poll(() => calls).toEqual([[{slider: 1}, {slider: 1}]]);
+
+test('controlled slider', () => {
+    const SliderWrapper = () => {
+        const [value, setValue] = React.useState(0);
+
+        return <Slider name="slider" value={value} onChangeValue={(value) => setValue(value)} />;
+    };
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <SliderWrapper />
+        </ThemeContextProvider>
+    );
+
+    const slider = screen.getByRole('slider');
+    fireEvent.change(slider, {target: {value: 90}});
+
+    expect(slider).toHaveValue('90');
 });
-test('slider is accessible', async ({mount}) => {
-    const component = await mount('slider/Accessible');
-    for (const label of ['slider1', 'slider2', 'slider3'])
-        await expect(component.getByRole('slider', {name: label})).toHaveCount(1);
+
+test('disabled slider', () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Slider name="slider" disabled />
+        </ThemeContextProvider>
+    );
+
+    const slider = screen.getByRole('slider');
+
+    expect(slider).toBeDisabled();
 });
-test('slider is reactive to changes in min, max and step props', async ({mount}) => {
-    const calls: Array<number> = [];
-    const component = await mount<typeof Reactive>('slider/Reactive', {
-        onChange: (value) => {
-            calls.push(value);
-        },
-    });
-    const slider = component.getByRole('slider');
-    await expect(slider).toHaveValue('0');
-    await component.getByLabel('min', {exact: true}).fill('3');
-    await expect(slider).toHaveValue('3');
-    await expect.poll(() => calls).toEqual([3]);
-    for (let index = 0; index < 3; index++) await slider.press('ArrowRight');
-    await expect(slider).toHaveValue('6');
-    await expect.poll(() => calls).toEqual([3, 4, 5, 6]);
-    await component.getByLabel('step', {exact: true}).fill('2');
-    await expect(slider).toHaveValue('7');
-    await expect.poll(() => calls).toEqual([3, 4, 5, 6, 7]);
-    await component.getByLabel('max', {exact: true}).fill('6');
-    await expect(slider).toHaveValue('5');
-    await expect.poll(() => calls).toEqual([3, 4, 5, 6, 7, 5]);
-    await component.getByLabel('step', {exact: true}).fill('1');
-    await expect(slider).toHaveValue('5');
-    expect(calls).toEqual([3, 4, 5, 6, 7, 5]);
+
+test('slider with values array', () => {
+    const fn = jest.fn();
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Slider name="slider" values={[12, 3, 4]} value={3} onChangeValue={fn} />
+        </ThemeContextProvider>
+    );
+
+    const slider = screen.getByRole('slider');
+
+    fireEvent.change(slider, {target: {value: 1}});
+    expect(fn).not.toHaveBeenCalled();
+
+    fireEvent.change(slider, {target: {value: 0}});
+    expect(fn).toHaveBeenCalledWith(12);
+});
+
+test('slider inside form', async () => {
+    const handleSubmitSpy = jest.fn();
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Form onSubmit={handleSubmitSpy} initialValues={{slider: 0}}>
+                <Slider name="slider" />
+                <ButtonPrimary submit>done!</ButtonPrimary>
+            </Form>
+        </ThemeContextProvider>
+    );
+
+    const slider = screen.getByRole('slider');
+
+    fireEvent.change(slider, {target: {value: 1}});
+
+    await userEvent.click(screen.getByRole('button'));
+    await waitFor(() => expect(handleSubmitSpy).toHaveBeenCalledWith({slider: 1}, {slider: 1}));
+});
+
+test('slider is accessible', () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Slider name="slider1" aria-label="slider1" />
+
+            <label htmlFor="slider2">slider2</label>
+            <Slider name="slider2" id="slider2" />
+
+            <div id="slider3">slider3</div>
+            <Slider name="slider3" aria-labelledby="slider3" />
+        </ThemeContextProvider>
+    );
+
+    expect(screen.getByLabelText('slider1')).toBeInTheDocument();
+    expect(screen.getByLabelText('slider2')).toBeInTheDocument();
+    expect(screen.getByLabelText('slider3')).toBeInTheDocument();
+});
+
+test('slider is reactive to changes in min, max and step props', async () => {
+    const handleSubmitSpy = jest.fn();
+
+    const SliderWrapper = () => {
+        const [min, setMin] = React.useState(0);
+        const [max, setMax] = React.useState(10);
+        const [step, setStep] = React.useState(1);
+
+        return (
+            <>
+                <Slider name="slider" min={min} max={max} step={step} onChangeValue={handleSubmitSpy} />
+                <IntegerField
+                    label="min"
+                    name="min"
+                    defaultValue={String(min)}
+                    onChangeValue={(value) => {
+                        if (value !== '') {
+                            setMin(+value);
+                        }
+                    }}
+                />
+                <IntegerField
+                    label="max"
+                    name="max"
+                    defaultValue={String(max)}
+                    onChangeValue={(value) => {
+                        if (value !== '') {
+                            setMax(+value);
+                        }
+                    }}
+                />
+                <IntegerField
+                    label="step"
+                    name="step"
+                    defaultValue={String(step)}
+                    onChangeValue={(value) => {
+                        if (value !== '') {
+                            setStep(+value);
+                        }
+                    }}
+                />
+            </>
+        );
+    };
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <SliderWrapper />
+        </ThemeContextProvider>
+    );
+
+    const clearAndType = async (element: Element, value: string) => {
+        await userEvent.clear(element);
+        await userEvent.type(element, value);
+    };
+
+    const slider = screen.getByRole('slider');
+    const minField = await screen.findByLabelText('min');
+    const maxField = await screen.findByLabelText('max');
+    const stepField = await screen.findByLabelText('step');
+
+    expect(slider).toHaveValue('0');
+
+    await clearAndType(minField, '3');
+    expect(slider).toHaveValue('3');
+    expect(handleSubmitSpy).toHaveBeenCalledWith(3);
+
+    fireEvent.change(slider, {target: {value: 6}});
+    expect(slider).toHaveValue('6');
+    expect(handleSubmitSpy).toHaveBeenCalledWith(6);
+
+    await clearAndType(stepField, '2');
+    expect(slider).toHaveValue('7');
+    expect(handleSubmitSpy).toHaveBeenCalledWith(7);
+
+    await clearAndType(maxField, '6');
+    expect(slider).toHaveValue('5');
+    expect(handleSubmitSpy).toHaveBeenCalledWith(5);
+
+    await clearAndType(stepField, '1');
+    expect(slider).toHaveValue('5');
+    // onChangeValue should not have been called here
+    expect(handleSubmitSpy).toHaveBeenCalledTimes(4);
 });

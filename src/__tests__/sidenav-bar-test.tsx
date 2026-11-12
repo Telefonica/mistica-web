@@ -1,1135 +1,1670 @@
-import {test as browserTest} from '@playwright/test';
-import {test, expect, getComponentStyles} from '../test-utils/component';
+import * as React from 'react';
+import {render, screen, fireEvent, waitFor, within} from '@testing-library/react';
+import ThemeContextProvider from '../theme-context-provider';
+import {makeTheme} from './test-utils';
+import {SidenavBar, SidenavLayout, Text2} from '..';
+import * as styles from '../sidenav-bar.css';
+import ScreenSizeContext from '../screen-size-context';
+import * as layoutStyles from '../sidenav-bar-layout.css';
+import {ThemeVariant} from '../theme-variant-context';
+import {getMovistarSkin} from '../skins/movistar';
 import {sidenavCollapse, sidenavExpand} from '../text-tokens';
+import IconHomeRegular from '../generated/mistica-icons/icon-home-regular';
+import IconFolderRegular from '../generated/mistica-icons/icon-folder-regular';
 
-import type {Locator, Page} from '@playwright/test';
+import type {SidenavFirstLevelItem} from '..';
+import type {Variant} from '../theme-variant-context';
+import type {Skin} from '../skins/types';
+import type {SidenavEntry, SidenavSection} from '../sidenav-bar-types';
 
+// The test theme resolves to `es-ES`, so the collapse action reads the Spanish text of these tokens.
 const COLLAPSE_LABEL = sidenavCollapse.es;
 const EXPAND_LABEL = sidenavExpand.es;
-test.use({viewport: {width: 1280, height: 720}, reducedMotion: 'reduce'});
-const computedStyle = (locator: Locator) =>
-    locator.evaluate((element) => {
-        const style = getComputedStyle(element);
-        return {
-            height: style.height,
-            minHeight: style.minHeight,
-            maxHeight: style.maxHeight,
-            overflow: style.overflow,
-            gap: style.gap,
-            paddingTop: style.paddingTop,
-            paddingBottom: style.paddingBottom,
-            marginTop: style.marginTop,
-            marginBottom: style.marginBottom,
-        };
+
+type IntersectionCallback = (entries: Array<{isIntersecting: boolean}>) => void;
+
+const liveIntersectionCallbacks = new Set<IntersectionCallback>();
+
+class MockIntersectionObserver {
+    private callback: IntersectionCallback;
+
+    constructor(callback: IntersectionCallback) {
+        this.callback = callback;
+        liveIntersectionCallbacks.add(callback);
+    }
+    observe = jest.fn();
+    unobserve = jest.fn();
+    disconnect = jest.fn(() => {
+        liveIntersectionCallbacks.delete(this.callback);
     });
-const openDialogPanel = async (page: Page, parentLabel: string) => {
-    const trigger = page.getByRole('button', {name: parentLabel, exact: true});
-    await trigger.click();
-    const panelId = await trigger.getAttribute('aria-controls');
-    expect(panelId).toBeTruthy();
-    const panel = page.locator('[id="' + panelId + '"]');
-    await expect(panel.locator(':focus')).toHaveCount(1);
-    return panel;
+}
+
+const scrollBodyToTheMiddle = async () => {
+    await React.act(async () => {
+        liveIntersectionCallbacks.forEach((callback) => callback([{isIntersecting: false}]));
+    });
 };
 
-test('SidenavBar renders a navigation landmark with its items', async ({mount, page}) => {
-    await mount('sidenav-bar/Scenario1', {});
-
-    await expect(page.getByRole('navigation', {name: 'Main navigation'})).toHaveCount(1);
-    await expect(page.getByRole('link', {name: 'Home'})).toHaveAttribute('href', '/home');
+beforeAll(() => {
+    window.IntersectionObserver = MockIntersectionObserver as unknown as typeof IntersectionObserver;
 });
-test('SidenavBar falls back to the height of the viewport when no parent constrains it', async ({
-    mount,
-    page,
-}) => {
-    await mount('sidenav-bar/Scenario2', {});
-    const style = await computedStyle(page.getByRole('navigation', {name: 'Main navigation'}));
-    expect(style.height).toBe(`${await page.evaluate(() => window.innerHeight)}px`);
+
+beforeEach(() => {
+    liveIntersectionCallbacks.clear();
+});
+
+// The group of a parent item and the second column both slide away instead of disappearing, so their node
+// stays in the document until the movement ends. Motion is off in the tests, so the exit unmounts on a
+// zero timeout; the browser still runs that unmount on a macrotask, which a heavy re-render of the bar can
+// delay well past the default deadline on a busy CI machine. A generous timeout keeps the wait stable.
+const waitForRemoval = (queryElement: () => HTMLElement | null): Promise<void> =>
+    waitFor(
+        () => {
+            expect(queryElement()).not.toBeInTheDocument();
+        },
+        {timeout: 5000}
+    );
+
+const defaultEntries: Array<SidenavSection> = [
+    {
+        title: 'Workspace',
+        items: [
+            {id: 'home', label: 'Home', asset: IconHomeRegular, href: '/home'},
+            {
+                id: 'projects',
+                label: 'Projects',
+                asset: IconFolderRegular,
+                defaultOpen: true,
+                children: [{id: 'active', label: 'Active', href: '/active'}],
+            },
+        ],
+    },
+];
+
+const renderSidenav = async (props: React.ComponentProps<typeof SidenavBar> = {}) => {
+    const result = render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <SidenavBar aria-label="Main navigation" entries={defaultEntries} {...props} />
+        </ThemeContextProvider>
+    );
+
+    // The default logo lazy loads its brand image, so let it settle before asserting.
+    await React.act(async () => {});
+
+    return result;
+};
+
+test('SidenavBar renders a navigation landmark with its items', async () => {
+    await renderSidenav();
+
+    expect(screen.getByRole('navigation', {name: 'Main navigation'})).toBeInTheDocument();
+    expect(screen.getByRole('link', {name: 'Home'})).toHaveAttribute('href', '/home');
+});
+
+test('SidenavBar falls back to the height of the viewport when no parent constrains it', async () => {
+    await renderSidenav();
+
+    // A percentage height alone resolves to `auto` under a parent that takes the height of its content, so
+    // the bar would shrink to the height of its items outside of `SidenavLayout`. The bounds carry the
+    // percentage instead, and they read as `0` and `none` under such a parent.
+    const style = getComputedStyle(screen.getByRole('navigation', {name: 'Main navigation'}));
+    expect(style.height).toBe('100vh');
     expect(style.minHeight).toBe('100%');
     expect(style.maxHeight).toBe('100%');
 });
-test('SidenavBar keeps the same fallback when it is boxed, minus the inset of the box', async ({
-    mount,
-    page,
-}) => {
-    await mount('sidenav-bar/Scenario3', {});
 
-    const style = await computedStyle(page.getByRole('navigation', {name: 'Main navigation'}));
-    expect(style.height).toBe(`${(await page.evaluate(() => window.innerHeight)) - 16}px`);
+test('SidenavBar keeps the same fallback when it is boxed, minus the inset of the box', async () => {
+    await renderSidenav({boxed: true});
+
+    const style = getComputedStyle(screen.getByRole('navigation', {name: 'Main navigation'}));
+    expect(style.height).toBe('calc(100vh - 16px)');
     expect(style.minHeight).toBe('calc(100% - 16px)');
     expect(style.maxHeight).toBe('calc(100% - 16px)');
 });
-test('SidenavLayout offsets the sticky rail by topOffset', async ({mount, page}) => {
-    await mount('sidenav-bar/Scenario4', {});
-    const layoutStyles = (await getComponentStyles(page)).sidenavLayout;
+
+test('SidenavLayout offsets the sticky rail by topOffset', async () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <SidenavLayout
+                topOffset={64}
+                sidenav={<SidenavBar aria-label="Main navigation" entries={defaultEntries} />}
+            >
+                content
+            </SidenavLayout>
+        </ThemeContextProvider>
+    );
+    await React.act(async () => {});
+
+    // `createVar` returns `var(--name)`, and the inline style needs the bare `--name`. The rail reads
+    // this variable for its sticky `top` and its `height`; jsdom does not resolve `var()` in those
+    // longhands, so the assertion stays on the declaration.
     const topOffsetVarName = layoutStyles.topOffsetVar.slice('var('.length, -1);
-    expect(
-        await page
-            .getByTestId('SidenavLayout')
-            .evaluate(
-                (element, name) => (element as HTMLElement).style.getPropertyValue(name),
-                topOffsetVarName
-            )
-    ).toBe('64px');
+    expect(screen.getByTestId('SidenavLayout').style.getPropertyValue(topOffsetVarName)).toBe('64px');
 });
-test('SidenavLayout leaves the rail at the top of the viewport without topOffset', async ({mount, page}) => {
-    await mount('sidenav-bar/Scenario5', {});
-    const layoutStyles = (await getComponentStyles(page)).sidenavLayout;
+
+test('SidenavLayout leaves the rail at the top of the viewport without topOffset', async () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <SidenavLayout sidenav={<SidenavBar aria-label="Main navigation" entries={defaultEntries} />}>
+                content
+            </SidenavLayout>
+        </ThemeContextProvider>
+    );
+    await React.act(async () => {});
 
     const topOffsetVarName = layoutStyles.topOffsetVar.slice('var('.length, -1);
+    expect(screen.getByTestId('SidenavLayout').style.getPropertyValue(topOffsetVarName)).toBe('');
+});
+
+test('SidenavBar marks the selected item with aria-current="page"', async () => {
+    await renderSidenav({selectedItemId: 'home'});
+
+    expect(screen.getByRole('link', {name: 'Home'})).toHaveAttribute('aria-current', 'page');
+    expect(screen.getByRole('link', {name: 'Active'})).not.toHaveAttribute('aria-current');
+});
+
+test('SidenavBar renders second-level items of an open item', async () => {
+    await renderSidenav();
+
+    expect(screen.getByRole('link', {name: 'Active'})).toHaveAttribute('href', '/active');
+});
+
+test('SidenavBar auto-expands a parent when one of its children is selected', async () => {
+    const entries: Array<SidenavSection> = [
+        {
+            title: 'Workspace',
+            items: [
+                {
+                    id: 'projects',
+                    label: 'Projects',
+                    asset: IconFolderRegular,
+                    children: [{id: 'active', label: 'Active', href: '/active'}],
+                },
+            ],
+        },
+    ];
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <SidenavBar aria-label="Main navigation" entries={entries} selectedItemId="active" />
+        </ThemeContextProvider>
+    );
+
+    await React.act(async () => {});
+
+    // The parent is not defaultOpen, so the child would be hidden unless the selection auto-expands it.
+    expect(screen.getByRole('link', {name: 'Active'})).toBeInTheDocument();
+});
+
+test('SidenavBar reopens a closed parent when the selection moves to a sibling child', async () => {
+    const entries: Array<SidenavSection> = [
+        {
+            title: 'Workspace',
+            items: [
+                {
+                    id: 'projects',
+                    label: 'Projects',
+                    asset: IconFolderRegular,
+                    children: [
+                        {id: 'active', label: 'Active', href: '/active'},
+                        {id: 'archived', label: 'Archived', href: '/archived'},
+                    ],
+                },
+            ],
+        },
+    ];
+
+    const {rerender} = render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <SidenavBar aria-label="Main navigation" entries={entries} selectedItemId="active" />
+        </ThemeContextProvider>
+    );
+
+    await React.act(async () => {});
+
+    expect(screen.getByRole('link', {name: 'Active'})).toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole('button', {name: 'Projects'}));
+
+    await waitForRemoval(() => screen.queryByRole('link', {name: 'Active'}));
+
+    rerender(
+        <ThemeContextProvider theme={makeTheme()}>
+            <SidenavBar aria-label="Main navigation" entries={entries} selectedItemId="archived" />
+        </ThemeContextProvider>
+    );
+
+    await React.act(async () => {});
+
+    expect(screen.getByRole('link', {name: 'Archived'})).toBeInTheDocument();
+});
+
+test('SidenavBar collapse button toggles the accessible label', async () => {
+    await renderSidenav();
+
+    const collapseButton = screen.getByRole('button', {name: COLLAPSE_LABEL});
+    fireEvent.click(collapseButton);
+
+    expect(screen.getByRole('button', {name: EXPAND_LABEL})).toBeInTheDocument();
+});
+
+test('SidenavBar hides the collapse button when showCollapseButton is false', async () => {
+    await renderSidenav({showCollapseButton: false});
+
     expect(
-        await page
-            .getByTestId('SidenavLayout')
-            .evaluate(
-                (element, name) => (element as HTMLElement).style.getPropertyValue(name),
-                topOffsetVarName
-            )
-    ).toBe('');
+        screen.queryByRole('button', {name: new RegExp(`${COLLAPSE_LABEL}|${EXPAND_LABEL}`)})
+    ).not.toBeInTheDocument();
 });
-test('SidenavBar marks the selected item with aria-current="page"', async ({mount, page}) => {
-    await mount('sidenav-bar/Scenario6', {});
 
-    await expect(page.getByRole('link', {name: 'Home'})).toHaveAttribute('aria-current', 'page');
-    await expect(page.getByRole('link', {name: 'Active'})).not.toHaveAttribute('aria-current');
+const queryItemRow = (itemId: string): HTMLElement => {
+    // eslint-disable-next-line testing-library/no-node-access
+    const row = document.querySelector(`[data-sidenav-item-id="${itemId}"]`);
+    if (!row) {
+        throw new Error(`No sidenav item with id "${itemId}"`);
+    }
+    return row as HTMLElement;
+};
+
+const hasStyle = (row: HTMLElement, className: string): boolean =>
+    // eslint-disable-next-line testing-library/no-node-access
+    Boolean(row.querySelector(`.${className}`));
+
+const renderCollapsible = (props: React.ComponentProps<typeof SidenavBar>) => (
+    <ThemeContextProvider theme={makeTheme()}>
+        <SidenavBar aria-label="Main navigation" entries={defaultEntries} {...props} />
+    </ThemeContextProvider>
+);
+
+test('SidenavBar follows a change of collapsed when showCollapseButton is false', async () => {
+    const {rerender} = render(renderCollapsible({showCollapseButton: false, collapsed: false}));
+    await React.act(async () => {});
+
+    expect(hasStyle(queryItemRow('home'), styles.itemTouchableCollapsed)).toBe(false);
+
+    rerender(renderCollapsible({showCollapseButton: false, collapsed: true}));
+    await React.act(async () => {});
+
+    expect(hasStyle(queryItemRow('home'), styles.itemTouchableCollapsed)).toBe(true);
 });
-test('SidenavBar renders second-level items of an open item', async ({mount, page}) => {
-    await mount('sidenav-bar/Scenario7', {});
 
-    await expect(page.getByRole('link', {name: 'Active'})).toHaveAttribute('href', '/active');
+test('SidenavBar ignores a change of defaultCollapsed when the user can toggle it', async () => {
+    const {rerender} = render(renderCollapsible({defaultCollapsed: false}));
+    await React.act(async () => {});
+
+    rerender(renderCollapsible({defaultCollapsed: true}));
+    await React.act(async () => {});
+
+    expect(hasStyle(queryItemRow('home'), styles.itemTouchableCollapsed)).toBe(false);
 });
-test('SidenavBar auto-expands a parent when one of its children is selected', async ({mount, page}) => {
-    await mount('sidenav-bar/Scenario8', {});
-    await expect(page.getByRole('link', {name: 'Active'})).toHaveCount(1);
+
+test('SidenavBar keeps the header slot when collapsed', async () => {
+    await renderSidenav({headerSlot: <span>header slot</span>, defaultCollapsed: true});
+
+    expect(screen.getByText('header slot')).toBeInTheDocument();
 });
-test('SidenavBar reopens a closed parent when the selection moves to a sibling child', async ({
-    mount,
-    page,
-}) => {
-    const component = await mount('sidenav-bar/Scenario9', {});
 
-    await expect(page.getByRole('link', {name: 'Active'})).toHaveCount(1);
+// Collapsed, the box of the section title closes and the items move up. The title stays in the document,
+// because the list of the section takes its name from it, so a screen reader still hears the section.
+test('SidenavBar closes the section title when collapsed and keeps the name of its list', async () => {
+    await renderSidenav({defaultCollapsed: true});
 
-    await page.getByRole('button', {name: 'Projects'}).click();
+    // eslint-disable-next-line testing-library/no-node-access
+    const titleBox = screen.getByText('Workspace').closest(`.${styles.sectionTitle}`) as HTMLElement;
 
-    await expect(page.getByRole('link', {name: 'Active'})).toHaveCount(0);
-
-    await component.update({step: 1});
-
-    await expect(page.getByRole('link', {name: 'Archived'})).toHaveCount(1);
+    expect(titleBox).toHaveClass(styles.sectionTitleCollapsed);
+    expect(screen.getByRole('list', {name: 'Workspace'})).toBeInTheDocument();
 });
-test('SidenavBar collapse button toggles the accessible label', async ({mount, page}) => {
-    await mount('sidenav-bar/Scenario10', {});
 
-    const collapseButton = page.getByRole('button', {name: COLLAPSE_LABEL});
-    await collapseButton.click();
+// `title={{text, hidden: true}}` paints no heading, and the list of the section keeps that text as its
+// name, in the same way as the collapsed state above.
+test('SidenavBar hides the heading of a section and keeps the name of its list', async () => {
+    const entries: Array<SidenavSection> = [
+        {
+            title: {text: 'Workspace', hidden: true},
+            items: [{id: 'home', label: 'Home', asset: IconHomeRegular, href: '/home'}],
+        },
+    ];
+    await renderSidenav({entries});
 
-    await expect(page.getByRole('button', {name: EXPAND_LABEL})).toHaveCount(1);
+    // eslint-disable-next-line testing-library/no-node-access
+    const titleBox = screen.getByText('Workspace').closest(`.${styles.sectionTitle}`) as HTMLElement;
+
+    expect(titleBox).toHaveClass(styles.sectionTitleHidden);
+    expect(titleBox).not.toHaveClass(styles.sectionTitleCollapsed);
+    expect(screen.getByRole('list', {name: 'Workspace'})).toBeInTheDocument();
 });
-test('SidenavBar hides the collapse button when showCollapseButton is false', async ({mount, page}) => {
-    await mount('sidenav-bar/Scenario11', {});
 
-    await expect(
-        page.getByRole('button', {name: new RegExp(`${COLLAPSE_LABEL}|${EXPAND_LABEL}`)})
-    ).toHaveCount(0);
+// A title in its string form paints the heading, so it never carries the class that closes the box.
+test('SidenavBar paints the heading of a section that declares a plain string title', async () => {
+    await renderSidenav();
+
+    // eslint-disable-next-line testing-library/no-node-access
+    const titleBox = screen.getByText('Workspace').closest(`.${styles.sectionTitle}`) as HTMLElement;
+
+    expect(titleBox).not.toHaveClass(styles.sectionTitleHidden);
+    expect(screen.getByRole('list', {name: 'Workspace'})).toBeInTheDocument();
 });
-test('SidenavBar follows a change of collapsed when showCollapseButton is false', async ({mount, page}) => {
-    const component = await mount('sidenav-bar/Scenario12', {});
-    const queryItemRow = (id: string) => page.locator('[data-sidenav-item-id="' + id + '"]');
-    const hasStyle = async (row: Locator, className: string) =>
-        (await row.locator('.' + className.split(' ')[0]).count()) > 0;
-    const styles = (await getComponentStyles(page)).sidenav;
 
-    await expect.poll(() => hasStyle(queryItemRow('home'), styles.itemTouchableCollapsed)).toBe(false);
+// The spec keeps the label of every item in the DOM on the collapsed rail, and hides it with opacity and
+// width alone. A screen-reader-only label would leave nothing to fade, and it would carry no box either.
+test('SidenavBar keeps the label of an item in the document when collapsed', async () => {
+    await renderSidenav({defaultCollapsed: true});
 
-    await component.update({step: 1});
+    const label = screen.getByText('Home');
 
-    await expect.poll(() => hasStyle(queryItemRow('home'), styles.itemTouchableCollapsed)).toBe(true);
+    expect(label).toBeInTheDocument();
+    expect(hasStyle(queryItemRow('home'), styles.itemLabelCollapsed)).toBe(true);
+    screen.queryAllByTestId('ScreenReaderOnly').forEach((element) => {
+        expect(element).not.toContainElement(label);
+    });
 });
-test('SidenavBar ignores a change of defaultCollapsed when the user can toggle it', async ({mount, page}) => {
-    const component = await mount('sidenav-bar/Scenario13', {});
-    const queryItemRow = (id: string) => page.locator('[data-sidenav-item-id="' + id + '"]');
-    const hasStyle = async (row: Locator, className: string) =>
-        (await row.locator('.' + className.split(' ')[0]).count()) > 0;
-    const styles = (await getComponentStyles(page)).sidenav;
 
-    await component.update({step: 1});
+// The rows of an open group follow the rail while it collapses, like the row of their parent: each label
+// keeps its width and folds. Without this, the labels re-wrap as the rail narrows, the rows grow, and the
+// group bounces while it folds.
+test('SidenavBar folds the labels of an open group with the rail when it collapses', async () => {
+    await renderSidenav();
 
-    await expect.poll(() => hasStyle(queryItemRow('home'), styles.itemTouchableCollapsed)).toBe(false);
+    expect(hasStyle(queryItemRow('active'), styles.itemLabelCollapsed)).toBe(false);
+    expect(hasStyle(queryItemRow('active'), styles.itemLabelKeepsWidth)).toBe(false);
+
+    fireEvent.click(screen.getByRole('button', {name: COLLAPSE_LABEL}));
+
+    // The group leaves the document once it folded, so its rows still stand here, on the collapsed rail.
+    expect(hasStyle(queryItemRow('active'), styles.itemLabelCollapsed)).toBe(true);
+    expect(hasStyle(queryItemRow('active'), styles.itemLabelKeepsWidth)).toBe(true);
 });
-test('SidenavBar keeps the header slot when collapsed', async ({mount, page}) => {
-    await mount('sidenav-bar/Scenario14', {});
 
-    await expect(page.getByText('header slot')).toHaveCount(1);
+test('SidenavBar turns the chevron of a parent item that the user opens', async () => {
+    await renderSidenav();
+
+    fireEvent.click(screen.getByRole('button', {name: 'Projects'}));
+
+    expect(hasStyle(queryItemRow('projects'), styles.itemChevronRotated)).toBe(false);
+
+    fireEvent.click(screen.getByRole('button', {name: 'Projects'}));
+
+    expect(hasStyle(queryItemRow('projects'), styles.itemChevronRotated)).toBe(true);
 });
-test('SidenavBar closes the section title when collapsed and keeps the name of its list', async ({
-    mount,
-    page,
-}) => {
-    await mount('sidenav-bar/Scenario15', {});
-    const styles = (await getComponentStyles(page)).sidenav;
-    const titleBox = page
-        .locator('.' + styles.sectionTitle)
-        .filter({has: page.getByText('Workspace', {exact: true})});
 
-    await expect(titleBox).toContainClass(styles.sectionTitleCollapsed);
-    await expect(page.getByRole('list', {name: 'Workspace'})).toHaveCount(1);
+// The logo is muted for assistive technology, so there is no semantic query for it. The type of the
+// default logo shows up in the viewBox of its svg: the isotype of Movistar is a square of 72 units.
+const getLogoViewBox = (): string | null =>
+    // eslint-disable-next-line testing-library/no-node-access
+    screen.getByTestId('Logo').querySelector('svg')?.getAttribute('viewBox') ?? null;
+
+test('SidenavBar renders the isotype of the skin by default', async () => {
+    await renderSidenav();
+
+    expect(getLogoViewBox()).toBe('0 0 72 72');
 });
-test('SidenavBar hides the heading of a section and keeps the name of its list', async ({mount, page}) => {
-    await mount('sidenav-bar/Scenario16', {});
-    const styles = (await getComponentStyles(page)).sidenav;
-    const titleBox = page
-        .locator('.' + styles.sectionTitle)
-        .filter({has: page.getByText('Workspace', {exact: true})});
 
-    await expect(titleBox).toContainClass(styles.sectionTitleHidden);
-    await expect(titleBox).not.toContainClass(styles.sectionTitleCollapsed);
-    await expect(page.getByRole('list', {name: 'Workspace'})).toHaveCount(1);
+test('SidenavBar keeps the isotype of the skin when it is collapsed', async () => {
+    await renderSidenav({collapsed: true, onCollapse: jest.fn()});
+
+    expect(getLogoViewBox()).toBe('0 0 72 72');
 });
-test('SidenavBar paints the heading of a section that declares a plain string title', async ({
-    mount,
-    page,
-}) => {
-    await mount('sidenav-bar/Scenario17', {});
-    const styles = (await getComponentStyles(page)).sidenav;
-    const titleBox = page
-        .locator('.' + styles.sectionTitle)
-        .filter({has: page.getByText('Workspace', {exact: true})});
 
-    await expect(titleBox).not.toContainClass(styles.sectionTitleHidden);
-    await expect(page.getByRole('list', {name: 'Workspace'})).toHaveCount(1);
+test('SidenavBar renders the default logo when logo is true', async () => {
+    await renderSidenav({logo: true});
+
+    expect(getLogoViewBox()).toBe('0 0 72 72');
 });
-test('SidenavBar keeps the label of an item in the document when collapsed', async ({mount, page}) => {
-    await mount('sidenav-bar/Scenario18', {});
-    const queryItemRow = (id: string) => page.locator('[data-sidenav-item-id="' + id + '"]');
-    const hasStyle = async (row: Locator, className: string) =>
-        (await row.locator('.' + className.split(' ')[0]).count()) > 0;
-    const styles = (await getComponentStyles(page)).sidenav;
 
-    const label = page.getByText('Home');
+// The slot of the logo clips a node of the consumer that is larger than the slot. jsdom resolves the
+// class styles, so the computed overflow of the slot is readable here.
+test('SidenavBar clips a logo larger than its slot', async () => {
+    await renderSidenav({logo: <div data-testid="huge-logo" style={{width: 400, height: 400}} />});
 
-    await expect(label).toHaveCount(1);
-    await expect.poll(() => hasStyle(queryItemRow('home'), styles.itemLabelCollapsed)).toBe(true);
-    await expect(page.getByTestId('ScreenReaderOnly').getByText('Home', {exact: true})).toHaveCount(0);
+    // eslint-disable-next-line testing-library/no-node-access
+    const slot = screen.getByTestId('huge-logo').parentElement as HTMLElement;
+
+    expect(getComputedStyle(slot).overflow).toBe('hidden');
 });
-test('SidenavBar folds the labels of an open group with the rail when it collapses', async ({
-    mount,
-    page,
-}) => {
-    await page.clock.install({time: new Date('2025-01-01T00:00:00Z')});
-    await mount('sidenav-bar/Scenario19', {});
-    await page.clock.pauseAt(new Date('2025-01-02T00:00:00Z'));
-    const queryItemRow = (id: string) => page.locator('[data-sidenav-item-id="' + id + '"]');
-    const hasStyle = async (row: Locator, className: string) =>
-        (await row.locator('.' + className.split(' ')[0]).count()) > 0;
-    const styles = (await getComponentStyles(page)).sidenav;
 
-    await expect.poll(() => hasStyle(queryItemRow('active'), styles.itemLabelCollapsed)).toBe(false);
-    await expect.poll(() => hasStyle(queryItemRow('active'), styles.itemLabelKeepsWidth)).toBe(false);
-    const label = queryItemRow('active').locator('.' + styles.itemLabel.split(' ')[0]);
-    const expandedWidth = await label.evaluate((element) => element.getBoundingClientRect().width);
-    expect(expandedWidth).toBeGreaterThan(0);
+test('SidenavBar renders no logo when logo is false', async () => {
+    await renderSidenav({logo: false});
 
-    await page.getByRole('button', {name: COLLAPSE_LABEL}).click();
-    await expect.poll(() => hasStyle(queryItemRow('active'), styles.itemLabelCollapsed)).toBe(true);
-    await expect.poll(() => hasStyle(queryItemRow('active'), styles.itemLabelFrozenWidth)).toBe(true);
-    await expect
-        .poll(() => label.evaluate((element) => element.getBoundingClientRect().width))
-        .toBeCloseTo(expandedWidth);
+    expect(screen.queryByTestId('Logo')).not.toBeInTheDocument();
 });
-test('SidenavBar turns the chevron of a parent item that the user opens', async ({mount, page}) => {
-    await mount('sidenav-bar/Scenario20', {});
-    const queryItemRow = (id: string) => page.locator('[data-sidenav-item-id="' + id + '"]');
-    const hasStyle = async (row: Locator, className: string) =>
-        (await row.locator('.' + className.split(' ')[0]).count()) > 0;
-    const styles = (await getComponentStyles(page)).sidenav;
 
-    await page.getByRole('button', {name: 'Projects'}).click();
+test('SidenavBar renders the element that logo carries', async () => {
+    await renderSidenav({logo: <img src="/brand.svg" alt="Brand of the product" />});
 
-    await expect.poll(() => hasStyle(queryItemRow('projects'), styles.itemChevronRotated)).toBe(false);
-
-    await page.getByRole('button', {name: 'Projects'}).click();
-
-    await expect.poll(() => hasStyle(queryItemRow('projects'), styles.itemChevronRotated)).toBe(true);
+    expect(screen.getByRole('img', {name: 'Brand of the product'})).toBeInTheDocument();
+    expect(screen.queryByTestId('Logo')).not.toBeInTheDocument();
 });
-test('SidenavBar renders the isotype of the skin by default', async ({mount, page}) => {
-    await mount('sidenav-bar/Scenario21', {});
 
-    expect(await page.getByTestId('Logo').locator('svg').getAttribute('viewBox')).toBe('0 0 72 72');
+const renderLogoByState = ({collapsed}: {collapsed: boolean}) => (
+    <img src="/brand.svg" alt={collapsed ? 'Mark of the product' : 'Mark and name of the product'} />
+);
+
+test('SidenavBar gives the collapsed state to the function that logo carries', async () => {
+    await renderSidenav({logo: renderLogoByState});
+
+    expect(screen.getByRole('img', {name: 'Mark and name of the product'})).toBeInTheDocument();
 });
-test('SidenavBar keeps the isotype of the skin when it is collapsed', async ({mount, page}) => {
-    await mount('sidenav-bar/Scenario22', {});
 
-    expect(await page.getByTestId('Logo').locator('svg').getAttribute('viewBox')).toBe('0 0 72 72');
+test('SidenavBar gives the collapsed state to that function on the collapsed rail', async () => {
+    await renderSidenav({logo: renderLogoByState, collapsed: true, onCollapse: jest.fn()});
+
+    expect(screen.getByRole('img', {name: 'Mark of the product'})).toBeInTheDocument();
 });
-test('SidenavBar renders the default logo when logo is true', async ({mount, page}) => {
-    await mount('sidenav-bar/Scenario23', {});
 
-    expect(await page.getByTestId('Logo').locator('svg').getAttribute('viewBox')).toBe('0 0 72 72');
+test('SidenavBar moves the logo of that function when the user collapses the sidenav', async () => {
+    await renderSidenav({logo: renderLogoByState});
+
+    await React.act(async () => {
+        fireEvent.click(screen.getByRole('button', {name: COLLAPSE_LABEL}));
+    });
+
+    expect(screen.getByRole('img', {name: 'Mark of the product'})).toBeInTheDocument();
 });
-test('SidenavBar clips a logo larger than its slot', async ({mount, page}) => {
-    await mount('sidenav-bar/Scenario24', {});
-    const slot = page.getByTestId('huge-logo').locator('..');
 
-    expect((await computedStyle(slot)).overflow).toBe('hidden');
-});
-test('SidenavBar renders no logo when logo is false', async ({mount, page}) => {
-    await mount('sidenav-bar/Scenario25', {});
-
-    await expect(page.getByTestId('Logo')).toHaveCount(0);
-});
-test('SidenavBar renders the element that logo carries', async ({mount, page}) => {
-    await mount('sidenav-bar/Scenario26', {});
-
-    await expect(page.getByRole('img', {name: 'Brand of the product'})).toHaveCount(1);
-    await expect(page.getByTestId('Logo')).toHaveCount(0);
-});
-test('SidenavBar gives the collapsed state to the function that logo carries', async ({mount, page}) => {
-    await mount('sidenav-bar/Scenario27', {});
-
-    await expect(page.getByRole('img', {name: 'Mark and name of the product'})).toHaveCount(1);
-});
-test('SidenavBar gives the collapsed state to that function on the collapsed rail', async ({mount, page}) => {
-    await mount('sidenav-bar/Scenario28', {});
-
-    await expect(page.getByRole('img', {name: 'Mark of the product'})).toHaveCount(1);
-});
-test('SidenavBar moves the logo of that function when the user collapses the sidenav', async ({
-    mount,
-    page,
-}) => {
-    await mount('sidenav-bar/Scenario29', {});
-
-    await page.getByRole('button', {name: COLLAPSE_LABEL}).click();
-
-    await expect(page.getByRole('img', {name: 'Mark of the product'})).toHaveCount(1);
-});
-test('SidenavBar skips the moving phases when motion is off', async ({mount, page}) => {
-    await mount('sidenav-bar/Scenario30', {});
-
-    await page.getByRole('button', {name: COLLAPSE_LABEL}).click();
-
-    await expect(page.getByRole('img', {name: 'Logo collapsed'})).toHaveCount(1);
-});
-test('SidenavBar gives the collapse state to the functions that headerSlot and footerSlot carry', async ({
-    mount,
-    page,
-}) => {
-    await mount('sidenav-bar/Scenario31', {});
-    await expect(page.getByText('Header expanded false')).toHaveCount(1);
-    await expect(page.getByText('Footer expanded false')).toHaveCount(1);
-
-    await page.getByRole('button', {name: COLLAPSE_LABEL}).click();
-
-    await expect(page.getByText('Header collapsed true')).toHaveCount(1);
-    await expect(page.getByText('Footer collapsed true')).toHaveCount(1);
-});
-test('SidenavBar supports controlled selection with selectedItemId prop', async ({mount, page}) => {
-    const onSelectedItemIdChangeCalls: Array<Array<unknown>> = [];
-    const onSelectedItemIdChange = (...args: Array<unknown>) => {
-        onSelectedItemIdChangeCalls.push(args);
+// The matchMedia stub of the test setup answers true to `(prefers-reduced-motion)`, which turns motion
+// off. This answers false to that one query, and it leaves every other query to the stub. It replaces the
+// function instead of spying on it: the stub is a mock itself, and a spy on a mock reuses that same mock,
+// so a wrapper that calls the stub would call itself. It returns the function that restores the stub.
+const allowMotion = (): (() => void) => {
+    const matchMedia = window.matchMedia;
+    window.matchMedia = (query: string) =>
+        query.includes('prefers-reduced-motion') ? {...matchMedia(query), matches: false} : matchMedia(query);
+    return () => {
+        window.matchMedia = matchMedia;
     };
-    await mount('sidenav-bar/Scenario32', {onSelectedItemIdChange});
+};
 
-    await expect(page.getByRole('link', {name: 'Home'})).toHaveAttribute('aria-current', 'page');
-    await expect(page.getByRole('link', {name: 'Projects'})).not.toHaveAttribute('aria-current');
-    await expect(page.getByRole('link', {name: 'Active'})).not.toHaveAttribute('aria-current');
+const renderLogoByPhase = ({state}: {state: string}) => <img src="/brand.svg" alt={`Logo ${state}`} />;
+
+test('SidenavBar reports the phase of the motion to the logo, and settles it when the rail stops', async () => {
+    jest.useFakeTimers();
+    const restoreMotion = allowMotion();
+    try {
+        await renderSidenav({logo: renderLogoByPhase});
+        expect(screen.getByRole('img', {name: 'Logo expanded'})).toBeInTheDocument();
+
+        await React.act(async () => {
+            fireEvent.click(screen.getByRole('button', {name: COLLAPSE_LABEL}));
+        });
+        expect(screen.getByRole('img', {name: 'Logo collapsing'})).toBeInTheDocument();
+
+        await React.act(async () => {
+            jest.advanceTimersByTime(styles.COLLAPSE_DURATION_MS);
+        });
+        expect(screen.getByRole('img', {name: 'Logo collapsed'})).toBeInTheDocument();
+
+        await React.act(async () => {
+            fireEvent.click(screen.getByRole('button', {name: EXPAND_LABEL}));
+        });
+        expect(screen.getByRole('img', {name: 'Logo expanding'})).toBeInTheDocument();
+
+        await React.act(async () => {
+            jest.advanceTimersByTime(styles.COLLAPSE_DURATION_MS);
+        });
+        expect(screen.getByRole('img', {name: 'Logo expanded'})).toBeInTheDocument();
+    } finally {
+        jest.useRealTimers();
+        restoreMotion();
+    }
 });
-test('SidenavBar calls onSelectedItemIdChange when an item with id is clicked', async ({mount, page}) => {
-    const onSelectedItemIdChangeCalls: Array<Array<unknown>> = [];
-    const onSelectedItemIdChange = (...args: Array<unknown>) => {
-        onSelectedItemIdChangeCalls.push(args);
-    };
-    const onPressCalls: Array<Array<unknown>> = [];
-    const onPress = (...args: Array<unknown>) => {
-        onPressCalls.push(args);
-    };
-    await mount('sidenav-bar/Scenario33', {onSelectedItemIdChange, onPress});
 
-    const projectsButton = page.getByRole('button', {name: 'Projects'});
-    await projectsButton.click();
+test('SidenavBar skips the moving phases when motion is off', async () => {
+    await renderSidenav({logo: renderLogoByPhase});
 
-    await expect.poll(() => onSelectedItemIdChangeCalls).toContainEqual(['projects']);
-    await expect.poll(() => onPressCalls.length).toBeGreaterThan(0);
+    await React.act(async () => {
+        fireEvent.click(screen.getByRole('button', {name: COLLAPSE_LABEL}));
+    });
+
+    expect(screen.getByRole('img', {name: 'Logo collapsed'})).toBeInTheDocument();
 });
-test('SidenavBar renders stand-alone items at the first level, outside any section', async ({
-    mount,
-    page,
-}) => {
-    await mount('sidenav-bar/Scenario34', {});
 
-    await expect(page.getByRole('link', {name: 'Standalone top'})).toHaveAttribute('href', '/standalone-top');
-    await expect(page.getByRole('link', {name: 'Standalone bottom'})).toHaveAttribute(
+test('SidenavBar gives the collapse state to the functions that headerSlot and footerSlot carry', async () => {
+    await renderSidenav({
+        headerSlot: ({collapsed, state}) => <div>{`Header ${state} ${collapsed}`}</div>,
+        footerSlot: ({collapsed, state}) => <div>{`Footer ${state} ${collapsed}`}</div>,
+    });
+    expect(screen.getByText('Header expanded false')).toBeInTheDocument();
+    expect(screen.getByText('Footer expanded false')).toBeInTheDocument();
+
+    await React.act(async () => {
+        fireEvent.click(screen.getByRole('button', {name: COLLAPSE_LABEL}));
+    });
+
+    expect(screen.getByText('Header collapsed true')).toBeInTheDocument();
+    expect(screen.getByText('Footer collapsed true')).toBeInTheDocument();
+});
+
+test('SidenavBar supports controlled selection with selectedItemId prop', async () => {
+    const onSelectedItemIdChange = jest.fn();
+
+    const entries: Array<SidenavSection> = [
+        {
+            title: 'Workspace',
+            items: [
+                {id: 'home', label: 'Home', asset: IconHomeRegular, href: '/home'},
+                {id: 'projects', label: 'Projects', asset: IconFolderRegular, href: '/projects'},
+                {id: 'active', label: 'Active', asset: IconHomeRegular, href: '/active'},
+            ],
+        },
+    ];
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <SidenavBar
+                aria-label="Main navigation"
+                entries={entries}
+                selectedItemId="home"
+                onSelectedItemIdChange={onSelectedItemIdChange}
+            />
+        </ThemeContextProvider>
+    );
+
+    await React.act(async () => {});
+
+    expect(screen.getByRole('link', {name: 'Home'})).toHaveAttribute('aria-current', 'page');
+    expect(screen.getByRole('link', {name: 'Projects'})).not.toHaveAttribute('aria-current');
+    expect(screen.getByRole('link', {name: 'Active'})).not.toHaveAttribute('aria-current');
+});
+
+test('SidenavBar calls onSelectedItemIdChange when an item with id is clicked', async () => {
+    const onSelectedItemIdChange = jest.fn();
+    const onPress = jest.fn();
+
+    const entries: Array<SidenavSection> = [
+        {
+            title: 'Workspace',
+            items: [
+                {id: 'home', label: 'Home', asset: IconHomeRegular, onPress: () => {}},
+                {id: 'projects', label: 'Projects', asset: IconFolderRegular, onPress},
+            ],
+        },
+    ];
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <SidenavBar
+                aria-label="Main navigation"
+                entries={entries}
+                selectedItemId="home"
+                onSelectedItemIdChange={onSelectedItemIdChange}
+            />
+        </ThemeContextProvider>
+    );
+
+    await React.act(async () => {});
+
+    const projectsButton = screen.getByRole('button', {name: 'Projects'});
+    fireEvent.click(projectsButton);
+
+    expect(onSelectedItemIdChange).toHaveBeenCalledWith('projects');
+    expect(onPress).toHaveBeenCalled();
+});
+
+const mixedFirstLevel: Array<SidenavEntry> = [
+    {id: 'standalone-top', label: 'Standalone top', asset: IconHomeRegular, href: '/standalone-top'},
+    {
+        title: 'Workspace',
+        items: [{id: 'home', label: 'Home', asset: IconHomeRegular, href: '/home'}],
+    },
+    {
+        id: 'standalone-bottom',
+        label: 'Standalone bottom',
+        asset: IconFolderRegular,
+        href: '/standalone-bottom',
+    },
+];
+
+test('SidenavBar renders stand-alone items at the first level, outside any section', async () => {
+    await renderSidenav({entries: mixedFirstLevel});
+
+    expect(screen.getByRole('link', {name: 'Standalone top'})).toHaveAttribute('href', '/standalone-top');
+    expect(screen.getByRole('link', {name: 'Standalone bottom'})).toHaveAttribute(
         'href',
         '/standalone-bottom'
     );
 
-    const workspace = page.getByRole('list', {name: 'Workspace'});
-    await expect(workspace.locator(page.getByRole('link', {name: 'Home'}))).toHaveCount(1);
-    await expect(workspace.locator(page.getByRole('link', {name: 'Standalone top'}))).toHaveCount(0);
-    await expect(workspace.locator(page.getByRole('link', {name: 'Standalone bottom'}))).toHaveCount(0);
+    const workspace = screen.getByRole('list', {name: 'Workspace'});
+    expect(workspace).toContainElement(screen.getByRole('link', {name: 'Home'}));
+    expect(workspace).not.toContainElement(screen.getByRole('link', {name: 'Standalone top'}));
+    expect(workspace).not.toContainElement(screen.getByRole('link', {name: 'Standalone bottom'}));
 });
-test('SidenavBar builds one list for the first level, with one item per entry', async ({mount, page}) => {
-    await mount('sidenav-bar/Scenario35', {});
-    const getListItems = (list: Locator) => list.locator(':scope > [role="listitem"]');
 
-    const nav = page.getByRole('navigation', {name: 'Main navigation'});
-    const bodyList = nav.getByRole('list').first();
+// The body of the sidenav is a tree of lists: one list per level, and one list item per entry. A screen
+// reader then gives the position of an item among its siblings, at every level.
+
+/**
+ * The list items that a list owns. A query by role would also return the ones of the lists below it, and
+ * these tests read one level at a time.
+ */
+const getListItems = (list: HTMLElement): Array<HTMLElement> =>
+    // eslint-disable-next-line testing-library/no-node-access
+    (Array.from(list.children) as Array<HTMLElement>).filter(
+        (child) => child.getAttribute('role') === 'listitem'
+    );
+
+/** The list item that holds an element, which is the entry that the element belongs to. */
+const getOwnListItem = (element: HTMLElement): HTMLElement =>
+    // eslint-disable-next-line testing-library/no-node-access
+    element.closest('[role="listitem"]') as HTMLElement;
+
+test('SidenavBar builds one list for the first level, with one item per entry', async () => {
+    await renderSidenav({entries: mixedFirstLevel});
+
+    const nav = screen.getByRole('navigation', {name: 'Main navigation'});
+    const [bodyList] = within(nav).getAllByRole('list');
     const entries = getListItems(bodyList);
 
-    await expect(entries).toHaveCount(3);
-    await expect(entries.nth(0).locator(page.getByRole('link', {name: 'Standalone top'}))).toHaveCount(1);
-    await expect(entries.nth(1).locator(page.getByRole('list', {name: 'Workspace'}))).toHaveCount(1);
-    await expect(entries.nth(2).locator(page.getByRole('link', {name: 'Standalone bottom'}))).toHaveCount(1);
+    expect(entries).toHaveLength(3);
+    expect(entries[0]).toContainElement(screen.getByRole('link', {name: 'Standalone top'}));
+    expect(entries[1]).toContainElement(screen.getByRole('list', {name: 'Workspace'}));
+    expect(entries[2]).toContainElement(screen.getByRole('link', {name: 'Standalone bottom'}));
 });
-test('SidenavBar gives each section a list of its own, named by its title', async ({mount, page}) => {
-    await mount('sidenav-bar/Scenario36', {});
-    const getListItems = (list: Locator) => list.locator(':scope > [role="listitem"]');
 
-    const sectionList = page.getByRole('list', {name: 'Workspace'});
+test('SidenavBar gives each section a list of its own, named by its title', async () => {
+    await renderSidenav({entries: mixedFirstLevel});
 
-    await expect(getListItems(sectionList)).toHaveCount(1);
-    await expect(sectionList.locator(page.getByRole('link', {name: 'Home'}))).toHaveCount(1);
+    const sectionList = screen.getByRole('list', {name: 'Workspace'});
+
+    expect(getListItems(sectionList)).toHaveLength(1);
+    expect(sectionList).toContainElement(screen.getByRole('link', {name: 'Home'}));
 });
-test('SidenavBar gives a stand-alone entry a single list item', async ({mount, page}) => {
-    await mount('sidenav-bar/Scenario37', {});
-    const getOwnListItem = (element: Locator) => element.locator('xpath=ancestor::*[@role="listitem"][1]');
 
-    const entry = getOwnListItem(page.getByRole('link', {name: 'Standalone top'}));
+// A stand-alone entry carries the rail of the items on a wrapper of its own, and that wrapper is its list
+// item. The item inside renders none: two nested list items would report one entry instead of two.
+test('SidenavBar gives a stand-alone entry a single list item', async () => {
+    await renderSidenav({entries: mixedFirstLevel});
 
-    await expect(entry.getByRole('listitem')).toHaveCount(0);
+    const entry = getOwnListItem(screen.getByRole('link', {name: 'Standalone top'}));
+
+    expect(within(entry).queryAllByRole('listitem')).toHaveLength(0);
 });
-test('SidenavBar keeps a parent item and its children in the same list item', async ({mount, page}) => {
-    await mount('sidenav-bar/Scenario38', {});
-    const getOwnListItem = (element: Locator) => element.locator('xpath=ancestor::*[@role="listitem"][1]');
 
-    const entry = getOwnListItem(page.getByRole('button', {name: 'Projects'}));
-    const children = page.getByRole('list', {name: 'Projects'});
+// The trigger of a group and the children that it opens share one list item, so a screen reader ties them
+// together. It matters on desktop VoiceOver, which does not announce the expanded state of the trigger.
+test('SidenavBar keeps a parent item and its children in the same list item', async () => {
+    await renderSidenav();
 
-    await expect(entry.locator(children)).toHaveCount(1);
-    await expect(children.locator(page.getByRole('link', {name: 'Active'}))).toHaveCount(1);
+    const entry = getOwnListItem(screen.getByRole('button', {name: 'Projects'}));
+    const children = screen.getByRole('list', {name: 'Projects'});
+
+    expect(entry).toContainElement(children);
+    expect(children).toContainElement(screen.getByRole('link', {name: 'Active'}));
 });
-test('SidenavBar keeps every entry of the first level 8px from its neighbours and from the two ends', async ({
-    mount,
-    page,
-}) => {
-    await mount('sidenav-bar/Scenario39', {});
-    const getListItems = (list: Locator) => list.locator(':scope > [role="listitem"]');
 
-    const nav = page.getByRole('navigation', {name: 'Main navigation'});
-    const bodyList = nav.getByRole('list').first();
-    const listStyle = await computedStyle(bodyList);
+// Every entry of the first level owns 8px above and below itself, a section as much as a stand-alone item,
+// so the body list holds one 16px gap between any two neighbours and 8px at each of its two ends. The
+// entries themselves carry no margin of their own.
+test('SidenavBar keeps every entry of the first level 8px from its neighbours and from the two ends', async () => {
+    await renderSidenav({
+        entries: [
+            {id: 'first', label: 'First', asset: IconHomeRegular, href: '/first'},
+            {id: 'second', label: 'Second', asset: IconHomeRegular, href: '/second'},
+            {
+                title: 'Workspace',
+                items: [{id: 'home', label: 'Home', asset: IconHomeRegular, href: '/home'}],
+            },
+            {id: 'third', label: 'Third', asset: IconHomeRegular, href: '/third'},
+        ],
+    });
+
+    const nav = screen.getByRole('navigation', {name: 'Main navigation'});
+    const [bodyList] = within(nav).getAllByRole('list');
+    const listStyle = getComputedStyle(bodyList);
 
     expect(listStyle.gap).toBe('16px');
     expect(listStyle.paddingTop).toBe('8px');
     expect(listStyle.paddingBottom).toBe('8px');
-    const marginTops = await getListItems(bodyList).evaluateAll((entries) =>
-        entries.map((entry) => getComputedStyle(entry).marginTop)
-    );
+    // jsdom reads an unset margin as an empty string.
+    const marginTops = getListItems(bodyList).map((entry) => getComputedStyle(entry).marginTop || '0px');
     expect(marginTops).toEqual(['0px', '0px', '0px', '0px']);
 });
-test('SidenavBar gives each section divider its 16px on the side of the items only', async ({
-    mount,
-    page,
-}) => {
-    await mount('sidenav-bar/Scenario40', {});
-    const styles = (await getComponentStyles(page)).sidenav;
 
-    const nav = page.getByRole('navigation', {name: 'Main navigation'});
+// A divider owns 16px on the side of its items only. Its outward side is the edge of the entry, where the
+// gap of the body list already gives the 16px to the neighbour, so a line reads 16px on each side.
+test('SidenavBar gives each section divider its 16px on the side of the items only', async () => {
+    await renderSidenav({
+        entries: [
+            {id: 'first', label: 'First', asset: IconHomeRegular, href: '/first'},
+            {
+                title: 'Workspace',
+                dividerTop: true,
+                dividerBottom: true,
+                items: [{id: 'home', label: 'Home', asset: IconHomeRegular, href: '/home'}],
+            },
+            {id: 'last', label: 'Last', asset: IconHomeRegular, href: '/last'},
+        ],
+    });
+
+    const nav = screen.getByRole('navigation', {name: 'Main navigation'});
+    // Both divider classes compose one base class, which comes last in the string.
     const dividerBaseClass = styles.sectionDividerTop.split(' ').pop();
-    const [topDivider, bottomDivider] = await nav.locator(`.${dividerBaseClass}`).all();
+    // eslint-disable-next-line testing-library/no-node-access
+    const [topDivider, bottomDivider] = Array.from(nav.querySelectorAll<HTMLElement>(`.${dividerBaseClass}`));
 
-    expect((await computedStyle(topDivider)).marginTop || '0px').toBe('0px');
-    expect((await computedStyle(topDivider)).marginBottom).toBe('16px');
-    expect((await computedStyle(bottomDivider)).marginTop).toBe('16px');
-    expect((await computedStyle(bottomDivider)).marginBottom || '0px').toBe('0px');
+    expect(getComputedStyle(topDivider).marginTop || '0px').toBe('0px');
+    expect(getComputedStyle(topDivider).marginBottom).toBe('16px');
+    expect(getComputedStyle(bottomDivider).marginTop).toBe('16px');
+    expect(getComputedStyle(bottomDivider).marginBottom || '0px').toBe('0px');
 });
-test('SidenavBar draws no divider above the first entry nor below the last one', async ({mount, page}) => {
-    await mount('sidenav-bar/Scenario41', {});
-    const getListItems = (list: Locator) => list.locator(':scope > [role="listitem"]');
-    const styles = (await getComponentStyles(page)).sidenav;
 
-    const nav = page.getByRole('navigation', {name: 'Main navigation'});
-    const bodyList = nav.getByRole('list').first();
+// A line parts two entries, so the body draws none at its own two ends, whatever the sections ask for.
+test('SidenavBar draws no divider above the first entry nor below the last one', async () => {
+    await renderSidenav({
+        entries: [
+            {
+                title: 'First',
+                dividerTop: true,
+                dividerBottom: true,
+                items: [{id: 'one', label: 'One', asset: IconHomeRegular, href: '/one'}],
+            },
+            {
+                title: 'Second',
+                dividerTop: true,
+                dividerBottom: true,
+                items: [{id: 'two', label: 'Two', asset: IconHomeRegular, href: '/two'}],
+            },
+            {
+                title: 'Third',
+                dividerTop: true,
+                dividerBottom: true,
+                items: [{id: 'three', label: 'Three', asset: IconHomeRegular, href: '/three'}],
+            },
+        ],
+    });
+
+    const nav = screen.getByRole('navigation', {name: 'Main navigation'});
+    const [bodyList] = within(nav).getAllByRole('list');
     const entries = getListItems(bodyList);
     const dividerBaseClass = styles.sectionDividerTop.split(' ').pop();
-    const countDividers = (entry: Locator) => entry.locator(`.${dividerBaseClass}`).count();
-    expect(await Promise.all((await entries.all()).map(countDividers))).toEqual([1, 1, 0]);
-});
-test('SidenavBar shares one divider between a section with a bottom divider and a section with a top divider', async ({
-    mount,
-    page,
-}) => {
-    await mount('sidenav-bar/Scenario42', {});
-    const getListItems = (list: Locator) => list.locator(':scope > [role="listitem"]');
-    const styles = (await getComponentStyles(page)).sidenav;
+    // eslint-disable-next-line testing-library/no-node-access
+    const countDividers = (entry: HTMLElement) => entry.querySelectorAll(`.${dividerBaseClass}`).length;
 
-    const nav = page.getByRole('navigation', {name: 'Main navigation'});
-    const bodyList = nav.getByRole('list').first();
+    // The first entry keeps its bottom line, which the second one shares. The second keeps its bottom
+    // line too, which the third one shares. The third draws nothing.
+    expect(entries.map(countDividers)).toEqual([1, 1, 0]);
+});
+
+// A bottom divider that meets a top divider would paint two lines with 16px between them. The second
+// section drops its top divider, so one line parts the two sections, with 16px on each side.
+test('SidenavBar shares one divider between a section with a bottom divider and a section with a top divider', async () => {
+    await renderSidenav({
+        entries: [
+            {
+                title: 'First',
+                dividerBottom: true,
+                items: [{id: 'one', label: 'One', asset: IconHomeRegular, href: '/one'}],
+            },
+            {
+                title: 'Second',
+                dividerTop: true,
+                dividerBottom: true,
+                items: [{id: 'two', label: 'Two', asset: IconHomeRegular, href: '/two'}],
+            },
+            {
+                title: 'Third',
+                items: [{id: 'three', label: 'Three', asset: IconHomeRegular, href: '/three'}],
+            },
+        ],
+    });
+
+    const nav = screen.getByRole('navigation', {name: 'Main navigation'});
+    const [bodyList] = within(nav).getAllByRole('list');
     const entries = getListItems(bodyList);
+    // Both divider classes compose one base class, which comes last in the string.
     const dividerBaseClass = styles.sectionDividerTop.split(' ').pop();
-    const countDividers = (entry: Locator) => entry.locator(`.${dividerBaseClass}`).count();
+    // eslint-disable-next-line testing-library/no-node-access
+    const countDividers = (entry: HTMLElement) => entry.querySelectorAll(`.${dividerBaseClass}`).length;
 
-    expect(await Promise.all((await entries.all()).map(countDividers))).toEqual([1, 1, 0]);
+    expect(entries.map(countDividers)).toEqual([1, 1, 0]);
 });
-test('SidenavBar keeps the declared order of entries and stand-alone items', async ({mount, page}) => {
-    await mount('sidenav-bar/Scenario43', {});
 
-    const labels = await page.getByRole('link').allTextContents();
+test('SidenavBar keeps the declared order of entries and stand-alone items', async () => {
+    await renderSidenav({entries: mixedFirstLevel});
+
+    const labels = screen
+        .getAllByRole('link')
+        .map((link) => link.textContent)
+        .filter(Boolean);
 
     expect(labels).toEqual(['Standalone top', 'Home', 'Standalone bottom']);
 });
-test('SidenavBar selects a stand-alone item at the first level', async ({mount, page}) => {
-    await mount('sidenav-bar/Scenario44', {});
 
-    await expect(page.getByRole('link', {name: 'Standalone top'})).toHaveAttribute('aria-current', 'page');
-    await expect(page.getByRole('link', {name: 'Home'})).not.toHaveAttribute('aria-current');
+test('SidenavBar selects a stand-alone item at the first level', async () => {
+    await renderSidenav({entries: mixedFirstLevel, selectedItemId: 'standalone-top'});
+
+    expect(screen.getByRole('link', {name: 'Standalone top'})).toHaveAttribute('aria-current', 'page');
+    expect(screen.getByRole('link', {name: 'Home'})).not.toHaveAttribute('aria-current');
 });
-test('SidenavBar double panel opens with the label of the parent item and its children', async ({
-    mount,
-    page,
-}) => {
-    await mount('sidenav-bar/Scenario45', {});
-    const getPanel = (name: string) => page.getByRole('list', {name, exact: true});
 
-    await expect(getPanel('Projects')).toHaveCount(0);
+const doublePanelEntries: Array<SidenavSection> = [
+    {
+        title: 'Workspace',
+        items: [
+            {id: 'home', label: 'Home', asset: IconHomeRegular, onPress: () => {}},
+            {
+                id: 'projects',
+                label: 'Projects',
+                asset: IconFolderRegular,
+                children: [
+                    {id: 'active', label: 'Active', onPress: () => {}},
+                    {id: 'archived', label: 'Archived', onPress: () => {}},
+                ],
+            },
+            {
+                id: 'documents',
+                label: 'Documents',
+                asset: IconFolderRegular,
+                children: [{id: 'shared', label: 'Shared', onPress: () => {}}],
+            },
+        ],
+    },
+];
 
-    await page.getByRole('button', {name: 'Projects'}).click();
+const renderDoublePanelSidenav = async (props: Record<string, unknown> = {}) => {
+    const result = render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <SidenavBar
+                {...({
+                    'aria-label': 'Main navigation',
+                    entries: doublePanelEntries,
+                    doublePanel: true,
+                    ...props,
+                } as any)}
+            />
+        </ThemeContextProvider>
+    );
+
+    await React.act(async () => {});
+
+    return result;
+};
+
+// The list of the panel takes its name from the visible title, through `aria-labelledby`, so the query by
+// name also asserts that association.
+const getPanel = (parentLabel: string) => screen.queryByRole('list', {name: parentLabel});
+
+test('SidenavBar double panel opens with the label of the parent item and its children', async () => {
+    await renderDoublePanelSidenav();
+
+    expect(getPanel('Projects')).not.toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole('button', {name: 'Projects'}));
 
     const panel = getPanel('Projects');
-    await expect(panel).toHaveCount(1);
-    await expect(panel.locator(page.getByRole('button', {name: 'Active'}))).toHaveCount(1);
-    await expect(panel.locator(page.getByRole('button', {name: 'Archived'}))).toHaveCount(1);
-    await expect(page.getByRole('button', {name: 'Projects'})).toHaveAttribute('aria-expanded', 'true');
+    expect(panel).toBeInTheDocument();
+    expect(panel).toContainElement(screen.getByRole('button', {name: 'Active'}));
+    expect(panel).toContainElement(screen.getByRole('button', {name: 'Archived'}));
+    expect(screen.getByRole('button', {name: 'Projects'})).toHaveAttribute('aria-expanded', 'true');
 });
-test('SidenavBar double panel moves the focus to the first item of the column when it opens', async ({
-    mount,
-    page,
-}) => {
-    await mount('sidenav-bar/Scenario46', {});
 
-    await page.getByRole('button', {name: 'Projects'}).click();
+// The first item of the column takes the focus when the column opens, so a screen reader announces the
+// named list that the user entered, and the first press of a key already acts on an item.
+test('SidenavBar double panel moves the focus to the first item of the column when it opens', async () => {
+    await renderDoublePanelSidenav();
 
-    await expect(page.getByRole('button', {name: 'Active'})).toBeFocused();
+    fireEvent.click(screen.getByRole('button', {name: 'Projects'}));
+
+    await waitFor(() => {
+        expect(screen.getByRole('button', {name: 'Active'})).toHaveFocus();
+    });
 });
-test('SidenavBar double panel steps into the column and back to its parent with the arrow keys', async ({
-    mount,
-    page,
-}) => {
-    await mount('sidenav-bar/Scenario47', {});
-    const getPanel = (name: string) => page.getByRole('list', {name, exact: true});
 
-    await page.getByRole('button', {name: 'Projects'}).click();
+// The column belongs to no item of the rail, so it answers these keys itself. It stays open either way:
+// it is a column of the bar, and not a floating panel.
+test('SidenavBar double panel steps into the column and back to its parent with the arrow keys', async () => {
+    await renderDoublePanelSidenav();
 
-    await expect(page.getByRole('button', {name: 'Active'})).toBeFocused();
+    fireEvent.click(screen.getByRole('button', {name: 'Projects'}));
+    await waitFor(() => {
+        expect(screen.getByRole('button', {name: 'Active'})).toHaveFocus();
+    });
 
-    await page.getByRole('button', {name: 'Active'}).press('ArrowDown');
-    await expect(page.getByRole('button', {name: 'Archived'})).toBeFocused();
+    fireEvent.keyDown(screen.getByRole('button', {name: 'Active'}), {key: 'ArrowDown'});
+    expect(screen.getByRole('button', {name: 'Archived'})).toHaveFocus();
 
-    await page.getByRole('button', {name: 'Archived'}).press('ArrowUp');
-    await expect(page.getByRole('button', {name: 'Active'})).toBeFocused();
-    await page.getByRole('button', {name: 'Active'}).press('ArrowUp');
-    await expect(page.getByRole('button', {name: 'Projects'})).toBeFocused();
-    await expect(getPanel('Projects')).toHaveCount(1);
+    fireEvent.keyDown(screen.getByRole('button', {name: 'Archived'}), {key: 'ArrowUp'});
+    expect(screen.getByRole('button', {name: 'Active'})).toHaveFocus();
+
+    // ArrowUp on the first item of the column steps back to its trigger, and the column stays open.
+    fireEvent.keyDown(screen.getByRole('button', {name: 'Active'}), {key: 'ArrowUp'});
+    expect(screen.getByRole('button', {name: 'Projects'})).toHaveFocus();
+    expect(getPanel('Projects')).toBeInTheDocument();
 });
-test('SidenavBar double panel opens the column and lands on its first item with one ArrowRight', async ({
-    mount,
-    page,
-}) => {
-    await mount('sidenav-bar/Scenario48', {});
 
-    const trigger = page.getByRole('button', {name: 'Projects', expanded: false});
-    await trigger.focus();
-    await trigger.press('ArrowRight');
+// One press of ArrowRight opens the column and steps into it, so the user reaches the first item without
+// a second press. The column exists only after that press, so the item that opens it carries the request.
+test('SidenavBar double panel opens the column and lands on its first item with one ArrowRight', async () => {
+    await renderDoublePanelSidenav();
 
-    await expect(page.getByRole('button', {name: 'Active'})).toBeFocused();
+    const trigger = screen.getByRole('button', {name: 'Projects', expanded: false});
+    trigger.focus();
+    fireEvent.keyDown(trigger, {key: 'ArrowRight'});
+
+    await waitFor(() => {
+        expect(screen.getByRole('button', {name: 'Active'})).toHaveFocus();
+    });
 });
-test('SidenavBar double panel steps back into the open column with ArrowRight', async ({mount, page}) => {
-    await mount('sidenav-bar/Scenario49', {});
-    const getPanel = (name: string) => page.getByRole('list', {name, exact: true});
 
-    await page.getByRole('button', {name: 'Projects'}).click();
-    const column = getPanel('Projects');
+// A parent whose column already stands open answers ArrowRight with the first item of that column. The
+// column announced itself when it opened, and it stands beside the rail, so the user needs no second stop.
+test('SidenavBar double panel steps back into the open column with ArrowRight', async () => {
+    await renderDoublePanelSidenav();
 
-    await expect(page.getByRole('button', {name: 'Active'})).toBeFocused();
+    fireEvent.click(screen.getByRole('button', {name: 'Projects'}));
+    const column = getPanel('Projects') as HTMLElement;
+    await waitFor(() => {
+        expect(screen.getByRole('button', {name: 'Active'})).toHaveFocus();
+    });
 
-    const trigger = page.getByRole('button', {name: 'Projects'});
-    await trigger.focus();
-    await trigger.press('ArrowRight');
+    const trigger = screen.getByRole('button', {name: 'Projects'});
+    trigger.focus();
+    fireEvent.keyDown(trigger, {key: 'ArrowRight'});
 
-    await expect(page.getByRole('button', {name: 'Active'})).toBeFocused();
-    await expect(column).toHaveCount(1);
+    expect(screen.getByRole('button', {name: 'Active'})).toHaveFocus();
+    expect(column).toBeInTheDocument();
 });
-test('SidenavBar double panel closes when the user presses one of its children', async ({mount, page}) => {
-    await mount('sidenav-bar/Scenario50', {});
-    const getPanel = (name: string) => page.getByRole('list', {name, exact: true});
 
-    await page.getByRole('button', {name: 'Projects'}).click();
-    await page.getByRole('button', {name: 'Active'}).click();
+// The second column and the dialog panel of the collapsed rail hold the children of one parent item, so
+// each of them carries a list of its own, named by its visible title.
+test.each`
+    collapsed | representation
+    ${false}  | ${'second column'}
+    ${true}   | ${'dialog panel'}
+`('SidenavBar gives a list to the $representation', async ({collapsed}) => {
+    await renderDoublePanelSidenav({defaultCollapsed: collapsed});
 
-    await expect(getPanel('Projects')).toHaveCount(0);
+    fireEvent.click(screen.getByRole('button', {name: 'Projects'}));
+
+    const panelList = getPanel('Projects') as HTMLElement;
+
+    expect(getListItems(panelList)).toHaveLength(2);
+    expect(panelList).toContainElement(screen.getByRole('button', {name: 'Active'}));
 });
-test('SidenavBar double panel closes when the user presses the same parent item again', async ({
-    mount,
-    page,
-}) => {
-    await mount('sidenav-bar/Scenario51', {});
-    const getPanel = (name: string) => page.getByRole('list', {name, exact: true});
 
-    await page.getByRole('button', {name: 'Projects'}).click();
-    await page.getByRole('button', {name: 'Projects'}).click();
+test('SidenavBar double panel closes when the user presses one of its children', async () => {
+    await renderDoublePanelSidenav();
 
-    await expect(getPanel('Projects')).toHaveCount(0);
+    fireEvent.click(screen.getByRole('button', {name: 'Projects'}));
+    fireEvent.click(screen.getByRole('button', {name: 'Active'}));
+
+    await waitForRemoval(() => getPanel('Projects'));
 });
-test('SidenavBar double panel closes when the user presses outside of the bar', async ({mount, page}) => {
-    await mount('sidenav-bar/Scenario52', {});
-    const getPanel = (name: string) => page.getByRole('list', {name, exact: true});
 
-    await page.getByRole('button', {name: 'Projects'}).click();
-    await expect(getPanel('Projects')).toHaveCount(1);
+test('SidenavBar double panel closes when the user presses the same parent item again', async () => {
+    await renderDoublePanelSidenav();
 
-    await page.locator('body').click();
+    fireEvent.click(screen.getByRole('button', {name: 'Projects'}));
+    fireEvent.click(screen.getByRole('button', {name: 'Projects'}));
 
-    await expect(getPanel('Projects')).toHaveCount(0);
+    await waitForRemoval(() => getPanel('Projects'));
 });
-test('SidenavBar double panel stays open when the user presses the background of the bar', async ({
-    mount,
-    page,
-}) => {
-    await mount('sidenav-bar/Scenario53', {});
-    const getPanel = (name: string) => page.getByRole('list', {name, exact: true});
 
-    await page.getByRole('button', {name: 'Projects'}).click();
-    await page.getByText('Workspace').click();
+test('SidenavBar double panel closes when the user presses outside of the bar', async () => {
+    await renderDoublePanelSidenav();
 
-    await expect(getPanel('Projects')).toHaveCount(1);
+    fireEvent.click(screen.getByRole('button', {name: 'Projects'}));
+    expect(getPanel('Projects')).toBeInTheDocument();
+
+    fireEvent.click(document.body);
+
+    await waitForRemoval(() => getPanel('Projects'));
 });
-test('SidenavBar double panel stays open when the user collapses the sidenav', async ({mount, page}) => {
-    await mount('sidenav-bar/Scenario54', {});
-    const getPanel = (name: string) => page.getByRole('list', {name, exact: true});
 
-    await page.getByRole('button', {name: 'Projects'}).click();
-    await expect(getPanel('Projects')).toHaveCount(1);
+// The second column is a column of the bar, not a floating dialog, so a press that lands on the bar
+// itself (the background of a column, a section title) leaves it open.
+test('SidenavBar double panel stays open when the user presses the background of the bar', async () => {
+    await renderDoublePanelSidenav();
 
-    await page.getByRole('button', {name: COLLAPSE_LABEL}).click();
+    fireEvent.click(screen.getByRole('button', {name: 'Projects'}));
+    fireEvent.click(screen.getByText('Workspace'));
 
-    await expect(getPanel('Projects')).toHaveCount(1);
+    expect(getPanel('Projects')).toBeInTheDocument();
 });
-test('SidenavBar double panel stays open when the user presses outside of the bar and it holds the selection', async ({
-    mount,
-    page,
-}) => {
-    await mount('sidenav-bar/Scenario55', {});
-    const getPanel = (name: string) => page.getByRole('list', {name, exact: true});
 
-    await expect(getPanel('Projects')).toHaveCount(1);
+// The rail keeps its open column when the user collapses it. A real browser also needs the listener that
+// watches for a press outside of the bar to read the path of that press, because the collapse action
+// swaps its icon and the node that the press started on leaves the document. jsdom keeps that node, so
+// the acceptance test of the same name is the one that guards the fix.
+test('SidenavBar double panel stays open when the user collapses the sidenav', async () => {
+    await renderDoublePanelSidenav();
 
-    await page.locator('body').click();
-    await expect(page.getByRole('button', {name: 'Projects', exact: true})).toHaveAttribute(
-        'aria-expanded',
-        'true'
-    );
+    fireEvent.click(screen.getByRole('button', {name: 'Projects'}));
+    expect(getPanel('Projects')).toBeInTheDocument();
 
-    await expect(getPanel('Projects')).toHaveCount(1);
+    fireEvent.click(screen.getByRole('button', {name: COLLAPSE_LABEL}));
+
+    expect(getPanel('Projects')).toBeInTheDocument();
 });
-test('SidenavBar double panel closes when the user presses a first-level item without children', async ({
-    mount,
-    page,
-}) => {
-    await mount('sidenav-bar/Scenario56', {});
-    const getPanel = (name: string) => page.getByRole('list', {name, exact: true});
 
-    await page.getByRole('button', {name: 'Projects'}).click();
-    await page.getByRole('button', {name: 'Home'}).click();
+// A column that holds the current selection survives a press outside of the bar: the app selects a child
+// with a press of its own, and dismissing the column would hide the new selection.
+test('SidenavBar double panel stays open when the user presses outside of the bar and it holds the selection', async () => {
+    await renderDoublePanelSidenav({selectedItemId: 'active'});
 
-    await expect(getPanel('Projects')).toHaveCount(0);
+    expect(getPanel('Projects')).toBeInTheDocument();
+
+    fireEvent.click(document.body);
+
+    expect(getPanel('Projects')).toBeInTheDocument();
 });
-test('SidenavBar double panel refreshes when the user presses another parent item', async ({mount, page}) => {
-    await mount('sidenav-bar/Scenario57', {});
-    const getPanel = (name: string) => page.getByRole('list', {name, exact: true});
 
-    await page.getByRole('button', {name: 'Projects'}).click();
-    await page.getByRole('button', {name: 'Documents'}).click();
+test('SidenavBar double panel closes when the user presses a first-level item without children', async () => {
+    await renderDoublePanelSidenav();
 
-    await expect(getPanel('Projects')).toHaveCount(0);
+    fireEvent.click(screen.getByRole('button', {name: 'Projects'}));
+    fireEvent.click(screen.getByRole('button', {name: 'Home'}));
+
+    await waitForRemoval(() => getPanel('Projects'));
+});
+
+test('SidenavBar double panel refreshes when the user presses another parent item', async () => {
+    await renderDoublePanelSidenav();
+
+    fireEvent.click(screen.getByRole('button', {name: 'Projects'}));
+    fireEvent.click(screen.getByRole('button', {name: 'Documents'}));
+
+    expect(getPanel('Projects')).not.toBeInTheDocument();
 
     const panel = getPanel('Documents');
-    await expect(panel).toHaveCount(1);
-    await expect(panel.locator(page.getByRole('button', {name: 'Shared'}))).toHaveCount(1);
-    await expect(page.getByRole('button', {name: 'Archived'})).toHaveCount(0);
+    expect(panel).toBeInTheDocument();
+    expect(panel).toContainElement(screen.getByRole('button', {name: 'Shared'}));
+    expect(screen.queryByRole('button', {name: 'Archived'})).not.toBeInTheDocument();
 });
-test('SidenavBar double panel opens when the selection moves to one of its children', async ({
-    mount,
-    page,
-}) => {
-    await mount('sidenav-bar/Scenario58', {});
-    const getPanel = (name: string) => page.getByRole('list', {name, exact: true});
+
+test('SidenavBar double panel opens when the selection moves to one of its children', async () => {
+    await renderDoublePanelSidenav({selectedItemId: 'archived'});
 
     const panel = getPanel('Projects');
-    await expect(panel).toHaveCount(1);
-    await expect(panel.locator(page.getByRole('button', {name: 'Archived'}))).toHaveCount(1);
+    expect(panel).toBeInTheDocument();
+    expect(panel).toContainElement(screen.getByRole('button', {name: 'Archived'}));
 });
-test('SidenavBar double panel closes when the selection moves to a first-level item without children', async ({
-    mount,
-    page,
-}) => {
-    const component = await mount('sidenav-bar/Scenario59', {});
-    const getPanel = (name: string) => page.getByRole('list', {name, exact: true});
 
-    await expect(getPanel('Projects')).toHaveCount(1);
-
-    await component.update({step: 1});
-
-    await expect(getPanel('Projects')).toHaveCount(0);
-});
-test('SidenavBar double panel closes when the user presses one of its children, with a controlled selection', async ({
-    mount,
-    page,
-}) => {
-    await mount('sidenav-bar/Scenario60', {});
-    const getPanel = (name: string) => page.getByRole('list', {name, exact: true});
-
-    await expect(getPanel('Projects')).toHaveCount(1);
-
-    await page.getByRole('button', {name: 'Archived'}).click();
-
-    await expect(getPanel('Projects')).toHaveCount(0);
-});
-test('SidenavBar double panel moves to the parent of a child selected outside of the bar', async ({
-    mount,
-    page,
-}) => {
-    await mount('sidenav-bar/ExternalSelection');
-    const getPanel = (name: string) => page.getByRole('list', {name, exact: true});
-
-    await expect(getPanel('Projects')).toHaveCount(1);
-
-    await expect(page.getByRole('button', {name: 'Active', exact: true})).toBeVisible();
-    await page.getByRole('button', {name: 'Select from the app'}).click();
-
-    await expect(getPanel('Projects')).toHaveCount(0);
-
-    await expect(page.getByRole('button', {name: 'Documents', exact: true})).toHaveAttribute(
-        'aria-expanded',
-        'true'
+test('SidenavBar double panel closes when the selection moves to a first-level item without children', async () => {
+    const renderWithSelection = (selectedItemId: string) => (
+        <ThemeContextProvider theme={makeTheme()}>
+            <SidenavBar
+                {...({
+                    'aria-label': 'Main navigation',
+                    entries: doublePanelEntries,
+                    doublePanel: true,
+                    selectedItemId,
+                } as any)}
+            />
+        </ThemeContextProvider>
     );
+
+    const {rerender} = render(renderWithSelection('active'));
+    await React.act(async () => {});
+
+    expect(getPanel('Projects')).toBeInTheDocument();
+
+    rerender(renderWithSelection('home'));
+
+    await waitForRemoval(() => getPanel('Projects'));
+});
+
+// A press inside the second column moves the selection and closes the column at the same time. The
+// selection of that press must not reopen the column, so the press wins over the selection.
+test('SidenavBar double panel closes when the user presses one of its children, with a controlled selection', async () => {
+    const ControlledSidenav = (): JSX.Element => {
+        const [selectedItemId, setSelectedItemId] = React.useState<string | null>('active');
+        return (
+            <ThemeContextProvider theme={makeTheme()}>
+                <SidenavBar
+                    {...({
+                        'aria-label': 'Main navigation',
+                        entries: doublePanelEntries,
+                        doublePanel: true,
+                        selectedItemId,
+                        onSelectedItemIdChange: setSelectedItemId,
+                    } as any)}
+                />
+            </ThemeContextProvider>
+        );
+    };
+
+    render(<ControlledSidenav />);
+    await React.act(async () => {});
+
+    expect(getPanel('Projects')).toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole('button', {name: 'Archived'}));
+
+    await waitForRemoval(() => getPanel('Projects'));
+});
+
+// The press that selects a child of the app lands outside of the bar, so it is both a new selection and a
+// press outside of the bar. The new selection wins, and the column moves to the parent of that child.
+test('SidenavBar double panel moves to the parent of a child selected outside of the bar', async () => {
+    const ControlledSidenav = (): JSX.Element => {
+        const [selectedItemId, setSelectedItemId] = React.useState<string | null>('active');
+        return (
+            <ThemeContextProvider theme={makeTheme()}>
+                <SidenavBar
+                    {...({
+                        'aria-label': 'Main navigation',
+                        entries: doublePanelEntries,
+                        doublePanel: true,
+                        selectedItemId,
+                        onSelectedItemIdChange: setSelectedItemId,
+                    } as any)}
+                />
+                <button onClick={() => setSelectedItemId('shared')}>Select from the app</button>
+            </ThemeContextProvider>
+        );
+    };
+
+    render(<ControlledSidenav />);
+    await React.act(async () => {});
+
+    expect(getPanel('Projects')).toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole('button', {name: 'Select from the app'}));
+    await React.act(async () => {});
+
+    expect(getPanel('Projects')).not.toBeInTheDocument();
+
     const panel = getPanel('Documents');
-    await expect(panel).toHaveCount(1);
-    await expect(panel.locator(page.getByRole('button', {name: 'Shared'}))).toHaveCount(1);
+    expect(panel).toBeInTheDocument();
+    expect(panel).toContainElement(screen.getByRole('button', {name: 'Shared'}));
 });
-test('SidenavBar opens a closed double panel for a child selected outside the bar', async ({mount, page}) => {
-    await mount('sidenav-bar/ExternalSelection', {initialSelection: 'home'});
-    await expect(page.getByRole('list', {name: 'Documents', exact: true})).toHaveCount(0);
 
-    await page.getByRole('button', {name: 'Select from the app'}).click();
+// The tooltip of the collapsed rail wraps the row of the item, and the wrapper carries `aria-describedby`.
+const hasTooltip = (itemId: string): boolean =>
+    // eslint-disable-next-line testing-library/no-node-access
+    Boolean(document.querySelector(`[data-sidenav-item-id="${itemId}"] [aria-describedby]`));
 
-    await expect(page.getByRole('button', {name: 'Documents', exact: true})).toHaveAttribute(
-        'aria-expanded',
-        'true'
-    );
-    await expect(page.getByRole('button', {name: 'Shared', exact: true})).toHaveAttribute(
-        'aria-current',
-        'page'
-    );
+// The second column sits beside the collapsed rail, so it hides no item: the other items of the rail keep
+// their tooltip, which gives the label of an item that shows only its icon.
+test('SidenavBar collapsed double panel keeps the tooltips of the other items while a column is open', async () => {
+    await renderDoublePanelSidenav({collapsed: true, onCollapse: () => {}});
+
+    expect(hasTooltip('documents')).toBe(true);
+
+    fireEvent.click(screen.getByRole('button', {name: 'Projects'}));
+
+    expect(getPanel('Projects')).toBeInTheDocument();
+    expect(hasTooltip('documents')).toBe(true);
+    expect(hasTooltip('home')).toBe(true);
+    // The column already shows the label of this item as its title.
+    expect(hasTooltip('projects')).toBe(false);
 });
-test('SidenavBar collapsed double panel keeps the tooltips of the other items while a column is open', async ({
-    mount,
-    page,
-}) => {
-    await mount('sidenav-bar/Scenario62', {});
-    const queryItemRow = (id: string) => page.locator('[data-sidenav-item-id="' + id + '"]');
-    const getPanel = (name: string) => page.getByRole('list', {name, exact: true});
-    const hasTooltip = async (id: string) =>
-        (await queryItemRow(id).locator('[aria-describedby]').count()) > 0;
 
-    await expect.poll(() => hasTooltip('documents')).toBe(true);
+// The dialog panel of the collapsed rail floats over the items, so a tooltip would overlap it.
+test('SidenavBar collapsed drops the tooltips of the rail while the dialog panel is open', async () => {
+    await renderDoublePanelSidenav({doublePanel: false, collapsed: true, onCollapse: () => {}});
 
-    await page.getByRole('button', {name: 'Projects'}).click();
+    expect(hasTooltip('documents')).toBe(true);
 
-    await expect(getPanel('Projects')).toHaveCount(1);
-    await expect.poll(() => hasTooltip('documents')).toBe(true);
-    await expect.poll(() => hasTooltip('home')).toBe(true);
-    await expect.poll(() => hasTooltip('projects')).toBe(false);
+    fireEvent.click(screen.getByRole('button', {name: 'Projects'}));
+
+    expect(hasTooltip('documents')).toBe(false);
+    expect(hasTooltip('projects')).toBe(false);
 });
-test('SidenavBar collapsed drops the tooltips of the rail while the dialog panel is open', async ({
-    mount,
-    page,
-}) => {
-    await mount('sidenav-bar/Scenario63', {});
-    const queryItemRow = (id: string) => page.locator('[data-sidenav-item-id="' + id + '"]');
-    const hasTooltip = async (id: string) =>
-        (await queryItemRow(id).locator('[aria-describedby]').count()) > 0;
 
-    await expect.poll(() => hasTooltip('documents')).toBe(true);
+// The dialog panel opens in a portal, at the end of the document, so a screen reader that reads the page
+// in order never reaches it from its trigger. The first item of the panel takes the focus, and the named
+// list around it tells the user which list they entered.
+test('SidenavBar collapsed moves the focus into the dialog panel and ties it to the trigger', async () => {
+    await renderDoublePanelSidenav({doublePanel: false, collapsed: true, onCollapse: () => {}});
 
-    await page.getByRole('button', {name: 'Projects'}).click();
+    fireEvent.click(screen.getByRole('button', {name: 'Projects'}));
 
-    await expect.poll(() => hasTooltip('documents')).toBe(false);
-    await expect.poll(() => hasTooltip('projects')).toBe(false);
+    const panelId = screen.getByRole('button', {name: 'Projects'}).getAttribute('aria-controls');
+    // eslint-disable-next-line testing-library/no-node-access
+    const panel = panelId ? document.getElementById(panelId) : null;
+
+    await waitFor(() => {
+        expect(screen.getByRole('button', {name: 'Active'})).toHaveFocus();
+    });
+    expect(panel).toContainElement(screen.getByRole('button', {name: 'Active'}));
 });
-test('SidenavBar collapsed moves the focus into the dialog panel and ties it to the trigger', async ({
-    mount,
-    page,
-}) => {
-    await mount('sidenav-bar/Scenario64', {});
 
-    await page.getByRole('button', {name: 'Projects'}).click();
+/** Opens the dialog panel of a parent of the collapsed rail, and waits for the focus to land inside it. */
+const openDialogPanel = async (parentLabel: string): Promise<HTMLElement> => {
+    fireEvent.click(screen.getByRole('button', {name: parentLabel}));
 
-    const panelId = await page
-        .getByRole('button', {name: 'Projects', exact: true})
-        .getAttribute('aria-controls');
-    const panel = page.locator('[id="' + panelId + '"]');
+    const panelId = screen.getByRole('button', {name: parentLabel}).getAttribute('aria-controls');
+    // eslint-disable-next-line testing-library/no-node-access
+    const panel = panelId ? document.getElementById(panelId) : null;
+    await waitFor(() => {
+        // eslint-disable-next-line testing-library/no-node-access
+        expect(panel).toContainElement(document.activeElement as HTMLElement);
+    });
+    return panel as HTMLElement;
+};
 
-    await expect(page.getByRole('button', {name: 'Active'})).toBeFocused();
+// The first item of the panel holds the focus when the panel opens, so ArrowDown steps to the second one.
+test('SidenavBar collapsed opens the dialog panel with the focus on its first item', async () => {
+    await renderDoublePanelSidenav({doublePanel: false, collapsed: true, onCollapse: () => {}});
 
-    await expect(panel.locator(page.getByRole('button', {name: 'Active'}))).toHaveCount(1);
+    await openDialogPanel('Projects');
+
+    expect(screen.getByRole('button', {name: 'Active'})).toHaveFocus();
+
+    fireEvent.keyDown(screen.getByRole('button', {name: 'Active'}), {key: 'ArrowDown'});
+
+    expect(screen.getByRole('button', {name: 'Archived'})).toHaveFocus();
 });
-test('SidenavBar collapsed opens the dialog panel with the focus on its first item', async ({
-    mount,
-    page,
-}) => {
-    await mount('sidenav-bar/Scenario65', {});
 
-    await openDialogPanel(page, 'Projects');
+// The dialog panel floats over the collapsed rail, so its rows never take the treatment of that rail: the
+// labels stay readable, and they take their width from the panel.
+test('SidenavBar collapsed keeps the labels of the dialog panel readable', async () => {
+    await renderDoublePanelSidenav({doublePanel: false, collapsed: true, onCollapse: () => {}});
 
-    await expect(page.getByRole('button', {name: 'Active'})).toBeFocused();
+    const panel = await openDialogPanel('Projects');
 
-    await page.getByRole('button', {name: 'Active'}).press('ArrowDown');
-
-    await expect(page.getByRole('button', {name: 'Archived'})).toBeFocused();
+    expect(panel).toContainElement(queryItemRow('active'));
+    expect(hasStyle(queryItemRow('active'), styles.itemLabelCollapsed)).toBe(false);
+    expect(hasStyle(queryItemRow('active'), styles.itemLabelKeepsWidth)).toBe(false);
 });
-test('SidenavBar collapsed keeps the labels of the dialog panel readable', async ({mount, page}) => {
-    await mount('sidenav-bar/Scenario66', {});
-    const queryItemRow = (id: string) => page.locator('[data-sidenav-item-id="' + id + '"]');
-    const hasStyle = async (row: Locator, className: string) =>
-        (await row.locator('.' + className.split(' ')[0]).count()) > 0;
-    const styles = (await getComponentStyles(page)).sidenav;
 
-    const panel = await openDialogPanel(page, 'Projects');
+// Tab reads the sequence of the spec: the trigger, the children of its panel, then the item that follows
+// the trigger on the rail. The panel lives in a portal, at the end of the document, so nothing of that
+// sequence comes from the document itself.
+test('SidenavBar collapsed reads the dialog panel between its trigger and the next item with Tab', async () => {
+    await renderDoublePanelSidenav({doublePanel: false, collapsed: true, onCollapse: () => {}});
 
-    await expect(panel.locator(queryItemRow('active'))).toHaveCount(1);
-    await expect.poll(() => hasStyle(queryItemRow('active'), styles.itemLabelCollapsed)).toBe(false);
-    await expect.poll(() => hasStyle(queryItemRow('active'), styles.itemLabelKeepsWidth)).toBe(false);
-    const label = queryItemRow('active').locator('.' + styles.itemLabel.split(' ')[0]);
-    const expandedWidth = await label.evaluate((element) => element.getBoundingClientRect().width);
-    expect(expandedWidth).toBeGreaterThan(0);
+    await openDialogPanel('Projects');
+    expect(screen.getByRole('button', {name: 'Active'})).toHaveFocus();
+
+    fireEvent.keyDown(screen.getByRole('button', {name: 'Active'}), {key: 'Tab'});
+    expect(screen.getByRole('button', {name: 'Archived'})).toHaveFocus();
+
+    // The last child of the panel steps to the item that follows its trigger on the rail.
+    fireEvent.keyDown(screen.getByRole('button', {name: 'Archived'}), {key: 'Tab'});
+    expect(screen.getByRole('button', {name: 'Documents'})).toHaveFocus();
+
+    // And backwards, that item steps to the last child of the panel.
+    fireEvent.keyDown(screen.getByRole('button', {name: 'Documents'}), {key: 'Tab', shiftKey: true});
+    expect(screen.getByRole('button', {name: 'Archived'})).toHaveFocus();
 });
-test('SidenavBar collapsed reads the dialog panel between its trigger and the next item with Tab', async ({
-    mount,
-    page,
-}) => {
-    await mount('sidenav-bar/Scenario67', {});
 
-    await openDialogPanel(page, 'Projects');
-    await expect(page.getByRole('button', {name: 'Active'})).toBeFocused();
+// ArrowLeft leaves the list, the same way it collapses a list that opens in place.
+test('SidenavBar collapsed closes the dialog panel with ArrowLeft and returns to its parent', async () => {
+    await renderDoublePanelSidenav({doublePanel: false, collapsed: true, onCollapse: () => {}});
 
-    await page.getByRole('button', {name: 'Active'}).press('Tab');
-    await expect(page.getByRole('button', {name: 'Archived'})).toBeFocused();
-    await page.getByRole('button', {name: 'Archived'}).press('Tab');
-    await expect(page.getByRole('button', {name: 'Documents'})).toBeFocused();
-    await page.getByRole('button', {name: 'Documents'}).press('Shift+Tab');
-    await expect(page.getByRole('button', {name: 'Archived'})).toBeFocused();
+    await openDialogPanel('Projects');
+
+    fireEvent.keyDown(screen.getByRole('button', {name: 'Active'}), {key: 'ArrowLeft'});
+
+    await waitForRemoval(() => screen.queryByRole('button', {name: 'Active'}));
+    await waitFor(() => {
+        expect(screen.getByRole('button', {name: 'Projects'})).toHaveFocus();
+    });
 });
-test('SidenavBar collapsed closes the dialog panel with ArrowLeft and returns to its parent', async ({
-    mount,
-    page,
-}) => {
-    await mount('sidenav-bar/Scenario68', {});
 
-    await openDialogPanel(page, 'Projects');
+// ArrowUp on the first item of the panel leads out of the list as well: above it stands its parent.
+test('SidenavBar collapsed closes the dialog panel with ArrowUp on its first item', async () => {
+    await renderDoublePanelSidenav({doublePanel: false, collapsed: true, onCollapse: () => {}});
 
-    await page.getByRole('button', {name: 'Active'}).press('ArrowLeft');
+    await openDialogPanel('Projects');
 
-    await expect(page.getByRole('button', {name: 'Active'})).toHaveCount(0);
+    fireEvent.keyDown(screen.getByRole('button', {name: 'Active'}), {key: 'ArrowUp'});
 
-    await expect(page.getByRole('button', {name: 'Projects'})).toBeFocused();
+    await waitForRemoval(() => screen.queryByRole('button', {name: 'Active'}));
+    await waitFor(() => {
+        expect(screen.getByRole('button', {name: 'Projects'})).toHaveFocus();
+    });
 });
-test('SidenavBar collapsed closes the dialog panel with ArrowUp on its first item', async ({mount, page}) => {
-    await mount('sidenav-bar/Scenario69', {});
 
-    await openDialogPanel(page, 'Projects');
+// A parent that already stands open answers ArrowRight with the first item of its panel: the user steps
+// back into the panel that they left, without closing and opening it again.
+test('SidenavBar collapsed steps back into the open dialog panel with ArrowRight', async () => {
+    await renderDoublePanelSidenav({doublePanel: false, collapsed: true, onCollapse: () => {}});
 
-    await page.getByRole('button', {name: 'Active'}).press('ArrowUp');
+    await openDialogPanel('Projects');
 
-    await expect(page.getByRole('button', {name: 'Active'})).toHaveCount(0);
+    const trigger = screen.getByRole('button', {name: 'Projects'});
+    trigger.focus();
 
-    await expect(page.getByRole('button', {name: 'Projects'})).toBeFocused();
+    fireEvent.keyDown(trigger, {key: 'ArrowRight'});
+
+    expect(screen.getByRole('button', {name: 'Active'})).toHaveFocus();
 });
-test('SidenavBar collapsed steps back into the open dialog panel with ArrowRight', async ({mount, page}) => {
-    await mount('sidenav-bar/Scenario70', {});
 
-    await openDialogPanel(page, 'Projects');
+// The rail travels on its own: an open panel keeps its place while the focus passes its trigger, so the
+// user reads the whole rail without losing the panel.
+test('SidenavBar collapsed keeps the dialog panel open while the arrow keys travel the rail', async () => {
+    await renderDoublePanelSidenav({doublePanel: false, collapsed: true, onCollapse: () => {}});
 
-    const trigger = page.getByRole('button', {name: 'Projects'});
-    await trigger.focus();
+    await openDialogPanel('Projects');
 
-    await trigger.press('ArrowRight');
+    // The user steps back onto the rail. Tab and Shift+Tab do it without closing the panel, and this test
+    // reaches the same state directly, so it asserts the travel of the rail alone.
+    const trigger = screen.getByRole('button', {name: 'Projects'});
+    trigger.focus();
 
-    await expect(page.getByRole('button', {name: 'Active'})).toBeFocused();
+    fireEvent.keyDown(trigger, {key: 'ArrowDown'});
+
+    expect(screen.getByRole('button', {name: 'Documents'})).toHaveFocus();
+    expect(screen.getByRole('button', {name: 'Active'})).toBeInTheDocument();
 });
-test('SidenavBar collapsed keeps the dialog panel open while the arrow keys travel the rail', async ({
-    mount,
-    page,
-}) => {
-    await mount('sidenav-bar/Scenario71', {});
 
-    await openDialogPanel(page, 'Projects');
-    const trigger = page.getByRole('button', {name: 'Projects'});
-    await trigger.focus();
+// The collapsed rail keeps the accent of a selected first-level item, so the selection reads the same in
+// both states. Only a parent with a selected descendant marks it with the background alone.
+test('SidenavBar keeps the accent of a selected first-level item on the collapsed rail', async () => {
+    await renderSidenav({defaultCollapsed: true, selectedItemId: 'home'});
 
-    await trigger.press('ArrowDown');
-
-    await expect(page.getByRole('button', {name: 'Documents'})).toBeFocused();
-    await expect(page.getByRole('button', {name: 'Active'})).toHaveCount(1);
+    expect(hasStyle(queryItemRow('home'), styles.itemAccent)).toBe(true);
+    expect(hasStyle(queryItemRow('home'), styles.itemTouchableSelected.default)).toBe(true);
 });
-test('SidenavBar keeps the accent of a selected first-level item on the collapsed rail', async ({
-    mount,
-    page,
-}) => {
-    await mount('sidenav-bar/Scenario72', {});
-    const queryItemRow = (id: string) => page.locator('[data-sidenav-item-id="' + id + '"]');
-    const hasStyle = async (row: Locator, className: string) =>
-        (await row.locator('.' + className.split(' ')[0]).count()) > 0;
-    const styles = (await getComponentStyles(page)).sidenav;
 
-    await expect.poll(() => hasStyle(queryItemRow('home'), styles.itemAccent)).toBe(true);
-    await expect.poll(() => hasStyle(queryItemRow('home'), styles.itemTouchableSelected.default)).toBe(true);
-});
-test('SidenavBar double panel gives the accent to the selected child, and the background to the parent', async ({
-    mount,
-    page,
-}) => {
-    await mount('sidenav-bar/Scenario73', {});
-    const queryItemRow = (id: string) => page.locator('[data-sidenav-item-id="' + id + '"]');
-    const hasStyle = async (row: Locator, className: string) =>
-        (await row.locator('.' + className.split(' ')[0]).count()) > 0;
-    const styles = (await getComponentStyles(page)).sidenav;
+// The accent bar and the selected background are style-only marks, without any semantic query, so the
+// test reads the DOM directly.
+test('SidenavBar double panel gives the accent to the selected child, and the background to the parent', async () => {
+    await renderDoublePanelSidenav({selectedItemId: 'archived'});
 
     const parentRow = queryItemRow('projects');
     const childRow = queryItemRow('archived');
 
-    await expect.poll(() => hasStyle(parentRow, styles.itemAccent)).toBe(false);
-    await expect.poll(() => hasStyle(parentRow, styles.itemTouchableSelected.default)).toBe(true);
-    await expect.poll(() => hasStyle(childRow, styles.itemAccent)).toBe(true);
-});
-test('SidenavBar double panel gives the background to the parent of the open column only', async ({
-    mount,
-    page,
-}) => {
-    await mount('sidenav-bar/Scenario74', {});
-    const queryItemRow = (id: string) => page.locator('[data-sidenav-item-id="' + id + '"]');
-    const hasStyle = async (row: Locator, className: string) =>
-        (await row.locator('.' + className.split(' ')[0]).count()) > 0;
-    const styles = (await getComponentStyles(page)).sidenav;
-
-    await expect
-        .poll(() => hasStyle(queryItemRow('projects'), styles.itemTouchableSelected.default))
-        .toBe(true);
-
-    await page.getByRole('button', {name: 'Documents'}).click();
-
-    await expect
-        .poll(() => hasStyle(queryItemRow('projects'), styles.itemTouchableSelected.default))
-        .toBe(false);
-    await expect
-        .poll(() => hasStyle(queryItemRow('documents'), styles.itemTouchableSelected.default))
-        .toBe(true);
-
-    await page.getByRole('button', {name: 'Documents'}).click();
-
-    await expect
-        .poll(() => hasStyle(queryItemRow('projects'), styles.itemTouchableSelected.default))
-        .toBe(true);
-    await expect
-        .poll(() => hasStyle(queryItemRow('documents'), styles.itemTouchableSelected.default))
-        .toBe(false);
-});
-test('SidenavBar expands the children inline when doublePanel is false', async ({mount, page}) => {
-    await mount('sidenav-bar/Scenario75', {});
-
-    await page.getByRole('button', {name: 'Projects'}).click();
-    const accordion = page.getByRole('list', {name: 'Projects'});
-    await expect(accordion.locator(page.getByRole('button', {name: 'Active'}))).toHaveCount(1);
-    await expect(accordion).not.toContainText('Projects');
-});
-test('SidenavBar renders a stand-alone item with children at the first level', async ({mount, page}) => {
-    await mount('sidenav-bar/Scenario76', {});
-
-    await expect(page.getByRole('button', {name: 'Standalone parent'})).toHaveCount(1);
-    await expect(page.getByRole('link', {name: 'Child'})).toHaveAttribute('href', '/child');
-});
-test('SidenavBar boxed drops its border when the sidenav carries a variant of its own', async ({
-    mount,
-    page,
-}) => {
-    await mount('sidenav-bar/Scenario77', {});
-    const sidenavBar = page.getByRole('navigation');
-    const styles = (await getComponentStyles(page)).sidenav;
-
-    await expect(sidenavBar).not.toContainClass(styles.boxedBorder);
-});
-test('SidenavBar boxed drops its border when the skin turns showBoxedBorder off', async ({mount, page}) => {
-    await mount('sidenav-bar/Scenario78', {});
-    const sidenavBar = page.getByRole('navigation');
-    const styles = (await getComponentStyles(page)).sidenav;
-
-    await expect(sidenavBar).not.toContainClass(styles.boxedBorder);
-});
-test('SidenavBar collapse button reports its state through aria-expanded', async ({mount, page}) => {
-    await mount('sidenav-bar/Scenario79', {});
-
-    const collapseButton = page.getByRole('button', {name: COLLAPSE_LABEL});
-    await expect(collapseButton).toHaveAttribute('aria-expanded', 'true');
-
-    await collapseButton.click();
-
-    await expect(page.getByRole('button', {name: EXPAND_LABEL})).toHaveAttribute('aria-expanded', 'false');
-});
-test('SidenavBar moves the focus down and up with the arrow keys', async ({mount, page}) => {
-    await mount('sidenav-bar/Scenario80', {});
-
-    const home = page.getByRole('link', {name: 'Home'});
-    const search = page.getByRole('link', {name: 'Search'});
-
-    await home.focus();
-    await home.press('ArrowDown');
-    await expect(search).toBeFocused();
-
-    await search.press('ArrowUp');
-    await expect(home).toBeFocused();
-});
-test('SidenavBar focuses the first and last items with Home and End', async ({mount, page}) => {
-    await mount('sidenav-bar/Scenario81', {});
-
-    const home = page.getByRole('link', {name: 'Home'});
-    const teams = page.getByRole('button', {name: 'Teams'});
-
-    await home.focus();
-    await home.press('End');
-    await expect(teams).toBeFocused();
-
-    await teams.press('Home');
-    await expect(home).toBeFocused();
-});
-test('SidenavBar expands a closed parent with ArrowRight and collapses it with ArrowLeft', async ({
-    mount,
-    page,
-}) => {
-    await mount('sidenav-bar/Scenario82', {});
-
-    const teams = page.getByRole('button', {name: 'Teams', expanded: false});
-
-    await teams.focus();
-    await teams.press('ArrowRight');
-
-    await expect(page.getByRole('button', {name: 'Teams', expanded: true})).toHaveCount(1);
-    await expect(page.getByRole('link', {name: 'Engineering'})).toHaveCount(1);
-
-    await page.getByRole('button', {name: 'Teams'}).press('ArrowLeft');
-
-    await expect(page.getByRole('link', {name: 'Engineering'})).toHaveCount(0);
-});
-test('SidenavBar steps into the group of an open parent with ArrowRight', async ({mount, page}) => {
-    await mount('sidenav-bar/Scenario83', {});
-
-    const teams = page.getByRole('button', {name: 'Teams', expanded: false});
-
-    await teams.focus();
-    await teams.press('ArrowRight');
-    await page.getByRole('button', {name: 'Teams'}).press('ArrowRight');
-
-    await expect(page.getByRole('link', {name: 'Engineering'})).toBeFocused();
-});
-test('SidenavBar moves the focus to the parent with ArrowLeft from a child', async ({mount, page}) => {
-    await mount('sidenav-bar/Scenario84', {});
-
-    const teams = page.getByRole('button', {name: 'Teams'});
-    await teams.focus();
-    await teams.press('ArrowRight');
-
-    const eng = page.getByRole('link', {name: 'Engineering'});
-    await eng.focus();
-    await eng.press('ArrowLeft');
-
-    await expect(page.getByRole('button', {name: 'Teams'})).toBeFocused();
+    expect(hasStyle(parentRow, styles.itemAccent)).toBe(false);
+    expect(hasStyle(parentRow, styles.itemTouchableSelected.default)).toBe(true);
+    expect(hasStyle(childRow, styles.itemAccent)).toBe(true);
 });
 
-for (const collapsed of [false, true])
-    test(`SidenavBar gives a list to the ${collapsed ? 'dialog panel' : 'second column'}`, async ({
-        mount,
-        page,
-    }) => {
-        await mount('sidenav-bar/DoublePanel', {collapsed});
-        await page.getByRole('button', {name: 'Projects', exact: true}).click();
-        const panel = page.getByRole('list', {name: 'Projects', exact: true});
-        await expect(panel.locator(':scope > [role="listitem"]')).toHaveCount(2);
-        await expect(panel.getByRole('button', {name: 'Active', exact: true})).toHaveCount(1);
-    });
-for (const [pageVariant, expected] of [
+// Only one parent at a time carries the selected background. The parent of the open column takes it, and
+// the parent of the selected child takes it back when that column closes, with no change of the selection.
+test('SidenavBar double panel gives the background to the parent of the open column only', async () => {
+    await renderDoublePanelSidenav({selectedItemId: 'archived'});
+
+    expect(hasStyle(queryItemRow('projects'), styles.itemTouchableSelected.default)).toBe(true);
+
+    fireEvent.click(screen.getByRole('button', {name: 'Documents'}));
+    await React.act(async () => {});
+
+    expect(hasStyle(queryItemRow('projects'), styles.itemTouchableSelected.default)).toBe(false);
+    expect(hasStyle(queryItemRow('documents'), styles.itemTouchableSelected.default)).toBe(true);
+
+    fireEvent.click(screen.getByRole('button', {name: 'Documents'}));
+    await React.act(async () => {});
+
+    expect(hasStyle(queryItemRow('projects'), styles.itemTouchableSelected.default)).toBe(true);
+    expect(hasStyle(queryItemRow('documents'), styles.itemTouchableSelected.default)).toBe(false);
+});
+
+test('SidenavBar expands the children inline when doublePanel is false', async () => {
+    await renderDoublePanelSidenav({doublePanel: false});
+
+    fireEvent.click(screen.getByRole('button', {name: 'Projects'}));
+
+    // The label of the trigger names the accordion, and it stands outside of it.
+    const accordion = screen.getByRole('list', {name: 'Projects'});
+    expect(accordion).toContainElement(screen.getByRole('button', {name: 'Active'}));
+    expect(accordion).not.toHaveTextContent('Projects');
+});
+
+test('SidenavBar renders a stand-alone item with children at the first level', async () => {
+    const entries: Array<SidenavEntry> = [
+        {
+            id: 'standalone-parent',
+            label: 'Standalone parent',
+            asset: IconFolderRegular,
+            defaultOpen: true,
+            children: [{id: 'child', label: 'Child', href: '/child'}],
+        },
+    ];
+
+    await renderSidenav({entries});
+
+    expect(screen.getByRole('button', {name: 'Standalone parent'})).toBeInTheDocument();
+    expect(screen.getByRole('link', {name: 'Child'})).toHaveAttribute('href', '/child');
+});
+
+const renderBoxedSidenav = async ({
+    variant,
+    pageVariant,
+    skin = getMovistarSkin(),
+}: {
+    variant?: Variant;
+    pageVariant?: Variant;
+    skin?: Skin;
+} = {}) => {
+    render(
+        <ThemeContextProvider theme={makeTheme({skin})}>
+            <ThemeVariant variant={pageVariant ?? 'default'}>
+                <SidenavBar aria-label="Main navigation" entries={defaultEntries} variant={variant} boxed />
+            </ThemeVariant>
+        </ThemeContextProvider>
+    );
+
+    await React.act(async () => {});
+
+    return screen.getByRole('navigation');
+};
+
+// The border of the box follows `shouldShowBoxedBorder`, the rule that `Boxed` also follows: it reads over a
+// default and over an alternative page, and it does not over a brand, a negative or a media page.
+test.each([
     ['default', true],
     ['alternative', true],
     ['brand', false],
     ['negative', false],
     ['media', false],
-] as const)
-    test(`SidenavBar boxed over a ${pageVariant} page paints its border: ${expected}`, async ({
-        mount,
-        page,
-    }) => {
-        await mount('sidenav-bar/Boxed', {pageVariant});
-        const styles = (await getComponentStyles(page)).sidenav;
-        const nav = page.getByRole('navigation');
-        await expect(nav).toContainClass(styles.boxed);
-        if (expected) await expect(nav).toContainClass(styles.boxedBorder);
-        else await expect(nav).not.toContainClass(styles.boxedBorder);
-    });
-test('SidenavBar reports the phase of the motion to the logo, and settles it when the rail stops', async ({
-    mount,
-    page,
-}) => {
-    await page.emulateMedia({reducedMotion: 'no-preference'});
-    await page.clock.install({time: new Date('2025-01-01T00:00:00Z')});
-    await mount('sidenav-bar/Motion');
-    const styles = (await getComponentStyles(page)).sidenav;
-    await expect(page.getByRole('img', {name: 'Logo expanded', exact: true})).toHaveCount(1);
-    await page.clock.pauseAt(new Date('2025-01-02T00:00:00Z'));
-    await page.getByRole('button', {name: COLLAPSE_LABEL}).click();
-    await expect(page.getByRole('img', {name: 'Logo collapsing', exact: true})).toHaveCount(1);
-    await page.clock.runFor(styles.COLLAPSE_DURATION_MS);
-    await expect(page.getByRole('img', {name: 'Logo collapsed', exact: true})).toHaveCount(1);
-    await page.getByRole('button', {name: EXPAND_LABEL}).click();
-    await expect(page.getByRole('img', {name: 'Logo expanding', exact: true})).toHaveCount(1);
-    await page.clock.runFor(styles.COLLAPSE_DURATION_MS);
-    await expect(page.getByRole('img', {name: 'Logo expanded', exact: true})).toHaveCount(1);
+] as const)('SidenavBar boxed over a %s page paints its border: %s', async (pageVariant, expected) => {
+    const sidenavBar = await renderBoxedSidenav({pageVariant});
+
+    expect(sidenavBar).toHaveClass(styles.boxed);
+    expect(sidenavBar.classList.contains(styles.boxedBorder)).toBe(expected);
 });
-browserTest(
-    'SidenavBar reports a first-level item without an asset, and it accepts a second-level one',
-    async ({mount, page}) => {
-        const messages: Array<string> = [];
-        const pageErrors: Array<string> = [];
-        page.on('console', (message) => {
-            if (['error', 'warning'].includes(message.type()) && message.args().length)
-                messages.push(message.text());
-        });
-        page.on('pageerror', (error) => pageErrors.push(error.message));
-        await mount('sidenav-bar/InvalidAsset');
-        await expect.poll(() => messages).toEqual([expect.stringContaining('SidenavBar item "Home"')]);
-        expect(messages[0]).toContain('is a first-level item without an asset');
-        expect(pageErrors).toEqual([]);
-    }
-);
-test('SidenavBar drops its scroll dividers when the screen goes narrow and back', async ({mount, page}) => {
-    await mount('sidenav-bar/Scrollable');
-    const styles = (await getComponentStyles(page)).sidenav;
-    const dividers = page.locator('.' + styles.scrollSpacerDivider.split(' ').pop());
-    const body = page.locator('.' + styles.bodyBase.split(' ')[0]);
-    await expect(dividers).toHaveCount(1);
-    await body.evaluate((element) => {
-        element.scrollTop = (element.scrollHeight - element.clientHeight) / 2;
+
+// A box that paints its own variant carries its own background, which the border would cut across.
+test('SidenavBar boxed drops its border when the sidenav carries a variant of its own', async () => {
+    const sidenavBar = await renderBoxedSidenav({variant: 'brand'});
+
+    expect(sidenavBar).not.toHaveClass(styles.boxedBorder);
+});
+
+test('SidenavBar boxed drops its border when the skin turns showBoxedBorder off', async () => {
+    const movistarSkin = getMovistarSkin();
+    const skin: Skin = {
+        ...movistarSkin,
+        componentProperties: {
+            ...movistarSkin.componentProperties,
+            showBoxedBorder: {
+                default: false,
+                alternative: false,
+                brand: false,
+                negative: false,
+                media: false,
+            },
+        },
+    };
+
+    const sidenavBar = await renderBoxedSidenav({skin});
+
+    expect(sidenavBar).not.toHaveClass(styles.boxedBorder);
+});
+
+test('SidenavBar collapse button reports its state through aria-expanded', async () => {
+    await renderSidenav();
+
+    const collapseButton = screen.getByRole('button', {name: COLLAPSE_LABEL});
+    expect(collapseButton).toHaveAttribute('aria-expanded', 'true');
+
+    fireEvent.click(collapseButton);
+
+    expect(screen.getByRole('button', {name: EXPAND_LABEL})).toHaveAttribute('aria-expanded', 'false');
+});
+
+const keyboardEntries: Array<SidenavSection> = [
+    {
+        title: {text: 'General', hidden: true},
+        items: [
+            {id: 'home', label: 'Home', asset: IconHomeRegular, href: '/home'},
+            {id: 'search', label: 'Search', asset: IconHomeRegular, href: '/search'},
+            {
+                id: 'teams',
+                label: 'Teams',
+                asset: IconFolderRegular,
+                children: [{id: 'eng', label: 'Engineering', href: '/eng'}],
+            },
+        ],
+    },
+];
+
+const renderKeyboardSidenav = async () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <SidenavBar aria-label="Main navigation" entries={keyboardEntries} />
+        </ThemeContextProvider>
+    );
+    await React.act(async () => {});
+};
+
+test('SidenavBar moves the focus down and up with the arrow keys', async () => {
+    await renderKeyboardSidenav();
+
+    const home = screen.getByRole('link', {name: 'Home'});
+    const search = screen.getByRole('link', {name: 'Search'});
+
+    home.focus();
+    fireEvent.keyDown(home, {key: 'ArrowDown'});
+    expect(search).toHaveFocus();
+
+    fireEvent.keyDown(search, {key: 'ArrowUp'});
+    expect(home).toHaveFocus();
+});
+
+test('SidenavBar focuses the first and last items with Home and End', async () => {
+    await renderKeyboardSidenav();
+
+    const home = screen.getByRole('link', {name: 'Home'});
+    const teams = screen.getByRole('button', {name: 'Teams'});
+
+    home.focus();
+    fireEvent.keyDown(home, {key: 'End'});
+    expect(teams).toHaveFocus();
+
+    fireEvent.keyDown(teams, {key: 'Home'});
+    expect(home).toHaveFocus();
+});
+
+test('SidenavBar expands a closed parent with ArrowRight and collapses it with ArrowLeft', async () => {
+    await renderKeyboardSidenav();
+
+    const teams = screen.getByRole('button', {name: 'Teams', expanded: false});
+
+    teams.focus();
+    fireEvent.keyDown(teams, {key: 'ArrowRight'});
+
+    expect(screen.getByRole('button', {name: 'Teams', expanded: true})).toBeInTheDocument();
+    expect(screen.getByRole('link', {name: 'Engineering'})).toBeInTheDocument();
+
+    fireEvent.keyDown(screen.getByRole('button', {name: 'Teams'}), {key: 'ArrowLeft'});
+
+    await waitForRemoval(() => screen.queryByRole('link', {name: 'Engineering'}));
+});
+
+// The second ArrowRight steps into the group that the first one opened, which is what a tree does.
+test('SidenavBar steps into the group of an open parent with ArrowRight', async () => {
+    await renderKeyboardSidenav();
+
+    const teams = screen.getByRole('button', {name: 'Teams', expanded: false});
+
+    teams.focus();
+    fireEvent.keyDown(teams, {key: 'ArrowRight'});
+    fireEvent.keyDown(screen.getByRole('button', {name: 'Teams'}), {key: 'ArrowRight'});
+
+    expect(screen.getByRole('link', {name: 'Engineering'})).toHaveFocus();
+});
+
+test('SidenavBar moves the focus to the parent with ArrowLeft from a child', async () => {
+    await renderKeyboardSidenav();
+
+    const teams = screen.getByRole('button', {name: 'Teams'});
+    teams.focus();
+    fireEvent.keyDown(teams, {key: 'ArrowRight'});
+
+    const eng = screen.getByRole('link', {name: 'Engineering'});
+    eng.focus();
+    fireEvent.keyDown(eng, {key: 'ArrowLeft'});
+
+    expect(screen.getByRole('button', {name: 'Teams'})).toHaveFocus();
+});
+
+// The type requires the asset of a first-level item, so only a consumer without TypeScript reaches this
+// report. The entry below drops the asset through a cast, which is what that consumer does at run time.
+test('SidenavBar reports a first-level item without an asset, and it accepts a second-level one', async () => {
+    const consoleError = jest.spyOn(console, 'error').mockImplementation(() => {});
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <SidenavBar
+                entries={[
+                    {
+                        title: {text: 'General', hidden: true},
+                        items: [
+                            {
+                                id: 'projects',
+                                label: 'Projects',
+                                asset: IconFolderRegular,
+                                defaultOpen: true,
+                                children: [{id: 'active', label: 'Active', href: '/active'}],
+                            },
+                            {id: 'home', label: 'Home', href: '/home'} as SidenavFirstLevelItem,
+                        ],
+                    },
+                ]}
+            />
+        </ThemeContextProvider>
+    );
+    await React.act(async () => {});
+
+    const messages = consoleError.mock.calls.map(([message]) => String(message));
+    expect(messages.filter((message) => message.includes('is a first-level item without an asset'))).toEqual([
+        expect.stringContaining('SidenavBar item "Home"'),
+    ]);
+    consoleError.mockRestore();
+});
+
+// A trip to a narrow screen replaces the rail with the mobile treatment, which unmounts the body and its
+// sentinels. The dividers that a scroll had earned do not belong to the body that comes back.
+test('SidenavBar drops its scroll dividers when the screen goes narrow and back', async () => {
+    const screenSizeOf = (isTabletOrSmaller: boolean) => ({
+        isMobile: isTabletOrSmaller,
+        isTablet: false,
+        isTabletOrBigger: !isTabletOrSmaller,
+        isTabletOrSmaller,
+        isDesktopOrBigger: !isTabletOrSmaller,
+        isLargeDesktop: false,
+        isExtraLargeDesktop: false,
     });
-    await expect(dividers).toHaveCount(2);
-    await page.setViewportSize({width: 411, height: 731});
-    await expect(page.getByRole('button', {name: 'Abrir menú de navegación'})).toBeVisible();
-    await page.setViewportSize({width: 1280, height: 720});
-    await expect(body).toHaveJSProperty('scrollTop', 0);
-    await expect(dividers).toHaveCount(1);
+
+    const sidenavOnScreen = (isTabletOrSmaller: boolean) => (
+        <ThemeContextProvider theme={makeTheme()}>
+            <ScreenSizeContext.Provider value={screenSizeOf(isTabletOrSmaller)}>
+                <SidenavBar
+                    aria-label="Main navigation"
+                    entries={defaultEntries}
+                    headerSlot={<Text2 regular>Header</Text2>}
+                    fixedFooter
+                    footerSlot={<Text2 regular>Footer</Text2>}
+                />
+            </ScreenSizeContext.Provider>
+        </ThemeContextProvider>
+    );
+
+    const {container, rerender} = render(sidenavOnScreen(false));
+    await React.act(async () => {});
+
+    const dividerBaseClass = styles.scrollSpacerDivider.split(' ').pop();
+    // eslint-disable-next-line testing-library/no-node-access
+    const countScrollDividers = () => container.querySelectorAll(`.${dividerBaseClass}`).length;
+
+    expect(countScrollDividers()).toBe(0);
+
+    await scrollBodyToTheMiddle();
+    expect(countScrollDividers()).toBe(2);
+
+    await React.act(async () => {
+        rerender(sidenavOnScreen(true));
+    });
+    await React.act(async () => {
+        rerender(sidenavOnScreen(false));
+    });
+
+    // The desktop body comes back at its own rest position, so neither divider paints until its observer
+    // reports a sentinel outside of the scrollport again.
+    expect(countScrollDividers()).toBe(0);
 });
