@@ -1,4 +1,5 @@
 const childProcess = require('child_process');
+const buildIcons = require('./build-icons');
 const execSync = childProcess.execSync;
 
 const run = (command) => {
@@ -21,6 +22,12 @@ const compile = () => {
     run(`echo "export * from './dist/community';" > community.d.ts`);
     run(`echo "export * from './dist-es/community';" > community.js`);
     run(`yarn swc community.js -o community.js --source-maps=false -C module.type=commonjs`);
+
+    // @telefonica/mistica-icons comes from the same repository and from the same release
+    buildIcons();
+
+    // the icons must never come back into this package. See the script for the reason.
+    run(`node scripts/check-icons-not-bundled.js`);
 };
 
 if (require.main === module) {

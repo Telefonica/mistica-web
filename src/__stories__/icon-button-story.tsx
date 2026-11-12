@@ -1,10 +1,10 @@
 import * as React from 'react';
 import {IconButton, ToggleIconButton} from '../icon-button';
-import IconCloseRegular from '../generated/mistica-icons/icon-close-regular';
+import IconCloseRegular from '@telefonica/mistica-icons/icon-close-regular';
 import ResponsiveLayout from '../responsive-layout';
 import Box from '../box';
-import IconPlayFilled from '../generated/mistica-icons/icon-play-filled';
-import IconPauseFilled from '../generated/mistica-icons/icon-pause-filled';
+import IconPlayFilled from '@telefonica/mistica-icons/icon-play-filled';
+import IconPauseFilled from '@telefonica/mistica-icons/icon-pause-filled';
 
 import type {Variant} from '../theme-variant-context';
 import type {IconButtonType, IconButtonBackgroundType} from '../icon-button';

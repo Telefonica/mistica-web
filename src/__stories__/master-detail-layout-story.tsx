@@ -8,16 +8,16 @@ import {
     Stack,
     Title1,
     ButtonPrimary,
-    IconCreditCardVisaRegular,
-    IconInformationUserRegular,
-    IconLockClosedRegular,
-    IconBellProgramRegular,
-    IconSupportAgentRegular,
-    IconUserAccountRegular,
     Text4,
     Text2,
     Placeholder,
 } from '..';
+import IconCreditCardVisaRegular from '@telefonica/mistica-icons/icon-credit-card-visa-regular';
+import IconInformationUserRegular from '@telefonica/mistica-icons/icon-information-user-regular';
+import IconLockClosedRegular from '@telefonica/mistica-icons/icon-lock-closed-regular';
+import IconBellProgramRegular from '@telefonica/mistica-icons/icon-bell-program-regular';
+import IconSupportAgentRegular from '@telefonica/mistica-icons/icon-support-agent-regular';
+import IconUserAccountRegular from '@telefonica/mistica-icons/icon-user-account-regular';
 
 export default {
     title: 'Layout/Master detail layout',

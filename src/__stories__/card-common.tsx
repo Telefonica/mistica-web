@@ -1,15 +1,8 @@
 import * as React from 'react';
-import {
-    ButtonLink,
-    ButtonPrimary,
-    ButtonSecondary,
-    Circle,
-    IconMobileDeviceRegular,
-    IconStarFilled,
-    IconStarRegular,
-    skinVars,
-    ThemeVariant,
-} from '..';
+import {ButtonLink, ButtonPrimary, ButtonSecondary, Circle, skinVars, ThemeVariant} from '..';
+import IconMobileDeviceRegular from '@telefonica/mistica-icons/icon-mobile-device-regular';
+import IconStarFilled from '@telefonica/mistica-icons/icon-star-filled';
+import IconStarRegular from '@telefonica/mistica-icons/icon-star-regular';
 import avatarImg from './images/avatar.jpg';
 import beachVideo from './videos/beach.mp4';
 import beachImg from './images/beach.jpg';

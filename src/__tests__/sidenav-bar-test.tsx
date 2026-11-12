@@ -9,8 +9,8 @@ import * as layoutStyles from '../sidenav-bar-layout.css';
 import {ThemeVariant} from '../theme-variant-context';
 import {getMovistarSkin} from '../skins/movistar';
 import {sidenavCollapse, sidenavExpand} from '../text-tokens';
-import IconHomeRegular from '../generated/mistica-icons/icon-home-regular';
-import IconFolderRegular from '../generated/mistica-icons/icon-folder-regular';
+import IconHomeRegular from '@telefonica/mistica-icons/icon-home-regular';
+import IconFolderRegular from '@telefonica/mistica-icons/icon-folder-regular';
 
 import type {SidenavFirstLevelItem} from '..';
 import type {Variant} from '../theme-variant-context';

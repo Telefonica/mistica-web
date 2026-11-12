@@ -8,13 +8,13 @@
 'use client';
 import * as React from 'react';
 import {FieldEndIcon, TextFieldBaseAutosuggest} from './text-field-base';
-import IconCalendarRegular from './generated/mistica-icons/icon-calendar-regular';
+import IconCalendarRegular from '@telefonica/mistica-icons/icon-calendar-regular';
 import Datetime from 'react-datetime';
 import Overlay from './overlay';
 import {DEFAULT_WIDTH} from './text-field-components.css';
 import {cancelEvent, createChangeEvent} from './utils/dom';
 import {useElementDimensions, useTheme} from './hooks';
-import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
+import IconCloseRegular from '@telefonica/mistica-icons/icon-close-regular';
 import * as styles from './date-time-picker.css';
 import {vars} from './skins/skin-contract.css';
 import 'moment/locale/es';
