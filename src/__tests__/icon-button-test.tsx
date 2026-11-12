@@ -1,60 +1,205 @@
-import {test, expect} from '../test-utils/component';
+import * as React from 'react';
+import {fireEvent, render, screen} from '@testing-library/react';
+import ThemeContextProvider from '../theme-context-provider';
+import {makeTheme} from './test-utils';
+import userEvent from '@testing-library/user-event';
+import IconLightningRegular from '../generated/mistica-icons/icon-lightning-regular';
+import {IconButton, ToggleIconButton} from '../icon-button';
+import IconPauseFilled from '../generated/mistica-icons/icon-pause-filled';
+import IconPlayFilled from '../generated/mistica-icons/icon-play-filled';
 
-test('IconButton is accesible', async ({mount}) => {
-    const component = await mount('icon-button/Accessible');
-    await expect(component.getByRole('button', {name: 'icon-button'})).toHaveCount(1);
+import type {TouchableElement} from '../touchable';
+
+test('IconButton is accesible', () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <IconButton Icon={IconLightningRegular} aria-label="icon-button" onPress={() => {}} />
+        </ThemeContextProvider>
+    );
+
+    expect(screen.getByRole('button', {name: 'icon-button'})).toBeInTheDocument();
 });
-test('"to" uses a Link Component', async ({mount}) => {
-    const component = await mount('icon-button/CustomLink');
-    await expect(component).toHaveText('(Link Component)');
-    await expect(component.getByRole('link')).toHaveCount(0);
+
+test('"to" uses a Link Component', () => {
+    const Link = () => '(Link Component)' as any;
+
+    const {asFragment} = render(
+        <ThemeContextProvider theme={makeTheme({Link})}>
+            <IconButton Icon={IconLightningRegular} aria-label="icon-button" to="/test" />
+        </ThemeContextProvider>
+    );
+
+    expect(asFragment()).toMatchInlineSnapshot(`
+<DocumentFragment>
+  <div
+    class="icon-button_buttonContainer_default__yqt1oe1c icon-button_baseButtonContainer__yqt1oe1b"
+  >
+    (Link Component)
+  </div>
+</DocumentFragment>
+`);
 });
-test('<a> is rendered when using "to" prop', async ({mount}) => {
-    const component = await mount('icon-button/Anchor');
-    await expect(component.getByRole('link', {name: 'icon-button'})).toHaveAttribute('href', '/test');
+
+test('<a> is rendered when using "to" prop', () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <IconButton Icon={IconLightningRegular} aria-label="icon-button" to="/test" />
+        </ThemeContextProvider>
+    );
+
+    const anchor = screen.getByRole('link', {name: 'icon-button'});
+
+    expect(anchor).toHaveAttribute('href', '/test');
 });
-test('IconButton can track events', async ({mount}) => {
-    const component = await mount('icon-button/Tracking');
-    const event = {category: 'someCategory', action: 'someAction', label: 'someLabel'};
-    await component.getByRole('button', {name: 'icon-button'}).click();
-    await expect(component.getByTestId('events')).toHaveValue(JSON.stringify([event]));
-    await component.getByRole('button', {name: 'icon-button'}).click();
-    await expect(component.getByTestId('events')).toHaveValue(JSON.stringify([event, event]));
+
+test('IconButton can track events', async () => {
+    const logEventSpy = jest.fn();
+    const trackingEvent = {
+        category: 'someCategory',
+        action: 'someAction',
+        label: 'someLabel',
+    };
+
+    render(
+        <ThemeContextProvider theme={makeTheme({analytics: {logEvent: logEventSpy}})}>
+            <IconButton
+                Icon={IconLightningRegular}
+                trackingEvent={trackingEvent}
+                onPress={() => {}}
+                aria-label="icon-button"
+            />
+        </ThemeContextProvider>
+    );
+
+    const iconButton = await screen.findByRole('button', {name: 'icon-button'});
+
+    await userEvent.click(iconButton);
+    expect(logEventSpy).toHaveBeenCalledWith(trackingEvent);
+    expect(logEventSpy).toHaveBeenCalledTimes(1);
+
+    await userEvent.click(iconButton);
+    expect(logEventSpy).toHaveBeenCalledWith(trackingEvent);
+    expect(logEventSpy).toHaveBeenCalledTimes(2);
 });
-test('IconButton ref', async ({mount}) => {
-    const component = await mount('icon-button/Refs');
-    await expect(component.getByTestId('refs')).toHaveValue('["BUTTON","A","A"]');
-});
-for (const controlled of [true, false]) {
-    test(`ToggleIconButton is accesible (${controlled ? 'controlled' : 'uncontrolled'})`, async ({mount}) => {
-        const component = await mount('icon-button/Toggle', {controlled});
-        await expect(component.getByRole('button', {name: 'unchecked-icon-button', exact: true})).toHaveCount(
-            1
+
+test('IconButton ref', () => {
+    const TestComponent = () => {
+        const refOnPress = React.useRef<TouchableElement>(null);
+        const refHref = React.useRef<TouchableElement>(null);
+        const refTo = React.useRef<TouchableElement>(null);
+
+        React.useEffect(() => {
+            expect(refOnPress.current?.tagName).toBe('BUTTON');
+            expect(refHref.current?.tagName).toBe('A');
+            expect(refTo.current?.tagName).toBe('A');
+        });
+
+        return (
+            <ThemeContextProvider theme={makeTheme()}>
+                <IconButton
+                    Icon={IconLightningRegular}
+                    aria-label="icon-button"
+                    ref={refOnPress}
+                    onPress={() => {}}
+                />
+                <IconButton Icon={IconLightningRegular} aria-label="icon-button" ref={refHref} href="/" />
+                <IconButton Icon={IconLightningRegular} aria-label="icon-button" ref={refTo} to="/" />
+            </ThemeContextProvider>
         );
-        await expect(component.getByRole('button', {name: 'checked-icon-button', exact: true})).toHaveCount(
-            0
+    };
+
+    render(<TestComponent />);
+});
+
+test('ToggleIconButton is accesible (uncontrolled)', async () => {
+    const onChangeSpy = jest.fn();
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <ToggleIconButton
+                checkedProps={{
+                    Icon: IconPauseFilled,
+                    'aria-label': 'checked-icon-button',
+                }}
+                uncheckedProps={{
+                    Icon: IconPlayFilled,
+                    'aria-label': 'unchecked-icon-button',
+                }}
+                onChange={onChangeSpy}
+            />
+        </ThemeContextProvider>
+    );
+
+    expect(screen.getByRole('button', {name: 'unchecked-icon-button'})).toBeInTheDocument();
+    expect(screen.queryByRole('button', {name: 'checked-icon-button'})).not.toBeInTheDocument();
+
+    await userEvent.click(screen.getByRole('button', {name: 'unchecked-icon-button'}));
+
+    expect(screen.queryByRole('button', {name: 'unchecked-icon-button'})).not.toBeInTheDocument();
+    expect(screen.getByRole('button', {name: 'checked-icon-button'})).toBeInTheDocument();
+    expect(onChangeSpy).toHaveBeenCalledTimes(1);
+});
+
+test('ToggleIconButton is accesible (controlled)', async () => {
+    const ToggleIconButtonWrapper = () => {
+        const [checked, setChecked] = React.useState(false);
+        return (
+            <ThemeContextProvider theme={makeTheme()}>
+                <ToggleIconButton
+                    checkedProps={{
+                        Icon: IconPauseFilled,
+                        'aria-label': 'checked-icon-button',
+                    }}
+                    uncheckedProps={{
+                        Icon: IconPlayFilled,
+                        'aria-label': 'unchecked-icon-button',
+                    }}
+                    checked={checked}
+                    onChange={setChecked}
+                />
+            </ThemeContextProvider>
         );
-        await component.getByRole('button', {name: 'unchecked-icon-button', exact: true}).click();
-        await expect(component.getByRole('button', {name: 'unchecked-icon-button', exact: true})).toHaveCount(
-            0
-        );
-        await expect(component.getByRole('button', {name: 'checked-icon-button', exact: true})).toHaveCount(
-            1
-        );
-        if (!controlled) await expect(component.getByTestId('calls')).toHaveValue('1');
-    });
-}
-test("ToggleIconButton doesn't update its state until onChange promise is resolved", async ({
-    mount,
-    page,
-}) => {
-    const now = new Date('2026-01-01T00:00:00Z');
-    await page.clock.install({time: now});
-    await page.clock.pauseAt(now);
-    const component = await mount('icon-button/Toggle', {delay: 1000});
-    await component.getByRole('button', {name: 'unchecked-icon-button', exact: true}).click();
-    await page.clock.runFor(500);
-    await expect(component.getByRole('button', {name: 'unchecked-icon-button', exact: true})).toHaveCount(1);
-    await page.clock.runFor(500);
-    await expect(component.getByRole('button', {name: 'checked-icon-button', exact: true})).toHaveCount(1);
+    };
+
+    render(<ToggleIconButtonWrapper />);
+
+    expect(screen.getByRole('button', {name: 'unchecked-icon-button'})).toBeInTheDocument();
+    expect(screen.queryByRole('button', {name: 'checked-icon-button'})).not.toBeInTheDocument();
+
+    await userEvent.click(screen.getByRole('button', {name: 'unchecked-icon-button'}));
+
+    expect(screen.queryByRole('button', {name: 'unchecked-icon-button'})).not.toBeInTheDocument();
+    expect(screen.getByRole('button', {name: 'checked-icon-button'})).toBeInTheDocument();
+});
+
+test("ToggleIconButton doesn't update its state until onChange promise is resolved", async () => {
+    jest.useFakeTimers();
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <ToggleIconButton
+                checkedProps={{
+                    Icon: IconPauseFilled,
+                    'aria-label': 'checked-icon-button',
+                }}
+                uncheckedProps={{
+                    Icon: IconPlayFilled,
+                    'aria-label': 'unchecked-icon-button',
+                }}
+                onChange={async () => {
+                    await new Promise((resolve) => setTimeout(resolve, 1000));
+                }}
+            />
+        </ThemeContextProvider>
+    );
+
+    fireEvent.click(screen.getByRole('button', {name: 'unchecked-icon-button'}));
+
+    jest.advanceTimersByTime(500);
+
+    await screen.findByRole('button', {name: 'unchecked-icon-button'});
+
+    jest.runAllTimers();
+
+    await screen.findByRole('button', {name: 'checked-icon-button'});
 });

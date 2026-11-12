@@ -1,45 +1,200 @@
-import {test, expect} from '../test-utils/component';
+import * as React from 'react';
+import {NakedCard} from '../card-naked';
+import {makeTheme} from './test-utils';
+import {render, screen} from '@testing-library/react';
+import ThemeContextProvider from '../theme-context-provider';
+import Tag from '../tag';
+import Stack from '../stack';
+import {Text2} from '../text';
+import userEvent from '@testing-library/user-event';
 
-import type {AccessibleName} from './naked-card.story';
+const titleFirst = 'Title Headline Pretitle Description Extra line 1Extra line 2';
+const pretitleFirst = 'Pretitle Headline Title Description Extra line 1Extra line 2';
 
-const titleFirst = 'Title Headline Pretitle Description Extra line 1 Extra line 2';
-const pretitleFirst = 'Pretitle Headline Title Description Extra line 1 Extra line 2';
-for (const action of ['href', 'to', 'onPress'] as const) {
-    for (const {pretitleAs, titleAs, expectedLabel} of [
-        {pretitleAs: undefined, titleAs: undefined, expectedLabel: titleFirst},
-        {pretitleAs: 'h1', titleAs: 'h2', expectedLabel: pretitleFirst},
-        {pretitleAs: 'h2', titleAs: 'h1', expectedLabel: titleFirst},
-    ] as const) {
-        test(`NakedCard "${action}" label with pretitleAs={${pretitleAs}} and titleAs={${titleAs}}`, async ({
-            mount,
-        }) => {
-            const component = await mount<typeof AccessibleName>('naked-card/AccessibleName', {
-                action,
-                pretitleAs,
-                titleAs,
-            });
-            await expect(
-                component.getByRole(action === 'onPress' ? 'button' : 'link', {
-                    name: expectedLabel,
-                    exact: true,
-                })
-            ).toHaveCount(1);
-        });
+test.each`
+    pretitleAs   | titleAs      | expectedLabel
+    ${undefined} | ${undefined} | ${titleFirst}
+    ${'h1'}      | ${'h2'}      | ${pretitleFirst}
+    ${'h2'}      | ${'h1'}      | ${titleFirst}
+`(
+    'NakedCard "href" label with pretitleAs={$pretitleAs} and titleAs={$titleAs}',
+    async ({pretitleAs, titleAs, expectedLabel}) => {
+        render(
+            <ThemeContextProvider theme={makeTheme()}>
+                <NakedCard
+                    href="https://example.org"
+                    imageSrc="https://source.unsplash.com/900x900/"
+                    headline={<Tag type="promo">Headline</Tag>}
+                    pretitle="Pretitle"
+                    pretitleAs={pretitleAs}
+                    title="Title"
+                    titleAs={titleAs}
+                    description="Description"
+                    slot={
+                        <Stack space={4}>
+                            <Text2 regular>Extra line 1</Text2>
+                            <Text2 regular>Extra line 2</Text2>
+                        </Stack>
+                    }
+                />
+            </ThemeContextProvider>
+        );
+
+        await screen.findByRole('link', {name: expectedLabel});
     }
-}
-test('NakedCard onClose custom label', async ({mount}) => {
-    const component = await mount('naked-card/Closable');
-    await component.getByRole('button', {name: 'custom close label'}).click();
-    await expect(component.getByTestId('closes')).toHaveValue('1');
+);
+
+test.each`
+    pretitleAs   | titleAs      | expectedLabel
+    ${undefined} | ${undefined} | ${titleFirst}
+    ${'h1'}      | ${'h2'}      | ${pretitleFirst}
+    ${'h2'}      | ${'h1'}      | ${titleFirst}
+`(
+    'NakedCard "to" label with pretitleAs={$pretitleAs} and titleAs={$titleAs}',
+    async ({pretitleAs, titleAs, expectedLabel}) => {
+        render(
+            <ThemeContextProvider theme={makeTheme()}>
+                <NakedCard
+                    to="/foo/bar"
+                    imageSrc="https://source.unsplash.com/900x900/"
+                    headline={<Tag type="promo">Headline</Tag>}
+                    pretitle="Pretitle"
+                    pretitleAs={pretitleAs}
+                    title="Title"
+                    titleAs={titleAs}
+                    description="Description"
+                    slot={
+                        <Stack space={4}>
+                            <Text2 regular>Extra line 1</Text2>
+                            <Text2 regular>Extra line 2</Text2>
+                        </Stack>
+                    }
+                />
+            </ThemeContextProvider>
+        );
+
+        await screen.findByRole('link', {name: expectedLabel});
+    }
+);
+
+test.each`
+    pretitleAs   | titleAs      | expectedLabel
+    ${undefined} | ${undefined} | ${titleFirst}
+    ${'h1'}      | ${'h2'}      | ${pretitleFirst}
+    ${'h2'}      | ${'h1'}      | ${titleFirst}
+`(
+    'NakedCard "onPress" label with pretitleAs={$pretitleAs} and titleAs={$titleAs}',
+    async ({pretitleAs, titleAs, expectedLabel}) => {
+        render(
+            <ThemeContextProvider theme={makeTheme()}>
+                <NakedCard
+                    onPress={() => {}}
+                    imageSrc="https://source.unsplash.com/900x900/"
+                    headline={<Tag type="promo">Headline</Tag>}
+                    pretitle="Pretitle"
+                    pretitleAs={pretitleAs}
+                    title="Title"
+                    titleAs={titleAs}
+                    description="Description"
+                    slot={
+                        <Stack space={4}>
+                            <Text2 regular>Extra line 1</Text2>
+                            <Text2 regular>Extra line 2</Text2>
+                        </Stack>
+                    }
+                />
+            </ThemeContextProvider>
+        );
+
+        await screen.findByRole('button', {name: expectedLabel});
+    }
+);
+
+test('NakedCard onClose custom label', async () => {
+    const closeSpy = jest.fn();
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <NakedCard
+                onClose={closeSpy}
+                closeButtonLabel="custom close label"
+                title="Title"
+                description="Description"
+                imageSrc="https://source.unsplash.com/900x900/"
+            />
+        </ThemeContextProvider>
+    );
+
+    const closeButton = await screen.findByRole('button', {name: 'custom close label'});
+    await userEvent.click(closeButton);
+    expect(closeSpy).toHaveBeenCalledTimes(1);
 });
-for (const action of ['href', 'to', 'onPress'] as const) {
-    test(`NakedCard snap "${action}" label`, async ({mount}) => {
-        const component = await mount('naked-card/AccessibleName', {action, snap: true});
-        await expect(
-            component.getByRole(action === 'onPress' ? 'button' : 'link', {
-                name: 'Title Subtitle Description Extra line 1 Extra line 2',
-                exact: true,
-            })
-        ).toHaveCount(1);
-    });
-}
+
+test('NakedCard snap "href" label', async () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <NakedCard
+                size="snap"
+                href="https://example.org"
+                imageSrc="https://source.unsplash.com/900x900/"
+                title="Title"
+                subtitle="Subtitle"
+                description="Description"
+                slot={
+                    <Stack space={4}>
+                        <Text2 regular>Extra line 1</Text2>
+                        <Text2 regular>Extra line 2</Text2>
+                    </Stack>
+                }
+            />
+        </ThemeContextProvider>
+    );
+
+    await screen.findByRole('link', {name: 'Title Subtitle Description Extra line 1Extra line 2'});
+});
+
+test('NakedCard snap "to" label', async () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <NakedCard
+                size="snap"
+                to="/foo/bar"
+                imageSrc="https://source.unsplash.com/900x900/"
+                title="Title"
+                subtitle="Subtitle"
+                description="Description"
+                slot={
+                    <Stack space={4}>
+                        <Text2 regular>Extra line 1</Text2>
+                        <Text2 regular>Extra line 2</Text2>
+                    </Stack>
+                }
+            />
+        </ThemeContextProvider>
+    );
+
+    await screen.findByRole('link', {name: 'Title Subtitle Description Extra line 1Extra line 2'});
+});
+
+test('NakedCard snap "onPress" label', async () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <NakedCard
+                size="snap"
+                onPress={() => {}}
+                imageSrc="https://source.unsplash.com/900x900/"
+                title="Title"
+                subtitle="Subtitle"
+                description="Description"
+                slot={
+                    <Stack space={4}>
+                        <Text2 regular>Extra line 1</Text2>
+                        <Text2 regular>Extra line 2</Text2>
+                    </Stack>
+                }
+            />
+        </ThemeContextProvider>
+    );
+
+    await screen.findByRole('button', {name: 'Title Subtitle Description Extra line 1Extra line 2'});
+});

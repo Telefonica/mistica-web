@@ -1,65 +1,164 @@
-import {test, expect} from '../test-utils/component';
+import * as React from 'react';
+import {render, screen} from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import {AiCard} from '../community';
+import ThemeContextProvider from '../theme-context-provider';
+import {makeTheme} from './test-utils';
 
-test('renders static text', async ({mount}) => {
-    const component = await mount('ai-card/Content', {text: 'Hello world'});
-    await expect(component.getByTestId('AiCard')).toContainText('Hello world');
-});
-test('is non-interactive when no onPress is provided', async ({mount}) => {
-    const component = await mount('ai-card/Content', {text: 'Hello'});
-    await expect(component.getByRole('button')).toHaveCount(0);
-});
-test('renders as an accessible button when onPress is provided', async ({mount}) => {
-    const component = await mount('ai-card/Content', {text: 'Hello', interactive: true});
-    await expect(component.getByRole('button', {name: 'Hello', exact: true})).toHaveCount(1);
-});
-test('renders as an accessible link when href is provided', async ({mount}) => {
-    const component = await mount('ai-card/Content', {
-        text: 'Hello ',
-        words: ['world'],
-        href: 'https://example.com',
+beforeAll(() => {
+    Object.defineProperty(window, 'IntersectionObserver', {
+        writable: true,
+        configurable: true,
+        value: jest.fn().mockImplementation((callback: IntersectionObserverCallback) => ({
+            observe: jest.fn((element: Element) => {
+                callback(
+                    [{isIntersecting: true, target: element} as IntersectionObserverEntry],
+                    {} as IntersectionObserver
+                );
+            }),
+            disconnect: jest.fn(),
+            unobserve: jest.fn(),
+        })),
     });
-    await expect(component.getByRole('link', {name: 'Hello world', exact: true})).toHaveCount(1);
 });
-test('calls onPress when clicked', async ({mount}) => {
-    const component = await mount('ai-card/Content', {text: 'Hello', interactive: true});
-    await component.getByRole('button').click();
-    await expect(component.getByTestId('calls')).toHaveValue('1');
+
+afterEach(() => {
+    jest.useRealTimers();
+    jest.restoreAllMocks();
 });
-for (const {title, text, words, expected} of [
-    {
-        title: 'shows the last word immediately when user prefers reduced motion',
-        text: 'Check the ',
-        words: ['weather', 'news'],
-        expected: 'Check the news',
-    },
-    {title: 'animates at most 4 words', text: 'Find ', words: ['a', 'b', 'c', 'd', 'e'], expected: 'Find d'},
-    {
-        title: 'ignores empty and whitespace-only entries in words',
-        text: '',
-        words: ['', '  ', 'valid'],
-        expected: 'valid',
-    },
-]) {
-    test(title, async ({mount, page}) => {
-        await page.emulateMedia({reducedMotion: 'reduce'});
-        const component = await mount('ai-card/Content', {text, words, interactive: true});
-        await expect(component.getByRole('button', {name: expected, exact: true})).toHaveCount(1);
-    });
-}
-test('animates words: typed word appears in the card', async ({mount}) => {
-    const component = await mount('ai-card/Content', {text: '', words: ['hi'], interactive: true});
-    await expect(component.getByTestId('AiCard')).toContainText('hi');
+
+const mockPrefersReducedMotion = () => {
+    jest.spyOn(window, 'matchMedia').mockImplementation((query) => ({
+        matches: query === '(prefers-reduced-motion: reduce)',
+        addListener: jest.fn(),
+        removeListener: jest.fn(),
+        addEventListener: jest.fn(),
+        removeEventListener: jest.fn(),
+        media: query,
+        onchange: null,
+        dispatchEvent: jest.fn(),
+    }));
+};
+
+test('renders static text', () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <AiCard text="Hello world" />
+        </ThemeContextProvider>
+    );
+
+    expect(screen.getByTestId('AiCard').textContent).toContain('Hello world');
 });
-test('passes dataAttributes to the container element', async ({mount}) => {
-    const component = await mount('ai-card/Content', {text: 'Hello', dataAttributes: {testid: 'my-ai-card'}});
-    await expect(component.getByTestId('my-ai-card')).toHaveCount(1);
+
+test('is non-interactive when no onPress is provided', () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <AiCard text="Hello" />
+        </ThemeContextProvider>
+    );
+
+    expect(screen.queryByRole('button')).not.toBeInTheDocument();
 });
-test('aria-label prop overrides the auto-generated label', async ({mount}) => {
-    const component = await mount('ai-card/Content', {
-        text: 'Hello',
-        words: ['world'],
-        'aria-label': 'Custom label',
-        interactive: true,
-    });
-    await expect(component.getByRole('button', {name: 'Custom label', exact: true})).toHaveCount(1);
+
+test('renders as an accessible button when onPress is provided', () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <AiCard text="Hello" onPress={() => {}} />
+        </ThemeContextProvider>
+    );
+
+    expect(screen.getByRole('button', {name: 'Hello'})).toBeInTheDocument();
+});
+
+test('renders as an accessible link when href is provided', () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <AiCard text="Hello " words={['world']} href="https://example.com" />
+        </ThemeContextProvider>
+    );
+
+    expect(screen.getByRole('link', {name: 'Hello world'})).toBeInTheDocument();
+});
+
+test('calls onPress when clicked', async () => {
+    const handlePress = jest.fn();
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <AiCard text="Hello" onPress={handlePress} />
+        </ThemeContextProvider>
+    );
+
+    await userEvent.click(screen.getByRole('button'));
+
+    expect(handlePress).toHaveBeenCalledTimes(1);
+});
+
+test('shows the last word immediately when user prefers reduced motion', () => {
+    mockPrefersReducedMotion();
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <AiCard text="Check the " words={['weather', 'news']} onPress={() => {}} />
+        </ThemeContextProvider>
+    );
+
+    expect(screen.getByRole('button', {name: 'Check the news'})).toBeInTheDocument();
+});
+
+test('animates words: typed word appears in the card', () => {
+    jest.useFakeTimers();
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <AiCard text="" words={['hi']} onPress={() => {}} />
+        </ThemeContextProvider>
+    );
+
+    React.act(() => jest.advanceTimersByTime(500));
+
+    expect(screen.getByTestId('AiCard').textContent).toContain('hi');
+});
+
+test('animates at most 4 words', () => {
+    mockPrefersReducedMotion();
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <AiCard text="Find " words={['a', 'b', 'c', 'd', 'e']} onPress={() => {}} />
+        </ThemeContextProvider>
+    );
+
+    expect(screen.getByRole('button', {name: 'Find d'})).toBeInTheDocument();
+});
+
+test('ignores empty and whitespace-only entries in words', () => {
+    mockPrefersReducedMotion();
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <AiCard text="" words={['', '  ', 'valid']} onPress={() => {}} />
+        </ThemeContextProvider>
+    );
+
+    expect(screen.getByRole('button', {name: 'valid'})).toBeInTheDocument();
+});
+
+test('passes dataAttributes to the container element', () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <AiCard text="Hello" dataAttributes={{testid: 'my-ai-card'}} />
+        </ThemeContextProvider>
+    );
+
+    expect(screen.getByTestId('my-ai-card')).toBeInTheDocument();
+});
+
+test('aria-label prop overrides the auto-generated label', () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <AiCard text="Hello" words={['world']} aria-label="Custom label" onPress={() => {}} />
+        </ThemeContextProvider>
+    );
+
+    expect(screen.getByRole('button', {name: 'Custom label'})).toBeInTheDocument();
 });

@@ -1,96 +1,192 @@
-import {test, expect} from '../test-utils/component';
+import * as React from 'react';
+import TextLink from '../text-link';
+import {fireEvent, render, screen, waitFor} from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import ThemeContextProvider from '../theme-context-provider';
+import {makeTheme} from './test-utils';
+import {MemoryRouter, useLocation, Link as ReactRouterLink} from 'react-router-dom';
+import {redirect as redirectSpy} from '../utils/browser';
 
-import type {Navigation, Tracking} from './text-link.story';
-import type {TrackingEvent} from '../utils/types';
+import type {ThemeConfig} from '../theme';
 
-const trackingEvent = {category: 'someCategory', action: 'someAction', label: 'someLabel'};
-test('TextLink can track events', async ({mount}) => {
-    const events: Array<TrackingEvent> = [];
-    const component = await mount<typeof Tracking>('text-link/Tracking', {
-        onTrack: async (event) => {
-            events.push(event);
-        },
-    });
-    await component.getByRole('link', {name: /link without event/}).click();
-    expect(events).toEqual([]);
-    await component.getByRole('link', {name: /link with custom event/}).click();
-    await expect.poll(() => events).toEqual([trackingEvent]);
-    await component.getByRole('link', {name: /link with default event/}).click();
-    await expect
-        .poll(() => events)
-        .toEqual([
-            trackingEvent,
-            {category: 'user_interaction', action: 'link_tapped', label: 'link with default event'},
-        ]);
-});
-test(`onNavigate is called before navigation when using "href" prop`, async ({mount, page}) => {
-    const events: Array<string> = [];
-    const tracked: Array<TrackingEvent> = [];
-    let completeNavigation!: () => void;
-    const pendingNavigation = new Promise<void>((resolve) => {
-        completeNavigation = resolve;
-    });
-    await page.route('https://example.org/', (route) => route.fulfill({body: 'Destination'}));
-    const component = await mount<typeof Navigation>('text-link/Navigation', {
-        onNavigate: async () => {
-            events.push('navigate');
-            await pendingNavigation;
-        },
-        onTrack: async (event) => {
-            tracked.push(event);
-        },
-    });
-    await component.getByRole('link', {name: 'Test', exact: true}).click();
-    await expect.poll(() => events).toEqual(['navigate']);
-    expect(page.url()).toContain('/playwright/gallery/index.html');
-    completeNavigation();
-    await expect(page).toHaveURL('https://example.org/');
-    expect(tracked).toEqual([trackingEvent]);
-});
-test(`onNavigate is called during navigation when using "to" prop`, async ({mount}) => {
-    const events: Array<string> = [];
-    const tracked: Array<TrackingEvent> = [];
-    const component = await mount<typeof Navigation>('text-link/Navigation', {
-        router: true,
-        onNavigate: () => {
-            events.push('navigate');
-        },
-        onTrack: async (event) => {
-            tracked.push(event);
-        },
-    });
-    await expect(component.getByText('Current path: /', {exact: true})).toHaveCount(1);
-    await component.getByRole('link', {name: 'Test', exact: true}).click();
-    await expect(component.getByText('Current path: /example/path', {exact: true})).toHaveCount(1);
-    expect(events).toEqual(['navigate']);
-    await expect.poll(() => tracked).toEqual([trackingEvent]);
-});
-test(`Buttons have the appropiate role`, async ({mount}) => {
-    const component = await mount('text-link/Roles', {});
-    for (const [role, name] of [
-        ['link', 'to'],
-        ['link', 'href'],
-        ['button', 'onPress'],
-        ['menuitem', 'to'],
-        ['tab', 'href'],
-        ['link', 'onPress'],
-    ] as const) {
-        await expect(component.getByRole(role, {name, exact: true})).toHaveCount(1);
-    }
+jest.mock('../utils/browser', () => ({
+    ...jest.requireActual('../utils/browser'),
+    redirect: jest.fn(),
+}));
+
+beforeEach(() => {
+    (redirectSpy as any).mockReset();
 });
 
-test('TextLink indicates that opens in a new tab', async ({mount}) => {
-    const component = await mount('text-link/Labels', {newTab: true});
-    await expect(component.getByRole('link', {name: 'my link Se abre en ventana nueva'})).toHaveAttribute(
-        'target',
-        '_blank'
+const Link: ThemeConfig['Link'] = ({innerRef, ...props}) => <ReactRouterLink {...props} ref={innerRef} />;
+
+const trackingEvent = {
+    category: 'someCategory',
+    action: 'someAction',
+    label: 'someLabel',
+};
+
+test('TextLink can track events', async () => {
+    const logEventSpy = jest.fn();
+
+    render(
+        <ThemeContextProvider theme={makeTheme({analytics: {logEvent: logEventSpy}})}>
+            <TextLink href="#test">link without event</TextLink>
+            <TextLink trackingEvent={trackingEvent} href="#test">
+                link with custom event
+            </TextLink>
+            <TextLink trackEvent href="#test">
+                link with default event
+            </TextLink>
+        </ThemeContextProvider>
     );
+
+    const linkWithoutEvent = await screen.findByRole('link', {name: /link without event/});
+    const linkWithCustomEvent = await screen.findByRole('link', {name: /link with custom event/});
+    const linkWithDefaultEvent = await screen.findByRole('link', {name: /link with default event/});
+
+    await userEvent.click(linkWithoutEvent);
+    expect(logEventSpy).not.toHaveBeenCalled();
+
+    await userEvent.click(linkWithCustomEvent);
+    expect(logEventSpy).toHaveBeenCalledWith(trackingEvent);
+    expect(logEventSpy).toHaveBeenCalledTimes(1);
+
+    await userEvent.click(linkWithDefaultEvent);
+    expect(logEventSpy).toHaveBeenCalledWith({
+        category: 'user_interaction',
+        action: 'link_tapped',
+        label: 'link with default event',
+    });
+    expect(logEventSpy).toHaveBeenCalledTimes(2);
 });
-test('TextLink indicates that opens in the same page', async ({mount}) => {
-    const component = await mount('text-link/Labels');
-    await expect(component.getByRole('link', {name: 'my link Página actual'})).toHaveCount(1);
+
+test('onNavigate is called before navigation when using "href" prop', async () => {
+    const onNavigateSpy = jest.fn();
+    const logEventSpy = jest.fn();
+    const href = 'https://example.org';
+
+    render(
+        <ThemeContextProvider theme={makeTheme({analytics: {logEvent: logEventSpy}})}>
+            <TextLink href={href} trackingEvent={trackingEvent} onNavigate={onNavigateSpy}>
+                Test
+            </TextLink>
+        </ThemeContextProvider>
+    );
+
+    const link = screen.getByRole('link', {name: 'Test'});
+    fireEvent.click(link);
+
+    expect(onNavigateSpy).toHaveBeenCalledTimes(1);
+    expect(redirectSpy).not.toHaveBeenCalled();
+
+    await waitFor(() => {
+        expect(redirectSpy).toHaveBeenCalledWith(href, false, false);
+    });
+
+    await waitFor(() => {
+        expect(logEventSpy).toHaveBeenCalledWith(trackingEvent);
+    });
 });
-test('TextLink allows customizing the aria-label', async ({mount}) => {
-    const component = await mount('text-link/Labels', {customLabel: 'custom label'});
-    await expect(component.getByRole('link', {name: 'custom label'})).toHaveCount(1);
+
+test('onNavigate is called during navigation when using "to" prop', async () => {
+    const onNavigateSpy = jest.fn();
+    const logEventSpy = jest.fn();
+    const to = '/example/path';
+
+    const CurrentPath = () => {
+        return <div>Current path: {useLocation().pathname}</div>;
+    };
+
+    render(
+        <ThemeContextProvider theme={makeTheme({Link, analytics: {logEvent: logEventSpy}})}>
+            <MemoryRouter>
+                <TextLink to={to} trackingEvent={trackingEvent} onNavigate={onNavigateSpy}>
+                    Test
+                </TextLink>
+                <CurrentPath />
+            </MemoryRouter>
+        </ThemeContextProvider>
+    );
+
+    expect(screen.getByText('Current path: /')).toBeInTheDocument();
+
+    const link = screen.getByRole('link', {name: 'Test'});
+    fireEvent.click(link);
+
+    expect(screen.getByText(`Current path: ${to}`)).toBeInTheDocument();
+
+    expect(onNavigateSpy).toHaveBeenCalledTimes(1);
+
+    await waitFor(() => {
+        expect(logEventSpy).toHaveBeenCalledWith(trackingEvent);
+    });
+});
+
+test('Buttons have the appropiate role', async () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <TextLink to="/to">to</TextLink>
+            <TextLink href="/href">href</TextLink>
+            <TextLink onPress={() => {}}>onPress</TextLink>
+
+            <TextLink to="/to" role="menuitem">
+                to
+            </TextLink>
+            <TextLink href="/href" role="tab">
+                href
+            </TextLink>
+            <TextLink onPress={() => {}} role="link">
+                onPress
+            </TextLink>
+        </ThemeContextProvider>
+    );
+
+    expect(screen.getByRole('link', {name: 'to'})).toBeInTheDocument();
+    expect(screen.getByRole('link', {name: 'href'})).toBeInTheDocument();
+    expect(screen.getByRole('button', {name: 'onPress'})).toBeInTheDocument();
+    expect(screen.getByRole('menuitem', {name: 'to'})).toBeInTheDocument();
+    expect(screen.getByRole('tab', {name: 'href'})).toBeInTheDocument();
+    expect(screen.getByRole('link', {name: 'onPress'})).toBeInTheDocument();
+});
+
+test('TextLink indicates that opens in a new tab', async () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <TextLink newTab href="/test">
+                my link
+            </TextLink>
+        </ThemeContextProvider>
+    );
+
+    const link = await screen.findByRole('link', {name: 'my link Se abre en ventana nueva'});
+
+    expect(link).toBeInTheDocument();
+    expect(link).toHaveAttribute('target');
+});
+
+test('TextLink indicates that opens in the same page', async () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <TextLink href="#test">my link</TextLink>
+        </ThemeContextProvider>
+    );
+
+    const link = await screen.findByRole('link', {name: 'my link Página actual'});
+
+    expect(link).toBeInTheDocument();
+});
+
+test('TextLink allows customizing the aria-label', async () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <TextLink aria-label="custom label" href="#test">
+                my link
+            </TextLink>
+        </ThemeContextProvider>
+    );
+
+    const link = await screen.findByRole('link', {name: 'custom label'});
+
+    expect(link).toBeInTheDocument();
 });

@@ -1,43 +1,131 @@
-import {test, expect} from '../test-utils/component';
+import * as React from 'react';
+import {render, waitFor, fireEvent, screen} from '@testing-library/react';
+import {ButtonPrimary, Form, ThemeContextProvider, Switch} from '..';
+import userEvent from '@testing-library/user-event';
+import {makeTheme} from './test-utils';
 
-test('renders accesible switch', async ({mount}) => {
-    const component = await mount('switch/Toggle');
-    await expect(component.getByRole('switch')).toHaveCount(1);
-    await expect(component.getByRole('switch')).toHaveAttribute('aria-checked', 'false');
+test('renders accesible switch', () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Switch name="switch" defaultChecked={false} />
+        </ThemeContextProvider>
+    );
+
+    const switchElement = screen.getByRole('switch');
+
+    expect(switchElement).toBeInTheDocument();
+    expect(switchElement.getAttribute('aria-checked')).toBe('false');
 });
-test('controlled mode', async ({mount}) => {
-    const component = await mount('switch/Toggle', {controlled: true});
-    const toggle = component.getByRole('switch');
-    await expect(toggle).toHaveAttribute('aria-checked', 'false');
-    await toggle.click();
-    await expect(toggle).toHaveAttribute('aria-checked', 'true');
+
+test('controlled mode', () => {
+    const Component = () => {
+        const [checked, setChecked] = React.useState(false);
+        return <Switch name="switch" onChange={setChecked} checked={checked} />;
+    };
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Component />
+        </ThemeContextProvider>
+    );
+
+    const switchElement = screen.getByRole('switch');
+
+    expect(switchElement.getAttribute('aria-checked')).toBe('false');
+    fireEvent.click(switchElement);
+    expect(switchElement.getAttribute('aria-checked')).toBe('true');
 });
-for (const handler of [false, true]) {
-    test(`uncontrolled mode${handler ? ' with onChange handler' : ''}`, async ({mount}) => {
-        const component = await mount('switch/Toggle', {defaultChecked: true, handler});
-        const toggle = component.getByRole('switch');
-        await expect(toggle).toHaveAttribute('aria-checked', 'true');
-        await toggle.click();
-        await expect(toggle).toHaveAttribute('aria-checked', 'false');
-        if (handler) await expect(component.getByTestId('calls')).toHaveValue('[false]');
-    });
-}
-for (const controlled of [false, true]) {
-    test(`form ${controlled ? 'uncontrolled' : 'controlled'} mode`, async ({mount}) => {
-        const component = await mount('switch/FormToggle', {controlled});
-        const toggle = component.getByRole('switch');
-        await expect(toggle).toHaveAttribute('aria-checked', String(!controlled));
-        await toggle.click();
-        await expect(toggle).toHaveAttribute('aria-checked', String(controlled));
-        await expect(component.getByTestId('form-value')).toHaveValue(String(controlled));
-        await component.getByRole('button', {name: 'done!'}).click();
-        await expect(component.getByTestId('submission')).toHaveValue(
-            JSON.stringify([{switch: controlled}, {switch: controlled}])
-        );
-    });
-}
-test('Switch onClick event is not propagated', async ({mount}) => {
-    const component = await mount('switch/Propagation');
-    await component.getByRole('switch').click();
-    await expect(component.getByTestId('parent-calls')).toHaveValue('0');
+
+test('uncontrolled mode', () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Switch name="switch" defaultChecked />
+        </ThemeContextProvider>
+    );
+
+    const switchElement = screen.getByRole('switch');
+
+    expect(switchElement.getAttribute('aria-checked')).toBe('true');
+    fireEvent.click(switchElement);
+    expect(switchElement.getAttribute('aria-checked')).toBe('false');
+});
+
+test('uncontrolled mode with onChange handler', async () => {
+    const onChangeSpy = jest.fn();
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Switch name="switch" onChange={onChangeSpy} defaultChecked />
+        </ThemeContextProvider>
+    );
+
+    const switchElement = screen.getByRole('switch');
+
+    expect(switchElement.getAttribute('aria-checked')).toBe('true');
+    fireEvent.click(switchElement);
+    expect(switchElement.getAttribute('aria-checked')).toBe('false');
+
+    await waitFor(() => expect(onChangeSpy).toHaveBeenCalledWith(false));
+});
+
+test('form controlled mode', async () => {
+    const handleSubmitSpy = jest.fn();
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Form onSubmit={handleSubmitSpy} initialValues={{switch: true}}>
+                <Switch name="switch" />
+                <ButtonPrimary submit>done!</ButtonPrimary>
+            </Form>
+        </ThemeContextProvider>
+    );
+
+    const switchElement = screen.getByRole('switch');
+
+    expect(switchElement.getAttribute('aria-checked')).toBe('true');
+    fireEvent.click(switchElement);
+    expect(switchElement.getAttribute('aria-checked')).toBe('false');
+    await userEvent.click(screen.getByRole('button'));
+    await waitFor(() => expect(handleSubmitSpy).toHaveBeenCalledWith({switch: false}, {switch: false}));
+});
+
+test('form uncontrolled mode', async () => {
+    const handleSubmitSpy = jest.fn();
+
+    const ControlledSwitch = () => {
+        const [checked, setChecked] = React.useState(false);
+        return <Switch checked={checked} onChange={setChecked} name="switch" />;
+    };
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Form onSubmit={handleSubmitSpy} initialValues={{switch: true}}>
+                <ControlledSwitch />
+                <ButtonPrimary submit>done!</ButtonPrimary>
+            </Form>
+        </ThemeContextProvider>
+    );
+
+    const switchElement = screen.getByRole('switch');
+
+    expect(switchElement.getAttribute('aria-checked')).toBe('false');
+    fireEvent.click(switchElement);
+    expect(switchElement.getAttribute('aria-checked')).toBe('true');
+    await userEvent.click(screen.getByRole('button'));
+    await waitFor(() => expect(handleSubmitSpy).toHaveBeenCalledWith({switch: true}, {switch: true}));
+});
+
+test('Switch onClick event is not propagated', async () => {
+    const onPressHandler = jest.fn();
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <button onClick={onPressHandler}>
+                <Switch name="switch" defaultChecked={false} />
+            </button>
+        </ThemeContextProvider>
+    );
+
+    await userEvent.click(screen.getByRole('switch'));
+
+    expect(onPressHandler).not.toHaveBeenCalled();
 });

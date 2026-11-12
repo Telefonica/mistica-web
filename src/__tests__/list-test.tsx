@@ -1,275 +1,656 @@
-import {test, expect} from '../test-utils/component';
+import * as React from 'react';
+import {RowList, Row, BoxedRowList, BoxedRow} from '../list';
+import {RadioGroup} from '../radio-button';
+import {screen, render, waitFor, within} from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import {
+    ButtonPrimary,
+    Form,
+    IconPlayFilled,
+    IconShopRegular,
+    IconTrashCanRegular,
+    Stack,
+    Tag,
+    Text2,
+    ThemeContextProvider,
+} from '..';
+import {makeTheme} from './test-utils';
 
-test('RowList has a list role by default', async ({mount}) => {
-    const component = await mount('list/Scenario1', {});
-    const list = component.getByRole('list');
-    await expect(list).toHaveCount(1);
-    const items = component.getByRole('listitem');
-    await expect(items).toHaveCount(2);
-});
-test('BoxedRowList has a list role by default', async ({mount}) => {
-    const component = await mount('list/Scenario2', {});
-    const list = component.getByRole('list');
-    await expect(list).toHaveCount(1);
-    const items = component.getByRole('listitem');
-    await expect(items).toHaveCount(2);
-});
-test('BoxedRow updates its selected state from custom right content', async ({mount}) => {
-    const component = await mount('list/Scenario3', {});
-    await expect(component.getByText('Unselected')).toHaveCount(1);
-    await component.getByRole('button', {name: 'Unselected'}).click();
-    await expect(component.getByText('Selected')).toHaveCount(1);
-});
-test('BoxedRow follows checkbox state with an onPress action', async ({mount}) => {
-    const onPressCalls: Array<Array<unknown>> = [];
-    const onPress = async (...args: Array<unknown>) => {
-        onPressCalls.push(args);
-    };
-    const component = await mount('list/Scenario4', {onPress});
-    const checkbox = component.getByRole('checkbox', {name: 'Title'});
-    await checkbox.click();
-    await expect(checkbox).toBeChecked();
-    expect(onPressCalls).toEqual([]);
-    await checkbox.click();
-    await expect(checkbox).not.toBeChecked();
-});
-test('Row which navigates', async ({mount}) => {
-    const component = await mount('list/Scenario5', {});
-    const anchor = component.getByRole('link');
-    await expect(anchor).toHaveCount(1);
-    await expect(anchor).toHaveAttribute('href', '/some/url');
-});
-test('Row as a button', async ({mount}) => {
-    const spyCalls: Array<Array<unknown>> = [];
-    const spy = async (...args: Array<unknown>) => {
-        spyCalls.push(args);
-    };
-    const component = await mount('list/Scenario6', {spy});
-    const button = component.getByRole('button', {name: 'Title'});
-    await expect(button).toHaveCount(1);
-    await button.click();
-    await expect.poll(() => spyCalls.length).toBeGreaterThan(0);
-});
-test('Row, keeping its listitem role, containing a button reporting link role', async ({mount}) => {
-    const spyCalls: Array<Array<unknown>> = [];
-    const spy = async (...args: Array<unknown>) => {
-        spyCalls.push(args);
-    };
-    const component = await mount('list/Scenario7', {spy});
-    const rowDiv = component.getByRole('listitem');
-    await expect(rowDiv).toHaveCount(1);
-    const button = rowDiv.getByRole('link', {name: 'Title'});
-    await expect(button).toHaveCount(1);
-    await expect(component.getByTestId('content-container')).toHaveAttribute('aria-hidden', 'true');
-    await button.click();
-    await expect.poll(() => spyCalls.length).toBeGreaterThan(0);
-});
-test('Row with switch', async ({mount}) => {
-    const spyOnChangeCalls: Array<Array<unknown>> = [];
-    const spyOnChange = async (...args: Array<unknown>) => {
-        spyOnChangeCalls.push(args);
-    };
-    const component = await mount('list/Scenario8', {spyOnChange});
-    const switchEl = component.getByRole('switch', {name: 'Title'});
-    await expect(switchEl).not.toBeChecked();
-    await switchEl.click();
-    await expect(switchEl).toBeChecked();
-    await expect.poll(() => spyOnChangeCalls).toContainEqual([true]);
-    await switchEl.click();
-    await expect.poll(() => spyOnChangeCalls).toContainEqual([false]);
-});
-test('Row with checkbox', async ({mount}) => {
-    const spyOnChangeCalls: Array<Array<unknown>> = [];
-    const spyOnChange = async (...args: Array<unknown>) => {
-        spyOnChangeCalls.push(args);
-    };
-    const component = await mount('list/Scenario9', {spyOnChange});
-    const checkboxEl = component.getByRole('checkbox', {name: 'Title'});
-    await expect(checkboxEl).not.toBeChecked();
-    await checkboxEl.click();
-    await expect(checkboxEl).toBeChecked();
-    await expect.poll(() => spyOnChangeCalls).toContainEqual([true]);
-    await checkboxEl.click();
-    await expect.poll(() => spyOnChangeCalls).toContainEqual([false]);
-});
-test('Row with custom right element', async ({mount}) => {
-    const component = await mount('list/Scenario10', {});
-    await expect(component.getByText('custom')).toHaveCount(1);
-});
-test('Row list with radio buttons', async ({mount}) => {
-    const component = await mount('list/Scenario11', {});
-    const radioBanana = component.getByRole('radio', {name: 'Banana bananabanana'});
-    const radioApple = component.getByRole('radio', {name: 'Apple appleapple'});
-    await expect(radioBanana).not.toBeChecked();
-    await expect(radioApple).not.toBeChecked();
-    await radioBanana.click();
-    await expect(radioBanana).toBeChecked();
-    await expect(radioApple).not.toBeChecked();
-    await radioApple.click();
-    await expect(radioBanana).not.toBeChecked();
-    await expect(radioApple).toBeChecked();
-});
-test('RowList inside Form', async ({mount}) => {
-    const submitSpyCalls: Array<Array<unknown>> = [];
-    const submitSpy = async (...args: Array<unknown>) => {
-        submitSpyCalls.push(args);
-    };
-    const component = await mount('list/Scenario12', {submitSpy});
-    await component.getByRole('radio', {name: 'Banana'}).click();
-    await component.getByRole('checkbox', {name: 'Checkbox 1'}).click();
-    await component.getByRole('switch', {name: 'Switch 1'}).click();
-    await component.getByRole('button', {name: 'Submit'}).click();
-    await expect(component.getByRole('checkbox', {name: 'Checkbox 1'})).toBeChecked();
-    await expect(component.getByRole('checkbox', {name: 'Checkbox 2'})).not.toBeChecked();
-    await expect(component.getByRole('switch', {name: 'Switch 1'})).toBeChecked();
-    await expect(component.getByRole('switch', {name: 'Switch 2'})).not.toBeChecked();
-    await expect(component.getByRole('radio', {name: 'Banana'})).toBeChecked();
-    await expect(component.getByRole('radio', {name: 'Apple'})).not.toBeChecked();
+test('RowList has a list role by default', () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <RowList>
+                <Row title="Title" to="/somewhere" />
+                <Row title="Title 2" />
+            </RowList>
+        </ThemeContextProvider>
+    );
 
-    await expect.poll(() => submitSpyCalls.length).toBeGreaterThan(0);
-    await expect
-        .poll(() => submitSpyCalls[0]?.[0])
-        .toEqual({
+    const list = screen.getByRole('list');
+    expect(list).toBeInTheDocument();
+
+    const items = screen.getAllByRole('listitem');
+    expect(items).toHaveLength(2);
+});
+
+test('BoxedRowList has a list role by default', () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <BoxedRowList>
+                <BoxedRow title="Title" to="/somewhere" />
+                <BoxedRow title="Title 2" />
+            </BoxedRowList>
+        </ThemeContextProvider>
+    );
+
+    const list = screen.getByRole('list');
+    expect(list).toBeInTheDocument();
+
+    const items = screen.getAllByRole('listitem');
+    expect(items).toHaveLength(2);
+});
+
+test('BoxedRow updates its selected state from custom right content', async () => {
+    const CustomBoxedRow = () => {
+        const [selected, setSelected] = React.useState(false);
+
+        return (
+            <BoxedRow
+                selected={selected}
+                title="Title"
+                right={
+                    <button onClick={() => setSelected(!selected)}>
+                        {selected ? 'Selected' : 'Unselected'}
+                    </button>
+                }
+            />
+        );
+    };
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <BoxedRowList>
+                <CustomBoxedRow />
+            </BoxedRowList>
+        </ThemeContextProvider>
+    );
+
+    expect(screen.getByText('Unselected')).toBeInTheDocument();
+
+    await userEvent.click(screen.getByRole('button', {name: 'Unselected'}));
+
+    expect(screen.getByText('Selected')).toBeInTheDocument();
+});
+
+test('BoxedRow follows checkbox state with an onPress action', async () => {
+    const onPress = jest.fn();
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <BoxedRowList>
+                <BoxedRow title="Title" onPress={onPress} checkbox={{defaultValue: false}} />
+            </BoxedRowList>
+        </ThemeContextProvider>
+    );
+
+    const checkbox = screen.getByRole('checkbox', {name: 'Title'});
+
+    await userEvent.click(checkbox);
+
+    expect(checkbox).toBeChecked();
+    expect(onPress).not.toHaveBeenCalled();
+
+    await userEvent.click(checkbox);
+
+    expect(checkbox).not.toBeChecked();
+});
+
+test('Row which navigates', () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <RowList>
+                <Row title="Title" href="/some/url" />
+            </RowList>
+        </ThemeContextProvider>
+    );
+
+    const anchor = screen.getByRole('link');
+
+    expect(anchor).toBeInTheDocument();
+    expect(anchor).toHaveAttribute('href', '/some/url');
+});
+
+test('Row as a button', async () => {
+    const spy = jest.fn();
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <RowList>
+                <Row title="Title" onPress={spy} />
+            </RowList>
+        </ThemeContextProvider>
+    );
+
+    const button = screen.getByRole('button', {name: 'Title'});
+    expect(button).toBeInTheDocument();
+    await userEvent.click(button);
+    expect(spy).toHaveBeenCalled();
+});
+
+test('Row, keeping its listitem role, containing a button reporting link role', async () => {
+    const spy = jest.fn();
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <RowList>
+                <Row title="Title" onPress={spy} touchableRole="link" />
+            </RowList>
+        </ThemeContextProvider>
+    );
+
+    const rowDiv = screen.getByRole('listitem');
+    expect(rowDiv).toBeInTheDocument();
+
+    const button = within(rowDiv).getByRole('link', {name: 'Title'});
+    expect(button).toBeInTheDocument();
+
+    expect(screen.getByTestId('content-container')).toHaveAttribute('aria-hidden', 'true');
+
+    await userEvent.click(button);
+    expect(spy).toHaveBeenCalled();
+});
+
+test('Row with switch', async () => {
+    const spyOnChange = jest.fn();
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <RowList>
+                <Row title="Title" switch={{defaultValue: false, onChange: spyOnChange}} />
+            </RowList>
+        </ThemeContextProvider>
+    );
+
+    const switchEl = screen.getByRole('switch', {name: 'Title'});
+
+    expect(switchEl).not.toBeChecked();
+
+    await userEvent.click(switchEl);
+
+    expect(switchEl).toBeChecked();
+    expect(spyOnChange).toHaveBeenCalledWith(true);
+
+    await userEvent.click(switchEl);
+
+    expect(spyOnChange).toHaveBeenCalledWith(false);
+});
+
+test('Row with checkbox', async () => {
+    const spyOnChange = jest.fn();
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <RowList>
+                <Row title="Title" checkbox={{defaultValue: false, onChange: spyOnChange}} />
+            </RowList>
+        </ThemeContextProvider>
+    );
+
+    const checkboxEl = screen.getByRole('checkbox', {name: 'Title'});
+
+    expect(checkboxEl).not.toBeChecked();
+
+    await userEvent.click(checkboxEl);
+
+    expect(checkboxEl).toBeChecked();
+    expect(spyOnChange).toHaveBeenCalledWith(true);
+
+    await userEvent.click(checkboxEl);
+
+    expect(spyOnChange).toHaveBeenCalledWith(false);
+});
+
+test('Row with custom right element', () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <RowList>
+                <Row title="Title" right={() => <div>custom</div>} />
+            </RowList>
+        </ThemeContextProvider>
+    );
+
+    expect(screen.getByText('custom')).toBeInTheDocument();
+});
+
+test('Row list with radio buttons', async () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <RadioGroup name="radio-group">
+                <RowList>
+                    <Row title="Banana" subtitle="bananabanana" radioValue="banana" />
+                    <Row title="Apple" subtitle="appleapple" radioValue="apple" />
+                </RowList>
+            </RadioGroup>
+        </ThemeContextProvider>
+    );
+
+    const radioBanana = screen.getByRole('radio', {name: 'Banana bananabanana'});
+    const radioApple = screen.getByRole('radio', {name: 'Apple appleapple'});
+
+    expect(radioBanana).not.toBeChecked();
+    expect(radioApple).not.toBeChecked();
+
+    await userEvent.click(radioBanana);
+
+    expect(radioBanana).toBeChecked();
+    expect(radioApple).not.toBeChecked();
+
+    await userEvent.click(radioApple);
+
+    expect(radioBanana).not.toBeChecked();
+    expect(radioApple).toBeChecked();
+});
+
+test('RowList inside Form', async () => {
+    const submitSpy = jest.fn();
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Form onSubmit={submitSpy}>
+                <RadioGroup name="radio">
+                    <RowList>
+                        <Row title="Checkbox 1" checkbox={{name: 'checkbox1'}} />
+                        <Row title="Checkbox 2" onPress={() => {}} checkbox={{name: 'checkbox2'}} />
+                        <Row title="Switch 1" switch={{name: 'switch1'}} />
+                        <Row title="Switch 2" onPress={() => {}} switch={{name: 'switch2'}} />
+                        <Row title="Banana" radioValue="banana" />
+                        <Row title="Apple" radioValue="apple" />
+                    </RowList>
+                </RadioGroup>
+                <ButtonPrimary submit>Submit</ButtonPrimary>
+            </Form>
+        </ThemeContextProvider>
+    );
+
+    await userEvent.click(screen.getByRole('radio', {name: 'Banana'}));
+    await userEvent.click(screen.getByRole('checkbox', {name: 'Checkbox 1'}));
+    await userEvent.click(screen.getByRole('switch', {name: 'Switch 1'}));
+    await userEvent.click(screen.getByRole('button', {name: 'Submit'}));
+
+    expect(screen.getByRole('checkbox', {name: 'Checkbox 1'})).toBeChecked();
+    expect(screen.getByRole('checkbox', {name: 'Checkbox 2'})).not.toBeChecked();
+    expect(screen.getByRole('switch', {name: 'Switch 1'})).toBeChecked();
+    expect(screen.getByRole('switch', {name: 'Switch 2'})).not.toBeChecked();
+    expect(screen.getByRole('radio', {name: 'Banana'})).toBeChecked();
+    expect(screen.getByRole('radio', {name: 'Apple'})).not.toBeChecked();
+
+    await waitFor(() => {
+        expect(submitSpy).toHaveBeenCalled();
+        expect(submitSpy.mock.calls[0][0]).toEqual({
             checkbox1: true,
             checkbox2: false,
             switch1: true,
             switch2: false,
             radio: 'banana',
         });
-});
-test('Row list with icon buttons', async ({mount}) => {
-    const firstButtonSpyCalls: Array<Array<unknown>> = [];
-    const firstButtonSpy = async (...args: Array<unknown>) => {
-        firstButtonSpyCalls.push(args);
-    };
-    const secondButtonSpyCalls: Array<Array<unknown>> = [];
-    const secondButtonSpy = async (...args: Array<unknown>) => {
-        secondButtonSpyCalls.push(args);
-    };
-    const component = await mount('list/Scenario13', {firstButtonSpy, secondButtonSpy});
-    const firstButton = component.getByRole('button', {name: 'first-button'});
-    const secondButton = component.getByRole('button', {name: 'second-button'});
-    await firstButton.click();
-    await secondButton.click();
-    await secondButton.click();
-    await expect.poll(() => firstButtonSpyCalls).toHaveLength(1);
-    await expect.poll(() => secondButtonSpyCalls).toHaveLength(2);
-});
-test('Row list with iconButton', async ({mount}) => {
-    const onPressSpyCalls: Array<Array<unknown>> = [];
-    const onPressSpy = async (...args: Array<unknown>) => {
-        onPressSpyCalls.push(args);
-    };
-    const iconButtonOnPressSpyCalls: Array<Array<unknown>> = [];
-    const iconButtonOnPressSpy = async (...args: Array<unknown>) => {
-        iconButtonOnPressSpyCalls.push(args);
-    };
-    const logEventSpyCalls: Array<Array<unknown>> = [];
-    const logEventSpy = async (...args: Array<unknown>) => {
-        logEventSpyCalls.push(args);
-    };
-    const component = await mount('list/Scenario14', {onPressSpy, iconButtonOnPressSpy, logEventSpy});
-    const rowButton = component.getByRole('button', {name: 'Title Description'});
-    await rowButton.click();
-    await expect.poll(() => onPressSpyCalls).toHaveLength(1);
-    await expect.poll(() => logEventSpyCalls).toContainEqual([{name: 'row-tracking-event'}]);
-    const iconButton = component.getByRole('button', {name: 'Remove'});
-    await iconButton.click();
-    await expect.poll(() => iconButtonOnPressSpyCalls).toHaveLength(1);
-    await expect.poll(() => logEventSpyCalls).toContainEqual([{name: 'icon-button-tracking-event'}]);
-});
-test('BoxedRow, keeping its listitem role, containing a button reporting link role', async ({mount}) => {
-    const spyCalls: Array<Array<unknown>> = [];
-    const spy = async (...args: Array<unknown>) => {
-        spyCalls.push(args);
-    };
-    const component = await mount('list/Scenario15', {spy});
-    const rowDiv = component.getByRole('listitem');
-    await expect(rowDiv).toHaveCount(1);
-    const button = rowDiv.getByRole('link', {name: 'Title'});
-    await expect(button).toHaveCount(1);
-    await button.click();
-    await expect.poll(() => spyCalls.length).toBeGreaterThan(0);
-});
-test('Text content is read by screen readers in the right order in Rows with link', async ({mount}) => {
-    const component = await mount('list/Scenario16', {});
-    const row = component.getByRole('link', {
-        name: 'Title Headline Subtitle Description Extra line 1 Extra line 2 Detail right',
     });
-    await expect(row).toHaveCount(1);
 });
-test('Text content is read by screen readers in the right order in Rows with button', async ({mount}) => {
-    const component = await mount('list/Scenario17', {});
-    const row = component.getByRole('button', {
-        name: 'Title Headline Subtitle Description Extra line 1 Extra line 2 Detail right',
-    });
-    await expect(row).toHaveCount(1);
-});
-test('Text content is read by screen readers in the right order in Rows with checkbox', async ({mount}) => {
-    const component = await mount('list/Scenario18', {});
-    const row = component.getByRole('checkbox', {
-        name: 'Title Headline Subtitle Description Extra line 1 Extra line 2 detail right',
-    });
-    await expect(row).toHaveCount(1);
-});
-test('Text content is read by screen readers in the right order in Rows with switch', async ({mount}) => {
-    const component = await mount('list/Scenario19', {});
-    const row = component.getByRole('switch', {
-        name: 'Title Headline Subtitle Description Extra line 1 Extra line 2 detail right',
-    });
-    await expect(row).toHaveCount(1);
-});
-test('Text content is read by screen readers in the right order in Rows with radio', async ({mount}) => {
-    const component = await mount('list/Scenario20', {});
-    const row = component.getByRole('radio', {
-        name: 'Title Headline Subtitle Description Extra line 1 Extra line 2 detail right',
-    });
-    await expect(row).toHaveCount(1);
-});
-test('aria-label is read by screen readers in informative rows', async ({mount}) => {
-    const component = await mount('list/Scenario21', {});
-    await expect(component.getByText('Some custom label')).toHaveCount(1);
-});
-test('RowList renders with small prop', async ({mount}) => {
-    const component = await mount('list/Scenario22', {});
-    await expect(component.getByTestId('title')).toHaveCount(1);
-    await expect(component.getByTestId('description')).toHaveCount(1);
-    await expect(component.getByTestId('subtitle')).toHaveCount(1);
-});
-test('BoxedRowList renders with small prop', async ({mount}) => {
-    const component = await mount('list/Scenario23', {});
-    await expect(component.getByTestId('title')).toHaveCount(1);
-    await expect(component.getByTestId('description')).toHaveCount(1);
-    await expect(component.getByTestId('subtitle')).toHaveCount(1);
-});
-test('RowList renders divider between rows', async ({mount}) => {
-    const component = await mount('list/Scenario24', {});
-    const rows = component.getByRole('listitem');
-    await expect(rows).toHaveCount(2);
-    await expect(rows.nth(0).getByTestId('row-divider')).toHaveCount(1);
-});
-test('dual-action divider has inline paddingLeft style for offset measurement', async ({mount}) => {
-    const component = await mount('list/Scenario25', {});
-    const rows = component.getByRole('listitem');
-    const firstRow = rows.nth(0);
-    const dualActionDivider = firstRow.getByTestId('row-divider-dual-action');
-    const title = firstRow.getByTestId('title');
-    const rowBounds = await firstRow.boundingBox();
-    const titleBounds = await title.boundingBox();
-    if (!rowBounds || !titleBounds) {
-        throw new Error('Row and title must have visible bounds');
-    }
-    await expect
-        .poll(() => dualActionDivider.evaluate((element) => (element as HTMLElement).style.paddingLeft))
-        .toBe(`${titleBounds.x - rowBounds.x}px`);
-});
-for (const kind of ['switch', 'checkbox', 'radioValue'])
-    test(
-        'Row with ' + kind + ' and onPress hides inner divider and renders outer dual-action divider',
-        async ({mount}) => {
-            const component = await mount('list/DualAction', {kind});
-            const row = component.getByRole('listitem').first();
-            await expect(row.getByTestId('row-divider')).toHaveCount(0);
-            await expect(row.getByTestId('row-divider-dual-action')).toHaveCount(1);
-        }
+
+test('Row list with icon buttons', async () => {
+    const firstButtonSpy = jest.fn();
+    const secondButtonSpy = jest.fn();
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <RowList>
+                <Row
+                    title="Banana"
+                    subtitle="bananabanana"
+                    iconButton={{
+                        Icon: IconPlayFilled,
+                        onPress: firstButtonSpy,
+                        'aria-label': 'first-button',
+                    }}
+                />
+                <Row
+                    title="Apple"
+                    subtitle="appleapple"
+                    iconButton={{
+                        Icon: IconPlayFilled,
+                        onPress: secondButtonSpy,
+                        'aria-label': 'second-button',
+                    }}
+                />
+            </RowList>
+        </ThemeContextProvider>
     );
+
+    const firstButton = screen.getByRole('button', {name: 'first-button'});
+    const secondButton = screen.getByRole('button', {name: 'second-button'});
+
+    await userEvent.click(firstButton);
+    await userEvent.click(secondButton);
+    await userEvent.click(secondButton);
+
+    expect(firstButtonSpy).toHaveBeenCalledTimes(1);
+    expect(secondButtonSpy).toHaveBeenCalledTimes(2);
+});
+
+test('Row list with iconButton', async () => {
+    const onPressSpy = jest.fn();
+    const iconButtonOnPressSpy = jest.fn();
+    const logEventSpy = jest.fn();
+    render(
+        <ThemeContextProvider theme={makeTheme({analytics: {logEvent: logEventSpy}})}>
+            <RowList>
+                <Row
+                    asset={<IconShopRegular />}
+                    title="Title"
+                    description="Description"
+                    onPress={onPressSpy}
+                    trackingEvent={{name: 'row-tracking-event'}}
+                    iconButton={{
+                        'aria-label': 'Remove',
+                        Icon: IconTrashCanRegular,
+                        small: true,
+                        backgroundType: 'transparent',
+                        type: 'neutral',
+                        onPress: iconButtonOnPressSpy,
+                        trackingEvent: {name: 'icon-button-tracking-event'},
+                    }}
+                />
+            </RowList>
+        </ThemeContextProvider>
+    );
+
+    const rowButton = screen.getByRole('button', {name: 'Title Description'});
+    await userEvent.click(rowButton);
+    expect(onPressSpy).toHaveBeenCalledTimes(1);
+    expect(logEventSpy).toHaveBeenCalledWith({name: 'row-tracking-event'});
+
+    const iconButton = screen.getByRole('button', {name: 'Remove'});
+    await userEvent.click(iconButton);
+    expect(iconButtonOnPressSpy).toHaveBeenCalledTimes(1);
+    expect(logEventSpy).toHaveBeenCalledWith({name: 'icon-button-tracking-event'});
+});
+
+test('BoxedRow, keeping its listitem role, containing a button reporting link role', async () => {
+    const spy = jest.fn();
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <BoxedRowList>
+                <BoxedRow title="Title" onPress={spy} touchableRole="link" />
+            </BoxedRowList>
+        </ThemeContextProvider>
+    );
+
+    const rowDiv = screen.getByRole('listitem');
+    expect(rowDiv).toBeInTheDocument();
+
+    const button = within(rowDiv).getByRole('link', {name: 'Title'});
+    expect(button).toBeInTheDocument();
+
+    await userEvent.click(button);
+    expect(spy).toHaveBeenCalled();
+});
+
+test('Text content is read by screen readers in the right order in Rows with link', () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <RowList>
+                <Row
+                    headline={<Tag type="promo">Headline</Tag>}
+                    title="Title"
+                    subtitle="Subtitle"
+                    description="Description"
+                    detail="Detail"
+                    right="right"
+                    asset={<IconShopRegular />}
+                    slot={
+                        <Stack space={4}>
+                            <Text2 regular>Extra line 1</Text2>
+                            <Text2 regular>Extra line 2</Text2>
+                        </Stack>
+                    }
+                    href="/"
+                />
+            </RowList>
+        </ThemeContextProvider>
+    );
+
+    const row = screen.getByRole('link', {
+        name: 'Title Headline Subtitle Description Extra line 1 Extra line 2 Detail right',
+    });
+    expect(row).toBeInTheDocument();
+});
+
+test('Text content is read by screen readers in the right order in Rows with button', () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <RowList>
+                <Row
+                    headline={<Tag type="promo">Headline</Tag>}
+                    title="Title"
+                    subtitle="Subtitle"
+                    description="Description"
+                    detail="Detail"
+                    right="right"
+                    asset={<IconShopRegular />}
+                    slot={
+                        <Stack space={4}>
+                            <Text2 regular>Extra line 1</Text2>
+                            <Text2 regular>Extra line 2</Text2>
+                        </Stack>
+                    }
+                    onPress={() => {}}
+                />
+            </RowList>
+        </ThemeContextProvider>
+    );
+
+    const row = screen.getByRole('button', {
+        name: 'Title Headline Subtitle Description Extra line 1 Extra line 2 Detail right',
+    });
+    expect(row).toBeInTheDocument();
+});
+
+test('Text content is read by screen readers in the right order in Rows with checkbox', () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <RowList>
+                <Row
+                    headline={<Tag type="promo">Headline</Tag>}
+                    title="Title"
+                    subtitle="Subtitle"
+                    description="Description"
+                    slot={
+                        <Stack space={4}>
+                            <Text2 regular>Extra line 1</Text2>
+                            <Text2 regular>Extra line 2</Text2>
+                        </Stack>
+                    }
+                    detail="detail"
+                    right="right"
+                    asset={<IconShopRegular />}
+                    checkbox={{defaultValue: false}}
+                />
+            </RowList>
+        </ThemeContextProvider>
+    );
+
+    const row = screen.getByRole('checkbox', {
+        name: 'Title Headline Subtitle Description Extra line 1 Extra line 2 detail right',
+    });
+    expect(row).toBeInTheDocument();
+});
+
+test('Text content is read by screen readers in the right order in Rows with switch', () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <RowList>
+                <Row
+                    headline={<Tag type="promo">Headline</Tag>}
+                    title="Title"
+                    subtitle="Subtitle"
+                    description="Description"
+                    slot={
+                        <Stack space={4}>
+                            <Text2 regular>Extra line 1</Text2>
+                            <Text2 regular>Extra line 2</Text2>
+                        </Stack>
+                    }
+                    detail="detail"
+                    right="right"
+                    asset={<IconShopRegular />}
+                    switch={{defaultValue: false}}
+                />
+            </RowList>
+        </ThemeContextProvider>
+    );
+
+    const row = screen.getByRole('switch', {
+        name: 'Title Headline Subtitle Description Extra line 1 Extra line 2 detail right',
+    });
+    expect(row).toBeInTheDocument();
+});
+
+test('Text content is read by screen readers in the right order in Rows with radio', () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <RadioGroup name="radio-group">
+                <RowList>
+                    <Row
+                        headline={<Tag type="promo">Headline</Tag>}
+                        title="Title"
+                        subtitle="Subtitle"
+                        description="Description"
+                        slot={
+                            <Stack space={4}>
+                                <Text2 regular>Extra line 1</Text2>
+                                <Text2 regular>Extra line 2</Text2>
+                            </Stack>
+                        }
+                        detail="detail"
+                        right="right"
+                        asset={<IconShopRegular />}
+                        radioValue="radio1"
+                    />
+                </RowList>
+            </RadioGroup>
+        </ThemeContextProvider>
+    );
+
+    const row = screen.getByRole('radio', {
+        name: 'Title Headline Subtitle Description Extra line 1 Extra line 2 detail right',
+    });
+    expect(row).toBeInTheDocument();
+});
+
+test('aria-label is read by screen readers in informative rows', () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <RowList>
+                <Row
+                    aria-label="Some custom label"
+                    headline={<Tag type="promo">Headline</Tag>}
+                    title="Title"
+                    description="Description"
+                />
+            </RowList>
+        </ThemeContextProvider>
+    );
+
+    expect(screen.getByText('Some custom label')).toBeInTheDocument();
+});
+
+test('RowList renders with small prop', () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <RowList small>
+                <Row title="Title" description="Description" subtitle="Subtitle" />
+            </RowList>
+        </ThemeContextProvider>
+    );
+
+    expect(screen.getByTestId('title')).toBeInTheDocument();
+    expect(screen.getByTestId('description')).toBeInTheDocument();
+    expect(screen.getByTestId('subtitle')).toBeInTheDocument();
+});
+
+test('BoxedRowList renders with small prop', () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <BoxedRowList small>
+                <BoxedRow title="Title" description="Description" subtitle="Subtitle" />
+            </BoxedRowList>
+        </ThemeContextProvider>
+    );
+
+    expect(screen.getByTestId('title')).toBeInTheDocument();
+    expect(screen.getByTestId('description')).toBeInTheDocument();
+    expect(screen.getByTestId('subtitle')).toBeInTheDocument();
+});
+
+test('RowList renders divider between rows', () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <RowList>
+                <Row title="First" />
+                <Row title="Last" />
+            </RowList>
+        </ThemeContextProvider>
+    );
+
+    const rows = screen.getAllByRole('listitem');
+    expect(rows).toHaveLength(2);
+    expect(within(rows[0]).getByTestId('row-divider')).toBeInTheDocument();
+});
+
+const renderDualActionRow = (firstRowProps: Record<string, unknown>, needsRadioGroup = false) => {
+    const rowList = (
+        <RowList>
+            <Row title="First" onPress={() => {}} {...(firstRowProps as any)} />
+            <Row title="Last" {...((needsRadioGroup ? {radioValue: 'last'} : {}) as any)} />
+        </RowList>
+    );
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            {needsRadioGroup ? <RadioGroup name="radio-group">{rowList}</RadioGroup> : rowList}
+        </ThemeContextProvider>
+    );
+};
+
+const expectDualActionDividers = () => {
+    const firstRow = screen.getAllByRole('listitem')[0];
+    expect(within(firstRow).queryByTestId('row-divider')).not.toBeInTheDocument();
+    expect(within(firstRow).getByTestId('row-divider-dual-action')).toBeInTheDocument();
+};
+
+test('Row with switch and onPress hides inner divider and renders outer dual-action divider', () => {
+    renderDualActionRow({switch: {defaultValue: false}});
+    expectDualActionDividers();
+});
+
+test('Row with checkbox and onPress hides inner divider and renders outer dual-action divider', () => {
+    renderDualActionRow({checkbox: {defaultValue: false}});
+    expectDualActionDividers();
+});
+
+test('Row with radioValue and onPress hides inner divider and renders outer dual-action divider', () => {
+    renderDualActionRow({radioValue: 'first'}, true);
+    expectDualActionDividers();
+});
+
+test('dual-action divider has inline paddingLeft style for offset measurement', () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <RowList>
+                <Row title="First" onPress={() => {}} switch={{defaultValue: false}} />
+                <Row title="Last" />
+            </RowList>
+        </ThemeContextProvider>
+    );
+
+    const rows = screen.getAllByRole('listitem');
+    const firstRow = rows[0];
+    const dualActionDivider = within(firstRow).getByTestId('row-divider-dual-action');
+
+    expect(dualActionDivider).toHaveStyle({paddingLeft: '0px'});
+});

@@ -1,23 +1,94 @@
-import {test, expect} from '../test-utils/component';
+import * as React from 'react';
+import {render, screen} from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import TextField from '../text-field';
+import ThemeContextProvider from '../theme-context-provider';
+import {makeTheme} from './test-utils';
+import {ButtonPrimary} from '../button';
+import Form from '../form';
 
-for (const story of ['Uncontrolled', 'Controlled']) {
-    test(`TextField ${story.toLowerCase()}`, async ({mount}) => {
-        const component = await mount(`text-field/${story}`);
-        const field = component.getByLabel('Username');
-        await field.pressSequentially('pepito');
-        await expect(field).toHaveValue('pepito');
-    });
-}
-test('TextField optional - accessible name includes optional suffix as a single label', async ({mount}) => {
-    const component = await mount('text-field/Optional');
-    await expect(component.getByRole('textbox', {name: 'Email (opcional)', exact: true})).toHaveCount(1);
-});
-test('TextField maxLength', async ({mount}) => {
-    const component = await mount('text-field/MaxLength');
-    await component.getByRole('button', {name: 'Write long string'}).click();
-    await expect(component.getByLabel('Sort string')).toHaveValue('12345');
-    await component.getByRole('button', {name: 'Submit', exact: true}).click();
-    await expect(component.getByTestId('submission')).toHaveValue(
-        JSON.stringify([{sortstr: '12345'}, {sortstr: '12345'}])
+test('TextField uncontrolled', async () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <TextField label="Username" name="username" />
+        </ThemeContextProvider>
     );
+
+    const field = screen.getByLabelText('Username');
+    await userEvent.type(field, 'pepito');
+
+    expect(field).toHaveValue('pepito');
+});
+
+test('TextField controlled', async () => {
+    const Component = () => {
+        const [value, setValue] = React.useState('');
+
+        return <TextField label="Username" name="username" value={value} onChangeValue={setValue} />;
+    };
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Component />
+        </ThemeContextProvider>
+    );
+
+    const field = screen.getByLabelText('Username');
+    await userEvent.type(field, 'pepito');
+
+    expect(field).toHaveValue('pepito');
+});
+
+test('TextField optional - accessible name includes optional suffix as a single label', () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <TextField label="Email" name="email" optional />
+        </ThemeContextProvider>
+    );
+
+    const field = screen.getByRole('textbox', {name: 'Email (opcional)'});
+    expect(field).toBeInTheDocument();
+});
+
+test('TextField maxLength', async () => {
+    const onsubmitSpy = jest.fn();
+    const Component = () => {
+        const [value, setValue] = React.useState('');
+
+        const setLongString = () => {
+            setValue('1234567890');
+        };
+
+        return (
+            <Form onSubmit={onsubmitSpy}>
+                <TextField
+                    label="Sort string"
+                    name="sortstr"
+                    value={value}
+                    onChangeValue={setValue}
+                    maxLength={5}
+                />
+                <ButtonPrimary onPress={setLongString}>Write long string</ButtonPrimary>
+                <ButtonPrimary submit>Submit</ButtonPrimary>
+            </Form>
+        );
+    };
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Component />
+        </ThemeContextProvider>
+    );
+
+    const field = screen.getByLabelText('Sort string');
+    const button = screen.getByRole('button', {name: 'Write long string'});
+
+    await userEvent.click(button);
+
+    expect(field).toHaveValue('12345');
+
+    const submitButton = screen.getByRole('button', {name: 'Submit'});
+    await userEvent.click(submitButton);
+
+    expect(onsubmitSpy).toHaveBeenCalledWith({sortstr: '12345'}, {sortstr: '12345'});
 });

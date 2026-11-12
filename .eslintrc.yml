@@ -6,16 +6,8 @@ plugins:
     - mistica-local-rules
 overrides:
     - files:
-          - 'src/__tests__/**/*.story.tsx'
-      rules:
-          storybook/default-exports: 'off'
-          storybook/prefer-pascal-case: 'off'
-    - files:
-          - 'src/__tests__/**/*.{ts,tsx}'
           - 'playwright*.config.ts'
       settings:
-          testing-library/utils-module: 'off'
-          testing-library/custom-queries: 'off'
           import/resolver:
               node:
                   extensions: ['.js', '.ts', '.tsx']
@@ -37,8 +29,6 @@ overrides:
           - '.storybook/**/*.{js,ts,tsx}'
           - 'src/__stories__/**/*.{js,ts,tsx}'
           - 'playroom/**/*.{js,ts,tsx}'
-          - 'playwright/**/*.{js,ts,tsx}'
-          - 'src/__tests__/**/*.story.tsx'
           - '**/*-test.tsx'
           - '**/*-story.tsx'
       rules:

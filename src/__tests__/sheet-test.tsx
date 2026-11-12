@@ -1,395 +1,861 @@
-import {test, expect} from '../test-utils/component';
+import * as React from 'react';
+import Sheet from '../sheet-common';
+import {act, render, screen, waitFor, within} from '@testing-library/react';
+import {SheetRoot, ButtonPrimary, showSheet, ThemeContextProvider, Title1} from '..';
+import {makeTheme} from './test-utils';
+import userEvent from '@testing-library/user-event';
+import RadioListSheet from '../sheet-radio-list';
+import ActionsListSheet from '../sheet-actions-list';
+import InfoSheet from '../sheet-info';
+import ActionsSheet from '../sheet-actions';
 
-test('Sheet', async ({mount, page}) => {
-    await mount('sheet/Scenario1', {});
-    const openButton = page.getByRole('button', {name: 'Open', exact: true});
-    await openButton.click();
-    const sheet = await page.getByRole('dialog', {name: 'Sheet title', exact: true});
-    await expect(sheet).toHaveCount(1);
-    const closeButton = await sheet.getByRole('button', {name: 'Close', exact: true});
-    await closeButton.click();
-    await expect(sheet).toHaveCount(0);
-});
-test('Sheet restores focus to the trigger when closed', async ({mount, page}) => {
-    await mount('sheet/Scenario2', {});
-    const openButton = page.getByRole('button', {name: 'Open', exact: true});
-    await openButton.focus();
-    await page.keyboard.press('Enter');
-    const sheet = await page.getByRole('dialog', {name: 'Sheet title', exact: true});
-    const closeButton = await sheet.getByRole('button', {name: 'Close', exact: true});
-    await closeButton.click();
-    await expect(sheet).toHaveCount(0);
-    await expect(openButton).toBeFocused();
-});
-test('RadioListSheet', async ({mount, page}) => {
-    const selectSpyCalls: Array<Array<unknown>> = [];
-    const selectSpy = (...args: Array<unknown>) => {
-        selectSpyCalls.push(args);
+test('Sheet', async () => {
+    const TestComponent = () => {
+        const [showModal, setShowModal] = React.useState(false);
+        return (
+            <>
+                <ButtonPrimary onPress={() => setShowModal(true)}>Open</ButtonPrimary>
+                {showModal && (
+                    <Sheet
+                        onClose={() => {
+                            setShowModal(false);
+                        }}
+                    >
+                        {({closeModal, modalTitleId}) => (
+                            <>
+                                <Title1 id={modalTitleId}>Sheet title</Title1>
+                                <ButtonPrimary onPress={closeModal}>Close</ButtonPrimary>
+                            </>
+                        )}
+                    </Sheet>
+                )}
+            </>
+        );
     };
-    await mount('sheet/Scenario3', {selectSpy});
-    const openButton = page.getByRole('button', {name: 'Open', exact: true});
-    await openButton.click();
-    const sheet = await page.getByRole('dialog', {name: 'Choose an item', exact: true});
-    await expect(sheet).toHaveCount(1);
-    const item1 = await sheet.getByRole('radio', {name: 'Item 1', exact: true});
-    const item2 = await sheet.getByRole('radio', {name: 'Item 2', exact: true});
-    const continueButton = await sheet.getByRole('button', {name: 'Continuar', exact: true});
-    await expect(item2).toBeChecked();
-    await item1.click();
-    await continueButton.click();
-    await expect(sheet).toHaveCount(0);
-    await expect.poll(() => selectSpyCalls).toContainEqual(['1']);
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <TestComponent />
+        </ThemeContextProvider>
+    );
+
+    const openButton = screen.getByRole('button', {name: 'Open'});
+    await userEvent.click(openButton);
+    const sheet = await screen.findByRole('dialog', {name: 'Sheet title'});
+
+    expect(sheet).toBeInTheDocument();
+
+    const closeButton = await within(sheet).findByRole('button', {name: 'Close'});
+
+    await userEvent.click(closeButton);
+
+    await waitFor(() => expect(sheet).not.toBeInTheDocument());
 });
-test('ActionsListSheet', async ({mount, page}) => {
-    const selectSpyCalls: Array<Array<unknown>> = [];
-    const selectSpy = (...args: Array<unknown>) => {
-        selectSpyCalls.push(args);
+
+test('Sheet restores focus to the trigger when closed', async () => {
+    const TestComponent = () => {
+        const [showModal, setShowModal] = React.useState(false);
+        return (
+            <>
+                <ButtonPrimary onPress={() => setShowModal(true)}>Open</ButtonPrimary>
+                {showModal && (
+                    <Sheet
+                        onClose={() => {
+                            setShowModal(false);
+                        }}
+                    >
+                        {({closeModal, modalTitleId}) => (
+                            <>
+                                <Title1 id={modalTitleId}>Sheet title</Title1>
+                                <ButtonPrimary onPress={closeModal}>Close</ButtonPrimary>
+                            </>
+                        )}
+                    </Sheet>
+                )}
+            </>
+        );
     };
-    await mount('sheet/Scenario4', {selectSpy});
-    const openButton = page.getByRole('button', {name: 'Open', exact: true});
-    await openButton.click();
-    const sheet = await page.getByRole('dialog', {name: 'Choose an action', exact: true});
-    await expect(sheet).toHaveCount(1);
-    const action1 = await sheet.getByRole('button', {name: 'Action 1', exact: true});
-    const action2 = await sheet.getByRole('button', {name: 'Action 2', exact: true});
-    await expect(action1).toHaveCount(1);
-    await expect(action2).toHaveCount(1);
-    await action1.click();
-    await expect(sheet).toHaveCount(0);
-    await expect.poll(() => selectSpyCalls).toContainEqual(['1']);
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <TestComponent />
+        </ThemeContextProvider>
+    );
+
+    const openButton = screen.getByRole('button', {name: 'Open'});
+    openButton.focus();
+    await userEvent.keyboard('{Enter}');
+    const sheet = await screen.findByRole('dialog', {name: 'Sheet title'});
+
+    const closeButton = await within(sheet).findByRole('button', {name: 'Close'});
+    await userEvent.click(closeButton);
+
+    await waitFor(() => expect(sheet).not.toBeInTheDocument());
+
+    await waitFor(() => {
+        expect(openButton).toHaveFocus();
+    });
 });
-test('InfoSheet', async ({mount, page}) => {
-    await mount('sheet/Scenario5', {});
-    const openButton = page.getByRole('button', {name: 'Open', exact: true});
-    await openButton.click();
-    const sheet = await page.getByRole('dialog', {name: 'Title', exact: true});
-    await expect(sheet).toHaveCount(1);
-    const title = await sheet.getByRole('heading', {name: 'Title', exact: true});
-    await expect(title).toHaveCount(1);
-    const subtitle = await sheet.getByText('Subtitle');
-    await expect(subtitle).toHaveCount(1);
-    const description = await sheet.getByText('Description');
-    await expect(description).toHaveCount(1);
-    const itemList = await sheet.getByRole('list');
-    await expect(itemList).toHaveCount(1);
-    const items = await itemList.getByRole('listitem');
-    await expect(items).toHaveCount(2);
-});
-test('ActionsSheet', async ({mount, page}) => {
-    const onPressButtonSpyCalls: Array<Array<unknown>> = [];
-    const onPressButtonSpy = (...args: Array<unknown>) => {
-        onPressButtonSpyCalls.push(args);
+
+test('RadioListSheet', async () => {
+    const selectSpy = jest.fn();
+
+    const TestComponent = () => {
+        const [showModal, setShowModal] = React.useState(false);
+        return (
+            <>
+                <ButtonPrimary onPress={() => setShowModal(true)}>Open</ButtonPrimary>
+                {showModal && (
+                    <RadioListSheet
+                        title="Choose an item"
+                        onSelect={selectSpy}
+                        onClose={() => {
+                            setShowModal(false);
+                        }}
+                        selectedId="2"
+                        items={[
+                            {id: '1', title: 'Item 1'},
+                            {id: '2', title: 'Item 2'},
+                        ]}
+                    />
+                )}
+            </>
+        );
     };
-    await mount('sheet/Scenario6', {onPressButtonSpy});
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <TestComponent />
+        </ThemeContextProvider>
+    );
+
+    const openButton = screen.getByRole('button', {name: 'Open'});
+    await userEvent.click(openButton);
+    const sheet = await screen.findByRole('dialog', {name: 'Choose an item'});
+
+    expect(sheet).toBeInTheDocument();
+
+    const item1 = await within(sheet).findByRole('radio', {name: 'Item 1'});
+    const item2 = await within(sheet).findByRole('radio', {name: 'Item 2'});
+    const continueButton = await within(sheet).findByRole('button', {name: 'Continuar'});
+    expect(item2).toBeChecked();
+
+    await userEvent.click(item1);
+    await userEvent.click(continueButton);
+
+    await waitFor(() => expect(sheet).not.toBeInTheDocument());
+    expect(selectSpy).toHaveBeenCalledWith('1');
+});
+
+test('ActionsListSheet', async () => {
+    const selectSpy = jest.fn();
+
+    const TestComponent = () => {
+        const [showModal, setShowModal] = React.useState(false);
+        return (
+            <>
+                <ButtonPrimary onPress={() => setShowModal(true)}>Open</ButtonPrimary>
+                {showModal && (
+                    <ActionsListSheet
+                        title="Choose an action"
+                        onSelect={selectSpy}
+                        onClose={() => {
+                            setShowModal(false);
+                        }}
+                        items={[
+                            {id: '1', title: 'Action 1'},
+                            {id: '2', title: 'Action 2'},
+                        ]}
+                    />
+                )}
+            </>
+        );
+    };
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <TestComponent />
+        </ThemeContextProvider>
+    );
+
+    const openButton = screen.getByRole('button', {name: 'Open'});
+    await userEvent.click(openButton);
+    const sheet = await screen.findByRole('dialog', {name: 'Choose an action'});
+
+    expect(sheet).toBeInTheDocument();
+
+    const action1 = await within(sheet).findByRole('button', {name: 'Action 1'});
+    const action2 = await within(sheet).findByRole('button', {name: 'Action 2'});
+
+    expect(action1).toBeInTheDocument();
+    expect(action2).toBeInTheDocument();
+
+    await userEvent.click(action1);
+
+    await waitFor(
+        () => {
+            expect(sheet).not.toBeInTheDocument();
+        },
+        {timeout: 5000}
+    );
+
+    expect(selectSpy).toHaveBeenCalledWith('1');
+});
+
+test('InfoSheet', async () => {
+    const TestComponent = () => {
+        const [showModal, setShowModal] = React.useState(false);
+        return (
+            <>
+                <ButtonPrimary onPress={() => setShowModal(true)}>Open</ButtonPrimary>
+                {showModal && (
+                    <InfoSheet
+                        title="Title"
+                        subtitle="Subtitle"
+                        description="Description"
+                        items={[
+                            {id: '1', title: 'Item 1', icon: {type: 'bullet'}},
+                            {id: '2', title: 'Item 2', icon: {type: 'bullet'}},
+                        ]}
+                    />
+                )}
+            </>
+        );
+    };
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <TestComponent />
+        </ThemeContextProvider>
+    );
+
+    const openButton = screen.getByRole('button', {name: 'Open'});
+    await userEvent.click(openButton);
+    const sheet = await screen.findByRole('dialog', {name: 'Title'});
+
+    expect(sheet).toBeInTheDocument();
+
+    const title = await within(sheet).findByRole('heading', {name: 'Title'});
+    expect(title).toBeInTheDocument();
+
+    const subtitle = await within(sheet).findByText('Subtitle');
+    expect(subtitle).toBeInTheDocument();
+
+    const description = await within(sheet).findByText('Description');
+    expect(description).toBeInTheDocument();
+
+    const itemList = await within(sheet).findByRole('list');
+    expect(itemList).toBeInTheDocument();
+
+    const items = await within(itemList).findAllByRole('listitem');
+    expect(items).toHaveLength(2);
+});
+
+test('ActionsSheet', async () => {
+    const onPressButtonSpy = jest.fn();
+
+    const TestComponent = () => {
+        const [showModal, setShowModal] = React.useState(false);
+        return (
+            <>
+                <ButtonPrimary onPress={() => setShowModal(true)}>Open</ButtonPrimary>
+                {showModal && (
+                    <ActionsSheet
+                        title="Title"
+                        subtitle="Subtitle"
+                        description="Description"
+                        button={{text: 'Button'}}
+                        secondaryButton={{text: 'Secondary button'}}
+                        buttonLink={{text: 'Button link'}}
+                        onPressButton={onPressButtonSpy}
+                        onClose={() => {
+                            setShowModal(false);
+                        }}
+                    />
+                )}
+            </>
+        );
+    };
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <TestComponent />
+        </ThemeContextProvider>
+    );
+
     const openDialog = async () => {
-        const openButton = page.getByRole('button', {name: 'Open', exact: true});
-        await openButton.click();
-        return await page.getByRole('dialog', {name: 'Title', exact: true});
+        const openButton = screen.getByRole('button', {name: 'Open'});
+        await userEvent.click(openButton);
+        return await screen.findByRole('dialog', {name: 'Title'});
     };
+
     const sheet = await openDialog();
-    await expect(sheet).toHaveCount(1);
-    const primary = await sheet.getByRole('button', {name: 'Button', exact: true});
-    const secondary = await sheet.getByRole('button', {name: 'Secondary button', exact: true});
-    const link = await sheet.getByRole('button', {name: 'Button link', exact: true});
-    await expect(primary).toHaveCount(1);
-    await expect(secondary).toHaveCount(1);
-    await expect(link).toHaveCount(1);
-    await secondary.click();
-    await expect(sheet).toHaveCount(0);
-    await expect.poll(() => onPressButtonSpyCalls).toContainEqual(['SECONDARY']);
+
+    expect(sheet).toBeInTheDocument();
+
+    const primary = await within(sheet).findByRole('button', {name: 'Button'});
+    const secondary = await within(sheet).findByRole('button', {name: 'Secondary button'});
+    const link = await within(sheet).findByRole('button', {name: 'Button link'});
+
+    expect(primary).toBeInTheDocument();
+    expect(secondary).toBeInTheDocument();
+    expect(link).toBeInTheDocument();
+
+    await userEvent.click(secondary);
+
+    await waitFor(
+        () => {
+            expect(sheet).not.toBeInTheDocument();
+        },
+        {timeout: 5000}
+    );
+
+    expect(onPressButtonSpy).toHaveBeenCalledWith('SECONDARY');
 });
-test('showSheet INFO', async ({mount, page}) => {
-    const resultSpyCalls: Array<Array<unknown>> = [];
-    const resultSpy = (...args: Array<unknown>) => {
-        resultSpyCalls.push(args);
-    };
-    await mount('sheet/Scenario7', {resultSpy});
-    await page.getByRole('button', {name: 'Open sheet', exact: true}).click();
-    const sheet = await page.getByRole('dialog', {name: 'Title', exact: true});
-    await expect(sheet).toHaveCount(1);
-    const closeButton = await page.getByRole('button', {name: 'Cerrar', exact: true});
-    await closeButton.click();
-    await expect(sheet).toHaveCount(0);
-    await expect.poll(() => resultSpyCalls).toContainEqual([{action: 'DISMISS'}]);
-});
-test('showSheet ACTIONS_LIST', async ({mount, page}) => {
-    const resultSpyCalls: Array<Array<unknown>> = [];
-    const resultSpy = (...args: Array<unknown>) => {
-        resultSpyCalls.push(args);
-    };
-    await mount('sheet/Scenario8', {resultSpy});
-    await page.getByRole('button', {name: 'Open sheet', exact: true}).click();
-    const sheet = await page.getByRole('dialog', {name: 'Title', exact: true});
-    await expect(sheet).toHaveCount(1);
-    const item1 = await page.getByRole('button', {name: 'Item 2', exact: true});
-    await item1.click();
-    await expect(sheet).toHaveCount(0);
-    await expect.poll(() => resultSpyCalls).toContainEqual([{action: 'SUBMIT', selectedId: '2'}]);
-});
-test('showSheet ACTIONS_LIST dismiss', async ({mount, page}) => {
-    const resultSpyCalls: Array<Array<unknown>> = [];
-    const resultSpy = (...args: Array<unknown>) => {
-        resultSpyCalls.push(args);
-    };
-    await mount('sheet/Scenario9', {resultSpy});
-    await page.getByRole('button', {name: 'Open sheet', exact: true}).click();
-    const sheet = await page.getByRole('dialog', {name: 'Title', exact: true});
-    await expect(sheet).toHaveCount(1);
-    const closeButton = await page.getByRole('button', {name: 'Cerrar', exact: true});
-    await closeButton.click();
-    await expect(sheet).toHaveCount(0);
-    await expect.poll(() => resultSpyCalls).toContainEqual([{action: 'DISMISS'}]);
-});
-test('showSheet RADIO_LIST', async ({mount, page}) => {
-    const resultSpyCalls: Array<Array<unknown>> = [];
-    const resultSpy = (...args: Array<unknown>) => {
-        resultSpyCalls.push(args);
-    };
-    await mount('sheet/Scenario10', {resultSpy});
-    await page.getByRole('button', {name: 'Open sheet', exact: true}).click();
-    const sheet = await page.getByRole('dialog', {name: 'Title', exact: true});
-    await expect(sheet).toHaveCount(1);
-    const item1 = await page.getByRole('radio', {name: 'Item 2', exact: true});
-    const continueButton = await page.getByRole('button', {name: 'Continuar', exact: true});
-    await item1.click();
-    await continueButton.click();
-    await expect(sheet).toHaveCount(0);
-    await expect.poll(() => resultSpyCalls).toContainEqual([{action: 'SUBMIT', selectedId: '2'}]);
-});
-test('showSheet RADIO_LIST dismiss', async ({mount, page}) => {
-    const resultSpyCalls: Array<Array<unknown>> = [];
-    const resultSpy = (...args: Array<unknown>) => {
-        resultSpyCalls.push(args);
-    };
-    await mount('sheet/Scenario11', {resultSpy});
-    await page.getByRole('button', {name: 'Open sheet', exact: true}).click();
-    const sheet = await page.getByRole('dialog', {name: 'Title', exact: true});
-    await expect(sheet).toHaveCount(1);
-    const closeButton = await page.getByRole('button', {name: 'Cerrar', exact: true});
-    await closeButton.click();
-    await expect(sheet).toHaveCount(0);
-    await expect.poll(() => resultSpyCalls).toContainEqual([{action: 'DISMISS'}]);
-});
-test('showSheet ACTIONS', async ({mount, page}) => {
-    const resultSpyCalls: Array<Array<unknown>> = [];
-    const resultSpy = (...args: Array<unknown>) => {
-        resultSpyCalls.push(args);
-    };
-    await mount('sheet/Scenario12', {resultSpy});
-    await page.getByRole('button', {name: 'Open sheet', exact: true}).click();
-    const sheet = await page.getByRole('dialog', {name: 'Title', exact: true});
-    await expect(sheet).toHaveCount(1);
-    const primary = await page.getByRole('button', {name: 'Button', exact: true});
-    const secondary = await page.getByRole('button', {name: 'Secondary button', exact: true});
-    const link = await page.getByRole('button', {name: 'Button link', exact: true});
-    await expect(primary).toHaveCount(1);
-    await expect(secondary).toHaveCount(1);
-    await expect(link).toHaveCount(1);
-    await link.click();
-    await expect(sheet).toHaveCount(0);
-    await expect.poll(() => resultSpyCalls).toContainEqual([{action: 'LINK'}]);
-});
-test('showSheet ACTIONS dismiss', async ({mount, page}) => {
-    const resultSpyCalls: Array<Array<unknown>> = [];
-    const resultSpy = (...args: Array<unknown>) => {
-        resultSpyCalls.push(args);
-    };
-    await mount('sheet/Scenario13', {resultSpy});
-    await page.getByRole('button', {name: 'Open sheet', exact: true}).click();
-    const sheet = await page.getByRole('dialog', {name: 'Title', exact: true});
-    await expect(sheet).toHaveCount(1);
-    const closeButton = await page.getByRole('button', {name: 'Cerrar', exact: true});
-    await closeButton.click();
-    await expect(sheet).toHaveCount(0);
-    await expect.poll(() => resultSpyCalls).toContainEqual([{action: 'DISMISS'}]);
-});
-test('showSheet with native implementation INFO', async ({mount, page}) => {
-    const resultSpyCalls: Array<Array<unknown>> = [];
-    const resultSpy = (...args: Array<unknown>) => {
-        resultSpyCalls.push(args);
-    };
-    const nativeImplementationCalls: Array<Array<unknown>> = [];
-    const nativeImplementation = (...args: Array<unknown>) => {
-        nativeImplementationCalls.push(args);
-        return (() => Promise.resolve({action: 'DISMISS' as const, result: []}))();
-    };
-    await mount('sheet/Scenario14', {resultSpy, nativeImplementation});
-    await page.getByRole('button', {name: 'Open sheet', exact: true}).click();
-    await expect
-        .poll(() => nativeImplementationCalls)
-        .toContainEqual([
-            {
+
+test('showSheet INFO', async () => {
+    const resultSpy = jest.fn();
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <SheetRoot />
+        </ThemeContextProvider>
+    );
+
+    await act(async () => {
+        showSheet({
+            type: 'INFO',
+            props: {
                 title: 'Title',
-                content: [
-                    {
-                        type: 'LIST',
-                        id: 'list-0',
-                        listType: 'INFORMATIVE',
-                        autoSubmit: false,
-                        selectedIds: [],
-                        items: [{id: '1', title: 'Item 1', icon: {type: 'bullet'}}],
-                    },
+                items: [{id: '1', title: 'Item 1', icon: {type: 'bullet'}}],
+            },
+        }).then(resultSpy);
+    });
+
+    const sheet = await screen.findByRole('dialog', {name: 'Title'});
+    expect(sheet).toBeInTheDocument();
+
+    const closeButton = await screen.findByRole('button', {name: 'Cerrar'});
+    await userEvent.click(closeButton);
+
+    await waitFor(
+        () => {
+            expect(sheet).not.toBeInTheDocument();
+        },
+        {timeout: 5000}
+    );
+
+    expect(resultSpy).toHaveBeenCalledWith({action: 'DISMISS'});
+});
+
+test('showSheet ACTIONS_LIST', async () => {
+    const resultSpy = jest.fn();
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <SheetRoot />
+        </ThemeContextProvider>
+    );
+
+    await act(async () => {
+        showSheet({
+            type: 'ACTIONS_LIST',
+            props: {
+                title: 'Title',
+                items: [
+                    {id: '1', title: 'Item 1'},
+                    {id: '2', title: 'Item 2'},
                 ],
             },
-        ]);
-    await expect.poll(() => resultSpyCalls.length).toBeGreaterThan(0);
+        }).then(resultSpy);
+    });
+
+    const sheet = await screen.findByRole('dialog', {name: 'Title'});
+    expect(sheet).toBeInTheDocument();
+
+    const item1 = await screen.findByRole('button', {name: 'Item 2'});
+
+    await userEvent.click(item1);
+
+    await waitFor(
+        () => {
+            expect(sheet).not.toBeInTheDocument();
+        },
+        {timeout: 5000}
+    );
+
+    expect(resultSpy).toHaveBeenCalledWith({action: 'SUBMIT', selectedId: '2'});
 });
-test('showSheet with native implementation ACTIONS_LIST', async ({mount, page}) => {
-    const resultSpyCalls: Array<Array<unknown>> = [];
-    const resultSpy = (...args: Array<unknown>) => {
-        resultSpyCalls.push(args);
-    };
-    const nativeImplementationCalls: Array<Array<unknown>> = [];
-    const nativeImplementation = (...args: Array<unknown>) => {
-        nativeImplementationCalls.push(args);
-        return (() =>
-            Promise.resolve({
-                action: 'SUBMIT' as const,
-                result: [{id: 'list-0', selectedIds: ['2']}],
-            }))();
-    };
-    await mount('sheet/Scenario15', {resultSpy, nativeImplementation});
-    await page.getByRole('button', {name: 'Open sheet', exact: true}).click();
-    await expect
-        .poll(() => nativeImplementationCalls)
-        .toContainEqual([
-            {
+
+test('showSheet ACTIONS_LIST dismiss', async () => {
+    const resultSpy = jest.fn();
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <SheetRoot />
+        </ThemeContextProvider>
+    );
+
+    await act(async () => {
+        showSheet({
+            type: 'ACTIONS_LIST',
+            props: {
                 title: 'Title',
-                content: [
-                    {
-                        type: 'LIST',
-                        id: 'list-0',
-                        listType: 'ACTIONS',
-                        autoSubmit: true,
-                        selectedIds: [],
-                        items: [
-                            {id: '1', title: 'Item 1'},
-                            {id: '2', title: 'Item 2'},
-                        ],
-                    },
+                items: [
+                    {id: '1', title: 'Item 1'},
+                    {id: '2', title: 'Item 2'},
                 ],
             },
-        ]);
-    await expect.poll(() => resultSpyCalls).toContainEqual([{action: 'SUBMIT', selectedId: '2'}]);
+        }).then(resultSpy);
+    });
+
+    const sheet = await screen.findByRole('dialog', {name: 'Title'});
+    expect(sheet).toBeInTheDocument();
+
+    const closeButton = await screen.findByRole('button', {name: 'Cerrar'});
+    await userEvent.click(closeButton);
+
+    await waitFor(
+        () => {
+            expect(sheet).not.toBeInTheDocument();
+        },
+        {timeout: 5000}
+    );
+
+    expect(resultSpy).toHaveBeenCalledWith({action: 'DISMISS'});
 });
-test('showSheet with native implementation RADIO_LIST', async ({mount, page}) => {
-    const resultSpyCalls: Array<Array<unknown>> = [];
-    const resultSpy = (...args: Array<unknown>) => {
-        resultSpyCalls.push(args);
-    };
-    const nativeImplementationCalls: Array<Array<unknown>> = [];
-    const nativeImplementation = (...args: Array<unknown>) => {
-        nativeImplementationCalls.push(args);
-        return (() =>
-            Promise.resolve({
-                action: 'SUBMIT' as const,
-                result: [{id: 'list-0', selectedIds: ['2']}],
-            }))();
-    };
-    await mount('sheet/Scenario16', {resultSpy, nativeImplementation});
-    await page.getByRole('button', {name: 'Open sheet', exact: true}).click();
-    await expect
-        .poll(() => nativeImplementationCalls)
-        .toContainEqual([
-            {
+
+test('showSheet RADIO_LIST', async () => {
+    const resultSpy = jest.fn();
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <SheetRoot />
+        </ThemeContextProvider>
+    );
+
+    await act(async () => {
+        showSheet({
+            type: 'RADIO_LIST',
+            props: {
                 title: 'Title',
-                content: [
-                    {
-                        type: 'LIST',
-                        id: 'list-0',
-                        listType: 'SINGLE_SELECTION',
-                        autoSubmit: true,
-                        selectedIds: ['1'],
-                        items: [
-                            {id: '1', title: 'Item 1'},
-                            {id: '2', title: 'Item 2'},
-                        ],
-                    },
+                items: [
+                    {id: '1', title: 'Item 1'},
+                    {id: '2', title: 'Item 2'},
                 ],
             },
-        ]);
-    await expect.poll(() => resultSpyCalls).toContainEqual([{action: 'SUBMIT', selectedId: '2'}]);
+        }).then(resultSpy);
+    });
+
+    const sheet = await screen.findByRole('dialog', {name: 'Title'});
+    expect(sheet).toBeInTheDocument();
+
+    const item1 = await screen.findByRole('radio', {name: 'Item 2'});
+    const continueButton = await screen.findByRole('button', {name: 'Continuar'});
+
+    await userEvent.click(item1);
+    await userEvent.click(continueButton);
+
+    await waitFor(
+        () => {
+            expect(sheet).not.toBeInTheDocument();
+        },
+        {timeout: 5000}
+    );
+
+    expect(resultSpy).toHaveBeenCalledWith({action: 'SUBMIT', selectedId: '2'});
 });
-test('showSheet with native implementation ACTIONS', async ({mount, page}) => {
-    const resultSpyCalls: Array<Array<unknown>> = [];
-    const resultSpy = (...args: Array<unknown>) => {
-        resultSpyCalls.push(args);
-    };
-    const nativeImplementationCalls: Array<Array<unknown>> = [];
-    const nativeImplementation = (...args: Array<unknown>) => {
-        nativeImplementationCalls.push(args);
-        return (() =>
-            Promise.resolve({
-                action: 'SUBMIT' as const,
-                result: [{id: 'bottom-actions-0', selectedIds: ['LINK']}],
-            }))();
-    };
-    await mount('sheet/Scenario17', {resultSpy, nativeImplementation});
-    await page.getByRole('button', {name: 'Open sheet', exact: true}).click();
-    await expect
-        .poll(() => nativeImplementationCalls)
-        .toContainEqual([
-            {
+
+test('showSheet RADIO_LIST dismiss', async () => {
+    const resultSpy = jest.fn();
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <SheetRoot />
+        </ThemeContextProvider>
+    );
+
+    await act(async () => {
+        showSheet({
+            type: 'RADIO_LIST',
+            props: {
+                title: 'Title',
+                items: [
+                    {id: '1', title: 'Item 1'},
+                    {id: '2', title: 'Item 2'},
+                ],
+            },
+        }).then(resultSpy);
+    });
+
+    const sheet = await screen.findByRole('dialog', {name: 'Title'});
+    expect(sheet).toBeInTheDocument();
+
+    const closeButton = await screen.findByRole('button', {name: 'Cerrar'});
+    await userEvent.click(closeButton);
+
+    await waitFor(
+        () => {
+            expect(sheet).not.toBeInTheDocument();
+        },
+        {timeout: 5000}
+    );
+
+    expect(resultSpy).toHaveBeenCalledWith({action: 'DISMISS'});
+});
+
+test('showSheet ACTIONS', async () => {
+    const resultSpy = jest.fn();
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <SheetRoot />
+        </ThemeContextProvider>
+    );
+
+    await act(async () => {
+        showSheet({
+            type: 'ACTIONS',
+            props: {
                 title: 'Title',
                 subtitle: 'Subtitle',
                 description: 'Description',
-                content: [
-                    {
-                        type: 'BOTTOM_ACTIONS',
-                        id: 'bottom-actions-0',
-                        button: {text: 'Button'},
-                        secondaryButton: {text: 'Secondary button'},
-                        link: {text: 'Button link', withChevron: true},
-                    },
+                button: {text: 'Button'},
+                secondaryButton: {text: 'Secondary button'},
+                link: {text: 'Button link', withChevron: true},
+            },
+        }).then(resultSpy);
+    });
+
+    const sheet = await screen.findByRole('dialog', {name: 'Title'});
+    expect(sheet).toBeInTheDocument();
+
+    const primary = await screen.findByRole('button', {name: 'Button'});
+    const secondary = await screen.findByRole('button', {name: 'Secondary button'});
+    const link = await screen.findByRole('button', {name: 'Button link'});
+
+    expect(primary).toBeInTheDocument();
+    expect(secondary).toBeInTheDocument();
+    expect(link).toBeInTheDocument();
+
+    await userEvent.click(link);
+
+    await waitFor(
+        () => {
+            expect(sheet).not.toBeInTheDocument();
+        },
+        {timeout: 5000}
+    );
+
+    expect(resultSpy).toHaveBeenCalledWith({action: 'LINK'});
+});
+
+test('showSheet ACTIONS dismiss', async () => {
+    const resultSpy = jest.fn();
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <SheetRoot />
+        </ThemeContextProvider>
+    );
+
+    await act(async () => {
+        showSheet({
+            type: 'ACTIONS',
+            props: {
+                title: 'Title',
+                subtitle: 'Subtitle',
+                description: 'Description',
+                button: {text: 'Button'},
+                secondaryButton: {text: 'Secondary button'},
+                link: {text: 'Button link', withChevron: true},
+            },
+        }).then(resultSpy);
+    });
+
+    const sheet = await screen.findByRole('dialog', {name: 'Title'});
+    expect(sheet).toBeInTheDocument();
+
+    const closeButton = await screen.findByRole('button', {name: 'Cerrar'});
+    await userEvent.click(closeButton);
+
+    await waitFor(
+        () => {
+            expect(sheet).not.toBeInTheDocument();
+        },
+        {timeout: 5000}
+    );
+
+    expect(resultSpy).toHaveBeenCalledWith({action: 'DISMISS'});
+});
+
+test('showSheet fails if SheetRoot is not rendered', async () => {
+    await expect(
+        showSheet({
+            type: 'INFO',
+            props: {
+                title: 'Title',
+                items: [{id: '1', title: 'Item 1', icon: {type: 'bullet'}}],
+            },
+        })
+    ).rejects.toThrow('Tried to show a Sheet but the SheetRoot component was not mounted');
+});
+
+test('showSheet fails if there is already a sheet open', async () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <SheetRoot />
+        </ThemeContextProvider>
+    );
+
+    await act(async () => {
+        showSheet({
+            type: 'INFO',
+            props: {
+                title: 'Title',
+                items: [{id: '1', title: 'Item 1', icon: {type: 'bullet'}}],
+            },
+        });
+    });
+
+    const sheet = await screen.findByRole('dialog', {name: 'Title'});
+    expect(sheet).toBeInTheDocument();
+
+    await expect(
+        showSheet({
+            type: 'INFO',
+            props: {
+                title: 'Title',
+                items: [{id: '1', title: 'Item 1', icon: {type: 'bullet'}}],
+            },
+        })
+    ).rejects.toThrow('Tried to show a Sheet but there is already one open');
+
+    const closeButton = await screen.findByRole('button', {name: 'Cerrar'});
+    await userEvent.click(closeButton);
+
+    await waitFor(
+        () => {
+            expect(sheet).not.toBeInTheDocument();
+        },
+        {timeout: 5000}
+    );
+});
+
+test('showSheet with native implementation INFO', async () => {
+    const resultSpy = jest.fn();
+
+    const nativeImplementation = jest.fn(() => Promise.resolve({action: 'DISMISS' as const, result: []}));
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <SheetRoot nativeImplementation={nativeImplementation} />
+        </ThemeContextProvider>
+    );
+
+    await act(async () =>
+        showSheet({
+            type: 'INFO',
+            props: {
+                title: 'Title',
+                items: [{id: '1', title: 'Item 1', icon: {type: 'bullet'}}],
+            },
+        }).then(resultSpy)
+    );
+
+    expect(nativeImplementation).toHaveBeenCalledWith({
+        title: 'Title',
+        content: [
+            {
+                type: 'LIST',
+                id: 'list-0',
+                listType: 'INFORMATIVE',
+                autoSubmit: false,
+                selectedIds: [],
+                items: [{id: '1', title: 'Item 1', icon: {type: 'bullet'}}],
+            },
+        ],
+    });
+
+    expect(resultSpy).toHaveBeenCalled();
+});
+
+test('showSheet with native implementation ACTIONS_LIST', async () => {
+    const resultSpy = jest.fn();
+    const nativeImplementation = jest.fn(() =>
+        Promise.resolve({
+            action: 'SUBMIT' as const,
+            result: [{id: 'list-0', selectedIds: ['2']}],
+        })
+    );
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <SheetRoot nativeImplementation={nativeImplementation} />
+        </ThemeContextProvider>
+    );
+
+    await act(async () =>
+        showSheet({
+            type: 'ACTIONS_LIST',
+            props: {
+                title: 'Title',
+                items: [
+                    {id: '1', title: 'Item 1'},
+                    {id: '2', title: 'Item 2'},
                 ],
             },
-        ]);
-    await expect.poll(() => resultSpyCalls).toContainEqual([{action: 'LINK'}]);
-});
-test('showSheet with native implementation fallbacks to web if native fails', async ({mount, page}) => {
-    const nativeImplementationCalls: Array<Array<unknown>> = [];
-    const nativeImplementation = (...args: Array<unknown>) => {
-        nativeImplementationCalls.push(args);
-        return (() =>
-            Promise.reject({
-                code: '400',
-            }))();
-    };
-    const resultSpyCalls: Array<Array<unknown>> = [];
-    const resultSpy = (...args: Array<unknown>) => {
-        resultSpyCalls.push(args);
-    };
-    await mount('sheet/Scenario18', {nativeImplementation, resultSpy});
-    await page.getByRole('button', {name: 'Open sheet', exact: true}).click();
-    await expect.poll(() => nativeImplementationCalls.length).toBeGreaterThan(0);
-    const sheet = await page.getByRole('dialog', {name: 'Title', exact: true});
-    await expect(sheet).toHaveCount(1);
-    const link = await page.getByRole('button', {name: 'Button link', exact: true});
-    await link.click();
-    await expect(sheet).toHaveCount(0);
-    await expect.poll(() => resultSpyCalls).toContainEqual([{action: 'LINK'}]);
-});
-for (const mounted of [false, true])
-    test(
-        mounted
-            ? 'showSheet fails if there is already a sheet open'
-            : 'showSheet fails if SheetRoot is not rendered',
-        async ({mount, page}) => {
-            const component = await mount('sheet/Invalid', {mounted});
-            const open = component.getByRole('button', {name: 'Open sheet'});
-            await open.click();
-            if (mounted) {
-                await expect(page.getByRole('dialog', {name: 'Title'})).toBeVisible();
-                await open.dispatchEvent('click');
-            }
-            await expect(component.getByTestId('sheet-error')).toHaveValue(
-                mounted
-                    ? 'Tried to show a Sheet but there is already one open'
-                    : 'Tried to show a Sheet but the SheetRoot component was not mounted'
-            );
-            if (mounted) {
-                await page.getByRole('button', {name: 'Cerrar'}).click();
-                await expect(page.getByRole('dialog', {name: 'Title'})).toHaveCount(0);
-            }
-        }
+        }).then(resultSpy)
     );
+
+    expect(nativeImplementation).toHaveBeenCalledWith({
+        title: 'Title',
+        content: [
+            {
+                type: 'LIST',
+                id: 'list-0',
+                listType: 'ACTIONS',
+                autoSubmit: true,
+                selectedIds: [],
+                items: [
+                    {id: '1', title: 'Item 1'},
+                    {id: '2', title: 'Item 2'},
+                ],
+            },
+        ],
+    });
+
+    expect(resultSpy).toHaveBeenCalledWith({action: 'SUBMIT', selectedId: '2'});
+});
+
+test('showSheet with native implementation RADIO_LIST', async () => {
+    const resultSpy = jest.fn();
+    const nativeImplementation = jest.fn(() =>
+        Promise.resolve({
+            action: 'SUBMIT' as const,
+            result: [{id: 'list-0', selectedIds: ['2']}],
+        })
+    );
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <SheetRoot nativeImplementation={nativeImplementation} />
+        </ThemeContextProvider>
+    );
+
+    await act(async () =>
+        showSheet({
+            type: 'RADIO_LIST',
+            props: {
+                title: 'Title',
+                selectedId: '1',
+                items: [
+                    {id: '1', title: 'Item 1'},
+                    {id: '2', title: 'Item 2'},
+                ],
+            },
+        }).then(resultSpy)
+    );
+
+    expect(nativeImplementation).toHaveBeenCalledWith({
+        title: 'Title',
+        content: [
+            {
+                type: 'LIST',
+                id: 'list-0',
+                listType: 'SINGLE_SELECTION',
+                autoSubmit: true,
+                selectedIds: ['1'],
+                items: [
+                    {id: '1', title: 'Item 1'},
+                    {id: '2', title: 'Item 2'},
+                ],
+            },
+        ],
+    });
+
+    expect(resultSpy).toHaveBeenCalledWith({action: 'SUBMIT', selectedId: '2'});
+});
+
+test('showSheet with native implementation ACTIONS', async () => {
+    const resultSpy = jest.fn();
+    const nativeImplementation = jest.fn(() =>
+        Promise.resolve({
+            action: 'SUBMIT' as const,
+            result: [{id: 'bottom-actions-0', selectedIds: ['LINK']}],
+        })
+    );
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <SheetRoot nativeImplementation={nativeImplementation} />
+        </ThemeContextProvider>
+    );
+
+    await act(async () =>
+        showSheet({
+            type: 'ACTIONS',
+            props: {
+                title: 'Title',
+                subtitle: 'Subtitle',
+                description: 'Description',
+                button: {text: 'Button'},
+                secondaryButton: {text: 'Secondary button'},
+                link: {text: 'Button link', withChevron: true},
+            },
+        }).then(resultSpy)
+    );
+
+    expect(nativeImplementation).toHaveBeenCalledWith({
+        title: 'Title',
+        subtitle: 'Subtitle',
+        description: 'Description',
+        content: [
+            {
+                type: 'BOTTOM_ACTIONS',
+                id: 'bottom-actions-0',
+                button: {text: 'Button'},
+                secondaryButton: {text: 'Secondary button'},
+                link: {text: 'Button link', withChevron: true},
+            },
+        ],
+    });
+
+    expect(resultSpy).toHaveBeenCalledWith({action: 'LINK'});
+});
+
+test('showSheet with native implementation fallbacks to web if native fails', async () => {
+    const nativeImplementation = jest.fn(() =>
+        Promise.reject({
+            code: '400',
+        })
+    );
+
+    const resultSpy = jest.fn();
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <SheetRoot nativeImplementation={nativeImplementation} />
+        </ThemeContextProvider>
+    );
+
+    await act(async () => {
+        showSheet({
+            type: 'ACTIONS',
+            props: {
+                title: 'Title',
+                button: {text: 'Button'},
+                link: {text: 'Button link'},
+            },
+        }).then(resultSpy);
+    });
+
+    expect(nativeImplementation).toHaveBeenCalled();
+
+    // web implementation is shown:
+    const sheet = await screen.findByRole('dialog', {name: 'Title'});
+    expect(sheet).toBeInTheDocument();
+
+    const link = await screen.findByRole('button', {name: 'Button link'});
+    await userEvent.click(link);
+
+    await waitFor(
+        () => {
+            expect(sheet).not.toBeInTheDocument();
+        },
+        {timeout: 5000}
+    );
+
+    expect(resultSpy).toHaveBeenCalledWith({action: 'LINK'});
+});
