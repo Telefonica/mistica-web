@@ -8,7 +8,7 @@ import AdvancedDataCard from '../community/advanced-data-card';
 import {NakedCard} from '../card-naked';
 import Checkbox from '../checkbox';
 import Switch from '../switch-component';
-import {RadioGroup} from '../radio-button';
+import RadioButton, {RadioGroup} from '../radio-button';
 import ThemeContextProvider from '../theme-context-provider';
 import {ButtonPrimary} from '../button';
 import {makeTheme} from './test-utils';
@@ -170,6 +170,35 @@ describe.each(selectionCards)('explicit card selection (%#)', (Card) => {
         await userEvent.click(screen.getByRole('checkbox', {name: 'Custom option'}));
         expect(screen.getByRole('checkbox', {name: 'Custom option'})).toHaveAttribute('aria-checked', 'true');
     });
+});
+
+test('AdvancedDataCard radio controls in slots stay independent of the card surface', async () => {
+    renderWithTheme(
+        <RadioGroup name="slot-options">
+            <AdvancedSelectionCard
+                title="First card"
+                slot={<RadioButton value="first">First option</RadioButton>}
+            />
+            <AdvancedSelectionCard
+                title="Second card"
+                slot={<RadioButton value="second">Second option</RadioButton>}
+            />
+        </RadioGroup>
+    );
+    const first = screen.getByRole('radio', {name: 'First option'});
+    const second = screen.getByRole('radio', {name: 'Second option'});
+
+    // A negative stacking level on a slot ancestor can put the control behind the card surface.
+    // eslint-disable-next-line testing-library/no-node-access
+    for (let element: HTMLElement | null = first; element; element = element.parentElement) {
+        expect(getComputedStyle(element).zIndex).not.toMatch(/^-/);
+    }
+
+    await userEvent.click(screen.getByText('First card'));
+    expect(first).toHaveAttribute('aria-checked', 'false');
+    await userEvent.click(first);
+    expect(first).toHaveAttribute('aria-checked', 'true');
+    expect(second).toHaveAttribute('aria-checked', 'false');
 });
 
 test('advanced card custom actions remain independent', async () => {
