@@ -44,7 +44,7 @@ jobs:
             - run: yarn circular-dependencies
             - run: yarn build
             - run: yarn ts-check
-            - run: yarn test
+            - run: yarn test --ci
             - run: NO_BUILD=true yarn test-ssr
 
             - uses: actions/upload-artifact@v4
@@ -58,7 +58,6 @@ jobs:
               with:
                   name: playwright-report-build
                   path: |
-                      reports/playwright-components
                       reports/playwright
                       reports/playwright-html
 
