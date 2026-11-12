@@ -312,6 +312,7 @@ test.each([true, false])(
         });
 
         await page.click(await screen.findByRole('button', {name: 'Start'}));
-        expect(await page.screenshot()).toMatchImageSnapshot();
+        // Tolerate 1 pixel of difference between local and CI rendering
+        expect(await page.screenshot()).toMatchImageSnapshot({failureThreshold: 0.0002});
     }
 );
