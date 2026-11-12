@@ -24,7 +24,16 @@ const IconShareFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element =>
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
-        if (skinName.match(/^o2/i)) {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M14.25 5.586a2.8 2.8 0 0 1 2.8-2.8h.867a2.8 2.8 0 0 1 2.8 2.8v.868a2.8 2.8 0 0 1-2.8 2.8h-.868c-.873 0-1.653-.4-2.166-1.026l-5.15 3.007q.018.153.018.311v.868q0 .19-.025.373l5.142 3.003a2.8 2.8 0 0 1 2.181-1.044h.869a2.8 2.8 0 0 1 2.8 2.8v.868a2.8 2.8 0 0 1-2.8 2.8h-.869a2.8 2.8 0 0 1-2.8-2.8v-.67l-5.48-3.2a2.8 2.8 0 0 1-1.818.67h-.868a2.8 2.8 0 0 1-2.8-2.8v-.868a2.8 2.8 0 0 1 2.8-2.8h.868a2.8 2.8 0 0 1 1.863.71l5.435-3.175z"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path

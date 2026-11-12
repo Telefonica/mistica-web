@@ -24,7 +24,20 @@ const IconAuthenticationFailureRegular = ({color, size = 24, ...rest}: IconProps
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
-        if (skinName.match(/^vivo/i)) {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M8.249 14.626a.751.751 0 0 1 0 1.502l-2.5-.001-.23.012a2.25 2.25 0 0 0-2.02 2.238v2.121h4.75a.75.75 0 1 1 0 1.5h-5.5a.75.75 0 0 1-.749-.75v-2.871a3.75 3.75 0 0 1 3.557-3.745l.193-.005zm9.994-.884a.75.75 0 0 1 0 1.06l-1.19 1.191 1.19 1.19a.75.75 0 1 1-1.06 1.061l-1.191-1.19-1.199 1.198a.75.75 0 1 1-1.06-1.06l1.198-1.199-1.198-1.198a.75.75 0 0 1 1.06-1.06l1.199 1.197 1.19-1.19a.75.75 0 0 1 1.06 0"
+                    />
+                    <path
+                        fill={fillColor}
+                        d="M16.75 9.997a5.25 5.25 0 0 1 5.25 5.25v1.5a5.25 5.25 0 0 1-5.25 5.25h-1.5a5.25 5.25 0 0 1-5.25-5.25v-1.5c0-2.9 2.35-5.25 5.25-5.25zm3.75 5.25a3.75 3.75 0 0 0-3.75-3.75h-1.5a3.75 3.75 0 0 0-3.75 3.75l-.001 1.5a3.75 3.75 0 0 0 3.75 3.75h1.5a3.75 3.75 0 0 0 3.75-3.75zM10.662 2a4.35 4.35 0 0 1 4.35 4.35v1.907a.75.75 0 1 1-1.5 0V6.35a2.85 2.85 0 0 0-2.85-2.85h-1.8a2.85 2.85 0 0 0-2.85 2.85v1.8a2.85 2.85 0 0 0 2.362 2.808.751.751 0 0 1-.255 1.478A4.35 4.35 0 0 1 4.512 8.15v-1.8A4.35 4.35 0 0 1 8.863 2z"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path

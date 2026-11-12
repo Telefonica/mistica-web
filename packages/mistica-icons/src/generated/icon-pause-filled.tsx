@@ -24,7 +24,16 @@ const IconPauseFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element =>
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
-        if (skinName.match(/^o2/i)) {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M7.254 2c-.98 0-1.646.471-2.035 1.066a3.07 3.07 0 0 0-.474 1.622V18.93c-.022.475.053 1.185.388 1.81.365.682 1.046 1.258 2.117 1.26a2.36 2.36 0 0 0 1.61-.656c.54-.511.89-1.3.89-2.395V4.69a3.06 3.06 0 0 0-.463-1.62C8.9 2.472 8.235 2 7.254 2m9.509 0c-.98 0-1.646.471-2.035 1.066a3.07 3.07 0 0 0-.474 1.622V18.93c-.023.475.053 1.185.388 1.81.365.682 1.046 1.258 2.117 1.26a2.36 2.36 0 0 0 1.61-.656c.54-.511.89-1.3.89-2.395V4.69a3.06 3.06 0 0 0-.464-1.62C18.41 2.472 17.744 2 16.763 2"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path

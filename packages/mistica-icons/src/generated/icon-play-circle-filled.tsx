@@ -24,7 +24,16 @@ const IconPlayCircleFilled = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
-        if (skinName.match(/^vivo/i)) {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M13.75 2A8.25 8.25 0 0 1 22 10.25v3.5A8.25 8.25 0 0 1 13.75 22h-3.5A8.25 8.25 0 0 1 2 13.75v-3.5A8.25 8.25 0 0 1 10.25 2zm-2.225 5.553a2.32 2.32 0 0 0-2.272-.008 2.32 2.32 0 0 0-1.21 2.018v4.874c0 .878.513 1.636 1.21 2.018a2.31 2.31 0 0 0 2.272-.008l.001.001 4.225-2.428.002-.001a2.29 2.29 0 0 0 1.14-1.886l.002-.15a2.29 2.29 0 0 0-1.142-2.002h-.002l-4.225-2.43z"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path

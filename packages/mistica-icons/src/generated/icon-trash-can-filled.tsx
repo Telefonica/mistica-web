@@ -24,7 +24,16 @@ const IconTrashCanFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
-        if (skinName.match(/^o2/i)) {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M8.735 5.49H4.834a.75.75 0 0 0 0 1.5h.9v11.342c0 2.021 1.697 3.666 3.75 3.667h5.027c2.054 0 3.75-1.646 3.75-3.667L18.26 6.99h.906a.75.75 0 0 0 0-1.5H15.26V4.46c0-1.342-1.075-2.46-2.413-2.46h-1.7C9.81 2 8.736 3.119 8.736 4.46zm1.5 0h3.525V4.462c0-.548-.437-.961-.913-.961h-1.7c-.475 0-.912.413-.912.96zM10 18.239a.75.75 0 0 1-.75-.75v-7.56a.75.75 0 0 1 1.5 0v7.56a.75.75 0 0 1-.75.75m3.25-.75v-7.56a.75.75 0 0 1 1.5 0v7.56a.75.75 0 0 1-1.5 0"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path

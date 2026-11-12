@@ -24,7 +24,20 @@ const IconInvoicePlanFileRegular = ({color, size = 24, ...rest}: IconProps): JSX
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
-        if (skinName.match(/^blau/i)) {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M7.973 17.322a.75.75 0 0 0 0 1.492l.076.004h6.895a.75.75 0 0 0 0-1.5H8.05zm0-3a.75.75 0 0 0 0 1.493l.076.003h6.895a.75.75 0 0 0 0-1.5H8.05zm0-3a.75.75 0 0 0 0 1.493l.076.003h6.895a.75.75 0 0 0 0-1.5H8.05z"
+                    />
+                    <path
+                        fill={fillColor}
+                        d="M10.4 2.005a.75.75 0 0 0-.471.236L4.194 8.417a.75.75 0 0 0-.2.51v9.324l.005.192a3.75 3.75 0 0 0 3.552 3.551l.193.005h7.506a3.75 3.75 0 0 0 3.75-3.75V5.75a3.75 3.75 0 0 0-3.75-3.749h-4.771zM15.25 3.5a2.25 2.25 0 0 1 2.25 2.25v12.499a2.25 2.25 0 0 1-2.25 2.25H7.744a2.25 2.25 0 0 1-2.25-2.248V9.677H7.48a3.75 3.75 0 0 0 3.75-3.748V3.5zM9.729 5.929a2.25 2.25 0 0 1-2.25 2.248H6.465L9.729 4.66z"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^blau/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path

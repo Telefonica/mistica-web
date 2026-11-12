@@ -4456,6 +4456,17 @@ const iconMetadata: {[key: string]: {keywords: Array<string>; category: Array<st
         category: ['Maps and vehicles'],
         keywords: ['place', 'position', 'site', 'ubicación', 'localização', 'Ort'],
     },
+    'location-error': {
+        category: ['Maps and vehicles'],
+        keywords: [
+            'location error',
+            'position failure',
+            'map pin error',
+            'error de ubicación',
+            'erro de localização',
+            'Standortfehler',
+        ],
+    },
     'location-map': {
         category: ['Maps and vehicles'],
         keywords: [

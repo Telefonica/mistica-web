@@ -24,7 +24,20 @@ const IconAddMoreLocationRegular = ({color, size = 24, ...rest}: IconProps): JSX
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
-        if (skinName.match(/^vivo/i)) {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M12 6.25a.75.75 0 0 1 .75.75v1.75h1.75l.077.004a.75.75 0 0 1 0 1.492l-.077.004h-1.75V12l-.004.077a.75.75 0 0 1-1.492 0L11.25 12v-1.75H9.5a.75.75 0 0 1 0-1.5h1.75V7a.75.75 0 0 1 .75-.75"
+                    />
+                    <path
+                        fill={fillColor}
+                        d="M13.15 2c3.158 0 5.974 2.611 5.974 5.826v1.57c0 2.183-.878 4.417-2.108 6.502-1.236 2.093-2.867 4.103-4.46 5.855a.753.753 0 0 1-1.11 0C9.851 20 8.22 17.99 6.985 15.898c-1.231-2.085-2.109-4.318-2.109-6.502v-1.57C4.877 4.611 7.692 2 10.852 2zm-2.298 1.5c-2.388 0-4.475 1.995-4.475 4.326v1.57c0 1.8.732 3.76 1.9 5.739C9.302 16.87 10.632 18.57 12 20.122c1.368-1.552 2.7-3.252 3.724-4.987 1.168-1.979 1.9-3.939 1.9-5.739v-1.57c0-2.331-2.087-4.325-4.475-4.326z"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path

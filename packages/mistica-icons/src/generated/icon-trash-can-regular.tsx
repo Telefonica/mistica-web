@@ -24,7 +24,20 @@ const IconTrashCanRegular = ({color, size = 24, ...rest}: IconProps): JSX.Elemen
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
-        if (skinName.match(/^o2/i)) {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M10 18.239a.75.75 0 0 0 .75-.75v-7.56a.75.75 0 0 0-1.5 0v7.56c0 .414.336.75.75.75m3.25-.75a.75.75 0 0 0 1.5 0v-7.56a.75.75 0 0 0-1.5 0z"
+                    />
+                    <path
+                        fill={fillColor}
+                        d="M8.735 5.49H4.834a.75.75 0 0 0 0 1.5h.9v11.342c0 2.021 1.697 3.666 3.75 3.667h5.027c2.054 0 3.75-1.646 3.75-3.667L18.26 6.99h.906a.75.75 0 0 0 0-1.5H15.26V4.46c0-1.342-1.075-2.46-2.413-2.46h-1.7C9.81 2 8.736 3.119 8.736 4.46zm1.5 0V4.462c0-.548.437-.961.913-.961h1.699c.476 0 .913.413.913.96V5.49zm6.525 1.5v11.342c0 1.16-.99 2.166-2.25 2.167H9.485c-1.26 0-2.25-1.008-2.25-2.167V6.99z"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path

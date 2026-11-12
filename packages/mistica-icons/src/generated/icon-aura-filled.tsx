@@ -24,7 +24,16 @@ const IconAuraFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => 
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
-        if (skinName.match(/^vivo/i)) {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M10.25 2A8.25 8.25 0 0 0 2 10.25v9.443a2.307 2.307 0 0 0 3.846 1.718l2.51-2.172h5.394a8.25 8.25 0 0 0 8.25-8.25v-.739A8.25 8.25 0 0 0 13.75 2zm.736 8.765v-.318a.85.85 0 0 1 .845-.854h.338a.85.85 0 0 1 .844.854v.318a.85.85 0 0 1-.844.855h-.338a.85.85 0 0 1-.845-.855m-2.854.855a.85.85 0 0 1-.845-.855v-.318a.85.85 0 0 1 .845-.854h.338a.85.85 0 0 1 .844.854v.318a.85.85 0 0 1-.844.855zm6.554-.855v-.318a.85.85 0 0 1 .844-.854h.338a.85.85 0 0 1 .845.854v.318a.85.85 0 0 1-.845.855h-.338a.85.85 0 0 1-.844-.855"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path

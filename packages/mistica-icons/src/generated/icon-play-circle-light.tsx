@@ -24,7 +24,20 @@ const IconPlayCircleLight = ({color, size = 24, ...rest}: IconProps): JSX.Elemen
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
-        if (skinName.match(/^vivo/i)) {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M9.373 7.763a2.07 2.07 0 0 1 2.027.006h.001l4.226 2.428a2.04 2.04 0 0 1 1.018 1.79l-.001.136a2.04 2.04 0 0 1-1.016 1.678l-.002.001-4.225 2.429v-.001a2.07 2.07 0 0 1-2.028.006 2.07 2.07 0 0 1-1.08-1.8V9.563c0-.78.456-1.458 1.08-1.8m1.53.872a1.07 1.07 0 0 0-1.05.005c-.33.18-.56.538-.56.923v4.873l.01.143c.05.328.262.622.55.78.329.18.724.193 1.05.005l4.223-2.428a1.04 1.04 0 0 0 .519-.925v-.023a1.04 1.04 0 0 0-.518-.925z"
+                    />
+                    <path
+                        fill={fillColor}
+                        d="M13.7 1.999c4.584 0 8.3 3.716 8.301 8.3v3.402c0 4.583-3.717 8.3-8.3 8.3h-3.402a8.3 8.3 0 0 1-8.3-8.3v-3.402a8.3 8.3 0 0 1 8.3-8.3zm-3.401 1a7.3 7.3 0 0 0-7.3 7.3v3.402a7.3 7.3 0 0 0 7.3 7.3H13.7c4.032 0 7.3-3.269 7.301-7.3v-3.402a7.3 7.3 0 0 0-7.3-7.3z"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path

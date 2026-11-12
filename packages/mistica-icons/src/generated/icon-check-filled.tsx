@@ -29,7 +29,7 @@ const IconCheckFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element =>
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
                         fill={fillColor}
-                        d="M21.717 5.097a1 1 0 0 1-.014 1.414L9.044 18.917a1 1 0 0 1-1.413-.013L2.284 13.47a1 1 0 0 1 1.426-1.403l4.647 4.724L20.303 5.083a1 1 0 0 1 1.414.014"
+                        d="M21.717 5.097a1 1 0 0 1-.014 1.414L9.043 18.917a1 1 0 0 1-1.412-.013L2.284 13.47a1 1 0 0 1 1.426-1.403l4.647 4.724L20.303 5.083a1 1 0 0 1 1.414.014"
                     />
                 </svg>
             );

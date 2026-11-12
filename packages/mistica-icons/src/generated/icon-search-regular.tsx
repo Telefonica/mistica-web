@@ -24,7 +24,16 @@ const IconSearchRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element 
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
-        if (skinName.match(/^blau/i)) {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M9.518 2.247c-4.01 0-7.268 3.23-7.268 7.226s3.259 7.225 7.268 7.225a7.27 7.27 0 0 0 4.54-1.583l6.91 6.91a.75.75 0 0 0 1.062-1.06l-6.9-6.9a7.17 7.17 0 0 0 1.656-4.592c0-3.996-3.259-7.226-7.268-7.226M3.75 9.473c0-3.158 2.578-5.726 5.768-5.726s5.768 2.568 5.768 5.726-2.578 5.725-5.768 5.725S3.75 12.63 3.75 9.473"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^blau/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path

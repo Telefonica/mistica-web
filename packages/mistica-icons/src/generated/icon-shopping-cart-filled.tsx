@@ -24,7 +24,16 @@ const IconShoppingCartFilled = ({color, size = 24, ...rest}: IconProps): JSX.Ele
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
-        if (skinName.match(/^o2/i)) {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M10.094 17.999c.966 0 1.75.784 1.75 1.75v.5a1.75 1.75 0 0 1-1.75 1.75h-.5a1.75 1.75 0 0 1-1.75-1.75v-.5c0-.966.783-1.75 1.75-1.75zm7.416 0c.967 0 1.75.784 1.75 1.75v.5a1.75 1.75 0 0 1-1.75 1.75h-.5a1.75 1.75 0 0 1-1.75-1.75v-.5c0-.966.784-1.75 1.75-1.75zM2.752 2.497c1.88 0 3.43 1.644 3.85 3.421l.289 1.22c.585-.73 1.439-1.284 2.428-1.407q.229-.027.463-.028h7.856c.542 0 1.06.116 1.527.324 1.584.707 2.455 2.633 1.97 4.334l-1.04 3.67-.001-.002a3.75 3.75 0 0 1-3.617 2.758l.002.001-5.91.01a3.75 3.75 0 0 1-3.584-2.642l-.008-.026-.006-.028-.87-3.793-.957-4.045c-.31-1.312-1.403-2.267-2.392-2.267a.75.75 0 0 1 0-1.5"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path

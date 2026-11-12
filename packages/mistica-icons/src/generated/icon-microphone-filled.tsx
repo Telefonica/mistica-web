@@ -24,7 +24,20 @@ const IconMicrophoneFilled = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
-        if (skinName.match(/^o2/i)) {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M18.062 9.295a.75.75 0 0 1 .75.75v1.586c0 3.5-2.644 6.432-6.055 6.814V20.5h1.45a.75.75 0 0 1 0 1.5H9.795a.75.75 0 0 1 0-1.5h1.46v-2.053c-3.303-.363-5.89-3.118-6.059-6.466l-.009-.35v-1.585a.75.75 0 0 1 1.5 0v1.586l.007.273c.143 2.816 2.47 5.084 5.305 5.084 2.926 0 5.311-2.416 5.311-5.357v-1.586a.75.75 0 0 1 .75-.75"
+                    />
+                    <path
+                        fill={fillColor}
+                        d="M12.001 2.001a3.995 3.995 0 0 1 3.995 3.994v5.512a3.995 3.995 0 0 1-7.99 0V5.995a3.994 3.994 0 0 1 3.995-3.994"
+                    />
+                </svg>
+            );
+        } else if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
