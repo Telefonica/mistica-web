@@ -196,11 +196,12 @@ for (const testCase of STORY_TYPES) {
 for (const testCase of STORY_TYPES) {
     const storyType = testCase;
     test(`DateField (${testCase})`, async () => {
-        await openStoryPage(getStoryOfType('datefield', storyType));
+        await openStoryPage({...getStoryOfType('datefield', storyType), device: 'DESKTOP'});
         const field = await screen.findByLabelText('Label');
         await field.focus();
-        await field.fill('1980-10-06');
-        expect(await getValue(field)).toBe('1980-10-06');
+        // Use the same day and month so either date segment order works.
+        await field.pressSequentially('06061980');
+        await expect(field).toHaveValue('1980-06-06');
     });
 }
 
