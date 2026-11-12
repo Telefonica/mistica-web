@@ -16,6 +16,7 @@ const PromisePool = require('es6-promise-pool');
 
 const PATH_REPO_ROOT = path.join(__dirname, '../../..');
 const PATH_REPORTS = path.join(PATH_REPO_ROOT, 'reports/accessibility');
+const AUDIT_VIEWPORT = {width: 800, height: 600};
 
 const STORIES_BLACKLIST = new Set([
     'welcome-welcome--mistica',
@@ -70,7 +71,7 @@ const startStorybook = () => {
  * @returns {Promise<import('axe-core').AxeResults>}
  */
 const audit = async (browser, url, disabledRules = []) => {
-    const context = await browser.newContext();
+    const context = await browser.newContext({viewport: AUDIT_VIEWPORT});
     try {
         const page = await context.newPage();
         // Preserve the user-agent marker Mistica uses to detect the test environment.
