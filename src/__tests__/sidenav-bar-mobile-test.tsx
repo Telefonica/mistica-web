@@ -1,193 +1,232 @@
-import {test, expect} from '../test-utils/component';
+import * as React from 'react';
+import {render, screen, waitFor} from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import ThemeContextProvider from '../theme-context-provider';
+import {makeTheme} from './test-utils';
+import {SidenavBar} from '..';
+import IconHomeRegular from '../generated/mistica-icons/icon-home-regular';
+import IconFolderRegular from '../generated/mistica-icons/icon-folder-regular';
 
-test.use({viewport: {width: 411, height: 731}});
+import type {SidenavEntry} from '../sidenav-bar-types';
 
-test('SidenavBar mobile shows a top bar with the burger, and no panel', async ({mount, page}) => {
-    const selected: Array<string> = [];
+class MockIntersectionObserver {
+    observe = jest.fn();
+    unobserve = jest.fn();
+    disconnect = jest.fn();
+}
 
-    await mount('sidenav-bar-mobile/Scenario1', {
-        onSelectedItemIdChange: (id: string) => {
-            selected.push(id);
-        },
-    });
-    await expect(page.getByRole('button', {name: 'Open navigation menu'})).toHaveCount(1);
-    await expect(page.getByRole('navigation', {name: 'Main navigation'})).toHaveCount(0);
+// A tablet takes the mobile treatment as well, so every test of this file runs below the desktop
+// breakpoint.
+const resizeToMobile = () => {
+    window.innerWidth = 411;
+    window.innerHeight = 731;
+    window.dispatchEvent(new Event('resize'));
+};
+
+beforeAll(() => {
+    window.IntersectionObserver = MockIntersectionObserver as unknown as typeof IntersectionObserver;
 });
-test('SidenavBar mobile puts the header slot in the top bar', async ({mount, page}) => {
-    const selected: Array<string> = [];
 
-    await mount('sidenav-bar-mobile/Scenario2', {
-        onSelectedItemIdChange: (id: string) => {
-            selected.push(id);
-        },
-    });
-    await expect(page.getByRole('button', {name: 'Header action'})).toHaveCount(1);
+beforeEach(() => {
+    resizeToMobile();
+    // The panel animates over 300ms with real timers, whose late updates make these tests slow and flaky.
+    // An acceptance-test user agent zeroes that duration, so the panel transitions resolve synchronously.
+    jest.spyOn(window.navigator, 'userAgent', 'get').mockReturnValue('acceptance-test');
 });
-test('SidenavBar mobile reports the expanded state, at rest, to the function that headerSlot carries', async ({
-    mount,
-    page,
-}) => {
-    const selected: Array<string> = [];
 
-    await mount('sidenav-bar-mobile/Scenario3', {
-        onSelectedItemIdChange: (id: string) => {
-            selected.push(id);
-        },
-    });
-    await expect(page.getByRole('button', {name: 'Header expanded false'})).toHaveCount(1);
-});
-test('SidenavBar mobile ignores the collapsed state', async ({mount, page}) => {
-    const selected: Array<string> = [];
+const onSettingsPress = jest.fn();
 
-    await mount('sidenav-bar-mobile/Scenario4', {
-        onSelectedItemIdChange: (id: string) => {
-            selected.push(id);
-        },
-    });
-    await expect(page.getByRole('img', {name: 'Logo false'})).toHaveCount(1);
-    await expect(page.getByRole('button', {name: 'Header expanded false'})).toHaveCount(1);
-    await expect(page.getByRole('button', {name: 'Expand navigation'})).toHaveCount(0);
-    await expect(page.getByRole('button', {name: 'Collapse navigation'})).toHaveCount(0);
-    await page.getByRole('button', {name: 'Open navigation menu', exact: true}).click();
-    await expect(page.getByRole('navigation', {name: 'Main navigation', exact: true})).toBeVisible();
-    await expect(page.getByRole('button', {name: 'Footer expanded false'})).toHaveCount(1);
-    await expect(page.getByRole('link', {name: 'Home'})).toHaveCount(1);
-});
-test('SidenavBar mobile opens the panel with one row per first-level item', async ({mount, page}) => {
-    const selected: Array<string> = [];
+const entries: Array<SidenavEntry> = [
+    {id: 'dashboard', label: 'Dashboard', asset: IconHomeRegular, href: '/dashboard'},
+    {
+        title: 'Workspace',
+        dividerTop: true,
+        dividerBottom: true,
+        items: [
+            {id: 'home', label: 'Home', asset: IconHomeRegular, href: '/home'},
+            {
+                id: 'projects',
+                label: 'Projects',
+                asset: IconFolderRegular,
+                children: [
+                    {id: 'active', label: 'Active', href: '/active'},
+                    {id: 'archived', label: 'Archived', href: '/archived'},
+                ],
+            },
+            {id: 'settings', label: 'Settings', asset: IconFolderRegular, onPress: onSettingsPress},
+        ],
+    },
+];
 
-    await mount('sidenav-bar-mobile/Scenario5', {
-        onSelectedItemIdChange: (id: string) => {
-            selected.push(id);
-        },
-    });
-    await page.getByRole('button', {name: 'Open navigation menu', exact: true}).click();
-    await expect(page.getByRole('navigation', {name: 'Main navigation', exact: true})).toBeVisible();
-    await expect(page.getByRole('link', {name: 'Dashboard'})).toHaveAttribute('href', '/dashboard');
-    await expect(page.getByRole('link', {name: 'Home'})).toHaveAttribute('href', '/home');
-    await expect(page.getByRole('button', {name: 'Projects'})).toHaveCount(1);
-    await expect(page.getByRole('heading', {name: 'Workspace'})).toHaveCount(1);
-});
-test('SidenavBar mobile hides the heading of a section and keeps the name of its list', async ({
-    mount,
-    page,
-}) => {
-    const selected: Array<string> = [];
+// The accessible names of the burger and of the back bar come from the text tokens of the navigation bar,
+// so the theme takes an English locale and the assertions below read those names in English.
+const theme = makeTheme({i18n: {locale: 'en-GB', phoneNumberFormattingRegionCode: 'GB'}});
 
-    await mount('sidenav-bar-mobile/Scenario6', {
-        onSelectedItemIdChange: (id: string) => {
-            selected.push(id);
-        },
-    });
-    await page.getByRole('button', {name: 'Open navigation menu', exact: true}).click();
-    await expect(page.getByRole('navigation', {name: 'Main navigation', exact: true})).toBeVisible();
-    await expect(page.getByRole('heading', {name: 'Workspace'})).toHaveCount(0);
-    await expect(page.getByRole('list', {name: 'Workspace'})).toHaveCount(1);
-});
-test('SidenavBar mobile renders no item of the desktop rail', async ({mount, page}) => {
-    const selected: Array<string> = [];
+const renderSidenav = async (props: React.ComponentProps<typeof SidenavBar> = {}) => {
+    const result = render(
+        <ThemeContextProvider theme={theme}>
+            <SidenavBar aria-label="Main navigation" entries={entries} {...props} />
+        </ThemeContextProvider>
+    );
 
-    await mount('sidenav-bar-mobile/Scenario7', {
-        onSelectedItemIdChange: (id: string) => {
-            selected.push(id);
-        },
-    });
-    await page.getByRole('button', {name: 'Open navigation menu', exact: true}).click();
-    await expect(page.getByRole('navigation', {name: 'Main navigation', exact: true})).toBeVisible();
-    await expect(page.getByTestId('SidenavItem')).toHaveCount(0);
-    await expect(page.getByTestId('SidenavSection')).toHaveCount(0);
-});
-test('SidenavBar mobile renders the footer slot inside the panel', async ({mount, page}) => {
-    const selected: Array<string> = [];
+    // The default logo lazy loads its brand image, so let it settle before asserting.
+    await React.act(async () => {});
 
-    await mount('sidenav-bar-mobile/Scenario8', {
-        onSelectedItemIdChange: (id: string) => {
-            selected.push(id);
-        },
-    });
-    await expect(page.getByRole('button', {name: 'Footer action'})).toHaveCount(0);
-    await page.getByRole('button', {name: 'Open navigation menu', exact: true}).click();
-    await expect(page.getByRole('navigation', {name: 'Main navigation', exact: true})).toBeVisible();
-    await expect(page.getByRole('button', {name: 'Footer action'})).toHaveCount(1);
-});
-test('SidenavBar mobile opens the second level of a parent item, and returns from it', async ({
-    mount,
-    page,
-}) => {
-    const selected: Array<string> = [];
+    return result;
+};
 
-    await mount('sidenav-bar-mobile/Scenario9', {
-        onSelectedItemIdChange: (id: string) => {
-            selected.push(id);
-        },
-    });
-    await page.getByRole('button', {name: 'Open navigation menu', exact: true}).click();
-    await expect(page.getByRole('navigation', {name: 'Main navigation', exact: true})).toBeVisible();
-    await page.getByRole('button', {name: 'Projects'}).click();
-    await expect(page.getByRole('link', {name: 'Active'})).toHaveCount(1);
-    await expect(page.getByRole('link', {name: 'Archived'})).toHaveAttribute('href', '/archived');
-    await expect(page.getByRole('heading', {name: 'Projects'})).toHaveCount(1);
-    await page.getByRole('button', {name: 'Back'}).click();
-    await expect(page.getByRole('button', {name: 'Projects'})).toHaveCount(1);
-});
-test('SidenavBar mobile closes the panel when the user presses an item that navigates', async ({
-    mount,
-    page,
-}) => {
-    const selected: Array<string> = [];
-    let settings = 0;
-    await mount('sidenav-bar-mobile/Scenario10', {
-        onSelectedItemIdChange: (id: string) => {
-            selected.push(id);
-        },
-        onSettingsPress: () => {
-            settings++;
-        },
-    });
-    await page.getByRole('button', {name: 'Open navigation menu', exact: true}).click();
-    await expect(page.getByRole('navigation', {name: 'Main navigation', exact: true})).toBeVisible();
-    await page.getByRole('button', {name: 'Settings'}).click();
-    await expect.poll(() => selected).toEqual(['settings']);
-    await expect.poll(() => settings).toBe(1);
-    await expect(page.getByRole('navigation', {name: 'Main navigation'})).toHaveCount(0);
-});
-test('SidenavBar mobile keeps the panel open when the user presses a parent item', async ({mount, page}) => {
-    const selected: Array<string> = [];
+const openMenu = async () => {
+    await userEvent.click(screen.getByRole('button', {name: 'Open navigation menu'}));
+    return waitFor(() => screen.getByRole('navigation', {name: 'Main navigation'}));
+};
 
-    await mount('sidenav-bar-mobile/Scenario11', {
-        onSelectedItemIdChange: (id: string) => {
-            selected.push(id);
-        },
-    });
-    await page.getByRole('button', {name: 'Open navigation menu', exact: true}).click();
-    await expect(page.getByRole('navigation', {name: 'Main navigation', exact: true})).toBeVisible();
-    await page.getByRole('button', {name: 'Projects'}).click();
-    expect(selected).toEqual([]);
-    await expect(page.getByRole('navigation', {name: 'Main navigation'})).toHaveCount(1);
+beforeEach(() => {
+    onSettingsPress.mockClear();
 });
-test('SidenavBar mobile marks the selected item for a screen reader only', async ({mount, page}) => {
-    const selected: Array<string> = [];
 
-    await mount('sidenav-bar-mobile/Scenario12', {
-        onSelectedItemIdChange: (id: string) => {
-            selected.push(id);
-        },
-    });
-    await page.getByRole('button', {name: 'Open navigation menu', exact: true}).click();
-    await expect(page.getByRole('navigation', {name: 'Main navigation', exact: true})).toBeVisible();
-    await expect(page.getByRole('link', {name: 'Home'})).toHaveAttribute('aria-current', 'page');
-    await expect(page.getByRole('link', {name: 'Dashboard'})).not.toHaveAttribute('aria-current');
+test('SidenavBar mobile shows a top bar with the burger, and no panel', async () => {
+    await renderSidenav();
+
+    expect(screen.getByRole('button', {name: 'Open navigation menu'})).toBeInTheDocument();
+    expect(screen.queryByRole('navigation', {name: 'Main navigation'})).not.toBeInTheDocument();
 });
-test('SidenavBar mobile closes the panel from the burger', async ({mount, page}) => {
-    const selected: Array<string> = [];
 
-    await mount('sidenav-bar-mobile/Scenario13', {
-        onSelectedItemIdChange: (id: string) => {
-            selected.push(id);
-        },
+test('SidenavBar mobile puts the header slot in the top bar', async () => {
+    await renderSidenav({headerSlot: <button type="button">Header action</button>});
+
+    expect(screen.getByRole('button', {name: 'Header action'})).toBeInTheDocument();
+});
+
+test('SidenavBar mobile reports the expanded state, at rest, to the function that headerSlot carries', async () => {
+    await renderSidenav({
+        headerSlot: ({collapsed, state}) => <button type="button">{`Header ${state} ${collapsed}`}</button>,
     });
-    await page.getByRole('button', {name: 'Open navigation menu', exact: true}).click();
-    await expect(page.getByRole('navigation', {name: 'Main navigation', exact: true})).toBeVisible();
-    await page.getByRole('button', {name: 'Close navigation menu'}).click();
-    await expect(page.getByRole('navigation', {name: 'Main navigation'})).toHaveCount(0);
+
+    expect(screen.getByRole('button', {name: 'Header expanded false'})).toBeInTheDocument();
+});
+
+// The collapse state belongs to the desktop rail. The mobile branch never receives it, so a collapsed
+// bar renders the same top bar and panel as an expanded one, and it offers no button to toggle it.
+test('SidenavBar mobile ignores the collapsed state', async () => {
+    await renderSidenav({
+        collapsed: true,
+        onCollapse: jest.fn(),
+        logo: ({collapsed}) => <img src="/brand.svg" alt={`Logo ${collapsed}`} />,
+        headerSlot: ({collapsed, state}) => <button type="button">{`Header ${state} ${collapsed}`}</button>,
+        footerSlot: ({collapsed, state}) => <button type="button">{`Footer ${state} ${collapsed}`}</button>,
+    });
+
+    expect(screen.getByRole('img', {name: 'Logo false'})).toBeInTheDocument();
+    expect(screen.getByRole('button', {name: 'Header expanded false'})).toBeInTheDocument();
+    expect(screen.queryByRole('button', {name: 'Expand navigation'})).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', {name: 'Collapse navigation'})).not.toBeInTheDocument();
+
+    await openMenu();
+
+    expect(screen.getByRole('button', {name: 'Footer expanded false'})).toBeInTheDocument();
+    expect(screen.getByRole('link', {name: 'Home'})).toBeInTheDocument();
+});
+
+test('SidenavBar mobile opens the panel with one row per first-level item', async () => {
+    await renderSidenav();
+    await openMenu();
+
+    expect(screen.getByRole('link', {name: 'Dashboard'})).toHaveAttribute('href', '/dashboard');
+    expect(screen.getByRole('link', {name: 'Home'})).toHaveAttribute('href', '/home');
+    expect(screen.getByRole('button', {name: 'Projects'})).toBeInTheDocument();
+    expect(screen.getByRole('heading', {name: 'Workspace'})).toBeInTheDocument();
+});
+
+// A hidden title paints no heading on mobile either, and the list of the section keeps its name.
+test('SidenavBar mobile hides the heading of a section and keeps the name of its list', async () => {
+    const entries: Array<SidenavEntry> = [
+        {
+            title: {text: 'Workspace', hidden: true},
+            items: [{id: 'home', label: 'Home', asset: IconHomeRegular, href: '/home'}],
+        },
+    ];
+    await renderSidenav({entries});
+    await openMenu();
+
+    expect(screen.queryByRole('heading', {name: 'Workspace'})).not.toBeInTheDocument();
+    expect(screen.getByRole('list', {name: 'Workspace'})).toBeInTheDocument();
+});
+
+// The mobile panel builds its rows from `Row`, so it renders none of the items of the desktop rail.
+test('SidenavBar mobile renders no item of the desktop rail', async () => {
+    await renderSidenav();
+    await openMenu();
+
+    expect(screen.queryAllByTestId('SidenavItem')).toHaveLength(0);
+    expect(screen.queryAllByTestId('SidenavSection')).toHaveLength(0);
+});
+
+test('SidenavBar mobile renders the footer slot inside the panel', async () => {
+    await renderSidenav({footerSlot: <button type="button">Footer action</button>});
+
+    expect(screen.queryByRole('button', {name: 'Footer action'})).not.toBeInTheDocument();
+
+    await openMenu();
+
+    expect(screen.getByRole('button', {name: 'Footer action'})).toBeInTheDocument();
+});
+
+test('SidenavBar mobile opens the second level of a parent item, and returns from it', async () => {
+    await renderSidenav();
+    await openMenu();
+
+    await userEvent.click(screen.getByRole('button', {name: 'Projects'}));
+
+    expect(await screen.findByRole('link', {name: 'Active'})).toBeInTheDocument();
+    expect(screen.getByRole('link', {name: 'Archived'})).toHaveAttribute('href', '/archived');
+    expect(screen.getByRole('heading', {name: 'Projects'})).toBeInTheDocument();
+
+    await userEvent.click(screen.getByRole('button', {name: 'Back'}));
+
+    expect(await screen.findByRole('button', {name: 'Projects'})).toBeInTheDocument();
+});
+
+test('SidenavBar mobile closes the panel when the user presses an item that navigates', async () => {
+    const onSelectedItemIdChange = jest.fn();
+    await renderSidenav({onSelectedItemIdChange});
+    await openMenu();
+
+    await userEvent.click(screen.getByRole('button', {name: 'Settings'}));
+
+    expect(onSelectedItemIdChange).toHaveBeenCalledWith('settings');
+    expect(onSettingsPress).toHaveBeenCalled();
+    await waitFor(() =>
+        expect(screen.queryByRole('navigation', {name: 'Main navigation'})).not.toBeInTheDocument()
+    );
+});
+
+test('SidenavBar mobile keeps the panel open when the user presses a parent item', async () => {
+    const onSelectedItemIdChange = jest.fn();
+    await renderSidenav({onSelectedItemIdChange});
+    await openMenu();
+
+    await userEvent.click(screen.getByRole('button', {name: 'Projects'}));
+
+    expect(onSelectedItemIdChange).not.toHaveBeenCalled();
+    expect(screen.getByRole('navigation', {name: 'Main navigation'})).toBeInTheDocument();
+});
+
+// The selected item paints no indicator on mobile, and it still reports itself to a screen reader.
+test('SidenavBar mobile marks the selected item for a screen reader only', async () => {
+    await renderSidenav({selectedItemId: 'home'});
+    await openMenu();
+
+    expect(screen.getByRole('link', {name: 'Home'})).toHaveAttribute('aria-current', 'page');
+    expect(screen.getByRole('link', {name: 'Dashboard'})).not.toHaveAttribute('aria-current');
+});
+
+test('SidenavBar mobile closes the panel from the burger', async () => {
+    await renderSidenav();
+    await openMenu();
+
+    await userEvent.click(screen.getByRole('button', {name: 'Close navigation menu'}));
+
+    await waitFor(() =>
+        expect(screen.queryByRole('navigation', {name: 'Main navigation'})).not.toBeInTheDocument()
+    );
 });

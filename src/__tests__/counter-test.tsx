@@ -1,39 +1,111 @@
-import {test, expect} from '../test-utils/component';
+import * as React from 'react';
+import {screen, render} from '@testing-library/react';
+import {Counter, ThemeContextProvider} from '..';
+import {makeTheme} from './test-utils';
+import userEvent from '@testing-library/user-event';
 
-for (const {title, defaultValue, expected} of [
-    {title: 'Counter starts with min value', defaultValue: undefined, expected: '3'},
-    {title: 'Counter with default value greater than max is updated to max', defaultValue: 20, expected: '5'},
-    {title: 'Counter with default value lower than min is updated to min', defaultValue: 1, expected: '3'},
-]) {
-    test(title, async ({mount}) => {
-        const component = await mount('counter/Quantity', {defaultValue});
-        await expect(component.getByText(expected, {exact: true})).toHaveCount(1);
-    });
-}
-for (const controlled of [false, true]) {
-    test(`Counter with ${controlled ? 'controlled' : 'default'} value`, async ({mount}) => {
-        const component = await mount('counter/Quantity', {
-            controlled,
-            defaultValue: controlled ? undefined : 4,
-        });
-        await expect(component.getByText(controlled ? '3' : '4', {exact: true})).toHaveCount(1);
-        const increase = component.getByRole('button', {name: 'Aumentar valor'});
-        const decrease = component.getByRole('button', {name: 'Disminuir valor'});
-        await expect(increase).toHaveCount(1);
-        await expect(decrease).toHaveCount(1);
-        await increase.click();
-        await expect(component.getByText(controlled ? '4' : '5', {exact: true})).toHaveCount(1);
-        if (controlled) await increase.click();
-        else await expect(increase).toBeDisabled();
-        await expect(component.getByText('5', {exact: true})).toHaveCount(1);
-        await decrease.click();
-        await expect(component.getByText('4', {exact: true})).toHaveCount(1);
-    });
-}
-test('Counter with onRemove has remove button and callback is executed on press', async ({mount}) => {
-    const component = await mount('counter/Quantity', {defaultValue: 4, removable: true});
-    await component.getByRole('button', {name: 'Disminuir valor'}).click();
-    await expect(component.getByRole('button', {name: 'Disminuir valor'})).toHaveCount(0);
-    await component.getByRole('button', {name: 'Borrar elemento'}).click();
-    await expect(component.getByTestId('removals')).toHaveValue('1');
+test('Counter starts with min value', () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Counter min={3} max={5} />
+        </ThemeContextProvider>
+    );
+
+    expect(screen.getByText('3')).toBeInTheDocument();
+});
+
+test('Counter with default value', async () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Counter min={3} max={5} defaultValue={4} />
+        </ThemeContextProvider>
+    );
+
+    expect(screen.getByText('4')).toBeInTheDocument();
+
+    const increaseButton = screen.getByRole('button', {name: 'Aumentar valor'});
+    expect(increaseButton).toBeInTheDocument();
+
+    const decreaseButton = screen.getByRole('button', {name: 'Disminuir valor'});
+    expect(decreaseButton).toBeInTheDocument();
+
+    await userEvent.click(increaseButton);
+    expect(screen.getByText('5')).toBeInTheDocument();
+
+    await userEvent.click(increaseButton);
+    expect(screen.getByText('5')).toBeInTheDocument();
+
+    await userEvent.click(decreaseButton);
+    expect(screen.getByText('4')).toBeInTheDocument();
+});
+
+test('Counter with controlled value', async () => {
+    const CounterWrapper = () => {
+        const [value, setValue] = React.useState<number>(3);
+
+        return <Counter min={3} max={5} value={value} onChangeValue={(newValue) => setValue(newValue)} />;
+    };
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <CounterWrapper />
+        </ThemeContextProvider>
+    );
+
+    expect(screen.getByText('3')).toBeInTheDocument();
+
+    const increaseButton = screen.getByRole('button', {name: 'Aumentar valor'});
+    expect(increaseButton).toBeInTheDocument();
+
+    const decreaseButton = screen.getByRole('button', {name: 'Disminuir valor'});
+    expect(decreaseButton).toBeInTheDocument();
+
+    await userEvent.click(increaseButton);
+    expect(screen.getByText('4')).toBeInTheDocument();
+
+    await userEvent.click(increaseButton);
+    expect(screen.getByText('5')).toBeInTheDocument();
+
+    await userEvent.click(decreaseButton);
+    expect(screen.getByText('4')).toBeInTheDocument();
+});
+
+test('Counter with default value greater than max is updated to max', () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Counter min={3} max={5} defaultValue={20} />
+        </ThemeContextProvider>
+    );
+
+    expect(screen.getByText('5')).toBeInTheDocument();
+});
+
+test('Counter with default value lower than min is updated to min', () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Counter min={3} max={5} defaultValue={1} />
+        </ThemeContextProvider>
+    );
+
+    expect(screen.getByText('3')).toBeInTheDocument();
+});
+
+test('Counter with onRemove has remove button and callback is executed on press', async () => {
+    const removeFn = jest.fn();
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Counter min={3} max={5} defaultValue={4} onRemove={removeFn} />
+        </ThemeContextProvider>
+    );
+
+    await userEvent.click(screen.getByRole('button', {name: 'Disminuir valor'}));
+
+    expect(screen.queryByRole('button', {name: 'Disminuir valor'})).not.toBeInTheDocument();
+
+    const removeButton = screen.getByRole('button', {name: 'Borrar elemento'});
+    expect(removeButton).toBeInTheDocument();
+
+    await userEvent.click(removeButton);
+    expect(removeFn).toHaveBeenCalled();
 });
