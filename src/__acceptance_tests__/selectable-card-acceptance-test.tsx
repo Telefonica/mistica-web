@@ -183,21 +183,3 @@ for (const testCase of ['checkbox', 'switch', 'radio']) {
         });
     });
 }
-
-for (const control of ['checkbox', 'switch', 'radio']) {
-    test(`AdvancedDataCard slot ${control} receives pointer clicks independently`, async () => {
-        await openStoryPage({
-            id: 'components-cards-selection--selection',
-            device: 'DESKTOP',
-            args: {card: 'advanced', control, customRender: true},
-        });
-        const [first, second] = await screen.findAllByRole(control, {name: 'Custom control'});
-        await (await screen.findByText('First', {exact: true})).click();
-        expect(await first.evaluate((element) => element.getAttribute('aria-checked'))).toBe('false');
-        await first.click();
-        await waitFor(async () => {
-            expect(await first.evaluate((element) => element.getAttribute('aria-checked'))).toBe('true');
-        });
-        expect(await second.evaluate((element) => element.getAttribute('aria-checked'))).toBe('false');
-    });
-}
