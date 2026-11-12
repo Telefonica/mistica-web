@@ -33,7 +33,9 @@ const IconEmailRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element =
                     />
                 </svg>
             );
-        } else if (skinName.match(/^o2/i)) {
+        }
+
+        if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -42,7 +44,9 @@ const IconEmailRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element =
                     />
                 </svg>
             );
-        } else if (skinName.match(/^vivo/i)) {
+        }
+
+        if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -51,16 +55,16 @@ const IconEmailRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element =
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M19 4.25A2.75 2.75 0 0 1 21.75 7v10A2.75 2.75 0 0 1 19 19.75H5A2.75 2.75 0 0 1 2.25 17V7A2.75 2.75 0 0 1 5 4.25zm-6.584 9.374a.75.75 0 0 1-.832 0L3.75 8.401V17A1.25 1.25 0 0 0 5 18.25h14A1.25 1.25 0 0 0 20.25 17V8.401zM5 5.75a1.25 1.25 0 0 0-1.196.885L12 12.099l8.195-5.464A1.25 1.25 0 0 0 19 5.75z"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M19 4.25A2.75 2.75 0 0 1 21.75 7v10A2.75 2.75 0 0 1 19 19.75H5A2.75 2.75 0 0 1 2.25 17V7A2.75 2.75 0 0 1 5 4.25zm-6.584 9.374a.75.75 0 0 1-.832 0L3.75 8.401V17A1.25 1.25 0 0 0 5 18.25h14A1.25 1.25 0 0 0 20.25 17V8.401zM5 5.75a1.25 1.25 0 0 0-1.196.885L12 12.099l8.195-5.464A1.25 1.25 0 0 0 19 5.75z"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

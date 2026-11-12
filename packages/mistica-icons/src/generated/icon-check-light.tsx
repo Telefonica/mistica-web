@@ -33,7 +33,9 @@ const IconCheckLight = ({color, size = 24, ...rest}: IconProps): JSX.Element => 
                     />
                 </svg>
             );
-        } else if (skinName.match(/^o2/i)) {
+        }
+
+        if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -42,16 +44,16 @@ const IconCheckLight = ({color, size = 24, ...rest}: IconProps): JSX.Element => 
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M19.47 6.47a.75.75 0 1 1 1.06 1.06l-10 10a.75.75 0 0 1-1.06 0l-5-5a.75.75 0 1 1 1.06-1.06L10 15.94z"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M19.47 6.47a.75.75 0 1 1 1.06 1.06l-10 10a.75.75 0 0 1-1.06 0l-5-5a.75.75 0 1 1 1.06-1.06L10 15.94z"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

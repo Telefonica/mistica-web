@@ -33,16 +33,16 @@ const IconArrowLineUpRightLight = ({color, size = 24, ...rest}: IconProps): JSX.
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M16.95 6.3a.75.75 0 0 1 0 1.5H8.86l8.62 8.62a.75.75 0 0 1-1.06 1.06L7.8 8.86v8.09a.75.75 0 1 1-1.5 0v-9.9a.7.7 0 0 1 .04-.23l.015-.052.004-.01.032-.06a.8.8 0 0 1 .13-.178.8.8 0 0 1 .176-.128q.03-.018.062-.033l.01-.004.05-.015a.8.8 0 0 1 .232-.04z"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M16.95 6.3a.75.75 0 0 1 0 1.5H8.86l8.62 8.62a.75.75 0 0 1-1.06 1.06L7.8 8.86v8.09a.75.75 0 1 1-1.5 0v-9.9a.7.7 0 0 1 .04-.23l.015-.052.004-.01.032-.06a.8.8 0 0 1 .13-.178.8.8 0 0 1 .176-.128q.03-.018.062-.033l.01-.004.05-.015a.8.8 0 0 1 .232-.04z"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

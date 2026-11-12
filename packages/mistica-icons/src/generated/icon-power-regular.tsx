@@ -37,7 +37,9 @@ const IconPowerRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element =
                     />
                 </svg>
             );
-        } else if (skinName.match(/^vivo/i)) {
+        }
+
+        if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -46,20 +48,20 @@ const IconPowerRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element =
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M16.427 5.517a.75.75 0 0 1 1.056-.09 8.5 8.5 0 0 1 2.5 9.414A8.5 8.5 0 1 1 6.515 5.427a.75.75 0 0 1 .967 1.146 7 7 0 1 0 9.033 0 .75.75 0 0 1-.09-1.056"
-                    />
-                    <path
-                        fill={fillColor}
-                        d="M12 3.25a.75.75 0 0 1 .75.75v8a.75.75 0 0 1-1.5 0V4a.75.75 0 0 1 .75-.75"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M16.427 5.517a.75.75 0 0 1 1.056-.09 8.5 8.5 0 0 1 2.5 9.414A8.5 8.5 0 1 1 6.515 5.427a.75.75 0 0 1 .967 1.146 7 7 0 1 0 9.033 0 .75.75 0 0 1-.09-1.056"
+                />
+                <path
+                    fill={fillColor}
+                    d="M12 3.25a.75.75 0 0 1 .75.75v8a.75.75 0 0 1-1.5 0V4a.75.75 0 0 1 .75-.75"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

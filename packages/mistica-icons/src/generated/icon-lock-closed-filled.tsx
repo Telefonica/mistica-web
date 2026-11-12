@@ -33,7 +33,9 @@ const IconLockClosedFilled = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
                     />
                 </svg>
             );
-        } else if (skinName.match(/^o2/i)) {
+        }
+
+        if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -42,7 +44,9 @@ const IconLockClosedFilled = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
                     />
                 </svg>
             );
-        } else if (skinName.match(/^vivo/i)) {
+        }
+
+        if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -51,16 +55,16 @@ const IconLockClosedFilled = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M12.235 2.256A4.75 4.75 0 0 1 16.75 7v3.5H17a2.5 2.5 0 0 1 2.5 2.5v6a2.5 2.5 0 0 1-2.5 2.5H7A2.5 2.5 0 0 1 4.5 19v-6A2.5 2.5 0 0 1 7 10.5h.25V7A4.75 4.75 0 0 1 12 2.25zM12 14.25a1.75 1.75 0 1 0 0 3.5 1.75 1.75 0 0 0 0-3.5m0-10.5A3.25 3.25 0 0 0 8.75 7v3.5h6.5V7a3.25 3.25 0 0 0-3.089-3.246z"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M12.235 2.256A4.75 4.75 0 0 1 16.75 7v3.5H17a2.5 2.5 0 0 1 2.5 2.5v6a2.5 2.5 0 0 1-2.5 2.5H7A2.5 2.5 0 0 1 4.5 19v-6A2.5 2.5 0 0 1 7 10.5h.25V7A4.75 4.75 0 0 1 12 2.25zM12 14.25a1.75 1.75 0 1 0 0 3.5 1.75 1.75 0 0 0 0-3.5m0-10.5A3.25 3.25 0 0 0 8.75 7v3.5h6.5V7a3.25 3.25 0 0 0-3.089-3.246z"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

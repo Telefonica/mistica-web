@@ -34,7 +34,9 @@ const IconMobileDeviceLight = ({color, size = 24, ...rest}: IconProps): JSX.Elem
                     />
                 </svg>
             );
-        } else if (skinName.match(/^o2/i)) {
+        }
+
+        if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -43,7 +45,9 @@ const IconMobileDeviceLight = ({color, size = 24, ...rest}: IconProps): JSX.Elem
                     />
                 </svg>
             );
-        } else if (skinName.match(/^vivo/i)) {
+        }
+
+        if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -56,17 +60,17 @@ const IconMobileDeviceLight = ({color, size = 24, ...rest}: IconProps): JSX.Elem
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path fill={fillColor} d="M12 16a1 1 0 1 1 0 2 1 1 0 0 1 0-2" />
-                    <path
-                        fill={fillColor}
-                        d="M16 2.25A2.75 2.75 0 0 1 18.75 5v14A2.75 2.75 0 0 1 16 21.75H8A2.75 2.75 0 0 1 5.25 19V5A2.75 2.75 0 0 1 8 2.25zm-8 1.5c-.69 0-1.25.56-1.25 1.25v14c0 .69.56 1.25 1.25 1.25h8c.69 0 1.25-.56 1.25-1.25V5c0-.69-.56-1.25-1.25-1.25z"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path fill={fillColor} d="M12 16a1 1 0 1 1 0 2 1 1 0 0 1 0-2" />
+                <path
+                    fill={fillColor}
+                    d="M16 2.25A2.75 2.75 0 0 1 18.75 5v14A2.75 2.75 0 0 1 16 21.75H8A2.75 2.75 0 0 1 5.25 19V5A2.75 2.75 0 0 1 8 2.25zm-8 1.5c-.69 0-1.25.56-1.25 1.25v14c0 .69.56 1.25 1.25 1.25h8c.69 0 1.25-.56 1.25-1.25V5c0-.69-.56-1.25-1.25-1.25z"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

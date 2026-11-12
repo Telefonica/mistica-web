@@ -33,16 +33,16 @@ const IconMoonFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => 
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M12.079 2.5h.314a.502.502 0 0 1 .341.866 7 7 0 0 0-1.14 8.887 7 7 0 0 0 8.532 2.73.5.5 0 0 1 .649.654 9.503 9.503 0 0 1-12.84 4.94 9.5 9.5 0 0 1 4.066-18.085q.039.001.078.008"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M12.079 2.5h.314a.502.502 0 0 1 .341.866 7 7 0 0 0-1.14 8.887 7 7 0 0 0 8.532 2.73.5.5 0 0 1 .649.654 9.503 9.503 0 0 1-12.84 4.94 9.5 9.5 0 0 1 4.066-18.085q.039.001.078.008"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

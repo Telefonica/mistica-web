@@ -33,16 +33,16 @@ const IconArrowDropUpFilled = ({color, size = 24, ...rest}: IconProps): JSX.Elem
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M11.47 8.47a.75.75 0 0 1 1.06 0l6 6a.751.751 0 0 1-.53 1.28H6a.751.751 0 0 1-.53-1.28z"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M11.47 8.47a.75.75 0 0 1 1.06 0l6 6a.751.751 0 0 1-.53 1.28H6a.751.751 0 0 1-.53-1.28z"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

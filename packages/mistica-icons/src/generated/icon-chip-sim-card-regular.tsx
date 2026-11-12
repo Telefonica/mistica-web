@@ -37,7 +37,9 @@ const IconChipSimCardRegular = ({color, size = 24, ...rest}: IconProps): JSX.Ele
                     />
                 </svg>
             );
-        } else if (skinName.match(/^blau/i)) {
+        }
+
+        if (skinName.match(/^blau/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -50,7 +52,9 @@ const IconChipSimCardRegular = ({color, size = 24, ...rest}: IconProps): JSX.Ele
                     />
                 </svg>
             );
-        } else if (skinName.match(/^o2/i)) {
+        }
+
+        if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -63,7 +67,9 @@ const IconChipSimCardRegular = ({color, size = 24, ...rest}: IconProps): JSX.Ele
                     />
                 </svg>
             );
-        } else if (skinName.match(/^vivo/i)) {
+        }
+
+        if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -76,20 +82,20 @@ const IconChipSimCardRegular = ({color, size = 24, ...rest}: IconProps): JSX.Ele
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M14.5 10.25a2.25 2.25 0 0 1 2.25 2.25v4a2.25 2.25 0 0 1-2.25 2.25h-5a2.25 2.25 0 0 1-2.25-2.25v-4a2.25 2.25 0 0 1 2.25-2.25zm-5 1.5a.75.75 0 0 0-.75.75v4c0 .414.336.75.75.75h5a.75.75 0 0 0 .75-.75v-4a.75.75 0 0 0-.75-.75z"
-                    />
-                    <path
-                        fill={fillColor}
-                        d="M17 2.25A2.75 2.75 0 0 1 19.75 5v14A2.75 2.75 0 0 1 17 21.75H7A2.75 2.75 0 0 1 4.25 19V8.828c0-.73.29-1.429.806-1.944l3.828-3.828a2.75 2.75 0 0 1 1.944-.806zm-6.172 1.5c-.29 0-.57.101-.792.283l-.092.083-3.828 3.828a1.25 1.25 0 0 0-.366.884V19A1.25 1.25 0 0 0 7 20.25h10A1.25 1.25 0 0 0 18.25 19V5A1.25 1.25 0 0 0 17 3.75z"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M14.5 10.25a2.25 2.25 0 0 1 2.25 2.25v4a2.25 2.25 0 0 1-2.25 2.25h-5a2.25 2.25 0 0 1-2.25-2.25v-4a2.25 2.25 0 0 1 2.25-2.25zm-5 1.5a.75.75 0 0 0-.75.75v4c0 .414.336.75.75.75h5a.75.75 0 0 0 .75-.75v-4a.75.75 0 0 0-.75-.75z"
+                />
+                <path
+                    fill={fillColor}
+                    d="M17 2.25A2.75 2.75 0 0 1 19.75 5v14A2.75 2.75 0 0 1 17 21.75H7A2.75 2.75 0 0 1 4.25 19V8.828c0-.73.29-1.429.806-1.944l3.828-3.828a2.75 2.75 0 0 1 1.944-.806zm-6.172 1.5c-.29 0-.57.101-.792.283l-.092.083-3.828 3.828a1.25 1.25 0 0 0-.366.884V19A1.25 1.25 0 0 0 7 20.25h10A1.25 1.25 0 0 0 18.25 19V5A1.25 1.25 0 0 0 17 3.75z"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

@@ -33,16 +33,16 @@ const IconMenuRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element =>
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M20 17.25a.75.75 0 0 1 0 1.5H4a.75.75 0 0 1 0-1.5zm0-6a.75.75 0 0 1 0 1.5H4a.75.75 0 0 1 0-1.5zm0-6a.75.75 0 0 1 0 1.5H4a.75.75 0 0 1 0-1.5z"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M20 17.25a.75.75 0 0 1 0 1.5H4a.75.75 0 0 1 0-1.5zm0-6a.75.75 0 0 1 0 1.5H4a.75.75 0 0 1 0-1.5zm0-6a.75.75 0 0 1 0 1.5H4a.75.75 0 0 1 0-1.5z"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

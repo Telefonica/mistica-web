@@ -33,20 +33,20 @@ const IconKeyboardRegular = ({color, size = 24, ...rest}: IconProps): JSX.Elemen
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M6 13a1 1 0 1 1 0 2 1 1 0 0 1 0-2m12 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2m-3.998.26a.75.75 0 0 1-.004 1.5l-4-.01a.75.75 0 0 1 .004-1.5zM6 9a1 1 0 1 1 0 2 1 1 0 0 1 0-2m4 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2m4 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2m4 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"
-                    />
-                    <path
-                        fill={fillColor}
-                        d="M20 5.25A2.75 2.75 0 0 1 22.75 8v8A2.75 2.75 0 0 1 20 18.75H4A2.75 2.75 0 0 1 1.25 16V8A2.75 2.75 0 0 1 4 5.25zM4 6.75A1.25 1.25 0 0 0 2.75 8v8A1.25 1.25 0 0 0 4 17.25h16A1.25 1.25 0 0 0 21.25 16V8A1.25 1.25 0 0 0 20 6.75z"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M6 13a1 1 0 1 1 0 2 1 1 0 0 1 0-2m12 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2m-3.998.26a.75.75 0 0 1-.004 1.5l-4-.01a.75.75 0 0 1 .004-1.5zM6 9a1 1 0 1 1 0 2 1 1 0 0 1 0-2m4 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2m4 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2m4 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"
+                />
+                <path
+                    fill={fillColor}
+                    d="M20 5.25A2.75 2.75 0 0 1 22.75 8v8A2.75 2.75 0 0 1 20 18.75H4A2.75 2.75 0 0 1 1.25 16V8A2.75 2.75 0 0 1 4 5.25zM4 6.75A1.25 1.25 0 0 0 2.75 8v8A1.25 1.25 0 0 0 4 17.25h16A1.25 1.25 0 0 0 21.25 16V8A1.25 1.25 0 0 0 20 6.75z"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

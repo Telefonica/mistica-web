@@ -33,16 +33,16 @@ const IconUndoLight = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M8.47 5.47a.75.75 0 1 1 1.06 1.06L6.81 9.25H16a4.75 4.75 0 0 1 0 9.5h-1a.75.75 0 0 1 0-1.5h1a3.25 3.25 0 0 0 .161-6.496L16 10.75H6.81l2.72 2.72a.75.75 0 1 1-1.06 1.06l-4-4a.75.75 0 0 1-.22-.53.8.8 0 0 1 .055-.282l.004-.01q.022-.05.052-.097a.8.8 0 0 1 .109-.141z"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M8.47 5.47a.75.75 0 1 1 1.06 1.06L6.81 9.25H16a4.75 4.75 0 0 1 0 9.5h-1a.75.75 0 0 1 0-1.5h1a3.25 3.25 0 0 0 .161-6.496L16 10.75H6.81l2.72 2.72a.75.75 0 1 1-1.06 1.06l-4-4a.75.75 0 0 1-.22-.53.8.8 0 0 1 .055-.282l.004-.01q.022-.05.052-.097a.8.8 0 0 1 .109-.141z"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

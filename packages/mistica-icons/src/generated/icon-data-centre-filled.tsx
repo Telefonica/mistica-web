@@ -33,16 +33,16 @@ const IconDataCentreFilled = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M18 3.5A3.5 3.5 0 0 1 21.5 7v2a3.5 3.5 0 0 1-1.7 3 3.5 3.5 0 0 1 1.7 3v2a3.5 3.5 0 0 1-3.5 3.5H6A3.5 3.5 0 0 1 2.5 17v-2a3.5 3.5 0 0 1 1.698-3A3.5 3.5 0 0 1 2.5 9V7A3.5 3.5 0 0 1 6 3.5zM7 15a1 1 0 1 0 0 2 1 1 0 0 0 0-2m4 .25a.75.75 0 0 0 0 1.5h6a.75.75 0 0 0 0-1.5zM7 7a1 1 0 1 0 0 2 1 1 0 0 0 0-2m4 .25a.75.75 0 0 0 0 1.5h6a.75.75 0 0 0 0-1.5z"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M18 3.5A3.5 3.5 0 0 1 21.5 7v2a3.5 3.5 0 0 1-1.7 3 3.5 3.5 0 0 1 1.7 3v2a3.5 3.5 0 0 1-3.5 3.5H6A3.5 3.5 0 0 1 2.5 17v-2a3.5 3.5 0 0 1 1.698-3A3.5 3.5 0 0 1 2.5 9V7A3.5 3.5 0 0 1 6 3.5zM7 15a1 1 0 1 0 0 2 1 1 0 0 0 0-2m4 .25a.75.75 0 0 0 0 1.5h6a.75.75 0 0 0 0-1.5zM7 7a1 1 0 1 0 0 2 1 1 0 0 0 0-2m4 .25a.75.75 0 0 0 0 1.5h6a.75.75 0 0 0 0-1.5z"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

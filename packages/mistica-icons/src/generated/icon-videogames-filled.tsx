@@ -37,7 +37,9 @@ const IconVideogamesFilled = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
                     />
                 </svg>
             );
-        } else if (skinName.match(/^vivo/i)) {
+        }
+
+        if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -46,16 +48,16 @@ const IconVideogamesFilled = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M16.188 4.5c2.278 0 4.281 1.498 4.704 3.629l1.553 7.839c.429 2.162-1.666 3.892-3.832 3.455a4.24 4.24 0 0 1-1.803-.833l-2.855-2.274a.1.1 0 0 0-.039-.011h-3.49a.1.1 0 0 0-.04.011L7.742 18.48a4.6 4.6 0 0 1-2.09.957c-2.338.43-4.551-1.444-4.093-3.754l1.498-7.554C3.479 5.999 5.482 4.5 7.76 4.5zM8 8.25a.75.75 0 0 0-.75.75v1.25H6a.75.75 0 0 0 0 1.5h1.25V13a.75.75 0 0 0 1.5 0v-1.25H10a.75.75 0 0 0 0-1.5H8.75V9A.75.75 0 0 0 8 8.25M15 11a1 1 0 1 0 0 2 1 1 0 0 0 0-2m2-2a1 1 0 1 0 0 2 1 1 0 0 0 0-2"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M16.188 4.5c2.278 0 4.281 1.498 4.704 3.629l1.553 7.839c.429 2.162-1.666 3.892-3.832 3.455a4.24 4.24 0 0 1-1.803-.833l-2.855-2.274a.1.1 0 0 0-.039-.011h-3.49a.1.1 0 0 0-.04.011L7.742 18.48a4.6 4.6 0 0 1-2.09.957c-2.338.43-4.551-1.444-4.093-3.754l1.498-7.554C3.479 5.999 5.482 4.5 7.76 4.5zM8 8.25a.75.75 0 0 0-.75.75v1.25H6a.75.75 0 0 0 0 1.5h1.25V13a.75.75 0 0 0 1.5 0v-1.25H10a.75.75 0 0 0 0-1.5H8.75V9A.75.75 0 0 0 8 8.25M15 11a1 1 0 1 0 0 2 1 1 0 0 0 0-2m2-2a1 1 0 1 0 0 2 1 1 0 0 0 0-2"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

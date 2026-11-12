@@ -33,7 +33,9 @@ const IconBookFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => 
                     />
                 </svg>
             );
-        } else if (skinName.match(/^vivo/i)) {
+        }
+
+        if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -42,16 +44,16 @@ const IconBookFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => 
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M7.5 4.04a9.7 9.7 0 0 1 3.503.655.39.39 0 0 1 .247.367v13.976a.26.26 0 0 1-.368.232 8.2 8.2 0 0 0-3.382-.73 8.26 8.26 0 0 0-4.125 1.11A.75.75 0 0 1 2.25 19V6l.007-.1a.75.75 0 0 1 .368-.55A9.76 9.76 0 0 1 7.5 4.04m9 0a9.76 9.76 0 0 1 4.875 1.31.75.75 0 0 1 .375.65v13a.75.75 0 0 1-1.125.65 8.26 8.26 0 0 0-4.125-1.11c-1.168 0-2.32.251-3.382.73a.26.26 0 0 1-.368-.232V5.062a.39.39 0 0 1 .247-.367A9.7 9.7 0 0 1 16.5 4.04"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M7.5 4.04a9.7 9.7 0 0 1 3.503.655.39.39 0 0 1 .247.367v13.976a.26.26 0 0 1-.368.232 8.2 8.2 0 0 0-3.382-.73 8.26 8.26 0 0 0-4.125 1.11A.75.75 0 0 1 2.25 19V6l.007-.1a.75.75 0 0 1 .368-.55A9.76 9.76 0 0 1 7.5 4.04m9 0a9.76 9.76 0 0 1 4.875 1.31.75.75 0 0 1 .375.65v13a.75.75 0 0 1-1.125.65 8.26 8.26 0 0 0-4.125-1.11c-1.168 0-2.32.251-3.382.73a.26.26 0 0 1-.368-.232V5.062a.39.39 0 0 1 .247-.367A9.7 9.7 0 0 1 16.5 4.04"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

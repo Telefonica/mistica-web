@@ -33,7 +33,9 @@ const IconPlayCircleFilled = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
                     />
                 </svg>
             );
-        } else if (skinName.match(/^vivo/i)) {
+        }
+
+        if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -42,20 +44,20 @@ const IconPlayCircleFilled = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M16.006 10.867a1.3 1.3 0 0 1 0 2.266l-5.568 3.133A1.3 1.3 0 0 1 8.5 15.132V8.868a1.3 1.3 0 0 1 1.938-1.134z"
-                    />
-                    <path
-                        fill={fillColor}
-                        d="M21.75 12a9.75 9.75 0 1 1-19.5 0 9.75 9.75 0 0 1 19.5 0m-1.5 0a8.25 8.25 0 1 0-16.5 0 8.25 8.25 0 0 0 16.5.001"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M16.006 10.867a1.3 1.3 0 0 1 0 2.266l-5.568 3.133A1.3 1.3 0 0 1 8.5 15.132V8.868a1.3 1.3 0 0 1 1.938-1.134z"
+                />
+                <path
+                    fill={fillColor}
+                    d="M21.75 12a9.75 9.75 0 1 1-19.5 0 9.75 9.75 0 0 1 19.5 0m-1.5 0a8.25 8.25 0 1 0-16.5 0 8.25 8.25 0 0 0 16.5.001"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

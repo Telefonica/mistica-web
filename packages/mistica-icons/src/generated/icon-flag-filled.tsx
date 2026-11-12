@@ -33,16 +33,16 @@ const IconFlagFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => 
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M19 4.25a.5.5 0 0 1 .354.854L15.207 9.25l4.147 4.147a.5.5 0 0 1-.354.853H5.75V21a.75.75 0 0 1-1.5 0V5A.75.75 0 0 1 5 4.25z"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M19 4.25a.5.5 0 0 1 .354.854L15.207 9.25l4.147 4.147a.5.5 0 0 1-.354.853H5.75V21a.75.75 0 0 1-1.5 0V5A.75.75 0 0 1 5 4.25z"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

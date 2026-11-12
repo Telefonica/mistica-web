@@ -33,17 +33,17 @@ const IconPendriveRegular = ({color, size = 24, ...rest}: IconProps): JSX.Elemen
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path fill={fillColor} d="M7 11a1 1 0 1 1 0 2 1 1 0 0 1 0-2" />
-                    <path
-                        fill={fillColor}
-                        d="M16 6.25a.75.75 0 0 1 .75.75v1.25H21a.75.75 0 0 1 .75.75v6a.75.75 0 0 1-.75.75h-4.25V17a.75.75 0 0 1-.75.75H8a5.75 5.75 0 0 1 0-11.5zm-8 1.5a4.25 4.25 0 0 0 0 8.5h7.25v-8.5zm8.75 6.5h3.5v-4.5h-3.5z"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path fill={fillColor} d="M7 11a1 1 0 1 1 0 2 1 1 0 0 1 0-2" />
+                <path
+                    fill={fillColor}
+                    d="M16 6.25a.75.75 0 0 1 .75.75v1.25H21a.75.75 0 0 1 .75.75v6a.75.75 0 0 1-.75.75h-4.25V17a.75.75 0 0 1-.75.75H8a5.75 5.75 0 0 1 0-11.5zm-8 1.5a4.25 4.25 0 0 0 0 8.5h7.25v-8.5zm8.75 6.5h3.5v-4.5h-3.5z"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

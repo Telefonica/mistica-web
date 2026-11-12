@@ -33,7 +33,9 @@ const IconTargetFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element =
                     />
                 </svg>
             );
-        } else if (skinName.match(/^vivo/i)) {
+        }
+
+        if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -42,20 +44,20 @@ const IconTargetFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element =
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M12 7.75a4.25 4.25 0 0 1 4.245 4.04l.005.21a4.25 4.25 0 0 1-4.04 4.245l-.21.005a4.25 4.25 0 0 1-4.245-4.04L7.75 12A4.25 4.25 0 0 1 12 7.75m0 2.5a1.75 1.75 0 1 0 0 3.5 1.75 1.75 0 0 0 0-3.5"
-                    />
-                    <path
-                        fill={fillColor}
-                        d="M12 2.25A9.75 9.75 0 0 1 21.75 12l-.012.48a9.75 9.75 0 0 1-9.258 9.258l-.48.012a9.75 9.75 0 0 1-9.738-9.27L2.25 12A9.75 9.75 0 0 1 12 2.25m0 4A5.75 5.75 0 0 0 6.25 12l.007.285A5.75 5.75 0 0 0 12 17.75l.285-.007a5.75 5.75 0 0 0 5.458-5.458L17.75 12A5.75 5.75 0 0 0 12 6.25"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M12 7.75a4.25 4.25 0 0 1 4.245 4.04l.005.21a4.25 4.25 0 0 1-4.04 4.245l-.21.005a4.25 4.25 0 0 1-4.245-4.04L7.75 12A4.25 4.25 0 0 1 12 7.75m0 2.5a1.75 1.75 0 1 0 0 3.5 1.75 1.75 0 0 0 0-3.5"
+                />
+                <path
+                    fill={fillColor}
+                    d="M12 2.25A9.75 9.75 0 0 1 21.75 12l-.012.48a9.75 9.75 0 0 1-9.258 9.258l-.48.012a9.75 9.75 0 0 1-9.738-9.27L2.25 12A9.75 9.75 0 0 1 12 2.25m0 4A5.75 5.75 0 0 0 6.25 12l.007.285A5.75 5.75 0 0 0 12 17.75l.285-.007a5.75 5.75 0 0 0 5.458-5.458L17.75 12A5.75 5.75 0 0 0 12 6.25"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

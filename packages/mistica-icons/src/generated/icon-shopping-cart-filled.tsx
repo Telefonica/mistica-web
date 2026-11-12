@@ -33,7 +33,9 @@ const IconShoppingCartFilled = ({color, size = 24, ...rest}: IconProps): JSX.Ele
                     />
                 </svg>
             );
-        } else if (skinName.match(/^o2/i)) {
+        }
+
+        if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -42,7 +44,9 @@ const IconShoppingCartFilled = ({color, size = 24, ...rest}: IconProps): JSX.Ele
                     />
                 </svg>
             );
-        } else if (skinName.match(/^vivo/i)) {
+        }
+
+        if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -51,16 +55,16 @@ const IconShoppingCartFilled = ({color, size = 24, ...rest}: IconProps): JSX.Ele
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M9 18.25a1.75 1.75 0 1 1 0 3.5 1.75 1.75 0 0 1 0-3.5m9 0a1.75 1.75 0 1 1 0 3.5 1.75 1.75 0 0 1 0-3.5m-13.734-16a2.75 2.75 0 0 1 2.721 2.361l.127.889H18.79a2.5 2.5 0 0 1 2.487 2.749l-.6 6A2.5 2.5 0 0 1 18.19 16.5H8.853a2.5 2.5 0 0 1-2.493-2.309L5.796 6.88l-.293-2.056A1.25 1.25 0 0 0 4.266 3.75H3a.75.75 0 0 1 0-1.5z"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M9 18.25a1.75 1.75 0 1 1 0 3.5 1.75 1.75 0 0 1 0-3.5m9 0a1.75 1.75 0 1 1 0 3.5 1.75 1.75 0 0 1 0-3.5m-13.734-16a2.75 2.75 0 0 1 2.721 2.361l.127.889H18.79a2.5 2.5 0 0 1 2.487 2.749l-.6 6A2.5 2.5 0 0 1 18.19 16.5H8.853a2.5 2.5 0 0 1-2.493-2.309L5.796 6.88l-.293-2.056A1.25 1.25 0 0 0 4.266 3.75H3a.75.75 0 0 1 0-1.5z"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

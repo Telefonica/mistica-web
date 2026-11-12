@@ -33,16 +33,16 @@ const IconGasStationLight = ({color, size = 24, ...rest}: IconProps): JSX.Elemen
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M12 3.25A2.75 2.75 0 0 1 14.75 6v4.25H15A2.75 2.75 0 0 1 17.75 13v3a.75.75 0 0 0 1.5 0V9.75H19A1.75 1.75 0 0 1 17.25 8v-.69l-.78-.78a.75.75 0 1 1 1.06-1.06l3 3c.136.135.22.323.22.53v7a2.25 2.25 0 0 1-4.5 0v-3A1.25 1.25 0 0 0 15 11.75h-.25v7.5H15a.75.75 0 0 1 0 1.5H3a.75.75 0 0 1 0-1.5h.25V6A2.75 2.75 0 0 1 6 3.25zm-7.25 8.5v7.5h8.5v-7.5zm1.25-7A1.25 1.25 0 0 0 4.75 6v4.25h8.5V6A1.25 1.25 0 0 0 12 4.75z"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M12 3.25A2.75 2.75 0 0 1 14.75 6v4.25H15A2.75 2.75 0 0 1 17.75 13v3a.75.75 0 0 0 1.5 0V9.75H19A1.75 1.75 0 0 1 17.25 8v-.69l-.78-.78a.75.75 0 1 1 1.06-1.06l3 3c.136.135.22.323.22.53v7a2.25 2.25 0 0 1-4.5 0v-3A1.25 1.25 0 0 0 15 11.75h-.25v7.5H15a.75.75 0 0 1 0 1.5H3a.75.75 0 0 1 0-1.5h.25V6A2.75 2.75 0 0 1 6 3.25zm-7.25 8.5v7.5h8.5v-7.5zm1.25-7A1.25 1.25 0 0 0 4.75 6v4.25h8.5V6A1.25 1.25 0 0 0 12 4.75z"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

@@ -33,7 +33,9 @@ const IconClipLight = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
                     />
                 </svg>
             );
-        } else if (skinName.match(/^vivo/i)) {
+        }
+
+        if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -42,16 +44,16 @@ const IconClipLight = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M15 2.007a4.993 4.993 0 0 1 3.53 8.524l-6.5 6.5a2.871 2.871 0 1 1-4.06-4.062l6.5-6.5a.75.75 0 0 1 1.06 1.062l-6.5 6.5a1.371 1.371 0 1 0 1.94 1.938l6.5-6.5A3.494 3.494 0 0 0 15 3.507c-.926 0-1.815.369-2.47 1.024l-6.5 6.5a5.614 5.614 0 1 0 7.94 7.938l6.5-6.5a.75.75 0 0 1 1.06 1.062l-6.5 6.5A7.114 7.114 0 0 1 4.97 9.969l6.5-6.5A5 5 0 0 1 15 2.007"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M15 2.007a4.993 4.993 0 0 1 3.53 8.524l-6.5 6.5a2.871 2.871 0 1 1-4.06-4.062l6.5-6.5a.75.75 0 0 1 1.06 1.062l-6.5 6.5a1.371 1.371 0 1 0 1.94 1.938l6.5-6.5A3.494 3.494 0 0 0 15 3.507c-.926 0-1.815.369-2.47 1.024l-6.5 6.5a5.614 5.614 0 1 0 7.94 7.938l6.5-6.5a.75.75 0 0 1 1.06 1.062l-6.5 6.5A7.114 7.114 0 0 1 4.97 9.969l6.5-6.5A5 5 0 0 1 15 2.007"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

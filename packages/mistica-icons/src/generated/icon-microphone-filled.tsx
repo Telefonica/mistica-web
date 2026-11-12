@@ -37,7 +37,9 @@ const IconMicrophoneFilled = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
                     />
                 </svg>
             );
-        } else if (skinName.match(/^o2/i)) {
+        }
+
+        if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -46,7 +48,9 @@ const IconMicrophoneFilled = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
                     />
                 </svg>
             );
-        } else if (skinName.match(/^vivo/i)) {
+        }
+
+        if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -59,20 +63,20 @@ const IconMicrophoneFilled = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M19 9.25a.75.75 0 0 1 .75.75 7.75 7.75 0 0 1-7 7.713v2.537H16a.75.75 0 0 1 0 1.5H8a.75.75 0 0 1 0-1.5h3.25v-2.537a7.75 7.75 0 0 1-7-7.713.75.75 0 0 1 1.5 0A6.25 6.25 0 0 0 12 16.25l.31-.008A6.25 6.25 0 0 0 18.25 10a.75.75 0 0 1 .75-.75"
-                    />
-                    <path
-                        fill={fillColor}
-                        d="M12 1.5A3.5 3.5 0 0 1 15.5 5v5a3.5 3.5 0 0 1-7 0V5A3.5 3.5 0 0 1 12 1.5"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M19 9.25a.75.75 0 0 1 .75.75 7.75 7.75 0 0 1-7 7.713v2.537H16a.75.75 0 0 1 0 1.5H8a.75.75 0 0 1 0-1.5h3.25v-2.537a7.75 7.75 0 0 1-7-7.713.75.75 0 0 1 1.5 0A6.25 6.25 0 0 0 12 16.25l.31-.008A6.25 6.25 0 0 0 18.25 10a.75.75 0 0 1 .75-.75"
+                />
+                <path
+                    fill={fillColor}
+                    d="M12 1.5A3.5 3.5 0 0 1 15.5 5v5a3.5 3.5 0 0 1-7 0V5A3.5 3.5 0 0 1 12 1.5"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

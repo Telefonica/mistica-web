@@ -37,7 +37,9 @@ const IconImportLight = ({color, size = 24, ...rest}: IconProps): JSX.Element =>
                     />
                 </svg>
             );
-        } else if (skinName.match(/^vivo/i)) {
+        }
+
+        if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -46,20 +48,20 @@ const IconImportLight = ({color, size = 24, ...rest}: IconProps): JSX.Element =>
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M20 16.25a.75.75 0 0 1 .75.75v2A2.75 2.75 0 0 1 18 21.75H6A2.75 2.75 0 0 1 3.25 19v-2a.75.75 0 0 1 1.5 0v2l.006.124A1.25 1.25 0 0 0 6 20.25h12A1.25 1.25 0 0 0 19.25 19v-2a.75.75 0 0 1 .75-.75"
-                    />
-                    <path
-                        fill={fillColor}
-                        d="M12 3.25a.75.75 0 0 1 .75.75v10.19l3.72-3.72a.75.75 0 1 1 1.06 1.06l-5 5a.7.7 0 0 1-.16.118q-.041.025-.084.044-.048.02-.098.03-.02.008-.04.012l-.016.003a.8.8 0 0 1-.265 0l-.016-.003-.04-.011q-.05-.012-.098-.03-.044-.02-.083-.045a.8.8 0 0 1-.16-.118l-5-5a.75.75 0 1 1 1.06-1.06l3.72 3.72V4a.75.75 0 0 1 .75-.75"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M20 16.25a.75.75 0 0 1 .75.75v2A2.75 2.75 0 0 1 18 21.75H6A2.75 2.75 0 0 1 3.25 19v-2a.75.75 0 0 1 1.5 0v2l.006.124A1.25 1.25 0 0 0 6 20.25h12A1.25 1.25 0 0 0 19.25 19v-2a.75.75 0 0 1 .75-.75"
+                />
+                <path
+                    fill={fillColor}
+                    d="M12 3.25a.75.75 0 0 1 .75.75v10.19l3.72-3.72a.75.75 0 1 1 1.06 1.06l-5 5a.7.7 0 0 1-.16.118q-.041.025-.084.044-.048.02-.098.03-.02.008-.04.012l-.016.003a.8.8 0 0 1-.265 0l-.016-.003-.04-.011q-.05-.012-.098-.03-.044-.02-.083-.045a.8.8 0 0 1-.16-.118l-5-5a.75.75 0 1 1 1.06-1.06l3.72 3.72V4a.75.75 0 0 1 .75-.75"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

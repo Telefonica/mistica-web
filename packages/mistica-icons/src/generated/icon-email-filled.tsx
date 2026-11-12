@@ -37,7 +37,9 @@ const IconEmailFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element =>
                     />
                 </svg>
             );
-        } else if (skinName.match(/^vivo/i)) {
+        }
+
+        if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -46,20 +48,20 @@ const IconEmailFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element =>
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M21.356 7.365a.25.25 0 0 1 .394.205V17A2.75 2.75 0 0 1 19 19.75H5A2.75 2.75 0 0 1 2.25 17V7.57a.25.25 0 0 1 .394-.205l8.926 6.25a.75.75 0 0 0 .86 0z"
-                    />
-                    <path
-                        fill={fillColor}
-                        d="M19 4.25a2.75 2.75 0 0 1 2.2 1.104.236.236 0 0 1-.061.333l-8.995 6.297a.25.25 0 0 1-.288 0L2.86 5.687a.236.236 0 0 1-.061-.333q.116-.158.257-.298A2.75 2.75 0 0 1 5 4.25z"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M21.356 7.365a.25.25 0 0 1 .394.205V17A2.75 2.75 0 0 1 19 19.75H5A2.75 2.75 0 0 1 2.25 17V7.57a.25.25 0 0 1 .394-.205l8.926 6.25a.75.75 0 0 0 .86 0z"
+                />
+                <path
+                    fill={fillColor}
+                    d="M19 4.25a2.75 2.75 0 0 1 2.2 1.104.236.236 0 0 1-.061.333l-8.995 6.297a.25.25 0 0 1-.288 0L2.86 5.687a.236.236 0 0 1-.061-.333q.116-.158.257-.298A2.75 2.75 0 0 1 5 4.25z"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

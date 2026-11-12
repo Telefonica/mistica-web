@@ -33,7 +33,9 @@ const IconPenFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
                     />
                 </svg>
             );
-        } else if (skinName.match(/^vivo/i)) {
+        }
+
+        if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -42,16 +44,16 @@ const IconPenFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M12.44 6.854a.25.25 0 0 1 .353 0l4.354 4.353a.25.25 0 0 1 0 .353l-6.793 6.795-.006.003-.994.995a.5.5 0 0 1-.256.137l-5 1a.5.5 0 0 1-.588-.588l1-5 .02-.07a.5.5 0 0 1 .117-.186zm-6.98 8.392-.37 1.845 1.817 1.816 1.846-.368.54-.539-3.294-3.293zM16.5 4.17a3.3 3.3 0 0 1 1.849.562 3.33 3.33 0 0 1 1.226 4.042 3.3 3.3 0 0 1-.721 1.08l-.293.293a.25.25 0 0 1-.354 0l-4.353-4.354a.25.25 0 0 1 0-.354l.293-.293a3.33 3.33 0 0 1 2.353-.975"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M12.44 6.854a.25.25 0 0 1 .353 0l4.354 4.353a.25.25 0 0 1 0 .353l-6.793 6.795-.006.003-.994.995a.5.5 0 0 1-.256.137l-5 1a.5.5 0 0 1-.588-.588l1-5 .02-.07a.5.5 0 0 1 .117-.186zm-6.98 8.392-.37 1.845 1.817 1.816 1.846-.368.54-.539-3.294-3.293zM16.5 4.17a3.3 3.3 0 0 1 1.849.562 3.33 3.33 0 0 1 1.226 4.042 3.3 3.3 0 0 1-.721 1.08l-.293.293a.25.25 0 0 1-.354 0l-4.353-4.354a.25.25 0 0 1 0-.354l.293-.293a3.33 3.33 0 0 1 2.353-.975"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

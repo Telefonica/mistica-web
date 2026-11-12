@@ -33,7 +33,9 @@ const IconCocktailRegular = ({color, size = 24, ...rest}: IconProps): JSX.Elemen
                     />
                 </svg>
             );
-        } else if (skinName.match(/^vivo/i)) {
+        }
+
+        if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -42,16 +44,16 @@ const IconCocktailRegular = ({color, size = 24, ...rest}: IconProps): JSX.Elemen
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M6.602 1.364a.75.75 0 0 1 1.033.239l2.28 3.647h7.223c1.395 0 2.23 1.553 1.46 2.716l-4.335 6.55a2.7 2.7 0 0 1-1.514 1.123v4.611H16a.75.75 0 0 1 0 1.5H8a.75.75 0 0 1 0-1.5h3.25v-4.61a2.75 2.75 0 0 1-1.512-1.121l-.001-.002L5.4 7.966c-.77-1.163.065-2.716 1.46-2.716h1.286L6.364 2.398a.75.75 0 0 1 .238-1.034m4.384 12.324.08.107c.418.511 1.12.6 1.636.22a1.3 1.3 0 0 0 .31-.325l2.607-3.94H8.38zM6.86 6.75a.25.25 0 0 0-.21.388l.737 1.112h9.223l.736-1.112a.25.25 0 0 0-.209-.388z"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M6.602 1.364a.75.75 0 0 1 1.033.239l2.28 3.647h7.223c1.395 0 2.23 1.553 1.46 2.716l-4.335 6.55a2.7 2.7 0 0 1-1.514 1.123v4.611H16a.75.75 0 0 1 0 1.5H8a.75.75 0 0 1 0-1.5h3.25v-4.61a2.75 2.75 0 0 1-1.512-1.121l-.001-.002L5.4 7.966c-.77-1.163.065-2.716 1.46-2.716h1.286L6.364 2.398a.75.75 0 0 1 .238-1.034m4.384 12.324.08.107c.418.511 1.12.6 1.636.22a1.3 1.3 0 0 0 .31-.325l2.607-3.94H8.38zM6.86 6.75a.25.25 0 0 0-.21.388l.737 1.112h9.223l.736-1.112a.25.25 0 0 0-.209-.388z"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

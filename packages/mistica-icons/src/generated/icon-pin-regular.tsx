@@ -33,7 +33,9 @@ const IconPinRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element => 
                     />
                 </svg>
             );
-        } else if (skinName.match(/^vivo/i)) {
+        }
+
+        if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -42,16 +44,16 @@ const IconPinRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element => 
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M13.97 3.47a.75.75 0 0 1 1.06 0l5.5 5.5a.75.75 0 0 1-1.029 1.089l-3.356 3.356-1.443 3.849a.75.75 0 0 1-.171.266l-1.5 1.5a.75.75 0 0 1-1.061 0L9 16.06l-3.97 3.97a.75.75 0 0 1-1.06-1.06L7.94 15l-2.97-2.97a.75.75 0 0 1 0-1.06l1.5-1.5.06-.054a.8.8 0 0 1 .207-.118l3.847-1.443 3.357-3.357a.75.75 0 0 1 .029-1.028m-2.44 5.56a.75.75 0 0 1-.266.172l-3.849 1.443-.854.855 5.94 5.94.854-.856 1.443-3.848.032-.073a.8.8 0 0 1 .14-.193L18.44 9 15 5.56z"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M13.97 3.47a.75.75 0 0 1 1.06 0l5.5 5.5a.75.75 0 0 1-1.029 1.089l-3.356 3.356-1.443 3.849a.75.75 0 0 1-.171.266l-1.5 1.5a.75.75 0 0 1-1.061 0L9 16.06l-3.97 3.97a.75.75 0 0 1-1.06-1.06L7.94 15l-2.97-2.97a.75.75 0 0 1 0-1.06l1.5-1.5.06-.054a.8.8 0 0 1 .207-.118l3.847-1.443 3.357-3.357a.75.75 0 0 1 .029-1.028m-2.44 5.56a.75.75 0 0 1-.266.172l-3.849 1.443-.854.855 5.94 5.94.854-.856 1.443-3.848.032-.073a.8.8 0 0 1 .14-.193L18.44 9 15 5.56z"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

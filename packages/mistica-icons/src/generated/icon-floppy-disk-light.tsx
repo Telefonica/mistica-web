@@ -33,20 +33,20 @@ const IconFloppyDiskLight = ({color, size = 24, ...rest}: IconProps): JSX.Elemen
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M12 11.25a2.75 2.75 0 1 1 0 5.499 2.75 2.75 0 0 1 0-5.499m0 1.5a1.25 1.25 0 1 0 0 2.5 1.25 1.25 0 0 0 0-2.5"
-                    />
-                    <path
-                        fill={fillColor}
-                        d="M16 3.25c.199 0 .39.08.53.22l4 4c.14.14.22.331.22.53v10A2.75 2.75 0 0 1 18 20.75H6A2.75 2.75 0 0 1 3.25 18V6A2.75 2.75 0 0 1 6 3.25zM6 4.75A1.25 1.25 0 0 0 4.75 6v12A1.25 1.25 0 0 0 6 19.25h12A1.25 1.25 0 0 0 19.25 18V8.31l-3.56-3.56h-.94V8a.75.75 0 0 1-.75.75H8A.75.75 0 0 1 7.25 8V4.75zm2.75 2.5h4.5v-2.5h-4.5z"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M12 11.25a2.75 2.75 0 1 1 0 5.499 2.75 2.75 0 0 1 0-5.499m0 1.5a1.25 1.25 0 1 0 0 2.5 1.25 1.25 0 0 0 0-2.5"
+                />
+                <path
+                    fill={fillColor}
+                    d="M16 3.25c.199 0 .39.08.53.22l4 4c.14.14.22.331.22.53v10A2.75 2.75 0 0 1 18 20.75H6A2.75 2.75 0 0 1 3.25 18V6A2.75 2.75 0 0 1 6 3.25zM6 4.75A1.25 1.25 0 0 0 4.75 6v12A1.25 1.25 0 0 0 6 19.25h12A1.25 1.25 0 0 0 19.25 18V8.31l-3.56-3.56h-.94V8a.75.75 0 0 1-.75.75H8A.75.75 0 0 1 7.25 8V4.75zm2.75 2.5h4.5v-2.5h-4.5z"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

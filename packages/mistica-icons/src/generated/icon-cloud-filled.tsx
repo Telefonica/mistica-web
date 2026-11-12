@@ -33,7 +33,9 @@ const IconCloudFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element =>
                     />
                 </svg>
             );
-        } else if (skinName.match(/^vivo/i)) {
+        }
+
+        if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -42,16 +44,16 @@ const IconCloudFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element =>
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M10.187 4.783c2.03-.618 4.279-.212 5.9 1.088 1.46 1.167 2.215 2.9 2.04 4.66h.41c2.191 0 3.963 1.787 3.963 3.986s-1.772 3.987-3.965 3.987H6.657q-.028-.002-.055-.006c-2.805-.029-5.102-2.23-5.102-4.981 0-2.641 2.117-4.775 4.768-4.967.54-1.78 2.016-3.187 3.919-3.767"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M10.187 4.783c2.03-.618 4.279-.212 5.9 1.088 1.46 1.167 2.215 2.9 2.04 4.66h.41c2.191 0 3.963 1.787 3.963 3.986s-1.772 3.987-3.965 3.987H6.657q-.028-.002-.055-.006c-2.805-.029-5.102-2.23-5.102-4.981 0-2.641 2.117-4.775 4.768-4.967.54-1.78 2.016-3.187 3.919-3.767"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

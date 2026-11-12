@@ -33,16 +33,16 @@ const IconHospitalFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M17 2.5A2.5 2.5 0 0 1 19.5 5v15.25H21a.75.75 0 0 1 0 1.5H3a.75.75 0 0 1 0-1.5h1.5V5A2.5 2.5 0 0 1 7 2.5zM11 15a2 2 0 0 0-2 2v3.25h6V17a2 2 0 0 0-2-2zm1-8.75a.75.75 0 0 0-.75.75v1.25H10a.75.75 0 0 0 0 1.5h1.25V11a.75.75 0 0 0 1.5 0V9.75H14a.75.75 0 0 0 0-1.5h-1.25V7a.75.75 0 0 0-.75-.75"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M17 2.5A2.5 2.5 0 0 1 19.5 5v15.25H21a.75.75 0 0 1 0 1.5H3a.75.75 0 0 1 0-1.5h1.5V5A2.5 2.5 0 0 1 7 2.5zM11 15a2 2 0 0 0-2 2v3.25h6V17a2 2 0 0 0-2-2zm1-8.75a.75.75 0 0 0-.75.75v1.25H10a.75.75 0 0 0 0 1.5h1.25V11a.75.75 0 0 0 1.5 0V9.75H14a.75.75 0 0 0 0-1.5h-1.25V7a.75.75 0 0 0-.75-.75"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

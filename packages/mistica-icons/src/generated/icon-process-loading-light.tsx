@@ -33,7 +33,9 @@ const IconProcessLoadingLight = ({color, size = 24, ...rest}: IconProps): JSX.El
                     />
                 </svg>
             );
-        } else if (skinName.match(/^vivo/i)) {
+        }
+
+        if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -42,16 +44,16 @@ const IconProcessLoadingLight = ({color, size = 24, ...rest}: IconProps): JSX.El
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M12 17.25a.75.75 0 0 1 .75.75v3a.75.75 0 0 1-1.5 0v-3a.75.75 0 0 1 .75-.75m-4.78-1.53a.75.75 0 0 1 1.06 1.06l-2.15 2.15a.75.75 0 0 1-1.06-1.06zm8.5 0a.75.75 0 0 1 1.06 0l2.15 2.15a.75.75 0 0 1-1.06 1.06l-2.15-2.15a.75.75 0 0 1 0-1.06M6 11.25a.75.75 0 0 1 0 1.5H3a.75.75 0 0 1 0-1.5zm15 0a.75.75 0 0 1 0 1.5h-3a.75.75 0 0 1 0-1.5zM5.07 5.07a.75.75 0 0 1 1.06 0l2.15 2.15a.75.75 0 0 1-1.06 1.06L5.07 6.13a.75.75 0 0 1 0-1.06m12.8 0a.75.75 0 0 1 1.06 1.06l-2.15 2.15a.75.75 0 0 1-1.06-1.06zM12 2.25a.75.75 0 0 1 .75.75v3a.75.75 0 0 1-1.5 0V3a.75.75 0 0 1 .75-.75"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M12 17.25a.75.75 0 0 1 .75.75v3a.75.75 0 0 1-1.5 0v-3a.75.75 0 0 1 .75-.75m-4.78-1.53a.75.75 0 0 1 1.06 1.06l-2.15 2.15a.75.75 0 0 1-1.06-1.06zm8.5 0a.75.75 0 0 1 1.06 0l2.15 2.15a.75.75 0 0 1-1.06 1.06l-2.15-2.15a.75.75 0 0 1 0-1.06M6 11.25a.75.75 0 0 1 0 1.5H3a.75.75 0 0 1 0-1.5zm15 0a.75.75 0 0 1 0 1.5h-3a.75.75 0 0 1 0-1.5zM5.07 5.07a.75.75 0 0 1 1.06 0l2.15 2.15a.75.75 0 0 1-1.06 1.06L5.07 6.13a.75.75 0 0 1 0-1.06m12.8 0a.75.75 0 0 1 1.06 1.06l-2.15 2.15a.75.75 0 0 1-1.06-1.06zM12 2.25a.75.75 0 0 1 .75.75v3a.75.75 0 0 1-1.5 0V3a.75.75 0 0 1 .75-.75"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

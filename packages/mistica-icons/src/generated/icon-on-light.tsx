@@ -37,17 +37,17 @@ const IconOnLight = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path fill={fillColor} d="M16 9.25a2.75 2.75 0 1 1 0 5.5 2.75 2.75 0 0 1 0-5.5" />
-                    <path
-                        fill={fillColor}
-                        d="M16 5.25a6.75 6.75 0 1 1 0 13.5H8a6.75 6.75 0 1 1 0-13.5zm-8 1.5a5.25 5.25 0 0 0 0 10.5h8a5.25 5.25 0 0 0 0-10.5z"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path fill={fillColor} d="M16 9.25a2.75 2.75 0 1 1 0 5.5 2.75 2.75 0 0 1 0-5.5" />
+                <path
+                    fill={fillColor}
+                    d="M16 5.25a6.75 6.75 0 1 1 0 13.5H8a6.75 6.75 0 1 1 0-13.5zm-8 1.5a5.25 5.25 0 0 0 0 10.5h8a5.25 5.25 0 0 0 0-10.5z"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

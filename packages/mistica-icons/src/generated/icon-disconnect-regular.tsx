@@ -33,21 +33,21 @@ const IconDisconnectRegular = ({color, size = 24, ...rest}: IconProps): JSX.Elem
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M20.47 17.47a.75.75 0 1 1 1.06 1.06L20.06 20l1.47 1.47a.75.75 0 1 1-1.06 1.06L19 21.06l-1.47 1.47a.75.75 0 1 1-1.06-1.06L17.94 20l-1.47-1.47a.75.75 0 1 1 1.06-1.06L19 18.94z"
-                    />
-                    <path
-                        fill={fillColor}
-                        d="M16 2.25A2.75 2.75 0 0 1 18.75 5v9.5a.75.75 0 0 1-1.5 0V5c0-.69-.56-1.25-1.25-1.25H8c-.69 0-1.25.56-1.25 1.25v14c0 .69.56 1.25 1.25 1.25h5.5a.75.75 0 0 1 0 1.5H8A2.75 2.75 0 0 1 5.25 19V5A2.75 2.75 0 0 1 8 2.25z"
-                    />
-                    <path fill={fillColor} d="M12 16a1 1 0 1 1 0 2 1 1 0 0 1 0-2" />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M20.47 17.47a.75.75 0 1 1 1.06 1.06L20.06 20l1.47 1.47a.75.75 0 1 1-1.06 1.06L19 21.06l-1.47 1.47a.75.75 0 1 1-1.06-1.06L17.94 20l-1.47-1.47a.75.75 0 1 1 1.06-1.06L19 18.94z"
+                />
+                <path
+                    fill={fillColor}
+                    d="M16 2.25A2.75 2.75 0 0 1 18.75 5v9.5a.75.75 0 0 1-1.5 0V5c0-.69-.56-1.25-1.25-1.25H8c-.69 0-1.25.56-1.25 1.25v14c0 .69.56 1.25 1.25 1.25h5.5a.75.75 0 0 1 0 1.5H8A2.75 2.75 0 0 1 5.25 19V5A2.75 2.75 0 0 1 8 2.25z"
+                />
+                <path fill={fillColor} d="M12 16a1 1 0 1 1 0 2 1 1 0 0 1 0-2" />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

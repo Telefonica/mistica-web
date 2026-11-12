@@ -34,7 +34,9 @@ const IconVideoFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element =>
                     />
                 </svg>
             );
-        } else if (skinName.match(/^vivo/i)) {
+        }
+
+        if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -43,16 +45,16 @@ const IconVideoFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element =>
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M18 3.5A3.5 3.5 0 0 1 21.5 7v10a3.5 3.5 0 0 1-3.5 3.5H6A3.5 3.5 0 0 1 2.5 17V7A3.5 3.5 0 0 1 6 3.5zm-7.303 5.184a.8.8 0 0 0-1.197.695v5.242a.8.8 0 0 0 1.197.695l4.587-2.622a.8.8 0 0 0 0-1.388z"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M18 3.5A3.5 3.5 0 0 1 21.5 7v10a3.5 3.5 0 0 1-3.5 3.5H6A3.5 3.5 0 0 1 2.5 17V7A3.5 3.5 0 0 1 6 3.5zm-7.303 5.184a.8.8 0 0 0-1.197.695v5.242a.8.8 0 0 0 1.197.695l4.587-2.622a.8.8 0 0 0 0-1.388z"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

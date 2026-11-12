@@ -33,16 +33,16 @@ const IconTongueFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element =
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M20 5.25a.75.75 0 0 1 0 1.5h-2.25V13a5.75 5.75 0 0 1-11.5 0V6.75H4a.75.75 0 0 1 0-1.5zm-8.75 6.15a.75.75 0 0 0 1.5 0V6.75h-1.5z"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M20 5.25a.75.75 0 0 1 0 1.5h-2.25V13a5.75 5.75 0 0 1-11.5 0V6.75H4a.75.75 0 0 1 0-1.5zm-8.75 6.15a.75.75 0 0 0 1.5 0V6.75h-1.5z"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

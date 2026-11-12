@@ -33,16 +33,16 @@ const IconUmbrellaFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M12 3.5a8.5 8.5 0 0 1 8.5 8.5.5.5 0 0 1-.5.5h-7.25V18a1.25 1.25 0 0 0 2.5 0 .75.75 0 0 1 1.5 0 2.75 2.75 0 0 1-5.5 0v-5.5H4a.5.5 0 0 1-.5-.5A8.5 8.5 0 0 1 12 3.5"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M12 3.5a8.5 8.5 0 0 1 8.5 8.5.5.5 0 0 1-.5.5h-7.25V18a1.25 1.25 0 0 0 2.5 0 .75.75 0 0 1 1.5 0 2.75 2.75 0 0 1-5.5 0v-5.5H4a.5.5 0 0 1-.5-.5A8.5 8.5 0 0 1 12 3.5"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

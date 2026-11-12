@@ -33,7 +33,9 @@ const IconFunnelRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element 
                     />
                 </svg>
             );
-        } else if (skinName.match(/^vivo/i)) {
+        }
+
+        if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -42,16 +44,16 @@ const IconFunnelRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element 
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M20 3.25a.75.75 0 0 1 .75.75v2.172l-.014.272a2.75 2.75 0 0 1-.792 1.672l-.056.051-5.138 4.188V18.5a.75.75 0 0 1-.486.702l-4 1.5A.75.75 0 0 1 9.25 20v-7.643L4.049 8.155a1 1 0 0 1-.084-.079 2.75 2.75 0 0 1-.715-1.848V4A.75.75 0 0 1 4 3.25zM4.75 6.227l.006.116c.023.253.125.494.29.69l5.426 4.384a.75.75 0 0 1 .278.583v6.917l2.5-.937V12a.75.75 0 0 1 .276-.581l5.373-4.38c.196-.204.317-.465.345-.744l.006-.123V4.75H4.75z"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M20 3.25a.75.75 0 0 1 .75.75v2.172l-.014.272a2.75 2.75 0 0 1-.792 1.672l-.056.051-5.138 4.188V18.5a.75.75 0 0 1-.486.702l-4 1.5A.75.75 0 0 1 9.25 20v-7.643L4.049 8.155a1 1 0 0 1-.084-.079 2.75 2.75 0 0 1-.715-1.848V4A.75.75 0 0 1 4 3.25zM4.75 6.227l.006.116c.023.253.125.494.29.69l5.426 4.384a.75.75 0 0 1 .278.583v6.917l2.5-.937V12a.75.75 0 0 1 .276-.581l5.373-4.38c.196-.204.317-.465.345-.744l.006-.123V4.75H4.75z"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

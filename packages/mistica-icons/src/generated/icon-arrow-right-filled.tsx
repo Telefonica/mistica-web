@@ -33,7 +33,9 @@ const IconArrowRightFilled = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
                     />
                 </svg>
             );
-        } else if (skinName.match(/^vivo/i)) {
+        }
+
+        if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -42,16 +44,16 @@ const IconArrowRightFilled = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M12.426 4.028a1.5 1.5 0 0 1 1.634.325l6.586 6.586a1.5 1.5 0 0 1 0 2.121l-6.586 6.586a1.5 1.5 0 0 1-2.556-.949l-.004-.111V15.5H4A1.5 1.5 0 0 1 2.5 14v-4A1.5 1.5 0 0 1 4 8.5h7.5V5.414a1.5 1.5 0 0 1 .926-1.386"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M12.426 4.028a1.5 1.5 0 0 1 1.634.325l6.586 6.586a1.5 1.5 0 0 1 0 2.121l-6.586 6.586a1.5 1.5 0 0 1-2.556-.949l-.004-.111V15.5H4A1.5 1.5 0 0 1 2.5 14v-4A1.5 1.5 0 0 1 4 8.5h7.5V5.414a1.5 1.5 0 0 1 .926-1.386"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

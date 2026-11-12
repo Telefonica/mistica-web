@@ -33,16 +33,16 @@ const IconKebabMenuLight = ({color, size = 24, ...rest}: IconProps): JSX.Element
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M12 17a2 2 0 1 1 0 4 2 2 0 0 1 0-4m0-7a2 2 0 1 1 0 4 2 2 0 0 1 0-4m0-7a2 2 0 1 1 0 4 2 2 0 0 1 0-4"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M12 17a2 2 0 1 1 0 4 2 2 0 0 1 0-4m0-7a2 2 0 1 1 0 4 2 2 0 0 1 0-4m0-7a2 2 0 1 1 0 4 2 2 0 0 1 0-4"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

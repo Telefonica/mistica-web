@@ -33,7 +33,9 @@ const IconRobotLight = ({color, size = 24, ...rest}: IconProps): JSX.Element => 
                     />
                 </svg>
             );
-        } else if (skinName.match(/^vivo/i)) {
+        }
+
+        if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -42,20 +44,20 @@ const IconRobotLight = ({color, size = 24, ...rest}: IconProps): JSX.Element => 
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M10 7a1 1 0 1 1 0 2 1 1 0 0 1 0-2m4 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"
-                    />
-                    <path
-                        fill={fillColor}
-                        d="M12 1.25a.75.75 0 0 1 .75.75v1.25H16A2.75 2.75 0 0 1 18.75 6v4A2.75 2.75 0 0 1 16 12.75h-.25v.786l3.585 1.793a.75.75 0 0 1-.67 1.342l-2.915-1.458V21a.75.75 0 0 1-1.5 0v-2.25h-4.5V21a.75.75 0 0 1-1.5 0v-5.787L5.335 16.67a.75.75 0 0 1-.67-1.342l3.585-1.793v-.786H8A2.75 2.75 0 0 1 5.25 10V6A2.75 2.75 0 0 1 8 3.25h3.25V2a.75.75 0 0 1 .75-.75m-2.25 16h4.5v-4.5h-4.5zM8 4.75A1.25 1.25 0 0 0 6.75 6v4A1.25 1.25 0 0 0 8 11.25h8A1.25 1.25 0 0 0 17.25 10V6A1.25 1.25 0 0 0 16 4.75z"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M10 7a1 1 0 1 1 0 2 1 1 0 0 1 0-2m4 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"
+                />
+                <path
+                    fill={fillColor}
+                    d="M12 1.25a.75.75 0 0 1 .75.75v1.25H16A2.75 2.75 0 0 1 18.75 6v4A2.75 2.75 0 0 1 16 12.75h-.25v.786l3.585 1.793a.75.75 0 0 1-.67 1.342l-2.915-1.458V21a.75.75 0 0 1-1.5 0v-2.25h-4.5V21a.75.75 0 0 1-1.5 0v-5.787L5.335 16.67a.75.75 0 0 1-.67-1.342l3.585-1.793v-.786H8A2.75 2.75 0 0 1 5.25 10V6A2.75 2.75 0 0 1 8 3.25h3.25V2a.75.75 0 0 1 .75-.75m-2.25 16h4.5v-4.5h-4.5zM8 4.75A1.25 1.25 0 0 0 6.75 6v4A1.25 1.25 0 0 0 8 11.25h8A1.25 1.25 0 0 0 17.25 10V6A1.25 1.25 0 0 0 16 4.75z"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

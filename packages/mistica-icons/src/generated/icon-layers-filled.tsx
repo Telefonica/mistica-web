@@ -33,24 +33,24 @@ const IconLayersFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element =
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M19.665 15.33a.75.75 0 0 1 .67 1.341l-8 4a.75.75 0 0 1-.67 0l-8-4a.75.75 0 0 1 .67-1.342L12 19.161z"
-                    />
-                    <path
-                        fill={fillColor}
-                        d="M19.665 11.33a.75.75 0 0 1 .67 1.341l-8 4a.75.75 0 0 1-.67 0l-8-4a.75.75 0 0 1 .67-1.342L12 15.161z"
-                    />
-                    <path
-                        fill={fillColor}
-                        d="M11.886 3.514a.5.5 0 0 1 .338.04l8 3.999a.5.5 0 0 1 0 .895l-8 4a.5.5 0 0 1-.448 0l-8-4a.5.5 0 0 1 0-.895l8-4z"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M19.665 15.33a.75.75 0 0 1 .67 1.341l-8 4a.75.75 0 0 1-.67 0l-8-4a.75.75 0 0 1 .67-1.342L12 19.161z"
+                />
+                <path
+                    fill={fillColor}
+                    d="M19.665 11.33a.75.75 0 0 1 .67 1.341l-8 4a.75.75 0 0 1-.67 0l-8-4a.75.75 0 0 1 .67-1.342L12 15.161z"
+                />
+                <path
+                    fill={fillColor}
+                    d="M11.886 3.514a.5.5 0 0 1 .338.04l8 3.999a.5.5 0 0 1 0 .895l-8 4a.5.5 0 0 1-.448 0l-8-4a.5.5 0 0 1 0-.895l8-4z"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

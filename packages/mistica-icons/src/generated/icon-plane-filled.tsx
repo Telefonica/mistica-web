@@ -33,7 +33,9 @@ const IconPlaneFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element =>
                     />
                 </svg>
             );
-        } else if (skinName.match(/^o2/i)) {
+        }
+
+        if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -42,7 +44,9 @@ const IconPlaneFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element =>
                     />
                 </svg>
             );
-        } else if (skinName.match(/^vivo/i)) {
+        }
+
+        if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -51,16 +55,16 @@ const IconPlaneFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element =>
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M18.95 2.5a2.552 2.552 0 0 1 1.804 4.354v-.001L18.07 9.628l2.405 7.214a.5.5 0 0 1-.117.508l-2.5 2.55a.502.502 0 0 1-.8-.114l-3.182-5.956-2.376 2.377V19c0 .133-.053.26-.146.354l-2 2a.5.5 0 0 1-.828-.195l-1.422-4.265-4.262-1.42a.5.5 0 0 1-.195-.827l2-2 .076-.063A.5.5 0 0 1 5 12.5h2.793l2.378-2.379L4.263 6.94a.5.5 0 0 1-.116-.793l2.5-2.5.052-.047a.5.5 0 0 1 .46-.074l7.211 2.403 2.783-2.688a2.55 2.55 0 0 1 1.797-.742"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M18.95 2.5a2.552 2.552 0 0 1 1.804 4.354v-.001L18.07 9.628l2.405 7.214a.5.5 0 0 1-.117.508l-2.5 2.55a.502.502 0 0 1-.8-.114l-3.182-5.956-2.376 2.377V19c0 .133-.053.26-.146.354l-2 2a.5.5 0 0 1-.828-.195l-1.422-4.265-4.262-1.42a.5.5 0 0 1-.195-.827l2-2 .076-.063A.5.5 0 0 1 5 12.5h2.793l2.378-2.379L4.263 6.94a.5.5 0 0 1-.116-.793l2.5-2.5.052-.047a.5.5 0 0 1 .46-.074l7.211 2.403 2.783-2.688a2.55 2.55 0 0 1 1.797-.742"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

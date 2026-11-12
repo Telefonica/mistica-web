@@ -33,7 +33,9 @@ const IconArrowUpFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element 
                     />
                 </svg>
             );
-        } else if (skinName.match(/^vivo/i)) {
+        }
+
+        if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -42,16 +44,16 @@ const IconArrowUpFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element 
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M12 2.914a1.5 1.5 0 0 1 1.06.44l6.586 6.586a1.5 1.5 0 0 1-.949 2.556l-.111.004H15.5V20a1.5 1.5 0 0 1-1.5 1.5h-4A1.5 1.5 0 0 1 8.5 20v-7.5H5.414a1.5 1.5 0 0 1-1.386-.926 1.5 1.5 0 0 1 .325-1.634l6.586-6.586c.281-.281.663-.44 1.06-.44"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M12 2.914a1.5 1.5 0 0 1 1.06.44l6.586 6.586a1.5 1.5 0 0 1-.949 2.556l-.111.004H15.5V20a1.5 1.5 0 0 1-1.5 1.5h-4A1.5 1.5 0 0 1 8.5 20v-7.5H5.414a1.5 1.5 0 0 1-1.386-.926 1.5 1.5 0 0 1 .325-1.634l6.586-6.586c.281-.281.663-.44 1.06-.44"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

@@ -33,7 +33,9 @@ const IconHomeFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => 
                     />
                 </svg>
             );
-        } else if (skinName.match(/^blau/i)) {
+        }
+
+        if (skinName.match(/^blau/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -42,7 +44,9 @@ const IconHomeFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => 
                     />
                 </svg>
             );
-        } else if (skinName.match(/^o2/i)) {
+        }
+
+        if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -51,7 +55,9 @@ const IconHomeFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => 
                     />
                 </svg>
             );
-        } else if (skinName.match(/^vivo/i)) {
+        }
+
+        if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -60,16 +66,16 @@ const IconHomeFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => 
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M10.262 3.987a2.5 2.5 0 0 1 3.476 0l6 5.806a2.5 2.5 0 0 1 .762 1.797V19a2.5 2.5 0 0 1-2.5 2.5H6A2.5 2.5 0 0 1 3.5 19v-7.41a2.5 2.5 0 0 1 .762-1.797zM12 13.749A2.25 2.25 0 0 0 9.75 16v3.5c0 .139.112.25.25.25h4a.25.25 0 0 0 .25-.25V16A2.25 2.25 0 0 0 12 13.75"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M10.262 3.987a2.5 2.5 0 0 1 3.476 0l6 5.806a2.5 2.5 0 0 1 .762 1.797V19a2.5 2.5 0 0 1-2.5 2.5H6A2.5 2.5 0 0 1 3.5 19v-7.41a2.5 2.5 0 0 1 .762-1.797zM12 13.749A2.25 2.25 0 0 0 9.75 16v3.5c0 .139.112.25.25.25h4a.25.25 0 0 0 .25-.25V16A2.25 2.25 0 0 0 12 13.75"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

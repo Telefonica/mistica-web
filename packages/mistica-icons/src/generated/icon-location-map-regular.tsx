@@ -37,7 +37,9 @@ const IconLocationMapRegular = ({color, size = 24, ...rest}: IconProps): JSX.Ele
                     />
                 </svg>
             );
-        } else if (skinName.match(/^o2/i)) {
+        }
+
+        if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -46,7 +48,9 @@ const IconLocationMapRegular = ({color, size = 24, ...rest}: IconProps): JSX.Ele
                     />
                 </svg>
             );
-        } else if (skinName.match(/^vivo/i)) {
+        }
+
+        if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -55,21 +59,21 @@ const IconLocationMapRegular = ({color, size = 24, ...rest}: IconProps): JSX.Ele
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path fill={fillColor} d="M19 17a1 1 0 1 1 0 2 1 1 0 0 1 0-2" />
-                    <path
-                        fill={fillColor}
-                        d="M19 14.249a3.752 3.752 0 0 1 3.678 4.482 3.75 3.75 0 0 1-1.027 1.918c-.387.39-1.119 1.036-2.167 1.923a.75.75 0 0 1-.965.002c-.998-.835-1.728-1.48-2.171-1.924a3.753 3.753 0 0 1 .568-5.77A3.75 3.75 0 0 1 19 14.25m0 1.5a2.25 2.25 0 0 0-1.59 3.84v.002q.486.487 1.588 1.424c.783-.67 1.31-1.142 1.592-1.424v-.001A2.25 2.25 0 0 0 19 15.749"
-                    />
-                    <path
-                        fill={fillColor}
-                        d="m9.02 3.251.083.007.026.004.035.008q.06.012.117.035l.025.01.029.014L15 6.161l5.665-2.832A.75.75 0 0 1 21.75 4v7.5a.75.75 0 0 1-1.5 0V5.213l-4.5 2.25V12.5a.75.75 0 0 1-1.5 0V7.463l-4.5-2.25v11.323l2.585 1.293a.75.75 0 0 1-.67 1.342L9 17.838 3.335 20.67A.75.75 0 0 1 2.25 20V7a.75.75 0 0 1 .415-.67l6-3 .027-.013.034-.014.02-.008a1 1 0 0 1 .124-.033l.035-.006.046-.004.03-.001L9 3.25zM3.75 7.463v11.323l4.5-2.25V5.213z"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path fill={fillColor} d="M19 17a1 1 0 1 1 0 2 1 1 0 0 1 0-2" />
+                <path
+                    fill={fillColor}
+                    d="M19 14.249a3.752 3.752 0 0 1 3.678 4.482 3.75 3.75 0 0 1-1.027 1.918c-.387.39-1.119 1.036-2.167 1.923a.75.75 0 0 1-.965.002c-.998-.835-1.728-1.48-2.171-1.924a3.753 3.753 0 0 1 .568-5.77A3.75 3.75 0 0 1 19 14.25m0 1.5a2.25 2.25 0 0 0-1.59 3.84v.002q.486.487 1.588 1.424c.783-.67 1.31-1.142 1.592-1.424v-.001A2.25 2.25 0 0 0 19 15.749"
+                />
+                <path
+                    fill={fillColor}
+                    d="m9.02 3.251.083.007.026.004.035.008q.06.012.117.035l.025.01.029.014L15 6.161l5.665-2.832A.75.75 0 0 1 21.75 4v7.5a.75.75 0 0 1-1.5 0V5.213l-4.5 2.25V12.5a.75.75 0 0 1-1.5 0V7.463l-4.5-2.25v11.323l2.585 1.293a.75.75 0 0 1-.67 1.342L9 17.838 3.335 20.67A.75.75 0 0 1 2.25 20V7a.75.75 0 0 1 .415-.67l6-3 .027-.013.034-.014.02-.008a1 1 0 0 1 .124-.033l.035-.006.046-.004.03-.001L9 3.25zM3.75 7.463v11.323l4.5-2.25V5.213z"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

@@ -33,7 +33,9 @@ const IconTrophyFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element =
                     />
                 </svg>
             );
-        } else if (skinName.match(/^o2/i)) {
+        }
+
+        if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -42,7 +44,9 @@ const IconTrophyFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element =
                     />
                 </svg>
             );
-        } else if (skinName.match(/^vivo/i)) {
+        }
+
+        if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -51,16 +55,16 @@ const IconTrophyFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element =
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M17 3.5a.5.5 0 0 1 .5.5v1.25h.5a3.75 3.75 0 0 1 0 7.5h-.701a5.05 5.05 0 0 1-1.424 2.266 5.7 5.7 0 0 1-3.34 1.46c.133.135.215.32.215.524v3.25H16a.75.75 0 0 1 0 1.5H8a.75.75 0 0 1 0-1.5h3.25V17c0-.204.082-.39.214-.524a5.7 5.7 0 0 1-3.339-1.46 5.05 5.05 0 0 1-1.424-2.266H6a3.75 3.75 0 0 1-3.745-3.564L2.25 9A3.75 3.75 0 0 1 6 5.25h.5V4a.5.5 0 0 1 .5-.5zm.5 7.75h.5a2.25 2.25 0 0 0 0-4.5h-.5zM6 6.75A2.25 2.25 0 0 0 3.75 9l.01.223A2.25 2.25 0 0 0 6 11.25h.5v-4.5z"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M17 3.5a.5.5 0 0 1 .5.5v1.25h.5a3.75 3.75 0 0 1 0 7.5h-.701a5.05 5.05 0 0 1-1.424 2.266 5.7 5.7 0 0 1-3.34 1.46c.133.135.215.32.215.524v3.25H16a.75.75 0 0 1 0 1.5H8a.75.75 0 0 1 0-1.5h3.25V17c0-.204.082-.39.214-.524a5.7 5.7 0 0 1-3.339-1.46 5.05 5.05 0 0 1-1.424-2.266H6a3.75 3.75 0 0 1-3.745-3.564L2.25 9A3.75 3.75 0 0 1 6 5.25h.5V4a.5.5 0 0 1 .5-.5zm.5 7.75h.5a2.25 2.25 0 0 0 0-4.5h-.5zM6 6.75A2.25 2.25 0 0 0 3.75 9l.01.223A2.25 2.25 0 0 0 6 11.25h.5v-4.5z"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

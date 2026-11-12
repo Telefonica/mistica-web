@@ -33,7 +33,9 @@ const IconQuestionFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element
                     />
                 </svg>
             );
-        } else if (skinName.match(/^o2/i)) {
+        }
+
+        if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -42,7 +44,9 @@ const IconQuestionFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element
                     />
                 </svg>
             );
-        } else if (skinName.match(/^vivo/i)) {
+        }
+
+        if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -51,16 +55,16 @@ const IconQuestionFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M12 2.5a9.5 9.5 0 0 1 9.5 9.5l-.012.467a9.5 9.5 0 0 1-9.021 9.021L12 21.5a9.5 9.5 0 0 1-9.488-9.033L2.5 12A9.5 9.5 0 0 1 12 2.5M12 16a1 1 0 1 0 0 2 1 1 0 0 0 0-2m.081-9.778a3.35 3.35 0 0 0-2.679 1.325.75.75 0 0 0 1.196.906 1.852 1.852 0 0 1 2.954.009 1.85 1.85 0 0 1-.624 2.75l-.196.088a2.25 2.25 0 0 0-1.481 2.243.75.75 0 0 0 1.498-.085.75.75 0 0 1 .5-.75l.019-.007a3.35 3.35 0 0 0 2.022-2.2 3.352 3.352 0 0 0-3.209-4.28"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M12 2.5a9.5 9.5 0 0 1 9.5 9.5l-.012.467a9.5 9.5 0 0 1-9.021 9.021L12 21.5a9.5 9.5 0 0 1-9.488-9.033L2.5 12A9.5 9.5 0 0 1 12 2.5M12 16a1 1 0 1 0 0 2 1 1 0 0 0 0-2m.081-9.778a3.35 3.35 0 0 0-2.679 1.325.75.75 0 0 0 1.196.906 1.852 1.852 0 0 1 2.954.009 1.85 1.85 0 0 1-.624 2.75l-.196.088a2.25 2.25 0 0 0-1.481 2.243.75.75 0 0 0 1.498-.085.75.75 0 0 1 .5-.75l.019-.007a3.35 3.35 0 0 0 2.022-2.2 3.352 3.352 0 0 0-3.209-4.28"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

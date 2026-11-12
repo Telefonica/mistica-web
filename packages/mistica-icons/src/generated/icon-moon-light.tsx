@@ -33,16 +33,16 @@ const IconMoonLight = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M12.079 2.25h.314a.75.75 0 0 1 .51 1.3 6.75 6.75 0 0 0 7.129 11.2.75.75 0 0 1 .973.984A9.75 9.75 0 1 1 12 2.242q.04.002.079.008m-1.398 1.6a8.25 8.25 0 0 0-5.954 4.252 8.25 8.25 0 0 0 14.093 8.535 8.25 8.25 0 0 1-8.281-3.713 8.25 8.25 0 0 1 .142-9.075"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M12.079 2.25h.314a.75.75 0 0 1 .51 1.3 6.75 6.75 0 0 0 7.129 11.2.75.75 0 0 1 .973.984A9.75 9.75 0 1 1 12 2.242q.04.002.079.008m-1.398 1.6a8.25 8.25 0 0 0-5.954 4.252 8.25 8.25 0 0 0 14.093 8.535 8.25 8.25 0 0 1-8.281-3.713 8.25 8.25 0 0 1 .142-9.075"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

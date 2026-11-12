@@ -37,7 +37,9 @@ const IconWifiRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element =>
                     />
                 </svg>
             );
-        } else if (skinName.match(/^blau/i)) {
+        }
+
+        if (skinName.match(/^blau/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -54,7 +56,9 @@ const IconWifiRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element =>
                     />
                 </svg>
             );
-        } else if (skinName.match(/^o2/i)) {
+        }
+
+        if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -71,7 +75,9 @@ const IconWifiRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element =>
                     />
                 </svg>
             );
-        } else if (skinName.match(/^vivo/i)) {
+        }
+
+        if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -84,20 +90,20 @@ const IconWifiRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element =>
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M12 17a1 1 0 1 1 0 2 1 1 0 0 1 0-2m0-3.75a4.76 4.76 0 0 1 3.359 1.392.75.75 0 0 1-1.06 1.06 3.25 3.25 0 0 0-4.596 0 .75.75 0 0 1-1.06-1.06A4.75 4.75 0 0 1 12 13.25m0-4a8.75 8.75 0 0 1 6.188 2.562.751.751 0 0 1-1.061 1.062 7.25 7.25 0 0 0-7.9-1.572c-.88.364-1.68.899-2.353 1.572a.75.75 0 0 1-1.06-1.062A8.75 8.75 0 0 1 12 9.25"
-                    />
-                    <path
-                        fill={fillColor}
-                        d="M2.985 8.985c4.98-4.98 13.05-4.978 18.059-.002a.75.75 0 1 1-1.057 1.064c-4.424-4.397-11.55-4.394-15.942-.001a.75.75 0 0 1-1.06-1.06"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M12 17a1 1 0 1 1 0 2 1 1 0 0 1 0-2m0-3.75a4.76 4.76 0 0 1 3.359 1.392.75.75 0 0 1-1.06 1.06 3.25 3.25 0 0 0-4.596 0 .75.75 0 0 1-1.06-1.06A4.75 4.75 0 0 1 12 13.25m0-4a8.75 8.75 0 0 1 6.188 2.562.751.751 0 0 1-1.061 1.062 7.25 7.25 0 0 0-7.9-1.572c-.88.364-1.68.899-2.353 1.572a.75.75 0 0 1-1.06-1.062A8.75 8.75 0 0 1 12 9.25"
+                />
+                <path
+                    fill={fillColor}
+                    d="M2.985 8.985c4.98-4.98 13.05-4.978 18.059-.002a.75.75 0 1 1-1.057 1.064c-4.424-4.397-11.55-4.394-15.942-.001a.75.75 0 0 1-1.06-1.06"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

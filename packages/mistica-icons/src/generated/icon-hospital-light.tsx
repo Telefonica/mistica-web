@@ -33,20 +33,20 @@ const IconHospitalLight = ({color, size = 24, ...rest}: IconProps): JSX.Element 
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M12 6.25a.75.75 0 0 1 .75.75v1.25H14a.75.75 0 0 1 0 1.5h-1.25V11a.75.75 0 0 1-1.5 0V9.75H10a.75.75 0 0 1 0-1.5h1.25V7a.75.75 0 0 1 .75-.75"
-                    />
-                    <path
-                        fill={fillColor}
-                        d="M17 2.25A2.75 2.75 0 0 1 19.75 5v15.25H21a.75.75 0 0 1 0 1.5H3a.75.75 0 0 1 0-1.5h1.25V5A2.75 2.75 0 0 1 7 2.25zM7 3.75A1.25 1.25 0 0 0 5.75 5v15.25h2.5V17A2.75 2.75 0 0 1 11 14.25h2A2.75 2.75 0 0 1 15.75 17v3.25h2.5V5A1.25 1.25 0 0 0 17 3.75zm4 12A1.25 1.25 0 0 0 9.75 17v3.25h4.5V17A1.25 1.25 0 0 0 13 15.75z"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M12 6.25a.75.75 0 0 1 .75.75v1.25H14a.75.75 0 0 1 0 1.5h-1.25V11a.75.75 0 0 1-1.5 0V9.75H10a.75.75 0 0 1 0-1.5h1.25V7a.75.75 0 0 1 .75-.75"
+                />
+                <path
+                    fill={fillColor}
+                    d="M17 2.25A2.75 2.75 0 0 1 19.75 5v15.25H21a.75.75 0 0 1 0 1.5H3a.75.75 0 0 1 0-1.5h1.25V5A2.75 2.75 0 0 1 7 2.25zM7 3.75A1.25 1.25 0 0 0 5.75 5v15.25h2.5V17A2.75 2.75 0 0 1 11 14.25h2A2.75 2.75 0 0 1 15.75 17v3.25h2.5V5A1.25 1.25 0 0 0 17 3.75zm4 12A1.25 1.25 0 0 0 9.75 17v3.25h4.5V17A1.25 1.25 0 0 0 13 15.75z"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

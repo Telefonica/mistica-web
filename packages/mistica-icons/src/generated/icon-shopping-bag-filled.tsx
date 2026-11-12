@@ -33,7 +33,9 @@ const IconShoppingBagFilled = ({color, size = 24, ...rest}: IconProps): JSX.Elem
                     />
                 </svg>
             );
-        } else if (skinName.match(/^vivo/i)) {
+        }
+
+        if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -42,16 +44,16 @@ const IconShoppingBagFilled = ({color, size = 24, ...rest}: IconProps): JSX.Elem
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M12.186 2.255A3.75 3.75 0 0 1 15.75 6v1.515a3.5 3.5 0 0 1 3.137 2.953l1.255 8.152a2.5 2.5 0 0 1-2.203 2.865l-.27.015H6.332a2.5 2.5 0 0 1-2.47-2.88l1.254-8.152A3.5 3.5 0 0 1 8.25 7.515V6A3.75 3.75 0 0 1 12 2.25zM12 3.75A2.25 2.25 0 0 0 9.75 6v1.5h4.5V6a2.25 2.25 0 0 0-2.027-2.24z"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M12.186 2.255A3.75 3.75 0 0 1 15.75 6v1.515a3.5 3.5 0 0 1 3.137 2.953l1.255 8.152a2.5 2.5 0 0 1-2.203 2.865l-.27.015H6.332a2.5 2.5 0 0 1-2.47-2.88l1.254-8.152A3.5 3.5 0 0 1 8.25 7.515V6A3.75 3.75 0 0 1 12 2.25zM12 3.75A2.25 2.25 0 0 0 9.75 6v1.5h4.5V6a2.25 2.25 0 0 0-2.027-2.24z"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

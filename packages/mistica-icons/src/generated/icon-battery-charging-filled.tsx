@@ -33,7 +33,9 @@ const IconBatteryChargingFilled = ({color, size = 24, ...rest}: IconProps): JSX.
                     />
                 </svg>
             );
-        } else if (skinName.match(/^vivo/i)) {
+        }
+
+        if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -42,16 +44,16 @@ const IconBatteryChargingFilled = ({color, size = 24, ...rest}: IconProps): JSX.
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M17 6.5A2.5 2.5 0 0 1 19.5 9v.5a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1v.5a2.5 2.5 0 0 1-2.5 2.5H6A2.5 2.5 0 0 1 3.5 15V9A2.5 2.5 0 0 1 6 6.5zm-4.614 2.356a.75.75 0 0 0-1.03.258l-1.5 2.5a.75.75 0 0 0 .644 1.136h1.675l-.819 1.364a.75.75 0 0 0 1.288.772l1.5-2.5a.75.75 0 0 0-.543-1.13l-.101-.006h-1.675l.819-1.364a.75.75 0 0 0-.258-1.03"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M17 6.5A2.5 2.5 0 0 1 19.5 9v.5a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1v.5a2.5 2.5 0 0 1-2.5 2.5H6A2.5 2.5 0 0 1 3.5 15V9A2.5 2.5 0 0 1 6 6.5zm-4.614 2.356a.75.75 0 0 0-1.03.258l-1.5 2.5a.75.75 0 0 0 .644 1.136h1.675l-.819 1.364a.75.75 0 0 0 1.288.772l1.5-2.5a.75.75 0 0 0-.543-1.13l-.101-.006h-1.675l.819-1.364a.75.75 0 0 0-.258-1.03"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

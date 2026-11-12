@@ -38,7 +38,9 @@ const IconMultideviceLight = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
                     />
                 </svg>
             );
-        } else if (skinName.match(/^o2/i)) {
+        }
+
+        if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -47,7 +49,9 @@ const IconMultideviceLight = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
                     />
                 </svg>
             );
-        } else if (skinName.match(/^vivo/i)) {
+        }
+
+        if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -60,17 +64,17 @@ const IconMultideviceLight = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path fill={fillColor} d="M18.5 18a1 1 0 1 1 0 2 1 1 0 0 1 0-2" />
-                    <path
-                        fill={fillColor}
-                        d="M18 3.25A2.75 2.75 0 0 1 20.75 6v5.356a2.75 2.75 0 0 1 2 2.644v6A2.75 2.75 0 0 1 20 22.75h-3a2.75 2.75 0 0 1-2.644-2H4A2.75 2.75 0 0 1 1.25 18c0-.82.566-1.508 1.328-1.697A2.74 2.74 0 0 1 2.25 15V6A2.75 2.75 0 0 1 5 3.25zm-1 9.5c-.69 0-1.25.56-1.25 1.25v6c0 .69.56 1.25 1.25 1.25h3c.69 0 1.25-.56 1.25-1.25v-6c0-.69-.56-1.25-1.25-1.25zm-14 5a.25.25 0 0 0-.25.25c0 .69.56 1.25 1.25 1.25h10.25v-1.5zm2-13c-.69 0-1.25.56-1.25 1.25v9c0 .69.56 1.25 1.25 1.25h9.25V14A2.75 2.75 0 0 1 17 11.25h2.25V6c0-.69-.56-1.25-1.25-1.25z"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path fill={fillColor} d="M18.5 18a1 1 0 1 1 0 2 1 1 0 0 1 0-2" />
+                <path
+                    fill={fillColor}
+                    d="M18 3.25A2.75 2.75 0 0 1 20.75 6v5.356a2.75 2.75 0 0 1 2 2.644v6A2.75 2.75 0 0 1 20 22.75h-3a2.75 2.75 0 0 1-2.644-2H4A2.75 2.75 0 0 1 1.25 18c0-.82.566-1.508 1.328-1.697A2.74 2.74 0 0 1 2.25 15V6A2.75 2.75 0 0 1 5 3.25zm-1 9.5c-.69 0-1.25.56-1.25 1.25v6c0 .69.56 1.25 1.25 1.25h3c.69 0 1.25-.56 1.25-1.25v-6c0-.69-.56-1.25-1.25-1.25zm-14 5a.25.25 0 0 0-.25.25c0 .69.56 1.25 1.25 1.25h10.25v-1.5zm2-13c-.69 0-1.25.56-1.25 1.25v9c0 .69.56 1.25 1.25 1.25h9.25V14A2.75 2.75 0 0 1 17 11.25h2.25V6c0-.69-.56-1.25-1.25-1.25z"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

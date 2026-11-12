@@ -37,7 +37,9 @@ const IconPhotoCameraRegular = ({color, size = 24, ...rest}: IconProps): JSX.Ele
                     />
                 </svg>
             );
-        } else if (skinName.match(/^vivo/i)) {
+        }
+
+        if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -46,20 +48,20 @@ const IconPhotoCameraRegular = ({color, size = 24, ...rest}: IconProps): JSX.Ele
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M12 9.25a3.75 3.75 0 1 1 0 7.5 3.75 3.75 0 0 1 0-7.5m0 1.5a2.25 2.25 0 1 0 0 4.5 2.25 2.25 0 0 0 0-4.5"
-                    />
-                    <path
-                        fill={fillColor}
-                        d="M13.846 3.25c.982 0 1.89.524 2.38 1.375l.939 1.625H19A2.75 2.75 0 0 1 21.75 9v9A2.75 2.75 0 0 1 19 20.75H5A2.75 2.75 0 0 1 2.25 18V9A2.75 2.75 0 0 1 5 6.25h1.567l.938-1.625A2.75 2.75 0 0 1 9.887 3.25zm-3.96 1.5a1.25 1.25 0 0 0-1.081.625l-1.011 1.75a1.25 1.25 0 0 1-1.083.625H5c-.69 0-1.25.56-1.25 1.25v9c0 .69.56 1.25 1.25 1.25h14c.69 0 1.25-.56 1.25-1.25V9c0-.69-.56-1.25-1.25-1.25h-1.98a1.25 1.25 0 0 1-1.082-.625l-1.01-1.75a1.25 1.25 0 0 0-1.082-.625z"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M12 9.25a3.75 3.75 0 1 1 0 7.5 3.75 3.75 0 0 1 0-7.5m0 1.5a2.25 2.25 0 1 0 0 4.5 2.25 2.25 0 0 0 0-4.5"
+                />
+                <path
+                    fill={fillColor}
+                    d="M13.846 3.25c.982 0 1.89.524 2.38 1.375l.939 1.625H19A2.75 2.75 0 0 1 21.75 9v9A2.75 2.75 0 0 1 19 20.75H5A2.75 2.75 0 0 1 2.25 18V9A2.75 2.75 0 0 1 5 6.25h1.567l.938-1.625A2.75 2.75 0 0 1 9.887 3.25zm-3.96 1.5a1.25 1.25 0 0 0-1.081.625l-1.011 1.75a1.25 1.25 0 0 1-1.083.625H5c-.69 0-1.25.56-1.25 1.25v9c0 .69.56 1.25 1.25 1.25h14c.69 0 1.25-.56 1.25-1.25V9c0-.69-.56-1.25-1.25-1.25h-1.98a1.25 1.25 0 0 1-1.082-.625l-1.01-1.75a1.25 1.25 0 0 0-1.082-.625z"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

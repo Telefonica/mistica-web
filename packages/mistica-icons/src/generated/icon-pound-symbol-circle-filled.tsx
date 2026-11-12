@@ -33,7 +33,9 @@ const IconPoundSymbolCircleFilled = ({color, size = 24, ...rest}: IconProps): JS
                     />
                 </svg>
             );
-        } else if (skinName.match(/^vivo/i)) {
+        }
+
+        if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -42,16 +44,16 @@ const IconPoundSymbolCircleFilled = ({color, size = 24, ...rest}: IconProps): JS
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M12 2.5a9.501 9.501 0 0 1 3.636 18.277 9.5 9.5 0 0 1-10.354-2.06A9.501 9.501 0 0 1 12 2.5m1 3.75A2.75 2.75 0 0 0 10.25 9v2.25H9a.75.75 0 0 0 0 1.5h1.25V14A1.25 1.25 0 0 1 9 15.25a.75.75 0 0 0 0 1.5h6a.75.75 0 0 0 0-1.5h-3.553c.196-.384.303-.811.303-1.25v-1.25H13a.75.75 0 0 0 0-1.5h-1.25V9A1.25 1.25 0 0 1 13 7.75l.124.006A1.25 1.25 0 0 1 14.25 9a.75.75 0 0 0 1.5 0 2.75 2.75 0 0 0-2.479-2.736z"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M12 2.5a9.501 9.501 0 0 1 3.636 18.277 9.5 9.5 0 0 1-10.354-2.06A9.501 9.501 0 0 1 12 2.5m1 3.75A2.75 2.75 0 0 0 10.25 9v2.25H9a.75.75 0 0 0 0 1.5h1.25V14A1.25 1.25 0 0 1 9 15.25a.75.75 0 0 0 0 1.5h6a.75.75 0 0 0 0-1.5h-3.553c.196-.384.303-.811.303-1.25v-1.25H13a.75.75 0 0 0 0-1.5h-1.25V9A1.25 1.25 0 0 1 13 7.75l.124.006A1.25 1.25 0 0 1 14.25 9a.75.75 0 0 0 1.5 0 2.75 2.75 0 0 0-2.479-2.736z"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

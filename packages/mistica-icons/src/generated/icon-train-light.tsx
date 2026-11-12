@@ -33,7 +33,9 @@ const IconTrainLight = ({color, size = 24, ...rest}: IconProps): JSX.Element => 
                     />
                 </svg>
             );
-        } else if (skinName.match(/^vivo/i)) {
+        }
+
+        if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -42,16 +44,16 @@ const IconTrainLight = ({color, size = 24, ...rest}: IconProps): JSX.Element => 
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M21 18.25a.75.75 0 0 1 0 1.5H3a.75.75 0 0 1 0-1.5zm-10-13c3.424 0 6.1.808 7.94 2.201 1.855 1.406 2.81 3.376 2.81 5.549A2.75 2.75 0 0 1 19 15.75H3a.75.75 0 0 1-.75-.75V6A.75.75 0 0 1 3 5.25zm-7.25 9H19A1.25 1.25 0 0 0 20.25 13q0-.644-.14-1.25H3.75zm0-4h3.5v-3.5h-3.5zm5 0h3.5V6.791q-.6-.04-1.25-.041H8.75zm5 0h5.749a5.8 5.8 0 0 0-1.466-1.604C17 7.863 15.58 7.26 13.75 6.96z"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M21 18.25a.75.75 0 0 1 0 1.5H3a.75.75 0 0 1 0-1.5zm-10-13c3.424 0 6.1.808 7.94 2.201 1.855 1.406 2.81 3.376 2.81 5.549A2.75 2.75 0 0 1 19 15.75H3a.75.75 0 0 1-.75-.75V6A.75.75 0 0 1 3 5.25zm-7.25 9H19A1.25 1.25 0 0 0 20.25 13q0-.644-.14-1.25H3.75zm0-4h3.5v-3.5h-3.5zm5 0h3.5V6.791q-.6-.04-1.25-.041H8.75zm5 0h5.749a5.8 5.8 0 0 0-1.466-1.604C17 7.863 15.58 7.26 13.75 6.96z"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

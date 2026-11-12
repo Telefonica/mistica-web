@@ -33,7 +33,9 @@ const IconHeartFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element =>
                     />
                 </svg>
             );
-        } else if (skinName.match(/^vivo/i)) {
+        }
+
+        if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -42,16 +44,16 @@ const IconHeartFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element =>
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M6.328 3.745a5.5 5.5 0 0 1 5.674 1.486 5.5 5.5 0 1 1 7.848 7.704q-.016.014-.032.024l-7.466 7.396a.5.5 0 0 1-.704 0l-7.5-7.428A5.5 5.5 0 0 1 2.49 8.844a5.5 5.5 0 0 1 3.839-5.1"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M6.328 3.745a5.5 5.5 0 0 1 5.674 1.486 5.5 5.5 0 1 1 7.848 7.704q-.016.014-.032.024l-7.466 7.396a.5.5 0 0 1-.704 0l-7.5-7.428A5.5 5.5 0 0 1 2.49 8.844a5.5 5.5 0 0 1 3.839-5.1"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

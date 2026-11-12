@@ -37,7 +37,9 @@ const IconAlertRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element =
                     />
                 </svg>
             );
-        } else if (skinName.match(/^o2/i)) {
+        }
+
+        if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -46,7 +48,9 @@ const IconAlertRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element =
                     />
                 </svg>
             );
-        } else if (skinName.match(/^vivo/i)) {
+        }
+
+        if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -59,20 +63,20 @@ const IconAlertRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element =
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M12 15a1 1 0 1 1 0 2 1 1 0 0 1 0-2m0-6.75a.75.75 0 0 1 .75.75v4a.75.75 0 0 1-1.5 0V9a.75.75 0 0 1 .75-.75"
-                    />
-                    <path
-                        fill={fillColor}
-                        d="M12 1.918a2.67 2.67 0 0 1 2.185 1.14l.094.143.002.004 8.105 13.536.007.01a2.665 2.665 0 0 1-2.277 3.995H3.884a2.665 2.665 0 0 1-2.276-3.996L9.714 3.213l.007-.012A2.67 2.67 0 0 1 12 1.918m0 1.5a1.17 1.17 0 0 0-.993.554v.004l-8.1 13.525a1.164 1.164 0 0 0 .995 1.745h16.196a1.164 1.164 0 0 0 .997-1.74l-8.1-13.528-.085-.122a1.17 1.17 0 0 0-.91-.438"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M12 15a1 1 0 1 1 0 2 1 1 0 0 1 0-2m0-6.75a.75.75 0 0 1 .75.75v4a.75.75 0 0 1-1.5 0V9a.75.75 0 0 1 .75-.75"
+                />
+                <path
+                    fill={fillColor}
+                    d="M12 1.918a2.67 2.67 0 0 1 2.185 1.14l.094.143.002.004 8.105 13.536.007.01a2.665 2.665 0 0 1-2.277 3.995H3.884a2.665 2.665 0 0 1-2.276-3.996L9.714 3.213l.007-.012A2.67 2.67 0 0 1 12 1.918m0 1.5a1.17 1.17 0 0 0-.993.554v.004l-8.1 13.525a1.164 1.164 0 0 0 .995 1.745h16.196a1.164 1.164 0 0 0 .997-1.74l-8.1-13.528-.085-.122a1.17 1.17 0 0 0-.91-.438"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

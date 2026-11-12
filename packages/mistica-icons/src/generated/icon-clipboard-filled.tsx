@@ -33,7 +33,9 @@ const IconClipboardFilled = ({color, size = 24, ...rest}: IconProps): JSX.Elemen
                     />
                 </svg>
             );
-        } else if (skinName.match(/^vivo/i)) {
+        }
+
+        if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -42,20 +44,20 @@ const IconClipboardFilled = ({color, size = 24, ...rest}: IconProps): JSX.Elemen
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M7.997 4.5c.156 0 .273.142.26.298A2.75 2.75 0 0 0 11 7.75h2.001a2.75 2.75 0 0 0 2.742-2.952c-.012-.156.105-.298.26-.298H17A2.5 2.5 0 0 1 19.5 7v12a2.5 2.5 0 0 1-2.5 2.5H7A2.5 2.5 0 0 1 4.5 19V7A2.5 2.5 0 0 1 7 4.5z"
-                    />
-                    <path
-                        fill={fillColor}
-                        d="M13.124 3.756a1.25 1.25 0 0 1 0 2.488L13 6.25h-2a1.25 1.25 0 0 1 0-2.5h2z"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M7.997 4.5c.156 0 .273.142.26.298A2.75 2.75 0 0 0 11 7.75h2.001a2.75 2.75 0 0 0 2.742-2.952c-.012-.156.105-.298.26-.298H17A2.5 2.5 0 0 1 19.5 7v12a2.5 2.5 0 0 1-2.5 2.5H7A2.5 2.5 0 0 1 4.5 19V7A2.5 2.5 0 0 1 7 4.5z"
+                />
+                <path
+                    fill={fillColor}
+                    d="M13.124 3.756a1.25 1.25 0 0 1 0 2.488L13 6.25h-2a1.25 1.25 0 0 1 0-2.5h2z"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

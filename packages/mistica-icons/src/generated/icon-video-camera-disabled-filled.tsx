@@ -33,7 +33,9 @@ const IconVideoCameraDisabledFilled = ({color, size = 24, ...rest}: IconProps): 
                     />
                 </svg>
             );
-        } else if (skinName.match(/^vivo/i)) {
+        }
+
+        if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -42,16 +44,16 @@ const IconVideoCameraDisabledFilled = ({color, size = 24, ...rest}: IconProps): 
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M2.47 2.47a.75.75 0 0 1 1.06 0l18 18a.75.75 0 1 1-1.06 1.06l-4.818-4.817a2.75 2.75 0 0 1-.708 1.231A2.75 2.75 0 0 1 13 18.75H5A2.75 2.75 0 0 1 2.25 16V8a2.75 2.75 0 0 1 2.036-2.653L2.47 3.53a.75.75 0 0 1 0-1.06M13 5.25A2.75 2.75 0 0 1 15.75 8v.786l3.468-1.733.205-.087a1.752 1.752 0 0 1 2.327 1.651v6.765l-.005.136a1.75 1.75 0 0 1-1.177 1.52.75.75 0 0 1-.773-.18L9.47 6.53A.75.75 0 0 1 10 5.25z"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M2.47 2.47a.75.75 0 0 1 1.06 0l18 18a.75.75 0 1 1-1.06 1.06l-4.818-4.817a2.75 2.75 0 0 1-.708 1.231A2.75 2.75 0 0 1 13 18.75H5A2.75 2.75 0 0 1 2.25 16V8a2.75 2.75 0 0 1 2.036-2.653L2.47 3.53a.75.75 0 0 1 0-1.06M13 5.25A2.75 2.75 0 0 1 15.75 8v.786l3.468-1.733.205-.087a1.752 1.752 0 0 1 2.327 1.651v6.765l-.005.136a1.75 1.75 0 0 1-1.177 1.52.75.75 0 0 1-.773-.18L9.47 6.53A.75.75 0 0 1 10 5.25z"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

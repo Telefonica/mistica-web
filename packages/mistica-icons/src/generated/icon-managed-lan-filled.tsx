@@ -33,16 +33,16 @@ const IconManagedLanFilled = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M16 2.5A2.5 2.5 0 0 1 18.5 5v4a2.5 2.5 0 0 1-2.5 2.5h-3.25V14a.7.7 0 0 1-.046.25H16A2.75 2.75 0 0 1 18.75 17v.616a2.5 2.5 0 1 1-1.5 0V17c0-.69-.56-1.25-1.25-1.25H8c-.69 0-1.25.56-1.25 1.25v.5a1 1 0 0 1-.01.113 2.5 2.5 0 1 1-1.481 0 1 1 0 0 1-.009-.113V17A2.75 2.75 0 0 1 8 14.25h3.296a.7.7 0 0 1-.046-.25v-2.5H8A2.5 2.5 0 0 1 5.5 9V5A2.5 2.5 0 0 1 8 2.5z"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M16 2.5A2.5 2.5 0 0 1 18.5 5v4a2.5 2.5 0 0 1-2.5 2.5h-3.25V14a.7.7 0 0 1-.046.25H16A2.75 2.75 0 0 1 18.75 17v.616a2.5 2.5 0 1 1-1.5 0V17c0-.69-.56-1.25-1.25-1.25H8c-.69 0-1.25.56-1.25 1.25v.5a1 1 0 0 1-.01.113 2.5 2.5 0 1 1-1.481 0 1 1 0 0 1-.009-.113V17A2.75 2.75 0 0 1 8 14.25h3.296a.7.7 0 0 1-.046-.25v-2.5H8A2.5 2.5 0 0 1 5.5 9V5A2.5 2.5 0 0 1 8 2.5z"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

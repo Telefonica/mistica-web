@@ -33,7 +33,9 @@ const IconTrashCanFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element
                     />
                 </svg>
             );
-        } else if (skinName.match(/^o2/i)) {
+        }
+
+        if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -42,7 +44,9 @@ const IconTrashCanFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element
                     />
                 </svg>
             );
-        } else if (skinName.match(/^vivo/i)) {
+        }
+
+        if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -51,16 +55,16 @@ const IconTrashCanFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M14 2.25A1.75 1.75 0 0 1 15.75 4v2.25H20a.75.75 0 0 1 0 1.5h-.51l-.942 11.296A2.55 2.55 0 0 1 16 21.55H8a2.55 2.55 0 0 1-2.548-2.504L4.511 7.75H4a.75.75 0 0 1 0-1.5h4.25V4A1.75 1.75 0 0 1 10 2.25zm-4 8a.75.75 0 0 0-.75.75v6a.75.75 0 0 0 1.5 0v-6a.75.75 0 0 0-.75-.75m4 0a.75.75 0 0 0-.75.75v6a.75.75 0 0 0 1.5 0v-6a.75.75 0 0 0-.75-.75m-4-6.5a.25.25 0 0 0-.25.25v2.25h4.5V4a.25.25 0 0 0-.201-.245L14 3.75z"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M14 2.25A1.75 1.75 0 0 1 15.75 4v2.25H20a.75.75 0 0 1 0 1.5h-.51l-.942 11.296A2.55 2.55 0 0 1 16 21.55H8a2.55 2.55 0 0 1-2.548-2.504L4.511 7.75H4a.75.75 0 0 1 0-1.5h4.25V4A1.75 1.75 0 0 1 10 2.25zm-4 8a.75.75 0 0 0-.75.75v6a.75.75 0 0 0 1.5 0v-6a.75.75 0 0 0-.75-.75m4 0a.75.75 0 0 0-.75.75v6a.75.75 0 0 0 1.5 0v-6a.75.75 0 0 0-.75-.75m-4-6.5a.25.25 0 0 0-.25.25v2.25h4.5V4a.25.25 0 0 0-.201-.245L14 3.75z"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

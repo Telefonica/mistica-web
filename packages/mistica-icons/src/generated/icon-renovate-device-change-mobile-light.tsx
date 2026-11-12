@@ -33,7 +33,9 @@ const IconRenovateDeviceChangeMobileLight = ({color, size = 24, ...rest}: IconPr
                     />
                 </svg>
             );
-        } else if (skinName.match(/^vivo/i)) {
+        }
+
+        if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -50,21 +52,21 @@ const IconRenovateDeviceChangeMobileLight = ({color, size = 24, ...rest}: IconPr
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path fill={fillColor} d="M6 17a1 1 0 1 1 0 2 1 1 0 0 1 0-2" />
-                    <path
-                        fill={fillColor}
-                        d="M8 9.25A2.75 2.75 0 0 1 10.75 12v8A2.75 2.75 0 0 1 8 22.75H4A2.75 2.75 0 0 1 1.25 20v-8A2.75 2.75 0 0 1 4 9.25zm-4 1.5c-.69 0-1.25.56-1.25 1.25v8c0 .69.56 1.25 1.25 1.25h4c.69 0 1.25-.56 1.25-1.25v-8c0-.69-.56-1.25-1.25-1.25zm15-8.5A2.75 2.75 0 0 1 21.75 5v14A2.75 2.75 0 0 1 19 21.75h-5a.75.75 0 0 1 0-1.5h5c.69 0 1.25-.56 1.25-1.25V5c0-.69-.56-1.25-1.25-1.25h-5a.75.75 0 0 1 0-1.5z"
-                    />
-                    <path
-                        fill={fillColor}
-                        d="M15 16a1 1 0 1 1 0 2 1 1 0 0 1 0-2M8.47 1.47a.75.75 0 0 1 1.06 0l2 2a.75.75 0 0 1 0 1.06l-2 2a.75.75 0 0 1-1.06-1.06l.72-.72H7c-.69 0-1.25.56-1.25 1.25v1a.75.75 0 0 1-1.5 0V6A2.75 2.75 0 0 1 7 3.25h2.19l-.72-.72a.75.75 0 0 1 0-1.06"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path fill={fillColor} d="M6 17a1 1 0 1 1 0 2 1 1 0 0 1 0-2" />
+                <path
+                    fill={fillColor}
+                    d="M8 9.25A2.75 2.75 0 0 1 10.75 12v8A2.75 2.75 0 0 1 8 22.75H4A2.75 2.75 0 0 1 1.25 20v-8A2.75 2.75 0 0 1 4 9.25zm-4 1.5c-.69 0-1.25.56-1.25 1.25v8c0 .69.56 1.25 1.25 1.25h4c.69 0 1.25-.56 1.25-1.25v-8c0-.69-.56-1.25-1.25-1.25zm15-8.5A2.75 2.75 0 0 1 21.75 5v14A2.75 2.75 0 0 1 19 21.75h-5a.75.75 0 0 1 0-1.5h5c.69 0 1.25-.56 1.25-1.25V5c0-.69-.56-1.25-1.25-1.25h-5a.75.75 0 0 1 0-1.5z"
+                />
+                <path
+                    fill={fillColor}
+                    d="M15 16a1 1 0 1 1 0 2 1 1 0 0 1 0-2M8.47 1.47a.75.75 0 0 1 1.06 0l2 2a.75.75 0 0 1 0 1.06l-2 2a.75.75 0 0 1-1.06-1.06l.72-.72H7c-.69 0-1.25.56-1.25 1.25v1a.75.75 0 0 1-1.5 0V6A2.75 2.75 0 0 1 7 3.25h2.19l-.72-.72a.75.75 0 0 1 0-1.06"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

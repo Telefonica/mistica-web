@@ -37,7 +37,9 @@ const IconChipDeviceFilled = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
                     />
                 </svg>
             );
-        } else if (skinName.match(/^vivo/i)) {
+        }
+
+        if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -50,20 +52,20 @@ const IconChipDeviceFilled = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M19.5 14a1.5 1.5 0 0 1 1.5 1.5v5a1.5 1.5 0 0 1-1.5 1.5h-3a1.5 1.5 0 0 1-1.5-1.5v-3.697c0-.502.25-.97.668-1.248l1.954-1.303a1.5 1.5 0 0 1 .832-.252zm-2 4a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5z"
-                    />
-                    <path
-                        fill={fillColor}
-                        d="M16 2.25c1.52 0 2.75 1.23 2.75 2.75v7.35c0 .22-.18.398-.4.414-.503.036-.98.154-1.421.448l-1.954 1.303a2.75 2.75 0 0 0-1.225 2.288V20.5q.002.461.144.874c.06.177-.064.376-.25.376H8c-1.52 0-2.75-1.23-2.75-2.75V5c0-1.52 1.23-2.75 2.75-2.75zM12 16.1c-.5 0-.9.4-.9.9s.4.9.9.9.9-.4.9-.9-.4-.9-.9-.9"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M19.5 14a1.5 1.5 0 0 1 1.5 1.5v5a1.5 1.5 0 0 1-1.5 1.5h-3a1.5 1.5 0 0 1-1.5-1.5v-3.697c0-.502.25-.97.668-1.248l1.954-1.303a1.5 1.5 0 0 1 .832-.252zm-2 4a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5z"
+                />
+                <path
+                    fill={fillColor}
+                    d="M16 2.25c1.52 0 2.75 1.23 2.75 2.75v7.35c0 .22-.18.398-.4.414-.503.036-.98.154-1.421.448l-1.954 1.303a2.75 2.75 0 0 0-1.225 2.288V20.5q.002.461.144.874c.06.177-.064.376-.25.376H8c-1.52 0-2.75-1.23-2.75-2.75V5c0-1.52 1.23-2.75 2.75-2.75zM12 16.1c-.5 0-.9.4-.9.9s.4.9.9.9.9-.4.9-.9-.4-.9-.9-.9"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

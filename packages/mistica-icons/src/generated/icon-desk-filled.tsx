@@ -33,16 +33,16 @@ const IconDeskFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => 
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M21 5.25a.75.75 0 0 1 0 1.5h-.25V19a.75.75 0 0 1-1.5 0v-4.75H15a.75.75 0 0 1-.75-.75v-2.75h-9.5V19a.75.75 0 0 1-1.5 0V6.75H3a.75.75 0 0 1 0-1.5zm-5.25 7.5h3.5v-2h-3.5zm0-3.5h3.5v-2.5h-3.5z"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M21 5.25a.75.75 0 0 1 0 1.5h-.25V19a.75.75 0 0 1-1.5 0v-4.75H15a.75.75 0 0 1-.75-.75v-2.75h-9.5V19a.75.75 0 0 1-1.5 0V6.75H3a.75.75 0 0 1 0-1.5zm-5.25 7.5h3.5v-2h-3.5zm0-3.5h3.5v-2.5h-3.5z"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

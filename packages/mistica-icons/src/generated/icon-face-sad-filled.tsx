@@ -33,7 +33,9 @@ const IconFaceSadFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element 
                     />
                 </svg>
             );
-        } else if (skinName.match(/^o2/i)) {
+        }
+
+        if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -42,7 +44,9 @@ const IconFaceSadFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element 
                     />
                 </svg>
             );
-        } else if (skinName.match(/^vivo/i)) {
+        }
+
+        if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -51,16 +55,16 @@ const IconFaceSadFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element 
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M12 2.5a9.501 9.501 0 0 1 3.636 18.277 9.5 9.5 0 0 1-10.354-2.06A9.501 9.501 0 0 1 12 2.5m0 11.75a4.25 4.25 0 0 0-3.036 1.275.75.75 0 0 0 1.072 1.05 2.75 2.75 0 0 1 3.928 0 .75.75 0 0 0 1.072-1.05A4.25 4.25 0 0 0 12 14.25m-1.665-4.67a.75.75 0 0 0-1.006.335c-.069.138-.343.335-.829.335s-.76-.197-.83-.335a.75.75 0 0 0-1.34.67c.43.862 1.407 1.165 2.17 1.165s1.74-.303 2.17-1.165a.75.75 0 0 0-.335-1.006m7 0a.75.75 0 0 0-1.006.335c-.069.138-.343.335-.829.335s-.76-.197-.83-.335a.75.75 0 0 0-1.34.67c.43.862 1.407 1.165 2.17 1.165s1.74-.303 2.17-1.165a.75.75 0 0 0-.335-1.006"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M12 2.5a9.501 9.501 0 0 1 3.636 18.277 9.5 9.5 0 0 1-10.354-2.06A9.501 9.501 0 0 1 12 2.5m0 11.75a4.25 4.25 0 0 0-3.036 1.275.75.75 0 0 0 1.072 1.05 2.75 2.75 0 0 1 3.928 0 .75.75 0 0 0 1.072-1.05A4.25 4.25 0 0 0 12 14.25m-1.665-4.67a.75.75 0 0 0-1.006.335c-.069.138-.343.335-.829.335s-.76-.197-.83-.335a.75.75 0 0 0-1.34.67c.43.862 1.407 1.165 2.17 1.165s1.74-.303 2.17-1.165a.75.75 0 0 0-.335-1.006m7 0a.75.75 0 0 0-1.006.335c-.069.138-.343.335-.829.335s-.76-.197-.83-.335a.75.75 0 0 0-1.34.67c.43.862 1.407 1.165 2.17 1.165s1.74-.303 2.17-1.165a.75.75 0 0 0-.335-1.006"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

@@ -33,16 +33,16 @@ const IconPuzzleFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element =
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M10 2.5A2.5 2.5 0 0 1 12.5 5v1a.5.5 0 0 0 .5.5h3A1.5 1.5 0 0 1 17.5 8v3a.5.5 0 0 0 .5.5h1a2.5 2.5 0 0 1 0 5h-1a.5.5 0 0 0-.5.5v3a1.5 1.5 0 0 1-1.5 1.5H4A1.5 1.5 0 0 1 2.5 20v-3A1.5 1.5 0 0 1 4 15.5h1a1.5 1.5 0 0 0 0-3H4A1.5 1.5 0 0 1 2.5 11V8A1.5 1.5 0 0 1 4 6.5h3a.5.5 0 0 0 .5-.5V5A2.5 2.5 0 0 1 10 2.5"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M10 2.5A2.5 2.5 0 0 1 12.5 5v1a.5.5 0 0 0 .5.5h3A1.5 1.5 0 0 1 17.5 8v3a.5.5 0 0 0 .5.5h1a2.5 2.5 0 0 1 0 5h-1a.5.5 0 0 0-.5.5v3a1.5 1.5 0 0 1-1.5 1.5H4A1.5 1.5 0 0 1 2.5 20v-3A1.5 1.5 0 0 1 4 15.5h1a1.5 1.5 0 0 0 0-3H4A1.5 1.5 0 0 1 2.5 11V8A1.5 1.5 0 0 1 4 6.5h3a.5.5 0 0 0 .5-.5V5A2.5 2.5 0 0 1 10 2.5"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

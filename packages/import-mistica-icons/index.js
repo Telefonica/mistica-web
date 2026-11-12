@@ -139,9 +139,9 @@ const getIconJsx = (svgFilename) => {
         .replace(/fill="#?\w+"/g, 'fill={fillColor}');
 };
 
-/** Higher specificity = checked first in the if/else chain;
+/** Higher specificity = checked first in the chain of early returns;
  * The skin with the LOWEST SPECIFICITY among those
- * carrying the icon becomes the else FALLBACK for ALL OTHER SKINS.
+ * carrying the icon becomes the final FALLBACK return for ALL OTHER SKINS.
  * @type {{[skin: string]: number}}
  */
 const SKIN_SPECIFICITY = {
@@ -182,15 +182,13 @@ const createIconComponentSource = async (name, componentName, svgIconsInfo) => {
         if (!hasVariants) {
             return `return ${getIconJsx(availableIcons[0][1])}`;
         }
-        let result = '';
-        for (let i = 0; i < availableIcons.length; i++) {
-            const [skin, filename] = availableIcons[i];
+        const specificIcons = availableIcons.slice(0, -1);
+        const [, fallbackFilename] = availableIcons[availableIcons.length - 1];
+        const earlyReturns = specificIcons.map(
             // using a match because we want "vivo" to match with "Vivo" and "Vivo-evolution"
-            const ifStr = i < availableIcons.length - 1 ? `if (skinName.match(/^${skin}/i))` : '';
-            const elseStr = i > 0 ? 'else' : '';
-            result += `${elseStr} ${ifStr} {return ${getIconJsx(filename)}}`;
-        }
-        return result;
+            ([skin, filename]) => `if (skinName.match(/^${skin}/i)) {return ${getIconJsx(filename)}}`
+        );
+        return [...earlyReturns, `return ${getIconJsx(fallbackFilename)}`].join('\n\n');
     };
 
     const source = `"use client"

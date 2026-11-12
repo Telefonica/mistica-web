@@ -33,17 +33,17 @@ const IconFragranceFilled = ({color, size = 24, ...rest}: IconProps): JSX.Elemen
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path fill={fillColor} d="M12 13.5a1.5 1.5 0 1 1 0 2.999 1.5 1.5 0 0 1 0-2.999" />
-                    <path
-                        fill={fillColor}
-                        d="M15 2.5a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-.5.5h-.25v2H17a2.5 2.5 0 0 1 2.5 2.5v8a2.5 2.5 0 0 1-2.5 2.5H7A2.5 2.5 0 0 1 4.5 19v-8A2.5 2.5 0 0 1 7 8.5h2.25v-2H9a.5.5 0 0 1-.5-.5V3a.5.5 0 0 1 .5-.5zm-3 10a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5m-1.25-6v2h2.5v-2z"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path fill={fillColor} d="M12 13.5a1.5 1.5 0 1 1 0 2.999 1.5 1.5 0 0 1 0-2.999" />
+                <path
+                    fill={fillColor}
+                    d="M15 2.5a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-.5.5h-.25v2H17a2.5 2.5 0 0 1 2.5 2.5v8a2.5 2.5 0 0 1-2.5 2.5H7A2.5 2.5 0 0 1 4.5 19v-8A2.5 2.5 0 0 1 7 8.5h2.25v-2H9a.5.5 0 0 1-.5-.5V3a.5.5 0 0 1 .5-.5zm-3 10a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5m-1.25-6v2h2.5v-2z"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

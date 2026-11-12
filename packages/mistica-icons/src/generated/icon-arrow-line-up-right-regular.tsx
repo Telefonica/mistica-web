@@ -33,16 +33,16 @@ const IconArrowLineUpRightRegular = ({color, size = 24, ...rest}: IconProps): JS
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M17.7 16.95a.75.75 0 0 1-1.5 0V8.86l-8.62 8.62a.75.75 0 0 1-1.06-1.06l8.62-8.62H7.05a.75.75 0 1 1 0-1.5h9.9q.12.002.231.04l.051.015.01.004.061.033a.8.8 0 0 1 .177.128.7.7 0 0 1 .13.177l.031.062.004.01q.009.024.016.05.038.11.039.232z"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M17.7 16.95a.75.75 0 0 1-1.5 0V8.86l-8.62 8.62a.75.75 0 0 1-1.06-1.06l8.62-8.62H7.05a.75.75 0 1 1 0-1.5h9.9q.12.002.231.04l.051.015.01.004.061.033a.8.8 0 0 1 .177.128.7.7 0 0 1 .13.177l.031.062.004.01q.009.024.016.05.038.11.039.232z"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

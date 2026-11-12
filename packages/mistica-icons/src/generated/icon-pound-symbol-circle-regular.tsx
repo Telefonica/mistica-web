@@ -37,7 +37,9 @@ const IconPoundSymbolCircleRegular = ({color, size = 24, ...rest}: IconProps): J
                     />
                 </svg>
             );
-        } else if (skinName.match(/^vivo/i)) {
+        }
+
+        if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -46,20 +48,20 @@ const IconPoundSymbolCircleRegular = ({color, size = 24, ...rest}: IconProps): J
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M13.272 6.264A2.75 2.75 0 0 1 15.75 9a.75.75 0 0 1-1.5 0 1.25 1.25 0 0 0-1.126-1.244L13 7.75A1.25 1.25 0 0 0 11.75 9v2.25H13a.75.75 0 0 1 0 1.5h-1.25V14c0 .439-.107.866-.303 1.25H15a.75.75 0 0 1 0 1.5H9a.75.75 0 0 1 0-1.5A1.25 1.25 0 0 0 10.25 14v-1.25H9a.75.75 0 0 1 0-1.5h1.25V9A2.75 2.75 0 0 1 13 6.25z"
-                    />
-                    <path
-                        fill={fillColor}
-                        d="M12 2.25A9.75 9.75 0 0 1 21.75 12l-.012.48a9.75 9.75 0 0 1-9.258 9.258l-.48.012a9.75 9.75 0 0 1-9.738-9.27L2.25 12A9.75 9.75 0 0 1 12 2.25m0 1.5A8.25 8.25 0 0 0 3.75 12l.01.405A8.25 8.25 0 0 0 12 20.25l.405-.01A8.25 8.25 0 0 0 20.25 12l-.01-.405A8.25 8.25 0 0 0 12 3.75"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M13.272 6.264A2.75 2.75 0 0 1 15.75 9a.75.75 0 0 1-1.5 0 1.25 1.25 0 0 0-1.126-1.244L13 7.75A1.25 1.25 0 0 0 11.75 9v2.25H13a.75.75 0 0 1 0 1.5h-1.25V14c0 .439-.107.866-.303 1.25H15a.75.75 0 0 1 0 1.5H9a.75.75 0 0 1 0-1.5A1.25 1.25 0 0 0 10.25 14v-1.25H9a.75.75 0 0 1 0-1.5h1.25V9A2.75 2.75 0 0 1 13 6.25z"
+                />
+                <path
+                    fill={fillColor}
+                    d="M12 2.25A9.75 9.75 0 0 1 21.75 12l-.012.48a9.75 9.75 0 0 1-9.258 9.258l-.48.012a9.75 9.75 0 0 1-9.738-9.27L2.25 12A9.75 9.75 0 0 1 12 2.25m0 1.5A8.25 8.25 0 0 0 3.75 12l.01.405A8.25 8.25 0 0 0 12 20.25l.405-.01A8.25 8.25 0 0 0 20.25 12l-.01-.405A8.25 8.25 0 0 0 12 3.75"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

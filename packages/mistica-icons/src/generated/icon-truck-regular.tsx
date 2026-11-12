@@ -37,7 +37,9 @@ const IconTruckRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element =
                     />
                 </svg>
             );
-        } else if (skinName.match(/^vivo/i)) {
+        }
+
+        if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -46,16 +48,16 @@ const IconTruckRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element =
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M13 4.25a.75.75 0 0 1 .75.75v.25H18c.263 0 .508.138.644.364l3 5a.75.75 0 0 1 .106.386v6a.75.75 0 0 1-.75.75h-1.356a2.747 2.747 0 0 1-5.288 0H9.644a2.748 2.748 0 0 1-5.288 0H3a.75.75 0 0 1-.75-.75V6A1.75 1.75 0 0 1 4 4.25zm-6 11.5a1.25 1.25 0 1 0 0 2.5 1.25 1.25 0 0 0 0-2.5m10 0a1.25 1.25 0 1 0 0 2.5 1.25 1.25 0 0 0 0-2.5m-3.25.5h.606a2.747 2.747 0 0 1 5.288 0h.606v-4.5h-6.5zM4 5.75a.25.25 0 0 0-.25.25v10.25h.606a2.748 2.748 0 0 1 5.288 0h2.606V5.75zm9.75 4.5h5.925l-2.1-3.5H13.75z"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M13 4.25a.75.75 0 0 1 .75.75v.25H18c.263 0 .508.138.644.364l3 5a.75.75 0 0 1 .106.386v6a.75.75 0 0 1-.75.75h-1.356a2.747 2.747 0 0 1-5.288 0H9.644a2.748 2.748 0 0 1-5.288 0H3a.75.75 0 0 1-.75-.75V6A1.75 1.75 0 0 1 4 4.25zm-6 11.5a1.25 1.25 0 1 0 0 2.5 1.25 1.25 0 0 0 0-2.5m10 0a1.25 1.25 0 1 0 0 2.5 1.25 1.25 0 0 0 0-2.5m-3.25.5h.606a2.747 2.747 0 0 1 5.288 0h.606v-4.5h-6.5zM4 5.75a.25.25 0 0 0-.25.25v10.25h.606a2.748 2.748 0 0 1 5.288 0h2.606V5.75zm9.75 4.5h5.925l-2.1-3.5H13.75z"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

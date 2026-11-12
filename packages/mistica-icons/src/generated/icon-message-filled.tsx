@@ -33,16 +33,16 @@ const IconMessageFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element 
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M18 3.5A3.5 3.5 0 0 1 21.5 7v8a3.5 3.5 0 0 1-3.5 3.5h-4.862l-4.881 2.929A.5.5 0 0 1 7.5 21v-2.5H6A3.5 3.5 0 0 1 2.5 15V7A3.5 3.5 0 0 1 6 3.5zM8 12.25a.75.75 0 0 0 0 1.5h6a.75.75 0 0 0 0-1.5zm0-4a.75.75 0 0 0 0 1.5h8a.75.75 0 0 0 0-1.5z"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M18 3.5A3.5 3.5 0 0 1 21.5 7v8a3.5 3.5 0 0 1-3.5 3.5h-4.862l-4.881 2.929A.5.5 0 0 1 7.5 21v-2.5H6A3.5 3.5 0 0 1 2.5 15V7A3.5 3.5 0 0 1 6 3.5zM8 12.25a.75.75 0 0 0 0 1.5h6a.75.75 0 0 0 0-1.5zm0-4a.75.75 0 0 0 0 1.5h8a.75.75 0 0 0 0-1.5z"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

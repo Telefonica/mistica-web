@@ -33,7 +33,9 @@ const IconNoPhotoCameraFilled = ({color, size = 24, ...rest}: IconProps): JSX.El
                     />
                 </svg>
             );
-        } else if (skinName.match(/^vivo/i)) {
+        }
+
+        if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -42,16 +44,16 @@ const IconNoPhotoCameraFilled = ({color, size = 24, ...rest}: IconProps): JSX.El
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M2.47 2.47a.75.75 0 0 1 1.06 0l18 18a.75.75 0 0 1-1.06 1.06l-.802-.801a1 1 0 0 1-.168.021H5A2.75 2.75 0 0 1 2.25 18V9A2.75 2.75 0 0 1 5 6.25h.19L2.47 3.53a.75.75 0 0 1 0-1.06m7.14 8.327a3.26 3.26 0 0 0-.672 3.284 3.253 3.253 0 0 0 4.836 1.642 3 3 0 0 0 .329-.254zm4.236-7.547c.982 0 1.89.524 2.381 1.375l.938 1.625H19A2.75 2.75 0 0 1 21.75 9v7.5a.75.75 0 0 1-1.285.526L9.03 5.376c-.776-.79-.215-2.126.893-2.126z"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M2.47 2.47a.75.75 0 0 1 1.06 0l18 18a.75.75 0 0 1-1.06 1.06l-.802-.801a1 1 0 0 1-.168.021H5A2.75 2.75 0 0 1 2.25 18V9A2.75 2.75 0 0 1 5 6.25h.19L2.47 3.53a.75.75 0 0 1 0-1.06m7.14 8.327a3.26 3.26 0 0 0-.672 3.284 3.253 3.253 0 0 0 4.836 1.642 3 3 0 0 0 .329-.254zm4.236-7.547c.982 0 1.89.524 2.381 1.375l.938 1.625H19A2.75 2.75 0 0 1 21.75 9v7.5a.75.75 0 0 1-1.285.526L9.03 5.376c-.776-.79-.215-2.126.893-2.126z"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

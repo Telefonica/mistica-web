@@ -33,20 +33,20 @@ const IconExitDoorRegular = ({color, size = 24, ...rest}: IconProps): JSX.Elemen
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M14.5 2.25a.75.75 0 0 1 0 1.5H7A1.25 1.25 0 0 0 5.75 5v15.25h10.5V13.5a.75.75 0 0 1 1.5 0v6.75H21a.75.75 0 0 1 0 1.5H3a.75.75 0 0 1 0-1.5h1.25V5A2.75 2.75 0 0 1 7 2.25z"
-                    />
-                    <path
-                        fill={fillColor}
-                        d="M13 11a1 1 0 1 1 0 2 1 1 0 0 1 0-2m4.47-7.53a.75.75 0 0 1 1.06 0l3 3a.75.75 0 0 1 0 1.06l-3 3a.75.75 0 1 1-1.06-1.06l1.72-1.72H14a.75.75 0 0 1 0-1.5h5.19l-1.72-1.72a.75.75 0 0 1 0-1.06"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M14.5 2.25a.75.75 0 0 1 0 1.5H7A1.25 1.25 0 0 0 5.75 5v15.25h10.5V13.5a.75.75 0 0 1 1.5 0v6.75H21a.75.75 0 0 1 0 1.5H3a.75.75 0 0 1 0-1.5h1.25V5A2.75 2.75 0 0 1 7 2.25z"
+                />
+                <path
+                    fill={fillColor}
+                    d="M13 11a1 1 0 1 1 0 2 1 1 0 0 1 0-2m4.47-7.53a.75.75 0 0 1 1.06 0l3 3a.75.75 0 0 1 0 1.06l-3 3a.75.75 0 1 1-1.06-1.06l1.72-1.72H14a.75.75 0 0 1 0-1.5h5.19l-1.72-1.72a.75.75 0 0 1 0-1.06"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

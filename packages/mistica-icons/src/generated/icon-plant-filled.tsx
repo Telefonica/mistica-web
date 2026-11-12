@@ -33,16 +33,16 @@ const IconPlantFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element =>
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M17 15a.5.5 0 0 1 .5.5V19a2.5 2.5 0 0 1-2.5 2.5H9A2.5 2.5 0 0 1 6.5 19v-3.5A.5.5 0 0 1 7 15zM6 2.5a6.5 6.5 0 0 1 6.376 5.241A6.49 6.49 0 0 1 18 4.5h3a.5.5 0 0 1 .5.5v1a6.5 6.5 0 0 1-6.5 6.5h-2.25v.5a.75.75 0 0 1-1.5 0v-1.5H9A6.5 6.5 0 0 1 2.5 5V3a.5.5 0 0 1 .5-.5z"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M17 15a.5.5 0 0 1 .5.5V19a2.5 2.5 0 0 1-2.5 2.5H9A2.5 2.5 0 0 1 6.5 19v-3.5A.5.5 0 0 1 7 15zM6 2.5a6.5 6.5 0 0 1 6.376 5.241A6.49 6.49 0 0 1 18 4.5h3a.5.5 0 0 1 .5.5v1a6.5 6.5 0 0 1-6.5 6.5h-2.25v.5a.75.75 0 0 1-1.5 0v-1.5H9A6.5 6.5 0 0 1 2.5 5V3a.5.5 0 0 1 .5-.5z"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

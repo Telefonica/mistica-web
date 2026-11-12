@@ -33,17 +33,17 @@ const IconMicrochipFilled = ({color, size = 24, ...rest}: IconProps): JSX.Elemen
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path fill={fillColor} d="M14.25 14.25h-4.5v-4.5h4.5z" />
-                    <path
-                        fill={fillColor}
-                        d="M14 2.25a.75.75 0 0 1 .75.75v1.5H18A1.5 1.5 0 0 1 19.5 6v3.25H21a.75.75 0 0 1 0 1.5h-1.5v2.5H21a.75.75 0 0 1 0 1.5h-1.5V18a1.5 1.5 0 0 1-1.5 1.5h-3.25V21a.75.75 0 0 1-1.5 0v-1.5h-2.5V21a.75.75 0 0 1-1.5 0v-1.5H6A1.5 1.5 0 0 1 4.5 18v-3.25H3a.75.75 0 0 1 0-1.5h1.5v-2.5H3a.75.75 0 0 1 0-1.5h1.5V6A1.5 1.5 0 0 1 6 4.5h3.25V3a.75.75 0 0 1 1.5 0v1.5h2.5V3a.75.75 0 0 1 .75-.75m-5 6a.75.75 0 0 0-.75.75v6c0 .414.336.75.75.75h6a.75.75 0 0 0 .75-.75V9a.75.75 0 0 0-.75-.75z"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path fill={fillColor} d="M14.25 14.25h-4.5v-4.5h4.5z" />
+                <path
+                    fill={fillColor}
+                    d="M14 2.25a.75.75 0 0 1 .75.75v1.5H18A1.5 1.5 0 0 1 19.5 6v3.25H21a.75.75 0 0 1 0 1.5h-1.5v2.5H21a.75.75 0 0 1 0 1.5h-1.5V18a1.5 1.5 0 0 1-1.5 1.5h-3.25V21a.75.75 0 0 1-1.5 0v-1.5h-2.5V21a.75.75 0 0 1-1.5 0v-1.5H6A1.5 1.5 0 0 1 4.5 18v-3.25H3a.75.75 0 0 1 0-1.5h1.5v-2.5H3a.75.75 0 0 1 0-1.5h1.5V6A1.5 1.5 0 0 1 6 4.5h3.25V3a.75.75 0 0 1 1.5 0v1.5h2.5V3a.75.75 0 0 1 .75-.75m-5 6a.75.75 0 0 0-.75.75v6c0 .414.336.75.75.75h6a.75.75 0 0 0 .75-.75V9a.75.75 0 0 0-.75-.75z"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

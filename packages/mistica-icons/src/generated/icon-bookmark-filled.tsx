@@ -33,16 +33,16 @@ const IconBookmarkFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M14 2.5A4.5 4.5 0 0 1 18.5 7v14a.5.5 0 0 1-.777.416l-5.584-3.723a.25.25 0 0 0-.278 0l-5.584 3.723A.5.5 0 0 1 5.5 21V7A4.5 4.5 0 0 1 10 2.5z"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M14 2.5A4.5 4.5 0 0 1 18.5 7v14a.5.5 0 0 1-.777.416l-5.584-3.723a.25.25 0 0 0-.278 0l-5.584 3.723A.5.5 0 0 1 5.5 21V7A4.5 4.5 0 0 1 10 2.5z"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

@@ -33,16 +33,16 @@ const IconDumbbellFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M8 5.5A1.5 1.5 0 0 1 9.5 7v4.25h5V7A1.5 1.5 0 0 1 16 5.5h1A1.5 1.5 0 0 1 18.5 7v10a1.5 1.5 0 0 1-1.5 1.5h-1a1.5 1.5 0 0 1-1.5-1.5v-4.25h-5V17A1.5 1.5 0 0 1 8 18.5H7A1.5 1.5 0 0 1 5.5 17V7A1.5 1.5 0 0 1 7 5.5zm-4 2a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-.5.5A1.5 1.5 0 0 1 2.5 15v-2.25H2a.75.75 0 0 1 0-1.5h.5V9A1.5 1.5 0 0 1 4 7.5m16 0A1.5 1.5 0 0 1 21.5 9v2.25h.5a.75.75 0 0 1 0 1.5h-.5V15a1.5 1.5 0 0 1-1.5 1.5.5.5 0 0 1-.5-.5V8a.5.5 0 0 1 .5-.5"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M8 5.5A1.5 1.5 0 0 1 9.5 7v4.25h5V7A1.5 1.5 0 0 1 16 5.5h1A1.5 1.5 0 0 1 18.5 7v10a1.5 1.5 0 0 1-1.5 1.5h-1a1.5 1.5 0 0 1-1.5-1.5v-4.25h-5V17A1.5 1.5 0 0 1 8 18.5H7A1.5 1.5 0 0 1 5.5 17V7A1.5 1.5 0 0 1 7 5.5zm-4 2a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-.5.5A1.5 1.5 0 0 1 2.5 15v-2.25H2a.75.75 0 0 1 0-1.5h.5V9A1.5 1.5 0 0 1 4 7.5m16 0A1.5 1.5 0 0 1 21.5 9v2.25h.5a.75.75 0 0 1 0 1.5h-.5V15a1.5 1.5 0 0 1-1.5 1.5.5.5 0 0 1-.5-.5V8a.5.5 0 0 1 .5-.5"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

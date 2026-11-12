@@ -33,16 +33,16 @@ const IconEditLight = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M16.5 3.922a3.578 3.578 0 0 1 2.53 6.108l-10.5 10.5a.75.75 0 0 1-.53.22H4a.75.75 0 0 1-.75-.75v-4c0-.2.08-.39.22-.53l10.5-10.5a3.58 3.58 0 0 1 2.53-1.048M4.75 16.31v2.94h2.94l8.75-8.75-2.94-2.94zM16.5 5.422a2.08 2.08 0 0 0-1.47.608l-.47.47 2.94 2.94.47-.47a2.077 2.077 0 0 0-1.47-3.548"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M16.5 3.922a3.578 3.578 0 0 1 2.53 6.108l-10.5 10.5a.75.75 0 0 1-.53.22H4a.75.75 0 0 1-.75-.75v-4c0-.2.08-.39.22-.53l10.5-10.5a3.58 3.58 0 0 1 2.53-1.048M4.75 16.31v2.94h2.94l8.75-8.75-2.94-2.94zM16.5 5.422a2.08 2.08 0 0 0-1.47.608l-.47.47 2.94 2.94.47-.47a2.077 2.077 0 0 0-1.47-3.548"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

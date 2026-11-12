@@ -33,7 +33,9 @@ const IconSearchMoneyFilled = ({color, size = 24, ...rest}: IconProps): JSX.Elem
                     />
                 </svg>
             );
-        } else if (skinName.match(/^vivo/i)) {
+        }
+
+        if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -50,16 +52,16 @@ const IconSearchMoneyFilled = ({color, size = 24, ...rest}: IconProps): JSX.Elem
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M10 2.5a7.5 7.5 0 0 1 5.807 12.246l5.723 5.724a.75.75 0 0 1-1.06 1.06l-5.724-5.723A7.5 7.5 0 0 1 10 17.5a7.5 7.5 0 0 1 0-15m2.251 3.965a3.75 3.75 0 0 0-4.582 1.81c-.16.309-.274.637-.343.975H7a.75.75 0 0 0 0 1.5h.326a3.752 3.752 0 0 0 4.925 2.785.75.75 0 0 0-.501-1.414 2.25 2.25 0 0 1-2.871-1.371H10a.75.75 0 0 0 0-1.5H8.879q.05-.146.122-.284a2.25 2.25 0 0 1 2.749-1.087.75.75 0 0 0 .501-1.414"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M10 2.5a7.5 7.5 0 0 1 5.807 12.246l5.723 5.724a.75.75 0 0 1-1.06 1.06l-5.724-5.723A7.5 7.5 0 0 1 10 17.5a7.5 7.5 0 0 1 0-15m2.251 3.965a3.75 3.75 0 0 0-4.582 1.81c-.16.309-.274.637-.343.975H7a.75.75 0 0 0 0 1.5h.326a3.752 3.752 0 0 0 4.925 2.785.75.75 0 0 0-.501-1.414 2.25 2.25 0 0 1-2.871-1.371H10a.75.75 0 0 0 0-1.5H8.879q.05-.146.122-.284a2.25 2.25 0 0 1 2.749-1.087.75.75 0 0 0 .501-1.414"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

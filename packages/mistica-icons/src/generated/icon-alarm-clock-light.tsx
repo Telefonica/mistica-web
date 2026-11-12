@@ -37,20 +37,20 @@ const IconAlarmClockLight = ({color, size = 24, ...rest}: IconProps): JSX.Elemen
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M12 9.25a.75.75 0 0 1 .75.75v2.25H14a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1-.75-.75v-3a.75.75 0 0 1 .75-.75"
-                    />
-                    <path
-                        fill={fillColor}
-                        d="M12 5.25a7.75 7.75 0 1 1 0 15.5 7.75 7.75 0 0 1 0-15.5m0 1.5a6.25 6.25 0 1 0 0 12.5 6.25 6.25 0 0 0 0-12.5M6.559 3.394a.75.75 0 0 1 .882 1.212l-2.75 2a.75.75 0 0 1-.882-1.212zm9.835.165a.75.75 0 0 1 1.047-.165l2.75 2a.75.75 0 0 1-.882 1.212l-2.75-2a.75.75 0 0 1-.165-1.047"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M12 9.25a.75.75 0 0 1 .75.75v2.25H14a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1-.75-.75v-3a.75.75 0 0 1 .75-.75"
+                />
+                <path
+                    fill={fillColor}
+                    d="M12 5.25a7.75 7.75 0 1 1 0 15.5 7.75 7.75 0 0 1 0-15.5m0 1.5a6.25 6.25 0 1 0 0 12.5 6.25 6.25 0 0 0 0-12.5M6.559 3.394a.75.75 0 0 1 .882 1.212l-2.75 2a.75.75 0 0 1-.882-1.212zm9.835.165a.75.75 0 0 1 1.047-.165l2.75 2a.75.75 0 0 1-.882 1.212l-2.75-2a.75.75 0 0 1-.165-1.047"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

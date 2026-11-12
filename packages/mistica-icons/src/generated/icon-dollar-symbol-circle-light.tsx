@@ -37,7 +37,9 @@ const IconDollarSymbolCircleLight = ({color, size = 24, ...rest}: IconProps): JS
                     />
                 </svg>
             );
-        } else if (skinName.match(/^vivo/i)) {
+        }
+
+        if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -50,20 +52,20 @@ const IconDollarSymbolCircleLight = ({color, size = 24, ...rest}: IconProps): JS
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M12 5.25a.75.75 0 0 1 .75.75v1.25H13a2.75 2.75 0 0 1 2.45 1.376.75.75 0 0 1-1.3.749 1.25 1.25 0 0 0-1.125-.625H11a1.25 1.25 0 0 0 0 2.5h2a2.75 2.75 0 0 1 0 5.5h-.25V18a.75.75 0 0 1-1.5 0v-1.25h-.411a2.75 2.75 0 0 1-2.29-1.375.75.75 0 0 1 1.3-.749 1.25 1.25 0 0 0 1.126.625L11 15.25h2a1.25 1.25 0 0 0 0-2.5h-2a2.75 2.75 0 0 1 0-5.5h.25V6a.75.75 0 0 1 .75-.75"
-                    />
-                    <path
-                        fill={fillColor}
-                        d="M12 2.25A9.75 9.75 0 0 1 21.75 12l-.012.48a9.75 9.75 0 0 1-9.258 9.258l-.48.012a9.75 9.75 0 0 1-9.738-9.27L2.25 12A9.75 9.75 0 0 1 12 2.25m0 1.5A8.25 8.25 0 0 0 3.75 12l.01.405A8.25 8.25 0 0 0 12 20.25l.405-.01A8.25 8.25 0 0 0 20.25 12l-.01-.405A8.25 8.25 0 0 0 12 3.75"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M12 5.25a.75.75 0 0 1 .75.75v1.25H13a2.75 2.75 0 0 1 2.45 1.376.75.75 0 0 1-1.3.749 1.25 1.25 0 0 0-1.125-.625H11a1.25 1.25 0 0 0 0 2.5h2a2.75 2.75 0 0 1 0 5.5h-.25V18a.75.75 0 0 1-1.5 0v-1.25h-.411a2.75 2.75 0 0 1-2.29-1.375.75.75 0 0 1 1.3-.749 1.25 1.25 0 0 0 1.126.625L11 15.25h2a1.25 1.25 0 0 0 0-2.5h-2a2.75 2.75 0 0 1 0-5.5h.25V6a.75.75 0 0 1 .75-.75"
+                />
+                <path
+                    fill={fillColor}
+                    d="M12 2.25A9.75 9.75 0 0 1 21.75 12l-.012.48a9.75 9.75 0 0 1-9.258 9.258l-.48.012a9.75 9.75 0 0 1-9.738-9.27L2.25 12A9.75 9.75 0 0 1 12 2.25m0 1.5A8.25 8.25 0 0 0 3.75 12l.01.405A8.25 8.25 0 0 0 12 20.25l.405-.01A8.25 8.25 0 0 0 20.25 12l-.01-.405A8.25 8.25 0 0 0 12 3.75"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

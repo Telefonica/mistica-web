@@ -33,16 +33,16 @@ const IconVoicemailRegular = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M17 8.25a3.75 3.75 0 0 1 0 7.5H7a3.75 3.75 0 0 1-3.465-5.185A3.75 3.75 0 0 1 7 8.25a3.75 3.75 0 0 1 3.465 2.315 3.75 3.75 0 0 1-.466 3.685h4.003a3.747 3.747 0 0 1 2.998-6M7 9.75a2.25 2.25 0 0 0-2.08 3.111A2.25 2.25 0 0 0 7 14.25a2.25 2.25 0 1 0 0-4.5m10 0a2.25 2.25 0 1 0 0 4.5 2.25 2.25 0 0 0 0-4.5"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M17 8.25a3.75 3.75 0 0 1 0 7.5H7a3.75 3.75 0 0 1-3.465-5.185A3.75 3.75 0 0 1 7 8.25a3.75 3.75 0 0 1 3.465 2.315 3.75 3.75 0 0 1-.466 3.685h4.003a3.747 3.747 0 0 1 2.998-6M7 9.75a2.25 2.25 0 0 0-2.08 3.111A2.25 2.25 0 0 0 7 14.25a2.25 2.25 0 1 0 0-4.5m10 0a2.25 2.25 0 1 0 0 4.5 2.25 2.25 0 0 0 0-4.5"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

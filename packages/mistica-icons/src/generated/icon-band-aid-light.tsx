@@ -33,20 +33,20 @@ const IconBandAidLight = ({color, size = 24, ...rest}: IconProps): JSX.Element =
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M12 13a1 1 0 1 1 0 2.001 1 1 0 0 1 0-2M10 11a1 1 0 1 1 0 2.001 1 1 0 0 1 0-2M14 11a1 1 0 1 1 0 2.001 1 1 0 0 1 0-2M12 9a1 1 0 1 1 0 2.001 1 1 0 0 1 0-2"
-                    />
-                    <path
-                        fill={fillColor}
-                        d="M16 2.3a5.7 5.7 0 0 1 4.03 9.73l-8 8a5.7 5.7 0 0 1-8.06-8.06l8-8A5.7 5.7 0 0 1 16 2.3m0 1.5a4.2 4.2 0 0 0-2.97 1.23l-8 8a4.2 4.2 0 1 0 5.94 5.94l8-8A4.199 4.199 0 0 0 16 3.8"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M12 13a1 1 0 1 1 0 2.001 1 1 0 0 1 0-2M10 11a1 1 0 1 1 0 2.001 1 1 0 0 1 0-2M14 11a1 1 0 1 1 0 2.001 1 1 0 0 1 0-2M12 9a1 1 0 1 1 0 2.001 1 1 0 0 1 0-2"
+                />
+                <path
+                    fill={fillColor}
+                    d="M16 2.3a5.7 5.7 0 0 1 4.03 9.73l-8 8a5.7 5.7 0 0 1-8.06-8.06l8-8A5.7 5.7 0 0 1 16 2.3m0 1.5a4.2 4.2 0 0 0-2.97 1.23l-8 8a4.2 4.2 0 1 0 5.94 5.94l8-8A4.199 4.199 0 0 0 16 3.8"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

@@ -33,16 +33,16 @@ const IconArrowLineUpLight = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="m12 4.25.076.004.055.008.018.003.039.011q.05.012.098.03a.8.8 0 0 1 .244.164l6 6a.75.75 0 1 1-1.06 1.06l-4.72-4.72V19a.75.75 0 0 1-1.5 0V6.81l-4.72 4.72a.75.75 0 0 1-1.06-1.06l6-6a.8.8 0 0 1 .16-.12q.037-.023.078-.041l.01-.004q.046-.018.094-.029l.039-.011.016-.003A1 1 0 0 1 12 4.25"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="m12 4.25.076.004.055.008.018.003.039.011q.05.012.098.03a.8.8 0 0 1 .244.164l6 6a.75.75 0 1 1-1.06 1.06l-4.72-4.72V19a.75.75 0 0 1-1.5 0V6.81l-4.72 4.72a.75.75 0 0 1-1.06-1.06l6-6a.8.8 0 0 1 .16-.12q.037-.023.078-.041l.01-.004q.046-.018.094-.029l.039-.011.016-.003A1 1 0 0 1 12 4.25"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

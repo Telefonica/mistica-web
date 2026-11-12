@@ -33,7 +33,9 @@ const IconReloadRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element 
                     />
                 </svg>
             );
-        } else if (skinName.match(/^o2/i)) {
+        }
+
+        if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -42,7 +44,9 @@ const IconReloadRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element 
                     />
                 </svg>
             );
-        } else if (skinName.match(/^vivo/i)) {
+        }
+
+        if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -51,16 +55,16 @@ const IconReloadRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element 
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M3.896 12.257c.41-.057.79.23.847.64a7.35 7.35 0 0 0 6.339 6.277 7.35 7.35 0 0 0 7.191-3.424H16a.75.75 0 0 1 0-1.5h4l.077.004a.75.75 0 0 1 .673.746v4a.75.75 0 0 1-1.5 0v-2.011a8.85 8.85 0 0 1-8.36 3.673 8.85 8.85 0 0 1-7.634-7.559.75.75 0 0 1 .64-.846M7.55 4.452a8.85 8.85 0 0 1 13.193 6.445.75.75 0 0 1-1.487.206 7.349 7.349 0 0 0-13.53-2.852H8a.75.75 0 0 1 0 1.5H4A.75.75 0 0 1 3.25 9V5a.75.75 0 0 1 1.5 0v2.01a8.85 8.85 0 0 1 2.8-2.56"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M3.896 12.257c.41-.057.79.23.847.64a7.35 7.35 0 0 0 6.339 6.277 7.35 7.35 0 0 0 7.191-3.424H16a.75.75 0 0 1 0-1.5h4l.077.004a.75.75 0 0 1 .673.746v4a.75.75 0 0 1-1.5 0v-2.011a8.85 8.85 0 0 1-8.36 3.673 8.85 8.85 0 0 1-7.634-7.559.75.75 0 0 1 .64-.846M7.55 4.452a8.85 8.85 0 0 1 13.193 6.445.75.75 0 0 1-1.487.206 7.349 7.349 0 0 0-13.53-2.852H8a.75.75 0 0 1 0 1.5H4A.75.75 0 0 1 3.25 9V5a.75.75 0 0 1 1.5 0v2.01a8.85 8.85 0 0 1 2.8-2.56"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

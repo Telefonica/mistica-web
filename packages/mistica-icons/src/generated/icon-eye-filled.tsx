@@ -33,7 +33,9 @@ const IconEyeFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
                     />
                 </svg>
             );
-        } else if (skinName.match(/^blau/i)) {
+        }
+
+        if (skinName.match(/^blau/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -46,7 +48,9 @@ const IconEyeFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
                     />
                 </svg>
             );
-        } else if (skinName.match(/^o2/i)) {
+        }
+
+        if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -59,16 +63,16 @@ const IconEyeFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M12 5.5c3.486 0 6.41 1.78 8.764 5.206.535.78.535 1.809 0 2.588C18.41 16.72 15.486 18.5 12 18.5s-6.41-1.78-8.764-5.206a2.29 2.29 0 0 1 0-2.588C5.59 7.28 8.514 5.5 12 5.5m0 3.75a2.75 2.75 0 1 0 0 5.5 2.75 2.75 0 0 0 0-5.5"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M12 5.5c3.486 0 6.41 1.78 8.764 5.206.535.78.535 1.809 0 2.588C18.41 16.72 15.486 18.5 12 18.5s-6.41-1.78-8.764-5.206a2.29 2.29 0 0 1 0-2.588C5.59 7.28 8.514 5.5 12 5.5m0 3.75a2.75 2.75 0 1 0 0 5.5 2.75 2.75 0 0 0 0-5.5"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

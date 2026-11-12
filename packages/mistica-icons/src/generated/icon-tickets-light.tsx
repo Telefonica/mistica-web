@@ -33,7 +33,9 @@ const IconTicketsLight = ({color, size = 24, ...rest}: IconProps): JSX.Element =
                     />
                 </svg>
             );
-        } else if (skinName.match(/^o2/i)) {
+        }
+
+        if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -42,7 +44,9 @@ const IconTicketsLight = ({color, size = 24, ...rest}: IconProps): JSX.Element =
                     />
                 </svg>
             );
-        } else if (skinName.match(/^vivo/i)) {
+        }
+
+        if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path fill={fillColor} d="m10.867 9.453-1.414 1.414-.601-.601 1.414-1.414z" />
@@ -52,20 +56,20 @@ const IconTicketsLight = ({color, size = 24, ...rest}: IconProps): JSX.Element =
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M15 10.25a.75.75 0 0 1 .75.75v2a.75.75 0 0 1-1.5 0v-2a.75.75 0 0 1 .75-.75"
-                    />
-                    <path
-                        fill={fillColor}
-                        d="M19 4.25A2.75 2.75 0 0 1 21.75 7v3a.75.75 0 0 1-.75.75 1.25 1.25 0 0 0 0 2.5.75.75 0 0 1 .75.75v3A2.75 2.75 0 0 1 19 19.75H5A2.75 2.75 0 0 1 2.25 17v-3a.75.75 0 0 1 .75-.75 1.25 1.25 0 0 0 0-2.5.75.75 0 0 1-.75-.75V7A2.75 2.75 0 0 1 5 4.25zM5 5.75A1.25 1.25 0 0 0 3.75 7v2.356a2.747 2.747 0 0 1 0 5.287V17A1.25 1.25 0 0 0 5 18.25h9.25V17a.75.75 0 0 1 1.5 0v1.25H19A1.25 1.25 0 0 0 20.25 17v-2.357a2.746 2.746 0 0 1 0-5.287V7A1.25 1.25 0 0 0 19 5.75h-3.25V7a.75.75 0 0 1-1.5 0V5.75z"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M15 10.25a.75.75 0 0 1 .75.75v2a.75.75 0 0 1-1.5 0v-2a.75.75 0 0 1 .75-.75"
+                />
+                <path
+                    fill={fillColor}
+                    d="M19 4.25A2.75 2.75 0 0 1 21.75 7v3a.75.75 0 0 1-.75.75 1.25 1.25 0 0 0 0 2.5.75.75 0 0 1 .75.75v3A2.75 2.75 0 0 1 19 19.75H5A2.75 2.75 0 0 1 2.25 17v-3a.75.75 0 0 1 .75-.75 1.25 1.25 0 0 0 0-2.5.75.75 0 0 1-.75-.75V7A2.75 2.75 0 0 1 5 4.25zM5 5.75A1.25 1.25 0 0 0 3.75 7v2.356a2.747 2.747 0 0 1 0 5.287V17A1.25 1.25 0 0 0 5 18.25h9.25V17a.75.75 0 0 1 1.5 0v1.25H19A1.25 1.25 0 0 0 20.25 17v-2.357a2.746 2.746 0 0 1 0-5.287V7A1.25 1.25 0 0 0 19 5.75h-3.25V7a.75.75 0 0 1-1.5 0V5.75z"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

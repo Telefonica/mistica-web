@@ -33,13 +33,13 @@ const IconRecordingFilled = ({color, size = 24, ...rest}: IconProps): JSX.Elemen
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path fill={fillColor} d="M12 5a7 7 0 1 1-.002 14A7 7 0 0 1 12 5" />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path fill={fillColor} d="M12 5a7 7 0 1 1-.002 14A7 7 0 0 1 12 5" />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

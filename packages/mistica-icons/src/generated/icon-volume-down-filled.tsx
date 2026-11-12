@@ -33,16 +33,16 @@ const IconVolumeDownFilled = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M9.875 5.26a1 1 0 0 1 1.625.78v11.92a1 1 0 0 1-1.625.78l-4.05-3.24H4A1.5 1.5 0 0 1 2.5 14v-4A1.5 1.5 0 0 1 4 8.5h1.824zM14.4 7.55a.75.75 0 0 1 1.05-.15 5.75 5.75 0 0 1 0 9.2.75.75 0 0 1-.9-1.2 4.26 4.26 0 0 0 1.7-3.4 4.25 4.25 0 0 0-1.7-3.4.75.75 0 0 1-.15-1.05"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M9.875 5.26a1 1 0 0 1 1.625.78v11.92a1 1 0 0 1-1.625.78l-4.05-3.24H4A1.5 1.5 0 0 1 2.5 14v-4A1.5 1.5 0 0 1 4 8.5h1.824zM14.4 7.55a.75.75 0 0 1 1.05-.15 5.75 5.75 0 0 1 0 9.2.75.75 0 0 1-.9-1.2 4.26 4.26 0 0 0 1.7-3.4 4.25 4.25 0 0 0-1.7-3.4.75.75 0 0 1-.15-1.05"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

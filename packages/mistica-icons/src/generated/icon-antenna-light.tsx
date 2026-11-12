@@ -41,7 +41,9 @@ const IconAntennaLight = ({color, size = 24, ...rest}: IconProps): JSX.Element =
                     />
                 </svg>
             );
-        } else if (skinName.match(/^vivo/i)) {
+        }
+
+        if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -50,24 +52,24 @@ const IconAntennaLight = ({color, size = 24, ...rest}: IconProps): JSX.Element =
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M12 10.25a1.75 1.75 0 0 1 1.21 3.011l2.502 7.502a.751.751 0 0 1-1.424.474l-.496-1.487h-3.584l-.496 1.488a.751.751 0 0 1-1.424-.475l2.5-7.502A1.75 1.75 0 0 1 12 10.251m-1.292 8h2.584L12 14.373z"
-                    />
-                    <path
-                        fill={fillColor}
-                        d="M12 2.257a9.752 9.752 0 0 1 9 13.501.751.751 0 0 1-1.385-.577 8.26 8.26 0 0 0-.75-7.75 8.251 8.251 0 0 0-15.077 3.78 8.25 8.25 0 0 0 .597 3.97.75.75 0 0 1-1.385.577 9.753 9.753 0 0 1 9-13.5"
-                    />
-                    <path
-                        fill={fillColor}
-                        d="M12 6.25a5.752 5.752 0 0 1 5.309 7.963.751.751 0 0 1-1.385-.577 4.253 4.253 0 0 0-1.917-5.383 4.25 4.25 0 0 0-5.929 5.383.75.75 0 0 1-1.385.577 5.752 5.752 0 0 1 5.308-7.963"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M12 10.25a1.75 1.75 0 0 1 1.21 3.011l2.502 7.502a.751.751 0 0 1-1.424.474l-.496-1.487h-3.584l-.496 1.488a.751.751 0 0 1-1.424-.475l2.5-7.502A1.75 1.75 0 0 1 12 10.251m-1.292 8h2.584L12 14.373z"
+                />
+                <path
+                    fill={fillColor}
+                    d="M12 2.257a9.752 9.752 0 0 1 9 13.501.751.751 0 0 1-1.385-.577 8.26 8.26 0 0 0-.75-7.75 8.251 8.251 0 0 0-15.077 3.78 8.25 8.25 0 0 0 .597 3.97.75.75 0 0 1-1.385.577 9.753 9.753 0 0 1 9-13.5"
+                />
+                <path
+                    fill={fillColor}
+                    d="M12 6.25a5.752 5.752 0 0 1 5.309 7.963.751.751 0 0 1-1.385-.577 4.253 4.253 0 0 0-1.917-5.383 4.25 4.25 0 0 0-5.929 5.383.75.75 0 0 1-1.385.577 5.752 5.752 0 0 1 5.308-7.963"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

@@ -33,7 +33,9 @@ const IconAddMoreLocationFilled = ({color, size = 24, ...rest}: IconProps): JSX.
                     />
                 </svg>
             );
-        } else if (skinName.match(/^vivo/i)) {
+        }
+
+        if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -42,20 +44,20 @@ const IconAddMoreLocationFilled = ({color, size = 24, ...rest}: IconProps): JSX.
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M19.082 15.254h.006a.7.7 0 0 1 .17.044.75.75 0 0 1 .492.702v2.25H22a.75.75 0 0 1 0 1.5h-2.25V22a.75.75 0 0 1-1.5 0v-2.25H16a.75.75 0 0 1 0-1.5h2.25V16a.75.75 0 0 1 .832-.746"
-                    />
-                    <path
-                        fill={fillColor}
-                        d="M12 2.5a8.503 8.503 0 0 1 8.055 11.212c-.047.139-.206.201-.345.154A2.25 2.25 0 0 0 16.75 16v.5a.25.25 0 0 1-.25.25H16a2.25 2.25 0 0 0-1.749 3.664.273.273 0 0 1-.009.364l-.474.476a2.5 2.5 0 0 1-3.535 0L5.99 17.013a8.505 8.505 0 0 1-1.842-9.264A8.5 8.5 0 0 1 12 2.5M12 8a3 3 0 1 0 0 6 3 3 0 0 0 0-6"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M19.082 15.254h.006a.7.7 0 0 1 .17.044.75.75 0 0 1 .492.702v2.25H22a.75.75 0 0 1 0 1.5h-2.25V22a.75.75 0 0 1-1.5 0v-2.25H16a.75.75 0 0 1 0-1.5h2.25V16a.75.75 0 0 1 .832-.746"
+                />
+                <path
+                    fill={fillColor}
+                    d="M12 2.5a8.503 8.503 0 0 1 8.055 11.212c-.047.139-.206.201-.345.154A2.25 2.25 0 0 0 16.75 16v.5a.25.25 0 0 1-.25.25H16a2.25 2.25 0 0 0-1.749 3.664.273.273 0 0 1-.009.364l-.474.476a2.5 2.5 0 0 1-3.535 0L5.99 17.013a8.505 8.505 0 0 1-1.842-9.264A8.5 8.5 0 0 1 12 2.5M12 8a3 3 0 1 0 0 6 3 3 0 0 0 0-6"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

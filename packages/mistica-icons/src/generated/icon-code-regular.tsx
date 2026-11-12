@@ -33,16 +33,16 @@ const IconCodeRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element =>
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M13.272 3.818a.75.75 0 0 1 1.455.364l-4 16a.75.75 0 0 1-1.455-.364zM6.47 7.47a.75.75 0 1 1 1.06 1.06L4.06 12l3.47 3.47a.75.75 0 0 1-1.06 1.06l-4-4a.75.75 0 0 1 0-1.06zm10 0a.75.75 0 0 1 1.06 0l4 4a.75.75 0 0 1 0 1.06l-4 4a.75.75 0 0 1-1.06-1.06L19.94 12l-3.47-3.47a.75.75 0 0 1 0-1.06"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M13.272 3.818a.75.75 0 0 1 1.455.364l-4 16a.75.75 0 0 1-1.455-.364zM6.47 7.47a.75.75 0 1 1 1.06 1.06L4.06 12l3.47 3.47a.75.75 0 0 1-1.06 1.06l-4-4a.75.75 0 0 1 0-1.06zm10 0a.75.75 0 0 1 1.06 0l4 4a.75.75 0 0 1 0 1.06l-4 4a.75.75 0 0 1-1.06-1.06L19.94 12l-3.47-3.47a.75.75 0 0 1 0-1.06"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

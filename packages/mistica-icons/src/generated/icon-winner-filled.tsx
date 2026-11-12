@@ -33,7 +33,9 @@ const IconWinnerFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element =
                     />
                 </svg>
             );
-        } else if (skinName.match(/^o2/i)) {
+        }
+
+        if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -42,7 +44,9 @@ const IconWinnerFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element =
                     />
                 </svg>
             );
-        } else if (skinName.match(/^vivo/i)) {
+        }
+
+        if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -51,20 +55,20 @@ const IconWinnerFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element =
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M18.61 15.106a.256.256 0 0 1 .411.04l2.008 3.494a.501.501 0 0 1-.466.748l-3.265-.211-1.45 2.934a.501.501 0 0 1-.881.029l-2.2-3.81a.26.26 0 0 1 .2-.385 9 9 0 0 0 5.643-2.84m-13.634.041a.256.256 0 0 1 .412-.042q.12.134.248.26a9 9 0 0 0 5.394 2.581c.184.02.293.223.2.383l-2.199 3.81a.501.501 0 0 1-.88-.028l-1.452-2.932-3.265.21a.501.501 0 0 1-.465-.747z"
-                    />
-                    <path
-                        fill={fillColor}
-                        d="M12.372 1.509A7.5 7.5 0 0 1 19.5 9q0 .166-.009.333a7.5 7.5 0 0 1-1.277 3.866l-.171.243q-.335.457-.74.862A7.502 7.502 0 0 1 4.5 9a7.5 7.5 0 0 1 .082-1.107A7.504 7.504 0 0 1 12 1.5zM12 5.75a3.25 3.25 0 1 0 0 6.5 3.25 3.25 0 0 0 0-6.5"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M18.61 15.106a.256.256 0 0 1 .411.04l2.008 3.494a.501.501 0 0 1-.466.748l-3.265-.211-1.45 2.934a.501.501 0 0 1-.881.029l-2.2-3.81a.26.26 0 0 1 .2-.385 9 9 0 0 0 5.643-2.84m-13.634.041a.256.256 0 0 1 .412-.042q.12.134.248.26a9 9 0 0 0 5.394 2.581c.184.02.293.223.2.383l-2.199 3.81a.501.501 0 0 1-.88-.028l-1.452-2.932-3.265.21a.501.501 0 0 1-.465-.747z"
+                />
+                <path
+                    fill={fillColor}
+                    d="M12.372 1.509A7.5 7.5 0 0 1 19.5 9q0 .166-.009.333a7.5 7.5 0 0 1-1.277 3.866l-.171.243q-.335.457-.74.862A7.502 7.502 0 0 1 4.5 9a7.5 7.5 0 0 1 .082-1.107A7.504 7.504 0 0 1 12 1.5zM12 5.75a3.25 3.25 0 1 0 0 6.5 3.25 3.25 0 0 0 0-6.5"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

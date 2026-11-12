@@ -33,20 +33,20 @@ const IconHotelRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element =
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M2 7.25a.75.75 0 0 1 .75.75v5.25h8.5V9a.75.75 0 0 1 .75-.75h7A3.75 3.75 0 0 1 22.75 12v5a.75.75 0 0 1-1.5 0v-2.25H2.75V17a.75.75 0 0 1-1.5 0V8A.75.75 0 0 1 2 7.25m10.75 6h8.5V12A2.25 2.25 0 0 0 19 9.75h-6.25z"
-                    />
-                    <path
-                        fill={fillColor}
-                        d="M7 6.25a2.75 2.75 0 1 1 0 5.5 2.75 2.75 0 0 1 0-5.5m0 1.5a1.25 1.25 0 1 0 0 2.5 1.25 1.25 0 0 0 0-2.5"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M2 7.25a.75.75 0 0 1 .75.75v5.25h8.5V9a.75.75 0 0 1 .75-.75h7A3.75 3.75 0 0 1 22.75 12v5a.75.75 0 0 1-1.5 0v-2.25H2.75V17a.75.75 0 0 1-1.5 0V8A.75.75 0 0 1 2 7.25m10.75 6h8.5V12A2.25 2.25 0 0 0 19 9.75h-6.25z"
+                />
+                <path
+                    fill={fillColor}
+                    d="M7 6.25a2.75 2.75 0 1 1 0 5.5 2.75 2.75 0 0 1 0-5.5m0 1.5a1.25 1.25 0 1 0 0 2.5 1.25 1.25 0 0 0 0-2.5"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

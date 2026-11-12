@@ -33,16 +33,16 @@ const IconEscalatorFilled = ({color, size = 24, ...rest}: IconProps): JSX.Elemen
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M19.5 4.5a3 3 0 0 1 0 6h-1.293l-8.268 8.268a2.5 2.5 0 0 1-1.767.732H4.5a3 3 0 0 1 0-6h2.293l8.267-8.268a2.5 2.5 0 0 1 1.768-.732z"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M19.5 4.5a3 3 0 0 1 0 6h-1.293l-8.268 8.268a2.5 2.5 0 0 1-1.767.732H4.5a3 3 0 0 1 0-6h2.293l8.267-8.268a2.5 2.5 0 0 1 1.768-.732z"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

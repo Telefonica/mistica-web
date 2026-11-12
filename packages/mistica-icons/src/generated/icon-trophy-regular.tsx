@@ -33,7 +33,9 @@ const IconTrophyRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element 
                     />
                 </svg>
             );
-        } else if (skinName.match(/^o2/i)) {
+        }
+
+        if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -42,7 +44,9 @@ const IconTrophyRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element 
                     />
                 </svg>
             );
-        } else if (skinName.match(/^vivo/i)) {
+        }
+
+        if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -51,16 +55,16 @@ const IconTrophyRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element 
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M17 3.25a.75.75 0 0 1 .75.75v1.295A.8.8 0 0 1 18 5.25a3.75 3.75 0 0 1 0 7.5.75.75 0 0 1-.41-.123 5.3 5.3 0 0 1-1.546 2.572 5.92 5.92 0 0 1-3.353 1.51q.058.136.059.291v3.25H16a.75.75 0 0 1 0 1.5H8a.75.75 0 0 1 0-1.5h3.25V17q0-.156.058-.291a5.92 5.92 0 0 1-3.352-1.51 5.3 5.3 0 0 1-1.548-2.572.75.75 0 0 1-.408.123 3.75 3.75 0 0 1 0-7.5q.132.002.25.045V4A.75.75 0 0 1 7 3.25zm-9.25 8.135c0 1.005.432 1.981 1.224 2.712.793.732 1.88 1.153 3.026 1.153s2.233-.421 3.026-1.153c.792-.73 1.224-1.707 1.224-2.712V4.75h-8.5zm-1.5-4.68A.7.7 0 0 1 6 6.75a2.25 2.25 0 0 0 0 4.5q.132.002.25.045zm11.5 4.59a.8.8 0 0 1 .25-.045 2.25 2.25 0 0 0 0-4.5.8.8 0 0 1-.25-.046z"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M17 3.25a.75.75 0 0 1 .75.75v1.295A.8.8 0 0 1 18 5.25a3.75 3.75 0 0 1 0 7.5.75.75 0 0 1-.41-.123 5.3 5.3 0 0 1-1.546 2.572 5.92 5.92 0 0 1-3.353 1.51q.058.136.059.291v3.25H16a.75.75 0 0 1 0 1.5H8a.75.75 0 0 1 0-1.5h3.25V17q0-.156.058-.291a5.92 5.92 0 0 1-3.352-1.51 5.3 5.3 0 0 1-1.548-2.572.75.75 0 0 1-.408.123 3.75 3.75 0 0 1 0-7.5q.132.002.25.045V4A.75.75 0 0 1 7 3.25zm-9.25 8.135c0 1.005.432 1.981 1.224 2.712.793.732 1.88 1.153 3.026 1.153s2.233-.421 3.026-1.153c.792-.73 1.224-1.707 1.224-2.712V4.75h-8.5zm-1.5-4.68A.7.7 0 0 1 6 6.75a2.25 2.25 0 0 0 0 4.5q.132.002.25.045zm11.5 4.59a.8.8 0 0 1 .25-.045 2.25 2.25 0 0 0 0-4.5.8.8 0 0 1-.25-.046z"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

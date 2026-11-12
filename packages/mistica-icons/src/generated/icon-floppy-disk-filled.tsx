@@ -34,16 +34,16 @@ const IconFloppyDiskFilled = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
                     <path fill={fillColor} d="M8.8 2h6.4v5.2H8.8z" />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M7 3.5a.25.25 0 0 1 .25.25V8c0 .414.336.75.75.75h6a.75.75 0 0 0 .75-.75V3.75A.25.25 0 0 1 15 3.5h1a.5.5 0 0 1 .354.146l4 4A.5.5 0 0 1 20.5 8v10a2.5 2.5 0 0 1-2.5 2.5H6A2.5 2.5 0 0 1 3.5 18V6A2.5 2.5 0 0 1 6 3.5zm5 7.75a2.75 2.75 0 1 0 0 5.499 2.75 2.75 0 0 0 0-5.499m0 1.5a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5m1-9.25a.25.25 0 0 1 .25.25V7a.25.25 0 0 1-.25.25H9A.25.25 0 0 1 8.75 7V3.75A.25.25 0 0 1 9 3.5z"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M7 3.5a.25.25 0 0 1 .25.25V8c0 .414.336.75.75.75h6a.75.75 0 0 0 .75-.75V3.75A.25.25 0 0 1 15 3.5h1a.5.5 0 0 1 .354.146l4 4A.5.5 0 0 1 20.5 8v10a2.5 2.5 0 0 1-2.5 2.5H6A2.5 2.5 0 0 1 3.5 18V6A2.5 2.5 0 0 1 6 3.5zm5 7.75a2.75 2.75 0 1 0 0 5.499 2.75 2.75 0 0 0 0-5.499m0 1.5a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5m1-9.25a.25.25 0 0 1 .25.25V7a.25.25 0 0 1-.25.25H9A.25.25 0 0 1 8.75 7V3.75A.25.25 0 0 1 9 3.5z"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

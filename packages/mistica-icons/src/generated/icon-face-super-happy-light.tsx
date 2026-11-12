@@ -37,7 +37,9 @@ const IconFaceSuperHappyLight = ({color, size = 24, ...rest}: IconProps): JSX.El
                     />
                 </svg>
             );
-        } else if (skinName.match(/^vivo/i)) {
+        }
+
+        if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -46,20 +48,20 @@ const IconFaceSuperHappyLight = ({color, size = 24, ...rest}: IconProps): JSX.El
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M16 12.25a.75.75 0 0 1 .75.75 4.75 4.75 0 0 1-9.5 0 .75.75 0 0 1 .75-.75zm-7.161 1.5a3.249 3.249 0 0 0 6.322 0zM9 8a1 1 0 1 1 0 2 1 1 0 0 1 0-2m6 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"
-                    />
-                    <path
-                        fill={fillColor}
-                        d="M12 2.25a9.75 9.75 0 1 1 0 19.502A9.75 9.75 0 0 1 12 2.25m0 1.5a8.25 8.25 0 1 0 0 16.5 8.25 8.25 0 0 0 0-16.5"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M16 12.25a.75.75 0 0 1 .75.75 4.75 4.75 0 0 1-9.5 0 .75.75 0 0 1 .75-.75zm-7.161 1.5a3.249 3.249 0 0 0 6.322 0zM9 8a1 1 0 1 1 0 2 1 1 0 0 1 0-2m6 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"
+                />
+                <path
+                    fill={fillColor}
+                    d="M12 2.25a9.75 9.75 0 1 1 0 19.502A9.75 9.75 0 0 1 12 2.25m0 1.5a8.25 8.25 0 1 0 0 16.5 8.25 8.25 0 0 0 0-16.5"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

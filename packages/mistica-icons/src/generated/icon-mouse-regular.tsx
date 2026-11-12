@@ -37,16 +37,16 @@ const IconMouseRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element =
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M14 2.25A4.75 4.75 0 0 1 18.75 7v10A4.75 4.75 0 0 1 14 21.75h-4A4.75 4.75 0 0 1 5.25 17V7A4.75 4.75 0 0 1 10 2.25zm-7.25 8.5V17A3.25 3.25 0 0 0 10 20.25h4A3.25 3.25 0 0 0 17.25 17v-6.25zm3.25-7A3.25 3.25 0 0 0 6.75 7v2.25h4.5v-5.5zm2.75 5.5h4.5V7A3.25 3.25 0 0 0 14 3.75h-1.25z"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M14 2.25A4.75 4.75 0 0 1 18.75 7v10A4.75 4.75 0 0 1 14 21.75h-4A4.75 4.75 0 0 1 5.25 17V7A4.75 4.75 0 0 1 10 2.25zm-7.25 8.5V17A3.25 3.25 0 0 0 10 20.25h4A3.25 3.25 0 0 0 17.25 17v-6.25zm3.25-7A3.25 3.25 0 0 0 6.75 7v2.25h4.5v-5.5zm2.75 5.5h4.5V7A3.25 3.25 0 0 0 14 3.75h-1.25z"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

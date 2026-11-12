@@ -33,7 +33,9 @@ const IconThumbUpFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element 
                     />
                 </svg>
             );
-        } else if (skinName.match(/^vivo/i)) {
+        }
+
+        if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -42,16 +44,16 @@ const IconThumbUpFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element 
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M6.75 19.5a1 1 0 0 1-1 1H4A1.5 1.5 0 0 1 2.5 19v-7A1.5 1.5 0 0 1 4 10.5h1.75a1 1 0 0 1 1 1zM13 3.5A2.5 2.5 0 0 1 15.5 6v4.5H18a2.5 2.5 0 0 1 2.5 2.5.5.5 0 0 1-.01.098l-1 5q0 .007-.004.016c-.16.683-.47 1.3-.91 1.74-.434.435-.986.682-1.576.645l-7 .001q-.49-.001-.956-.134c-.514-.146-.794-.666-.794-1.202v-8.208c0-.415.264-.775.615-.995q.33-.207.61-.486A3.5 3.5 0 0 0 10.5 7V6A2.5 2.5 0 0 1 13 3.5"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M6.75 19.5a1 1 0 0 1-1 1H4A1.5 1.5 0 0 1 2.5 19v-7A1.5 1.5 0 0 1 4 10.5h1.75a1 1 0 0 1 1 1zM13 3.5A2.5 2.5 0 0 1 15.5 6v4.5H18a2.5 2.5 0 0 1 2.5 2.5.5.5 0 0 1-.01.098l-1 5q0 .007-.004.016c-.16.683-.47 1.3-.91 1.74-.434.435-.986.682-1.576.645l-7 .001q-.49-.001-.956-.134c-.514-.146-.794-.666-.794-1.202v-8.208c0-.415.264-.775.615-.995q.33-.207.61-.486A3.5 3.5 0 0 0 10.5 7V6A2.5 2.5 0 0 1 13 3.5"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

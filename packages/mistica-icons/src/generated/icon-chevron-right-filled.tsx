@@ -33,7 +33,9 @@ const IconChevronRightFilled = ({color, size = 24, ...rest}: IconProps): JSX.Ele
                     />
                 </svg>
             );
-        } else if (skinName.match(/^o2/i)) {
+        }
+
+        if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -42,7 +44,9 @@ const IconChevronRightFilled = ({color, size = 24, ...rest}: IconProps): JSX.Ele
                     />
                 </svg>
             );
-        } else if (skinName.match(/^vivo/i)) {
+        }
+
+        if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -51,16 +55,16 @@ const IconChevronRightFilled = ({color, size = 24, ...rest}: IconProps): JSX.Ele
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M9.204 3.704a1.127 1.127 0 0 1 1.591 0l7 7c.44.439.44 1.152 0 1.592l-7 7a1.126 1.126 0 0 1-1.591-1.592l6.204-6.204-6.204-6.205a1.126 1.126 0 0 1 0-1.591"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M9.204 3.704a1.127 1.127 0 0 1 1.591 0l7 7c.44.439.44 1.152 0 1.592l-7 7a1.126 1.126 0 0 1-1.591-1.592l6.204-6.204-6.204-6.205a1.126 1.126 0 0 1 0-1.591"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

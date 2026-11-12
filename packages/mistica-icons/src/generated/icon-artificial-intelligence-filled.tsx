@@ -33,7 +33,9 @@ const IconArtificialIntelligenceFilled = ({color, size = 24, ...rest}: IconProps
                     />
                 </svg>
             );
-        } else if (skinName.match(/^vivo/i)) {
+        }
+
+        if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -42,16 +44,16 @@ const IconArtificialIntelligenceFilled = ({color, size = 24, ...rest}: IconProps
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M7.911 7.944a1 1 0 0 1 1.813 0l1.378 2.956 2.955 1.378a1 1 0 0 1 0 1.813l-2.955 1.379-1.378 2.955a1 1 0 0 1-1.813 0L6.532 15.47l-2.955-1.38a1 1 0 0 1 0-1.812L6.532 10.9zm9.443-3.634a.5.5 0 0 1 .925 0l.624 1.516a.5.5 0 0 0 .273.273l1.516.624a.5.5 0 0 1 0 .925l-1.516.623a.5.5 0 0 0-.273.272l-.624 1.517a.5.5 0 0 1-.925 0l-.623-1.517a.5.5 0 0 0-.272-.272l-1.517-.623a.5.5 0 0 1 0-.925l1.517-.624a.5.5 0 0 0 .272-.273z"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M7.911 7.944a1 1 0 0 1 1.813 0l1.378 2.956 2.955 1.378a1 1 0 0 1 0 1.813l-2.955 1.379-1.378 2.955a1 1 0 0 1-1.813 0L6.532 15.47l-2.955-1.38a1 1 0 0 1 0-1.812L6.532 10.9zm9.443-3.634a.5.5 0 0 1 .925 0l.624 1.516a.5.5 0 0 0 .273.273l1.516.624a.5.5 0 0 1 0 .925l-1.516.623a.5.5 0 0 0-.273.272l-.624 1.517a.5.5 0 0 1-.925 0l-.623-1.517a.5.5 0 0 0-.272-.272l-1.517-.623a.5.5 0 0 1 0-.925l1.517-.624a.5.5 0 0 0 .272-.273z"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

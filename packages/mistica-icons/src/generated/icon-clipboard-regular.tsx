@@ -33,7 +33,9 @@ const IconClipboardRegular = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
                     />
                 </svg>
             );
-        } else if (skinName.match(/^vivo/i)) {
+        }
+
+        if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -42,16 +44,16 @@ const IconClipboardRegular = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M13 2.25a2.75 2.75 0 0 1 2.644 2H17A2.75 2.75 0 0 1 19.75 7v12A2.75 2.75 0 0 1 17 21.75H7A2.75 2.75 0 0 1 4.25 19V7A2.75 2.75 0 0 1 7 4.25h1.356a2.75 2.75 0 0 1 2.644-2zm-6 3.5A1.25 1.25 0 0 0 5.75 7v12A1.25 1.25 0 0 0 7 20.25h10A1.25 1.25 0 0 0 18.25 19V7A1.25 1.25 0 0 0 17 5.75h-1.356a2.75 2.75 0 0 1-2.644 2h-2a2.75 2.75 0 0 1-2.644-2zm4-2a1.25 1.25 0 0 0 0 2.5h2a1.25 1.25 0 0 0 0-2.5z"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M13 2.25a2.75 2.75 0 0 1 2.644 2H17A2.75 2.75 0 0 1 19.75 7v12A2.75 2.75 0 0 1 17 21.75H7A2.75 2.75 0 0 1 4.25 19V7A2.75 2.75 0 0 1 7 4.25h1.356a2.75 2.75 0 0 1 2.644-2zm-6 3.5A1.25 1.25 0 0 0 5.75 7v12A1.25 1.25 0 0 0 7 20.25h10A1.25 1.25 0 0 0 18.25 19V7A1.25 1.25 0 0 0 17 5.75h-1.356a2.75 2.75 0 0 1-2.644 2h-2a2.75 2.75 0 0 1-2.644-2zm4-2a1.25 1.25 0 0 0 0 2.5h2a1.25 1.25 0 0 0 0-2.5z"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

@@ -37,7 +37,9 @@ const IconPayInvoiceRegular = ({color, size = 24, ...rest}: IconProps): JSX.Elem
                     />
                 </svg>
             );
-        } else if (skinName.match(/^blau/i)) {
+        }
+
+        if (skinName.match(/^blau/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -46,7 +48,9 @@ const IconPayInvoiceRegular = ({color, size = 24, ...rest}: IconProps): JSX.Elem
                     />
                 </svg>
             );
-        } else if (skinName.match(/^o2/i)) {
+        }
+
+        if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -55,7 +59,9 @@ const IconPayInvoiceRegular = ({color, size = 24, ...rest}: IconProps): JSX.Elem
                     />
                 </svg>
             );
-        } else if (skinName.match(/^vivo/i)) {
+        }
+
+        if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -68,24 +74,24 @@ const IconPayInvoiceRegular = ({color, size = 24, ...rest}: IconProps): JSX.Elem
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M18.485 15.285c.595-.082 1.2-.02 1.766.18a.75.75 0 0 1-.501 1.414 2.25 2.25 0 0 0-2.871 1.371H18a.75.75 0 0 1 0 1.5h-1.121q.05.146.122.284a2.25 2.25 0 0 0 2.749 1.087.75.75 0 0 1 .501 1.414 3.75 3.75 0 0 1-4.582-1.81 3.8 3.8 0 0 1-.343-.975H15a.75.75 0 0 1 0-1.5h.326a3.75 3.75 0 0 1 3.16-2.965"
-                    />
-                    <path
-                        fill={fillColor}
-                        d="M13 2.25q.072 0 .14.014h.01l.041.013c.034.01.067.017.098.03q.044.02.084.046.023.011.044.024.054.037.1.082l.013.01 5 5c.136.136.22.324.22.531v5a.75.75 0 0 1-1.5 0V8.75H14a1.746 1.746 0 0 1-1.75-1.752V3.75H6A1.25 1.25 0 0 0 4.75 5v14A1.25 1.25 0 0 0 6 20.25h6a.75.75 0 0 1 0 1.5H6A2.75 2.75 0 0 1 3.25 19V5A2.75 2.75 0 0 1 6 2.25zm.75 4.752a.25.25 0 0 0 .152.23q.046.018.096.018h2.191L13.75 4.81z"
-                    />
-                    <path
-                        fill={fillColor}
-                        d="M10 16.25a.75.75 0 0 1 0 1.5H8a.75.75 0 0 1 0-1.5zm2-4a.75.75 0 0 1 0 1.5H8a.75.75 0 0 1 0-1.5zm-3-6a.75.75 0 0 1 0 1.5H8a.75.75 0 0 1 0-1.5z"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M18.485 15.285c.595-.082 1.2-.02 1.766.18a.75.75 0 0 1-.501 1.414 2.25 2.25 0 0 0-2.871 1.371H18a.75.75 0 0 1 0 1.5h-1.121q.05.146.122.284a2.25 2.25 0 0 0 2.749 1.087.75.75 0 0 1 .501 1.414 3.75 3.75 0 0 1-4.582-1.81 3.8 3.8 0 0 1-.343-.975H15a.75.75 0 0 1 0-1.5h.326a3.75 3.75 0 0 1 3.16-2.965"
+                />
+                <path
+                    fill={fillColor}
+                    d="M13 2.25q.072 0 .14.014h.01l.041.013c.034.01.067.017.098.03q.044.02.084.046.023.011.044.024.054.037.1.082l.013.01 5 5c.136.136.22.324.22.531v5a.75.75 0 0 1-1.5 0V8.75H14a1.746 1.746 0 0 1-1.75-1.752V3.75H6A1.25 1.25 0 0 0 4.75 5v14A1.25 1.25 0 0 0 6 20.25h6a.75.75 0 0 1 0 1.5H6A2.75 2.75 0 0 1 3.25 19V5A2.75 2.75 0 0 1 6 2.25zm.75 4.752a.25.25 0 0 0 .152.23q.046.018.096.018h2.191L13.75 4.81z"
+                />
+                <path
+                    fill={fillColor}
+                    d="M10 16.25a.75.75 0 0 1 0 1.5H8a.75.75 0 0 1 0-1.5zm2-4a.75.75 0 0 1 0 1.5H8a.75.75 0 0 1 0-1.5zm-3-6a.75.75 0 0 1 0 1.5H8a.75.75 0 0 1 0-1.5z"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

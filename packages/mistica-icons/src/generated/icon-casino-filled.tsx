@@ -33,16 +33,16 @@ const IconCasinoFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element =
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M17 2.5A2.5 2.5 0 0 1 19.5 5v14a2.5 2.5 0 0 1-2.5 2.5H7A2.5 2.5 0 0 1 4.5 19V5A2.5 2.5 0 0 1 7 2.5zM16 17a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-4-9.5a.5.5 0 0 0-.4.2l-3 4a.5.5 0 0 0 0 .6l3 4a.5.5 0 0 0 .8 0l3-4a.5.5 0 0 0 0-.6l-3-4a.5.5 0 0 0-.4-.2M8 5a1 1 0 1 0 0 2 1 1 0 0 0 0-2"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M17 2.5A2.5 2.5 0 0 1 19.5 5v14a2.5 2.5 0 0 1-2.5 2.5H7A2.5 2.5 0 0 1 4.5 19V5A2.5 2.5 0 0 1 7 2.5zM16 17a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-4-9.5a.5.5 0 0 0-.4.2l-3 4a.5.5 0 0 0 0 .6l3 4a.5.5 0 0 0 .8 0l3-4a.5.5 0 0 0 0-.6l-3-4a.5.5 0 0 0-.4-.2M8 5a1 1 0 1 0 0 2 1 1 0 0 0 0-2"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

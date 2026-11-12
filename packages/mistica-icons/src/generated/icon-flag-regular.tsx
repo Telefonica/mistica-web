@@ -33,7 +33,9 @@ const IconFlagRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element =>
                     />
                 </svg>
             );
-        } else if (skinName.match(/^vivo/i)) {
+        }
+
+        if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -42,16 +44,16 @@ const IconFlagRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element =>
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M19 4.25a.75.75 0 0 1 .53 1.28L15.56 9.5l3.97 3.97a.75.75 0 0 1-.53 1.28H5.75V21a.75.75 0 0 1-1.5 0V5A.75.75 0 0 1 5 4.25zm-13.25 9h11.44l-3.22-3.22a.75.75 0 0 1 0-1.06l3.22-3.22H5.75z"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M19 4.25a.75.75 0 0 1 .53 1.28L15.56 9.5l3.97 3.97a.75.75 0 0 1-.53 1.28H5.75V21a.75.75 0 0 1-1.5 0V5A.75.75 0 0 1 5 4.25zm-13.25 9h11.44l-3.22-3.22a.75.75 0 0 1 0-1.06l3.22-3.22H5.75z"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

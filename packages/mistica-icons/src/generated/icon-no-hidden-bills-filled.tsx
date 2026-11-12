@@ -33,17 +33,17 @@ const IconNoHiddenBillsFilled = ({color, size = 24, ...rest}: IconProps): JSX.El
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M2.47 2.47a.75.75 0 0 1 1.06 0l18 18a.75.75 0 0 1-1.06 1.06l-.98-.98a2.25 2.25 0 0 1-1.99 1.2H7A2.75 2.75 0 0 1 4.25 19V5.31L2.47 3.53a.75.75 0 0 1 0-1.06M12 16.25a.75.75 0 0 0 0 1.5h4a.74.74 0 0 0 .497-.192l-1.308-1.308zm-3-4a.75.75 0 0 0 0 1.5h3.69l-1.5-1.5zM13.25 7A1.75 1.75 0 0 0 15 8.75h4.15a.6.6 0 0 1 .6.6V15a.75.75 0 0 1-1.28.53l-12-12A.75.75 0 0 1 7 2.25h5.65a.6.6 0 0 1 .6.6z"
-                    />
-                    <path fill={fillColor} d="M19.31 7.25H15a.25.25 0 0 1-.25-.25V2.69z" />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M2.47 2.47a.75.75 0 0 1 1.06 0l18 18a.75.75 0 0 1-1.06 1.06l-.98-.98a2.25 2.25 0 0 1-1.99 1.2H7A2.75 2.75 0 0 1 4.25 19V5.31L2.47 3.53a.75.75 0 0 1 0-1.06M12 16.25a.75.75 0 0 0 0 1.5h4a.74.74 0 0 0 .497-.192l-1.308-1.308zm-3-4a.75.75 0 0 0 0 1.5h3.69l-1.5-1.5zM13.25 7A1.75 1.75 0 0 0 15 8.75h4.15a.6.6 0 0 1 .6.6V15a.75.75 0 0 1-1.28.53l-12-12A.75.75 0 0 1 7 2.25h5.65a.6.6 0 0 1 .6.6z"
+                />
+                <path fill={fillColor} d="M19.31 7.25H15a.25.25 0 0 1-.25-.25V2.69z" />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

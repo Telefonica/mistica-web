@@ -33,16 +33,16 @@ const IconEmergencyCrossFilled = ({color, size = 24, ...rest}: IconProps): JSX.E
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M13.82 3.508A1.5 1.5 0 0 1 15.167 5v3.833H19a1.5 1.5 0 0 1 1.5 1.5v3.334l-.008.153A1.5 1.5 0 0 1 19 15.167h-3.833V19a1.5 1.5 0 0 1-1.347 1.492l-.153.008h-3.334a1.5 1.5 0 0 1-1.5-1.5v-3.833H5a1.5 1.5 0 0 1-1.492-1.347l-.008-.153v-3.334a1.5 1.5 0 0 1 1.5-1.5h3.833V5a1.5 1.5 0 0 1 1.5-1.5h3.334z"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M13.82 3.508A1.5 1.5 0 0 1 15.167 5v3.833H19a1.5 1.5 0 0 1 1.5 1.5v3.334l-.008.153A1.5 1.5 0 0 1 19 15.167h-3.833V19a1.5 1.5 0 0 1-1.347 1.492l-.153.008h-3.334a1.5 1.5 0 0 1-1.5-1.5v-3.833H5a1.5 1.5 0 0 1-1.492-1.347l-.008-.153v-3.334a1.5 1.5 0 0 1 1.5-1.5h3.833V5a1.5 1.5 0 0 1 1.5-1.5h3.334z"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

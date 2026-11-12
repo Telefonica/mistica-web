@@ -33,7 +33,9 @@ const IconMusicRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element =
                     />
                 </svg>
             );
-        } else if (skinName.match(/^vivo/i)) {
+        }
+
+        if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -42,16 +44,16 @@ const IconMusicRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element =
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M18.853 3.265A.75.75 0 0 1 19.75 4v12a1 1 0 0 1-.019.16q.018.168.019.34a3.25 3.25 0 1 1-1.5-2.738V8.914l-8.5 1.7V17a1 1 0 0 1-.019.16q.018.168.019.34a3.25 3.25 0 1 1-1.5-2.738V6a.75.75 0 0 1 .603-.735zM6.5 15.75a1.75 1.75 0 1 0 0 3.5 1.75 1.75 0 0 0 0-3.5m10-1a1.75 1.75 0 1 0 0 3.5 1.75 1.75 0 0 0 0-3.5M9.75 6.614v2.47l8.5-1.7v-2.47z"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M18.853 3.265A.75.75 0 0 1 19.75 4v12a1 1 0 0 1-.019.16q.018.168.019.34a3.25 3.25 0 1 1-1.5-2.738V8.914l-8.5 1.7V17a1 1 0 0 1-.019.16q.018.168.019.34a3.25 3.25 0 1 1-1.5-2.738V6a.75.75 0 0 1 .603-.735zM6.5 15.75a1.75 1.75 0 1 0 0 3.5 1.75 1.75 0 0 0 0-3.5m10-1a1.75 1.75 0 1 0 0 3.5 1.75 1.75 0 0 0 0-3.5M9.75 6.614v2.47l8.5-1.7v-2.47z"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

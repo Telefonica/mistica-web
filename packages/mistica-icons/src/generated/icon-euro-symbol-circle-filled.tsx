@@ -33,7 +33,9 @@ const IconEuroSymbolCircleFilled = ({color, size = 24, ...rest}: IconProps): JSX
                     />
                 </svg>
             );
-        } else if (skinName.match(/^vivo/i)) {
+        }
+
+        if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -42,16 +44,16 @@ const IconEuroSymbolCircleFilled = ({color, size = 24, ...rest}: IconProps): JSX
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M12 2.5a9.501 9.501 0 0 1 3.636 18.277 9.5 9.5 0 0 1-10.354-2.06A9.501 9.501 0 0 1 12 2.5m0 3.75c-2.05 0-3.666 1.5-4.368 3.5H7a.75.75 0 0 0 0 1.5h.292a7 7 0 0 0 0 1.5H7a.75.75 0 0 0 0 1.5h.632c.702 2 2.317 3.5 4.368 3.5 1.116 0 2.125-.463 2.913-1.203a.75.75 0 1 0-1.026-1.094c-.55.516-1.203.797-1.887.797-1.09 0-2.158-.76-2.758-2H11a.75.75 0 0 0 0-1.5H8.8a5.7 5.7 0 0 1 0-1.5H11a.75.75 0 0 0 0-1.5H9.242c.6-1.24 1.669-2 2.758-2 .685 0 1.338.28 1.888.797a.75.75 0 1 0 1.026-1.094C14.126 6.713 13.117 6.25 12 6.25"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M12 2.5a9.501 9.501 0 0 1 3.636 18.277 9.5 9.5 0 0 1-10.354-2.06A9.501 9.501 0 0 1 12 2.5m0 3.75c-2.05 0-3.666 1.5-4.368 3.5H7a.75.75 0 0 0 0 1.5h.292a7 7 0 0 0 0 1.5H7a.75.75 0 0 0 0 1.5h.632c.702 2 2.317 3.5 4.368 3.5 1.116 0 2.125-.463 2.913-1.203a.75.75 0 1 0-1.026-1.094c-.55.516-1.203.797-1.887.797-1.09 0-2.158-.76-2.758-2H11a.75.75 0 0 0 0-1.5H8.8a5.7 5.7 0 0 1 0-1.5H11a.75.75 0 0 0 0-1.5H9.242c.6-1.24 1.669-2 2.758-2 .685 0 1.338.28 1.888.797a.75.75 0 1 0 1.026-1.094C14.126 6.713 13.117 6.25 12 6.25"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

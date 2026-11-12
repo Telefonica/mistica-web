@@ -33,7 +33,9 @@ const IconShareFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element =>
                     />
                 </svg>
             );
-        } else if (skinName.match(/^o2/i)) {
+        }
+
+        if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -42,7 +44,9 @@ const IconShareFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element =>
                     />
                 </svg>
             );
-        } else if (skinName.match(/^vivo/i)) {
+        }
+
+        if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -51,16 +55,16 @@ const IconShareFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element =>
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M18.174 2.504A3.5 3.5 0 0 1 21.5 6l-.004.174a3.5 3.5 0 0 1-6.242 1.993L9.4 11.181a3.5 3.5 0 0 1 .001 1.636l5.852 3.015q.126-.161.271-.307A3.5 3.5 0 0 1 21.5 18l-.004.174a3.5 3.5 0 0 1-3.322 3.322L18 21.5a3.5 3.5 0 0 1-3.402-4.32l-5.852-3.013q-.126.16-.271.308a3.5 3.5 0 0 1-5.971-2.301L2.5 12a3.5 3.5 0 0 1 6.245-2.168l5.852-3.015A3.498 3.498 0 0 1 18 2.5z"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M18.174 2.504A3.5 3.5 0 0 1 21.5 6l-.004.174a3.5 3.5 0 0 1-6.242 1.993L9.4 11.181a3.5 3.5 0 0 1 .001 1.636l5.852 3.015q.126-.161.271-.307A3.5 3.5 0 0 1 21.5 18l-.004.174a3.5 3.5 0 0 1-3.322 3.322L18 21.5a3.5 3.5 0 0 1-3.402-4.32l-5.852-3.013q-.126.16-.271.308a3.5 3.5 0 0 1-5.971-2.301L2.5 12a3.5 3.5 0 0 1 6.245-2.168l5.852-3.015A3.498 3.498 0 0 1 18 2.5z"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

@@ -33,7 +33,9 @@ const IconAlertFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element =>
                     />
                 </svg>
             );
-        } else if (skinName.match(/^o2/i)) {
+        }
+
+        if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -42,7 +44,9 @@ const IconAlertFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element =>
                     />
                 </svg>
             );
-        } else if (skinName.match(/^vivo/i)) {
+        }
+
+        if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -51,16 +55,16 @@ const IconAlertFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element =>
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M12 2.168a2.42 2.42 0 0 1 1.98 1.033l.085.13.001.002 8.107 13.536.004.007a2.416 2.416 0 0 1-2.064 3.62H3.888a2.42 2.42 0 0 1-2.07-1.219 2.42 2.42 0 0 1 .006-2.402l.004-.007L9.931 3.34l.005-.009A2.42 2.42 0 0 1 12 2.168M12 15a1 1 0 1 0 0 2 1 1 0 0 0 0-2m0-6.75a.75.75 0 0 0-.75.75v4a.75.75 0 0 0 1.5 0V9a.75.75 0 0 0-.75-.75"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M12 2.168a2.42 2.42 0 0 1 1.98 1.033l.085.13.001.002 8.107 13.536.004.007a2.416 2.416 0 0 1-2.064 3.62H3.888a2.42 2.42 0 0 1-2.07-1.219 2.42 2.42 0 0 1 .006-2.402l.004-.007L9.931 3.34l.005-.009A2.42 2.42 0 0 1 12 2.168M12 15a1 1 0 1 0 0 2 1 1 0 0 0 0-2m0-6.75a.75.75 0 0 0-.75.75v4a.75.75 0 0 0 1.5 0V9a.75.75 0 0 0-.75-.75"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

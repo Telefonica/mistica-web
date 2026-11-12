@@ -33,21 +33,21 @@ const IconMobilePauseLight = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M17 16.25a.75.75 0 0 1 .75.75v5a.75.75 0 0 1-1.5 0v-5a.75.75 0 0 1 .75-.75m4 0a.75.75 0 0 1 .75.75v5a.75.75 0 0 1-1.5 0v-5a.75.75 0 0 1 .75-.75"
-                    />
-                    <path
-                        fill={fillColor}
-                        d="M16 2.25A2.75 2.75 0 0 1 18.75 5v8a.75.75 0 0 1-1.5 0V5c0-.69-.56-1.25-1.25-1.25H8c-.69 0-1.25.56-1.25 1.25v14c0 .69.56 1.25 1.25 1.25h4a.75.75 0 0 1 0 1.5H8A2.75 2.75 0 0 1 5.25 19V5A2.75 2.75 0 0 1 8 2.25z"
-                    />
-                    <path fill={fillColor} d="M12 16a1 1 0 1 1 0 2 1 1 0 0 1 0-2" />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M17 16.25a.75.75 0 0 1 .75.75v5a.75.75 0 0 1-1.5 0v-5a.75.75 0 0 1 .75-.75m4 0a.75.75 0 0 1 .75.75v5a.75.75 0 0 1-1.5 0v-5a.75.75 0 0 1 .75-.75"
+                />
+                <path
+                    fill={fillColor}
+                    d="M16 2.25A2.75 2.75 0 0 1 18.75 5v8a.75.75 0 0 1-1.5 0V5c0-.69-.56-1.25-1.25-1.25H8c-.69 0-1.25.56-1.25 1.25v14c0 .69.56 1.25 1.25 1.25h4a.75.75 0 0 1 0 1.5H8A2.75 2.75 0 0 1 5.25 19V5A2.75 2.75 0 0 1 8 2.25z"
+                />
+                <path fill={fillColor} d="M12 16a1 1 0 1 1 0 2 1 1 0 0 1 0-2" />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

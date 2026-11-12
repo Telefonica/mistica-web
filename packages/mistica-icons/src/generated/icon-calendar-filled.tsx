@@ -33,7 +33,9 @@ const IconCalendarFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element
                     />
                 </svg>
             );
-        } else if (skinName.match(/^o2/i)) {
+        }
+
+        if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -46,7 +48,9 @@ const IconCalendarFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element
                     />
                 </svg>
             );
-        } else if (skinName.match(/^vivo/i)) {
+        }
+
+        if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -55,16 +59,16 @@ const IconCalendarFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M16 1.25a.75.75 0 0 1 .75.75v1.25H18A2.75 2.75 0 0 1 20.75 6v12A2.75 2.75 0 0 1 18 20.75H6A2.75 2.75 0 0 1 3.25 18V6A2.75 2.75 0 0 1 6 3.25h1.25V2a.75.75 0 0 1 1.5 0v1.25h6.5V2a.75.75 0 0 1 .75-.75M4.75 18l.006.124A1.25 1.25 0 0 0 6 19.25h12A1.25 1.25 0 0 0 19.25 18V9.75H4.75z"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M16 1.25a.75.75 0 0 1 .75.75v1.25H18A2.75 2.75 0 0 1 20.75 6v12A2.75 2.75 0 0 1 18 20.75H6A2.75 2.75 0 0 1 3.25 18V6A2.75 2.75 0 0 1 6 3.25h1.25V2a.75.75 0 0 1 1.5 0v1.25h6.5V2a.75.75 0 0 1 .75-.75M4.75 18l.006.124A1.25 1.25 0 0 0 6 19.25h12A1.25 1.25 0 0 0 19.25 18V9.75H4.75z"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

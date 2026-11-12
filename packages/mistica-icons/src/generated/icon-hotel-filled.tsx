@@ -33,20 +33,20 @@ const IconHotelFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element =>
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M2 7.25a.75.75 0 0 1 .75.75v5.25h8.75V9a.5.5 0 0 1 .5-.5h7.175l.177.004c.88.042 1.717.403 2.346 1.017A3.46 3.46 0 0 1 22.75 12v5a.75.75 0 0 1-1.5 0v-2.25H2.75V17a.75.75 0 0 1-1.5 0V8A.75.75 0 0 1 2 7.25"
-                    />
-                    <path
-                        fill={fillColor}
-                        d="M7.247 6.513a2.5 2.5 0 1 1-2.734 2.734L4.5 9A2.5 2.5 0 0 1 7 6.5z"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M2 7.25a.75.75 0 0 1 .75.75v5.25h8.75V9a.5.5 0 0 1 .5-.5h7.175l.177.004c.88.042 1.717.403 2.346 1.017A3.46 3.46 0 0 1 22.75 12v5a.75.75 0 0 1-1.5 0v-2.25H2.75V17a.75.75 0 0 1-1.5 0V8A.75.75 0 0 1 2 7.25"
+                />
+                <path
+                    fill={fillColor}
+                    d="M7.247 6.513a2.5 2.5 0 1 1-2.734 2.734L4.5 9A2.5 2.5 0 0 1 7 6.5z"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

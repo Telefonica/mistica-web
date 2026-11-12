@@ -37,7 +37,9 @@ const IconMobileUserFilled = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
                     />
                 </svg>
             );
-        } else if (skinName.match(/^o2/i)) {
+        }
+
+        if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -46,16 +48,16 @@ const IconMobileUserFilled = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M16 2.5A2.5 2.5 0 0 1 18.5 5v14a2.5 2.5 0 0 1-2.5 2.5H8A2.5 2.5 0 0 1 5.5 19V5A2.5 2.5 0 0 1 8 2.5zM12 16a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-.005-5c-2.166 0-2.766 1.047-2.932 2.004-.094.544.385.996.937.996h4c.539 0 1.008-.431.927-.964-.148-.966-.742-2.036-2.932-2.036M12 6.25a1.75 1.75 0 1 0 0 3.5 1.75 1.75 0 0 0 0-3.5"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M16 2.5A2.5 2.5 0 0 1 18.5 5v14a2.5 2.5 0 0 1-2.5 2.5H8A2.5 2.5 0 0 1 5.5 19V5A2.5 2.5 0 0 1 8 2.5zM12 16a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-.005-5c-2.166 0-2.766 1.047-2.932 2.004-.094.544.385.996.937.996h4c.539 0 1.008-.431.927-.964-.148-.966-.742-2.036-2.932-2.036M12 6.25a1.75 1.75 0 1 0 0 3.5 1.75 1.75 0 0 0 0-3.5"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

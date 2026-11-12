@@ -33,16 +33,16 @@ const IconSupermarketFilled = ({color, size = 24, ...rest}: IconProps): JSX.Elem
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M19.153 1.508A1.5 1.5 0 0 1 20.5 3v2A1.5 1.5 0 0 1 19 6.5h-1.25v2.463l.59.074a2.75 2.75 0 0 1 2.41 2.729v8.484H22a.75.75 0 0 1 0 1.5H2a.75.75 0 0 1 0-1.5h1.25v-9.984a2.75 2.75 0 0 1 3.09-2.729l9.91 1.238V6.5H15A1.5 1.5 0 0 1 13.5 5V3A1.5 1.5 0 0 1 15 1.5h4zM4.75 20.25h6.5v-4.5h-6.5zm8 0h6.5v-4.5h-6.5z"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M19.153 1.508A1.5 1.5 0 0 1 20.5 3v2A1.5 1.5 0 0 1 19 6.5h-1.25v2.463l.59.074a2.75 2.75 0 0 1 2.41 2.729v8.484H22a.75.75 0 0 1 0 1.5H2a.75.75 0 0 1 0-1.5h1.25v-9.984a2.75 2.75 0 0 1 3.09-2.729l9.91 1.238V6.5H15A1.5 1.5 0 0 1 13.5 5V3A1.5 1.5 0 0 1 15 1.5h4zM4.75 20.25h6.5v-4.5h-6.5zm8 0h6.5v-4.5h-6.5z"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

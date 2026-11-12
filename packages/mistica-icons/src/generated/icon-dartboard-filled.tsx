@@ -33,7 +33,9 @@ const IconDartboardFilled = ({color, size = 24, ...rest}: IconProps): JSX.Elemen
                     />
                 </svg>
             );
-        } else if (skinName.match(/^vivo/i)) {
+        }
+
+        if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -42,16 +44,16 @@ const IconDartboardFilled = ({color, size = 24, ...rest}: IconProps): JSX.Elemen
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M16.94 1.94A1.5 1.5 0 0 1 19.5 3v1.5H21a1.5 1.5 0 0 1 1.06 2.56l-.91.91A9.95 9.95 0 0 1 22 12c0 5.523-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2c1.434 0 2.797.303 4.03.848zM12 6.25A5.75 5.75 0 1 0 17.75 12a.75.75 0 0 0-1.5 0A4.25 4.25 0 1 1 12 7.75a.75.75 0 0 0 0-1.5M15 6v1.94l-2.414 2.413A1.747 1.747 0 0 0 10.25 12a1.75 1.75 0 0 0 3.5 0c0-.206-.038-.403-.104-.587L16.061 9H18l3-3h-3V3z"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M16.94 1.94A1.5 1.5 0 0 1 19.5 3v1.5H21a1.5 1.5 0 0 1 1.06 2.56l-.91.91A9.95 9.95 0 0 1 22 12c0 5.523-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2c1.434 0 2.797.303 4.03.848zM12 6.25A5.75 5.75 0 1 0 17.75 12a.75.75 0 0 0-1.5 0A4.25 4.25 0 1 1 12 7.75a.75.75 0 0 0 0-1.5M15 6v1.94l-2.414 2.413A1.747 1.747 0 0 0 10.25 12a1.75 1.75 0 0 0 3.5 0c0-.206-.038-.403-.104-.587L16.061 9H18l3-3h-3V3z"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

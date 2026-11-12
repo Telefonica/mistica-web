@@ -37,7 +37,9 @@ const IconBoxFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
                     />
                 </svg>
             );
-        } else if (skinName.match(/^o2/i)) {
+        }
+
+        if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -46,7 +48,9 @@ const IconBoxFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
                     />
                 </svg>
             );
-        } else if (skinName.match(/^vivo/i)) {
+        }
+
+        if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -55,16 +59,16 @@ const IconBoxFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M3.5 8.507a.25.25 0 0 1 .372-.218l3.08 1.732q.028.015.052.038a.75.75 0 0 0 .28.158.3.3 0 0 1 .062.025l3.7 2.082a.4.4 0 0 1 .204.349v8.222a.15.15 0 0 1-.224.13l-7.271-4.09A.5.5 0 0 1 3.5 16.5zm16.629-.166a.25.25 0 0 1 .371.219v7.94a.5.5 0 0 1-.255.436l-7.271 4.09a.15.15 0 0 1-.224-.131v-8.219a.4.4 0 0 1 .206-.35zM16.477 5.17a.4.4 0 0 1 .396-.002l2.532 1.425a.25.25 0 0 1 0 .435l-7.11 3.95a.6.6 0 0 1-.585-.001L9.423 9.69a.25.25 0 0 1-.003-.435zm-4.663-2.634a.5.5 0 0 1 .431.029l2.528 1.422a.25.25 0 0 1 .002.434L7.817 8.448a.6.6 0 0 1-.594.004L4.643 7a.25.25 0 0 1 0-.435l7.112-4z"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M3.5 8.507a.25.25 0 0 1 .372-.218l3.08 1.732q.028.015.052.038a.75.75 0 0 0 .28.158.3.3 0 0 1 .062.025l3.7 2.082a.4.4 0 0 1 .204.349v8.222a.15.15 0 0 1-.224.13l-7.271-4.09A.5.5 0 0 1 3.5 16.5zm16.629-.166a.25.25 0 0 1 .371.219v7.94a.5.5 0 0 1-.255.436l-7.271 4.09a.15.15 0 0 1-.224-.131v-8.219a.4.4 0 0 1 .206-.35zM16.477 5.17a.4.4 0 0 1 .396-.002l2.532 1.425a.25.25 0 0 1 0 .435l-7.11 3.95a.6.6 0 0 1-.585-.001L9.423 9.69a.25.25 0 0 1-.003-.435zm-4.663-2.634a.5.5 0 0 1 .431.029l2.528 1.422a.25.25 0 0 1 .002.434L7.817 8.448a.6.6 0 0 1-.594.004L4.643 7a.25.25 0 0 1 0-.435l7.112-4z"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

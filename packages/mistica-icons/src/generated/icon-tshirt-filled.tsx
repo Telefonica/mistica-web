@@ -33,16 +33,16 @@ const IconTshirtFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element =
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="m15.158 3.525 6 2A.5.5 0 0 1 21.5 6v5a.5.5 0 0 1-.5.5h-2.5V19a1.5 1.5 0 0 1-1.5 1.5H7A1.5 1.5 0 0 1 5.5 19v-7.5H3a.5.5 0 0 1-.5-.5V6a.5.5 0 0 1 .342-.475l6-2A.5.5 0 0 1 9.5 4a2.5 2.5 0 0 0 5 0 .5.5 0 0 1 .658-.475"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="m15.158 3.525 6 2A.5.5 0 0 1 21.5 6v5a.5.5 0 0 1-.5.5h-2.5V19a1.5 1.5 0 0 1-1.5 1.5H7A1.5 1.5 0 0 1 5.5 19v-7.5H3a.5.5 0 0 1-.5-.5V6a.5.5 0 0 1 .342-.475l6-2A.5.5 0 0 1 9.5 4a2.5 2.5 0 0 0 5 0 .5.5 0 0 1 .658-.475"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

@@ -33,7 +33,9 @@ const IconLockOpenFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element
                     />
                 </svg>
             );
-        } else if (skinName.match(/^vivo/i)) {
+        }
+
+        if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -42,16 +44,16 @@ const IconLockOpenFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M12.235 1.256A4.75 4.75 0 0 1 16.75 6a.75.75 0 0 1-1.5 0 3.25 3.25 0 0 0-3.089-3.246L12 2.75A3.25 3.25 0 0 0 8.75 6v4.5H17a2.5 2.5 0 0 1 2.5 2.5v6a2.5 2.5 0 0 1-2.5 2.5H7A2.5 2.5 0 0 1 4.5 19v-6A2.5 2.5 0 0 1 7 10.5h.25V6A4.75 4.75 0 0 1 12 1.25zM12 14.25a1.75 1.75 0 1 0 0 3.5 1.75 1.75 0 0 0 0-3.5"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M12.235 1.256A4.75 4.75 0 0 1 16.75 6a.75.75 0 0 1-1.5 0 3.25 3.25 0 0 0-3.089-3.246L12 2.75A3.25 3.25 0 0 0 8.75 6v4.5H17a2.5 2.5 0 0 1 2.5 2.5v6a2.5 2.5 0 0 1-2.5 2.5H7A2.5 2.5 0 0 1 4.5 19v-6A2.5 2.5 0 0 1 7 10.5h.25V6A4.75 4.75 0 0 1 12 1.25zM12 14.25a1.75 1.75 0 1 0 0 3.5 1.75 1.75 0 0 0 0-3.5"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

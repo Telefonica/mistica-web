@@ -33,16 +33,16 @@ const IconCircuitsFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M8 3.5a.25.25 0 0 1 .25.25V9c0 .966.784 1.75 1.75 1.75h2.42a1.748 1.748 0 0 0 3.33-.75 1.75 1.75 0 0 0-3.33-.75H10A.25.25 0 0 1 9.75 9V3.75A.25.25 0 0 1 10 3.5h8A2.5 2.5 0 0 1 20.5 6v8a.25.25 0 0 1-.25.25h-7.67a1.748 1.748 0 0 0-3.33.75 1.75 1.75 0 0 0 3.33.75h7.67a.25.25 0 0 1 .25.25v2a2.5 2.5 0 0 1-2.5 2.5H6A2.5 2.5 0 0 1 3.5 18V6A2.5 2.5 0 0 1 6 3.5z"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M8 3.5a.25.25 0 0 1 .25.25V9c0 .966.784 1.75 1.75 1.75h2.42a1.748 1.748 0 0 0 3.33-.75 1.75 1.75 0 0 0-3.33-.75H10A.25.25 0 0 1 9.75 9V3.75A.25.25 0 0 1 10 3.5h8A2.5 2.5 0 0 1 20.5 6v8a.25.25 0 0 1-.25.25h-7.67a1.748 1.748 0 0 0-3.33.75 1.75 1.75 0 0 0 3.33.75h7.67a.25.25 0 0 1 .25.25v2a2.5 2.5 0 0 1-2.5 2.5H6A2.5 2.5 0 0 1 3.5 18V6A2.5 2.5 0 0 1 6 3.5z"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

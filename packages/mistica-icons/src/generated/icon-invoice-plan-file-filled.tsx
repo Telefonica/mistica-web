@@ -37,7 +37,9 @@ const IconInvoicePlanFileFilled = ({color, size = 24, ...rest}: IconProps): JSX.
                     />
                 </svg>
             );
-        } else if (skinName.match(/^o2/i)) {
+        }
+
+        if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -47,7 +49,9 @@ const IconInvoicePlanFileFilled = ({color, size = 24, ...rest}: IconProps): JSX.
                     <path fill={fillColor} d="M4.752 7.18 9.68 2.248V7.18z" />
                 </svg>
             );
-        } else if (skinName.match(/^vivo/i)) {
+        }
+
+        if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -56,17 +60,17 @@ const IconInvoicePlanFileFilled = ({color, size = 24, ...rest}: IconProps): JSX.
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M12.65 2.5a.6.6 0 0 1 .6.6V7A1.75 1.75 0 0 0 15 8.75h3.9a.6.6 0 0 1 .6.6V19a2.5 2.5 0 0 1-2.5 2.5H7A2.5 2.5 0 0 1 4.5 19V5A2.5 2.5 0 0 1 7 2.5zM13 16.25a.75.75 0 0 0 0 1.5h2a.75.75 0 0 0 0-1.5zm-4-4a.75.75 0 0 0 0 1.5h6a.75.75 0 0 0 0-1.5zm0-6a.75.75 0 0 0 0 1.5h1a.75.75 0 0 0 0-1.5z"
-                    />
-                    <path fill={fillColor} d="M18.957 7.25H15a.25.25 0 0 1-.25-.25V3.043z" />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M12.65 2.5a.6.6 0 0 1 .6.6V7A1.75 1.75 0 0 0 15 8.75h3.9a.6.6 0 0 1 .6.6V19a2.5 2.5 0 0 1-2.5 2.5H7A2.5 2.5 0 0 1 4.5 19V5A2.5 2.5 0 0 1 7 2.5zM13 16.25a.75.75 0 0 0 0 1.5h2a.75.75 0 0 0 0-1.5zm-4-4a.75.75 0 0 0 0 1.5h6a.75.75 0 0 0 0-1.5zm0-6a.75.75 0 0 0 0 1.5h1a.75.75 0 0 0 0-1.5z"
+                />
+                <path fill={fillColor} d="M18.957 7.25H15a.25.25 0 0 1-.25-.25V3.043z" />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

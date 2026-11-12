@@ -33,7 +33,9 @@ const IconRewindLight = ({color, size = 24, ...rest}: IconProps): JSX.Element =>
                     />
                 </svg>
             );
-        } else if (skinName.match(/^vivo/i)) {
+        }
+
+        if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -46,16 +48,16 @@ const IconRewindLight = ({color, size = 24, ...rest}: IconProps): JSX.Element =>
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M8.677 5.16c.808-.706 2.073-.132 2.073.941v11.797c0 1.074-1.265 1.648-2.073.94l-6.74-5.898a1.25 1.25 0 0 1 0-1.88zM3.139 12l6.11 5.346V6.652zm16.538-6.84c.808-.706 2.073-.132 2.073.941v11.797c0 1.074-1.265 1.648-2.073.94l-6.74-5.898a1.25 1.25 0 0 1 0-1.88zM14.139 12l6.11 5.346V6.652z"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M8.677 5.16c.808-.706 2.073-.132 2.073.941v11.797c0 1.074-1.265 1.648-2.073.94l-6.74-5.898a1.25 1.25 0 0 1 0-1.88zM3.139 12l6.11 5.346V6.652zm16.538-6.84c.808-.706 2.073-.132 2.073.941v11.797c0 1.074-1.265 1.648-2.073.94l-6.74-5.898a1.25 1.25 0 0 1 0-1.88zM14.139 12l6.11 5.346V6.652z"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

@@ -33,7 +33,9 @@ const IconVideoCameraLight = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
                     />
                 </svg>
             );
-        } else if (skinName.match(/^vivo/i)) {
+        }
+
+        if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -46,16 +48,16 @@ const IconVideoCameraLight = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M13 5.25A2.75 2.75 0 0 1 15.75 8v.787l3.468-1.733.205-.087a1.752 1.752 0 0 1 2.327 1.651v6.765l-.015.223a1.75 1.75 0 0 1-1.656 1.524 1.75 1.75 0 0 1-.861-.183l-3.468-1.733V16A2.75 2.75 0 0 1 13 18.75H5A2.75 2.75 0 0 1 2.25 16V8A2.75 2.75 0 0 1 5 5.25zm-8 1.5A1.25 1.25 0 0 0 3.75 8v8A1.25 1.25 0 0 0 5 17.25h8A1.25 1.25 0 0 0 14.25 16V8A1.25 1.25 0 0 0 13 6.75zm15.012 1.62a.25.25 0 0 0-.123.026l-4.139 2.068v3.073l4.139 2.068a.25.25 0 0 0 .243-.01.25.25 0 0 0 .118-.212V8.619l-.008-.063a.25.25 0 0 0-.23-.187"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M13 5.25A2.75 2.75 0 0 1 15.75 8v.787l3.468-1.733.205-.087a1.752 1.752 0 0 1 2.327 1.651v6.765l-.015.223a1.75 1.75 0 0 1-1.656 1.524 1.75 1.75 0 0 1-.861-.183l-3.468-1.733V16A2.75 2.75 0 0 1 13 18.75H5A2.75 2.75 0 0 1 2.25 16V8A2.75 2.75 0 0 1 5 5.25zm-8 1.5A1.25 1.25 0 0 0 3.75 8v8A1.25 1.25 0 0 0 5 17.25h8A1.25 1.25 0 0 0 14.25 16V8A1.25 1.25 0 0 0 13 6.75zm15.012 1.62a.25.25 0 0 0-.123.026l-4.139 2.068v3.073l4.139 2.068a.25.25 0 0 0 .243-.01.25.25 0 0 0 .118-.212V8.619l-.008-.063a.25.25 0 0 0-.23-.187"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

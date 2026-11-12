@@ -33,7 +33,9 @@ const IconSearchLight = ({color, size = 24, ...rest}: IconProps): JSX.Element =>
                     />
                 </svg>
             );
-        } else if (skinName.match(/^o2/i)) {
+        }
+
+        if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -42,7 +44,9 @@ const IconSearchLight = ({color, size = 24, ...rest}: IconProps): JSX.Element =>
                     />
                 </svg>
             );
-        } else if (skinName.match(/^vivo/i)) {
+        }
+
+        if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -51,16 +55,16 @@ const IconSearchLight = ({color, size = 24, ...rest}: IconProps): JSX.Element =>
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M10.38 2.26A7.75 7.75 0 0 1 17.75 10l-.01.38a7.75 7.75 0 0 1-1.756 4.544l5.546 5.546a.75.75 0 1 1-1.06 1.06l-5.546-5.546A7.75 7.75 0 0 1 10 17.75a7.75 7.75 0 0 1-7.74-7.37L2.25 10A7.75 7.75 0 0 1 10 2.25zM10 3.75A6.25 6.25 0 0 0 3.75 10l.008.308A6.25 6.25 0 0 0 16.25 10l-.008-.308a6.25 6.25 0 0 0-5.934-5.934z"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M10.38 2.26A7.75 7.75 0 0 1 17.75 10l-.01.38a7.75 7.75 0 0 1-1.756 4.544l5.546 5.546a.75.75 0 1 1-1.06 1.06l-5.546-5.546A7.75 7.75 0 0 1 10 17.75a7.75 7.75 0 0 1-7.74-7.37L2.25 10A7.75 7.75 0 0 1 10 2.25zM10 3.75A6.25 6.25 0 0 0 3.75 10l.008.308A6.25 6.25 0 0 0 16.25 10l-.008-.308a6.25 6.25 0 0 0-5.934-5.934z"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

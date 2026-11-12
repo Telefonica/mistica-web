@@ -33,16 +33,16 @@ const IconBandAidFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element 
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M16 2.55a5.452 5.452 0 0 1 3.854 9.305l-8 8A5.452 5.452 0 0 1 2.55 16c0-1.445.575-2.832 1.596-3.854l8-8A5.45 5.45 0 0 1 16 2.55M12 13a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2-2a1 1 0 1 0 0 2 1 1 0 0 0 0-2m4 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2-2a1 1 0 1 0 0 2 1 1 0 0 0 0-2"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M16 2.55a5.452 5.452 0 0 1 3.854 9.305l-8 8A5.452 5.452 0 0 1 2.55 16c0-1.445.575-2.832 1.596-3.854l8-8A5.45 5.45 0 0 1 16 2.55M12 13a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2-2a1 1 0 1 0 0 2 1 1 0 0 0 0-2m4 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2-2a1 1 0 1 0 0 2 1 1 0 0 0 0-2"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

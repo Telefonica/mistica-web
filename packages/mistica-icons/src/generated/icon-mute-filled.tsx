@@ -33,7 +33,9 @@ const IconMuteFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => 
                     />
                 </svg>
             );
-        } else if (skinName.match(/^vivo/i)) {
+        }
+
+        if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -42,16 +44,16 @@ const IconMuteFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => 
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M9.875 5.26a1 1 0 0 1 1.625.78v11.92a1 1 0 0 1-1.625.78l-4.05-3.24H4A1.5 1.5 0 0 1 2.5 14v-4A1.5 1.5 0 0 1 4 8.5h1.824zm9.595 3.71a.75.75 0 0 1 1.06 1.06L18.56 12l1.97 1.97a.75.75 0 0 1-1.06 1.06l-1.97-1.97-1.97 1.97a.75.75 0 1 1-1.06-1.06L16.44 12l-1.97-1.97a.75.75 0 0 1 1.06-1.06l1.97 1.97z"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M9.875 5.26a1 1 0 0 1 1.625.78v11.92a1 1 0 0 1-1.625.78l-4.05-3.24H4A1.5 1.5 0 0 1 2.5 14v-4A1.5 1.5 0 0 1 4 8.5h1.824zm9.595 3.71a.75.75 0 0 1 1.06 1.06L18.56 12l1.97 1.97a.75.75 0 0 1-1.06 1.06l-1.97-1.97-1.97 1.97a.75.75 0 1 1-1.06-1.06L16.44 12l-1.97-1.97a.75.75 0 0 1 1.06-1.06l1.97 1.97z"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

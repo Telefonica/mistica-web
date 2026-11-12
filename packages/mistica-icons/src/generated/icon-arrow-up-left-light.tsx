@@ -33,7 +33,9 @@ const IconArrowUpLeftLight = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
                     />
                 </svg>
             );
-        } else if (skinName.match(/^vivo/i)) {
+        }
+
+        if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -42,16 +44,16 @@ const IconArrowUpLeftLight = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M15.515 4.952a1.749 1.749 0 0 1 1.196 2.887l-.089.095-2.005 2.005 5.127 5.127a1.75 1.75 0 0 1 0 2.475l-2.829 2.828a1.75 1.75 0 0 1-2.475 0l-5.127-5.126-2.004 2.005a1.753 1.753 0 0 1-2.694-.265 1.75 1.75 0 0 1-.294-.972V6.697a1.75 1.75 0 0 1 1.75-1.75h9.314zM6.07 6.447a.25.25 0 0 0-.25.25v9.314a.25.25 0 0 0 .427.176l2.535-2.535a.75.75 0 0 1 1.062 0l5.656 5.656a.25.25 0 0 0 .354 0l2.828-2.828a.25.25 0 0 0 0-.353l-5.657-5.657a.75.75 0 0 1 0-1.06l2.536-2.536a.25.25 0 0 0 .054-.273.25.25 0 0 0-.231-.154z"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M15.515 4.952a1.749 1.749 0 0 1 1.196 2.887l-.089.095-2.005 2.005 5.127 5.127a1.75 1.75 0 0 1 0 2.475l-2.829 2.828a1.75 1.75 0 0 1-2.475 0l-5.127-5.126-2.004 2.005a1.753 1.753 0 0 1-2.694-.265 1.75 1.75 0 0 1-.294-.972V6.697a1.75 1.75 0 0 1 1.75-1.75h9.314zM6.07 6.447a.25.25 0 0 0-.25.25v9.314a.25.25 0 0 0 .427.176l2.535-2.535a.75.75 0 0 1 1.062 0l5.656 5.656a.25.25 0 0 0 .354 0l2.828-2.828a.25.25 0 0 0 0-.353l-5.657-5.657a.75.75 0 0 1 0-1.06l2.536-2.536a.25.25 0 0 0 .054-.273.25.25 0 0 0-.231-.154z"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

@@ -37,16 +37,16 @@ const IconAlarmClockFilled = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M12 5.5a7.5 7.5 0 1 1-.002 15A7.5 7.5 0 0 1 12 5.5m0 3.75a.75.75 0 0 0-.75.75v3c0 .414.336.75.75.75h2a.75.75 0 0 0 0-1.5h-1.25V10a.75.75 0 0 0-.75-.75M6.559 3.394a.75.75 0 0 1 .882 1.212l-2.75 2a.75.75 0 0 1-.882-1.212zm9.835.165a.75.75 0 0 1 1.047-.165l2.75 2a.75.75 0 0 1-.882 1.212l-2.75-2a.75.75 0 0 1-.165-1.047"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M12 5.5a7.5 7.5 0 1 1-.002 15A7.5 7.5 0 0 1 12 5.5m0 3.75a.75.75 0 0 0-.75.75v3c0 .414.336.75.75.75h2a.75.75 0 0 0 0-1.5h-1.25V10a.75.75 0 0 0-.75-.75M6.559 3.394a.75.75 0 0 1 .882 1.212l-2.75 2a.75.75 0 0 1-.882-1.212zm9.835.165a.75.75 0 0 1 1.047-.165l2.75 2a.75.75 0 0 1-.882 1.212l-2.75-2a.75.75 0 0 1-.165-1.047"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

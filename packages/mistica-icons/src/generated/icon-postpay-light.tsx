@@ -38,7 +38,9 @@ const IconPostpayLight = ({color, size = 24, ...rest}: IconProps): JSX.Element =
                     <path fill={fillColor} d="M9.963 5.242a.5.5 0 0 1 0 1h-3.5a.5.5 0 0 1 0-1z" />
                 </svg>
             );
-        } else if (skinName.match(/^vivo/i)) {
+        }
+
+        if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -51,17 +53,17 @@ const IconPostpayLight = ({color, size = 24, ...rest}: IconProps): JSX.Element =
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M19.47 13.47a.75.75 0 0 1 1.06 0l2 2a1 1 0 0 1 .067.078l.011.015a1 1 0 0 1 .073.127l.018.042a1 1 0 0 1 .034.117l.004.027q.01.053.011.11v.034a1 1 0 0 1-.01.101q-.002.018-.006.034a1 1 0 0 1-.039.132 1 1 0 0 1-.063.118q-.022.035-.048.069l-.016.016-.036.04-2 2a.75.75 0 1 1-1.06-1.06l.72-.72H19a2.25 2.25 0 1 0 1.5 3.927.75.75 0 0 1 1 1.118A3.75 3.75 0 1 1 19 15.25h1.19l-.72-.72a.75.75 0 0 1 0-1.06M16 2.25A2.75 2.75 0 0 1 18.75 5v6a.75.75 0 0 1-1.5 0V5c0-.69-.56-1.25-1.25-1.25H8c-.69 0-1.25.56-1.25 1.25v14c0 .69.56 1.25 1.25 1.25h4a.75.75 0 0 1 0 1.5H8A2.75 2.75 0 0 1 5.25 19V5A2.75 2.75 0 0 1 8 2.25z"
-                    />
-                    <path fill={fillColor} d="M12 16a1 1 0 1 1 0 2 1 1 0 0 1 0-2" />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M19.47 13.47a.75.75 0 0 1 1.06 0l2 2a1 1 0 0 1 .067.078l.011.015a1 1 0 0 1 .073.127l.018.042a1 1 0 0 1 .034.117l.004.027q.01.053.011.11v.034a1 1 0 0 1-.01.101q-.002.018-.006.034a1 1 0 0 1-.039.132 1 1 0 0 1-.063.118q-.022.035-.048.069l-.016.016-.036.04-2 2a.75.75 0 1 1-1.06-1.06l.72-.72H19a2.25 2.25 0 1 0 1.5 3.927.75.75 0 0 1 1 1.118A3.75 3.75 0 1 1 19 15.25h1.19l-.72-.72a.75.75 0 0 1 0-1.06M16 2.25A2.75 2.75 0 0 1 18.75 5v6a.75.75 0 0 1-1.5 0V5c0-.69-.56-1.25-1.25-1.25H8c-.69 0-1.25.56-1.25 1.25v14c0 .69.56 1.25 1.25 1.25h4a.75.75 0 0 1 0 1.5H8A2.75 2.75 0 0 1 5.25 19V5A2.75 2.75 0 0 1 8 2.25z"
+                />
+                <path fill={fillColor} d="M12 16a1 1 0 1 1 0 2 1 1 0 0 1 0-2" />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

@@ -41,7 +41,9 @@ const IconBlogLight = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
                     />
                 </svg>
             );
-        } else if (skinName.match(/^vivo/i)) {
+        }
+
+        if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -54,20 +56,20 @@ const IconBlogLight = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M17 15.25a.75.75 0 0 1 0 1.5H7a.75.75 0 0 1 0-1.5zm0-4a.75.75 0 0 1 0 1.5H7a.75.75 0 0 1 0-1.5zm0-4a.75.75 0 0 1 0 1.5H7a.75.75 0 0 1 0-1.5z"
-                    />
-                    <path
-                        fill={fillColor}
-                        d="M19 3.25A2.75 2.75 0 0 1 21.75 6v12A2.75 2.75 0 0 1 19 20.75H5A2.75 2.75 0 0 1 2.25 18V6A2.75 2.75 0 0 1 5 3.25zM5 4.75A1.25 1.25 0 0 0 3.75 6v12A1.25 1.25 0 0 0 5 19.25h14A1.25 1.25 0 0 0 20.25 18V6A1.25 1.25 0 0 0 19 4.75z"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M17 15.25a.75.75 0 0 1 0 1.5H7a.75.75 0 0 1 0-1.5zm0-4a.75.75 0 0 1 0 1.5H7a.75.75 0 0 1 0-1.5zm0-4a.75.75 0 0 1 0 1.5H7a.75.75 0 0 1 0-1.5z"
+                />
+                <path
+                    fill={fillColor}
+                    d="M19 3.25A2.75 2.75 0 0 1 21.75 6v12A2.75 2.75 0 0 1 19 20.75H5A2.75 2.75 0 0 1 2.25 18V6A2.75 2.75 0 0 1 5 3.25zM5 4.75A1.25 1.25 0 0 0 3.75 6v12A1.25 1.25 0 0 0 5 19.25h14A1.25 1.25 0 0 0 20.25 18V6A1.25 1.25 0 0 0 19 4.75z"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

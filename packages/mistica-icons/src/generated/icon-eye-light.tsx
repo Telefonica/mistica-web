@@ -37,7 +37,9 @@ const IconEyeLight = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
                     />
                 </svg>
             );
-        } else if (skinName.match(/^o2/i)) {
+        }
+
+        if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -50,7 +52,9 @@ const IconEyeLight = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
                     />
                 </svg>
             );
-        } else if (skinName.match(/^vivo/i)) {
+        }
+
+        if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -59,17 +63,17 @@ const IconEyeLight = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path fill={fillColor} d="M12 9.25a2.75 2.75 0 1 1 0 5.5 2.75 2.75 0 0 1 0-5.5" />
-                    <path
-                        fill={fillColor}
-                        d="M12 5.25c3.588 0 6.581 1.838 8.97 5.315a2.53 2.53 0 0 1 0 2.87c-2.39 3.477-5.382 5.315-8.97 5.315s-6.581-1.838-8.97-5.315a2.53 2.53 0 0 1 0-2.87C5.42 7.088 8.412 5.25 12 5.25m0 1.5c-2.978 0-5.552 1.489-7.733 4.664a1.035 1.035 0 0 0 0 1.172C6.448 15.76 9.022 17.25 12 17.25s5.552-1.489 7.733-4.664a1.035 1.035 0 0 0 0-1.172C17.552 8.24 14.978 6.75 12 6.75"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path fill={fillColor} d="M12 9.25a2.75 2.75 0 1 1 0 5.5 2.75 2.75 0 0 1 0-5.5" />
+                <path
+                    fill={fillColor}
+                    d="M12 5.25c3.588 0 6.581 1.838 8.97 5.315a2.53 2.53 0 0 1 0 2.87c-2.39 3.477-5.382 5.315-8.97 5.315s-6.581-1.838-8.97-5.315a2.53 2.53 0 0 1 0-2.87C5.42 7.088 8.412 5.25 12 5.25m0 1.5c-2.978 0-5.552 1.489-7.733 4.664a1.035 1.035 0 0 0 0 1.172C6.448 15.76 9.022 17.25 12 17.25s5.552-1.489 7.733-4.664a1.035 1.035 0 0 0 0-1.172C17.552 8.24 14.978 6.75 12 6.75"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

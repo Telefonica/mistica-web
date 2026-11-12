@@ -33,7 +33,9 @@ const IconPauseCircleRegular = ({color, size = 24, ...rest}: IconProps): JSX.Ele
                     />
                 </svg>
             );
-        } else if (skinName.match(/^vivo/i)) {
+        }
+
+        if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -46,20 +48,20 @@ const IconPauseCircleRegular = ({color, size = 24, ...rest}: IconProps): JSX.Ele
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M10.75 15a.75.75 0 0 1-1.5 0V9a.75.75 0 0 1 1.5 0zm4 0a.75.75 0 0 1-1.5 0V9a.75.75 0 0 1 1.5 0z"
-                    />
-                    <path
-                        fill={fillColor}
-                        d="M21.75 12a9.75 9.75 0 1 1-19.5 0 9.75 9.75 0 0 1 19.5 0m-1.5 0a8.25 8.25 0 1 0-16.5-.001 8.25 8.25 0 0 0 16.5.001"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M10.75 15a.75.75 0 0 1-1.5 0V9a.75.75 0 0 1 1.5 0zm4 0a.75.75 0 0 1-1.5 0V9a.75.75 0 0 1 1.5 0z"
+                />
+                <path
+                    fill={fillColor}
+                    d="M21.75 12a9.75 9.75 0 1 1-19.5 0 9.75 9.75 0 0 1 19.5 0m-1.5 0a8.25 8.25 0 1 0-16.5-.001 8.25 8.25 0 0 0 16.5.001"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

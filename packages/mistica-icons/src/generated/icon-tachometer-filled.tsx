@@ -33,7 +33,9 @@ const IconTachometerFilled = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
                     />
                 </svg>
             );
-        } else if (skinName.match(/^o2/i)) {
+        }
+
+        if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -42,7 +44,9 @@ const IconTachometerFilled = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
                     />
                 </svg>
             );
-        } else if (skinName.match(/^vivo/i)) {
+        }
+
+        if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -51,16 +55,16 @@ const IconTachometerFilled = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M12 2.5a9.501 9.501 0 0 1 7.834 14.874c-.72 1.05-1.955 1.49-3.127 1.49H7.293c-1.172 0-2.407-.44-3.127-1.49A9.5 9.5 0 0 1 12 2.5m4.53 4.97a.75.75 0 0 0-1.06 0l-3 3a1 1 0 0 0-.074.085 1.5 1.5 0 1 0 1.048 1.048 1 1 0 0 0 .086-.073l3-3a.75.75 0 0 0 0-1.06M12 6.25A5.75 5.75 0 0 0 6.25 12a.75.75 0 0 0 1.5 0A4.25 4.25 0 0 1 12 7.75a.75.75 0 0 0 0-1.5"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M12 2.5a9.501 9.501 0 0 1 7.834 14.874c-.72 1.05-1.955 1.49-3.127 1.49H7.293c-1.172 0-2.407-.44-3.127-1.49A9.5 9.5 0 0 1 12 2.5m4.53 4.97a.75.75 0 0 0-1.06 0l-3 3a1 1 0 0 0-.074.085 1.5 1.5 0 1 0 1.048 1.048 1 1 0 0 0 .086-.073l3-3a.75.75 0 0 0 0-1.06M12 6.25A5.75 5.75 0 0 0 6.25 12a.75.75 0 0 0 1.5 0A4.25 4.25 0 0 1 12 7.75a.75.75 0 0 0 0-1.5"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

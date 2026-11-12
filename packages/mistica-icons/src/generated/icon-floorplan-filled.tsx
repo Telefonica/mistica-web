@@ -33,16 +33,16 @@ const IconFloorplanFilled = ({color, size = 24, ...rest}: IconProps): JSX.Elemen
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M11 2.25a.25.25 0 0 1 .25.25v7.75H10a.75.75 0 0 0 0 1.5h2a.75.75 0 0 0 .75-.75V2.5a.25.25 0 0 1 .25-.25h3A2.75 2.75 0 0 1 18.75 5v5.69l3.28 3.28a.75.75 0 0 1-1.06 1.06l-2.22-2.22V19A2.75 2.75 0 0 1 16 21.75H5A2.75 2.75 0 0 1 2.25 19v-7a.25.25 0 0 1 .25-.25H6a.75.75 0 0 0 0-1.5H2.5a.25.25 0 0 1-.25-.25V5A2.75 2.75 0 0 1 5 2.25z"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M11 2.25a.25.25 0 0 1 .25.25v7.75H10a.75.75 0 0 0 0 1.5h2a.75.75 0 0 0 .75-.75V2.5a.25.25 0 0 1 .25-.25h3A2.75 2.75 0 0 1 18.75 5v5.69l3.28 3.28a.75.75 0 0 1-1.06 1.06l-2.22-2.22V19A2.75 2.75 0 0 1 16 21.75H5A2.75 2.75 0 0 1 2.25 19v-7a.25.25 0 0 1 .25-.25H6a.75.75 0 0 0 0-1.5H2.5a.25.25 0 0 1-.25-.25V5A2.75 2.75 0 0 1 5 2.25z"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

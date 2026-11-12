@@ -33,7 +33,9 @@ const IconHomeLight = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
                     />
                 </svg>
             );
-        } else if (skinName.match(/^o2/i)) {
+        }
+
+        if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -42,7 +44,9 @@ const IconHomeLight = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
                     />
                 </svg>
             );
-        } else if (skinName.match(/^vivo/i)) {
+        }
+
+        if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -51,16 +55,16 @@ const IconHomeLight = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M10.088 3.807a2.75 2.75 0 0 1 3.824 0l6 5.807c.535.518.838 1.232.838 1.976V19A2.75 2.75 0 0 1 18 21.75H6A2.75 2.75 0 0 1 3.25 19v-7.41c0-.744.303-1.458.838-1.976zm2.781 1.077a1.25 1.25 0 0 0-1.738 0l-6 5.808c-.243.235-.38.56-.381.898V19c0 .69.56 1.25 1.25 1.25h3.25V16a2.75 2.75 0 0 1 5.5 0v4.25H18c.69 0 1.25-.56 1.25-1.25v-7.41c0-.338-.138-.663-.38-.898zM12 14.75c-.69 0-1.25.56-1.25 1.25v4.25h2.5V16c0-.69-.56-1.25-1.25-1.25"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M10.088 3.807a2.75 2.75 0 0 1 3.824 0l6 5.807c.535.518.838 1.232.838 1.976V19A2.75 2.75 0 0 1 18 21.75H6A2.75 2.75 0 0 1 3.25 19v-7.41c0-.744.303-1.458.838-1.976zm2.781 1.077a1.25 1.25 0 0 0-1.738 0l-6 5.808c-.243.235-.38.56-.381.898V19c0 .69.56 1.25 1.25 1.25h3.25V16a2.75 2.75 0 0 1 5.5 0v4.25H18c.69 0 1.25-.56 1.25-1.25v-7.41c0-.338-.138-.663-.38-.898zM12 14.75c-.69 0-1.25.56-1.25 1.25v4.25h2.5V16c0-.69-.56-1.25-1.25-1.25"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

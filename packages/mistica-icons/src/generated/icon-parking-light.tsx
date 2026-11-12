@@ -33,7 +33,9 @@ const IconParkingLight = ({color, size = 24, ...rest}: IconProps): JSX.Element =
                     />
                 </svg>
             );
-        } else if (skinName.match(/^vivo/i)) {
+        }
+
+        if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -42,20 +44,20 @@ const IconParkingLight = ({color, size = 24, ...rest}: IconProps): JSX.Element =
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M12.667 7.25c.697 0 1.236.424 1.566.92.335.501.517 1.15.517 1.83s-.182 1.329-.517 1.83c-.33.496-.87.92-1.566.92H10.75V16a.75.75 0 0 1-1.5 0V8a.75.75 0 0 1 .75-.75zm-1.917 4h1.917c.04 0 .167-.024.318-.252.149-.223.265-.573.265-.998s-.116-.776-.265-.998c-.151-.228-.279-.252-.318-.252H10.75z"
-                    />
-                    <path
-                        fill={fillColor}
-                        d="M19 2.25A2.75 2.75 0 0 1 21.75 5v14A2.75 2.75 0 0 1 19 21.75H5A2.75 2.75 0 0 1 2.25 19V5A2.75 2.75 0 0 1 5 2.25zM5 3.75A1.25 1.25 0 0 0 3.75 5v14A1.25 1.25 0 0 0 5 20.25h14A1.25 1.25 0 0 0 20.25 19V5A1.25 1.25 0 0 0 19 3.75z"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M12.667 7.25c.697 0 1.236.424 1.566.92.335.501.517 1.15.517 1.83s-.182 1.329-.517 1.83c-.33.496-.87.92-1.566.92H10.75V16a.75.75 0 0 1-1.5 0V8a.75.75 0 0 1 .75-.75zm-1.917 4h1.917c.04 0 .167-.024.318-.252.149-.223.265-.573.265-.998s-.116-.776-.265-.998c-.151-.228-.279-.252-.318-.252H10.75z"
+                />
+                <path
+                    fill={fillColor}
+                    d="M19 2.25A2.75 2.75 0 0 1 21.75 5v14A2.75 2.75 0 0 1 19 21.75H5A2.75 2.75 0 0 1 2.25 19V5A2.75 2.75 0 0 1 5 2.25zM5 3.75A1.25 1.25 0 0 0 3.75 5v14A1.25 1.25 0 0 0 5 20.25h14A1.25 1.25 0 0 0 20.25 19V5A1.25 1.25 0 0 0 19 3.75z"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

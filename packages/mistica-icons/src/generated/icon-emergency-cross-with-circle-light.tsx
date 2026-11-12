@@ -33,20 +33,20 @@ const IconEmergencyCrossWithCircleLight = ({color, size = 24, ...rest}: IconProp
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M12.7 7a.8.8 0 0 1 .8.8v2.695h2.705a.8.8 0 0 1 .8.8v1.4a.8.8 0 0 1-.8.8H13.5V16.2a.8.8 0 0 1-.8.8h-1.4a.8.8 0 0 1-.8-.8v-2.705H7.805a.8.8 0 0 1-.8-.8v-1.4a.8.8 0 0 1 .8-.8H10.5V7.8a.8.8 0 0 1 .8-.8z"
-                    />
-                    <path
-                        fill={fillColor}
-                        d="M12 2.25a9.75 9.75 0 1 1 0 19.5 9.75 9.75 0 0 1 0-19.5m0 1.5a8.25 8.25 0 1 0-.001 16.5A8.25 8.25 0 0 0 12 3.75"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M12.7 7a.8.8 0 0 1 .8.8v2.695h2.705a.8.8 0 0 1 .8.8v1.4a.8.8 0 0 1-.8.8H13.5V16.2a.8.8 0 0 1-.8.8h-1.4a.8.8 0 0 1-.8-.8v-2.705H7.805a.8.8 0 0 1-.8-.8v-1.4a.8.8 0 0 1 .8-.8H10.5V7.8a.8.8 0 0 1 .8-.8z"
+                />
+                <path
+                    fill={fillColor}
+                    d="M12 2.25a9.75 9.75 0 1 1 0 19.5 9.75 9.75 0 0 1 0-19.5m0 1.5a8.25 8.25 0 1 0-.001 16.5A8.25 8.25 0 0 0 12 3.75"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

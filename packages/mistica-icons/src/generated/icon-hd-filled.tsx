@@ -33,20 +33,20 @@ const IconHdFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M15 9.75A1.25 1.25 0 0 1 16.25 11v2A1.25 1.25 0 0 1 15 14.25h-.25v-4.5z"
-                    />
-                    <path
-                        fill={fillColor}
-                        d="M19 4.5A2.5 2.5 0 0 1 21.5 7v10a2.5 2.5 0 0 1-2.5 2.5H5A2.5 2.5 0 0 1 2.5 17V7A2.5 2.5 0 0 1 5 4.5zm-9 3.75a.75.75 0 0 0-.75.75v2.25h-1.5V9a.75.75 0 0 0-1.5 0v6a.75.75 0 0 0 1.5 0v-2.25h1.5V15a.75.75 0 0 0 1.5 0V9a.75.75 0 0 0-.75-.75m4 0a.75.75 0 0 0-.75.75v6c0 .414.336.75.75.75h1A2.75 2.75 0 0 0 17.75 13v-2A2.75 2.75 0 0 0 15 8.25z"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M15 9.75A1.25 1.25 0 0 1 16.25 11v2A1.25 1.25 0 0 1 15 14.25h-.25v-4.5z"
+                />
+                <path
+                    fill={fillColor}
+                    d="M19 4.5A2.5 2.5 0 0 1 21.5 7v10a2.5 2.5 0 0 1-2.5 2.5H5A2.5 2.5 0 0 1 2.5 17V7A2.5 2.5 0 0 1 5 4.5zm-9 3.75a.75.75 0 0 0-.75.75v2.25h-1.5V9a.75.75 0 0 0-1.5 0v6a.75.75 0 0 0 1.5 0v-2.25h1.5V15a.75.75 0 0 0 1.5 0V9a.75.75 0 0 0-.75-.75m4 0a.75.75 0 0 0-.75.75v6c0 .414.336.75.75.75h1A2.75 2.75 0 0 0 17.75 13v-2A2.75 2.75 0 0 0 15 8.25z"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

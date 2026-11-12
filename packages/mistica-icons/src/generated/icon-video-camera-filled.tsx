@@ -33,7 +33,9 @@ const IconVideoCameraFilled = ({color, size = 24, ...rest}: IconProps): JSX.Elem
                     />
                 </svg>
             );
-        } else if (skinName.match(/^vivo/i)) {
+        }
+
+        if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -42,16 +44,16 @@ const IconVideoCameraFilled = ({color, size = 24, ...rest}: IconProps): JSX.Elem
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M13 5.5A2.5 2.5 0 0 1 15.5 8v1.19l3.83-1.914.175-.074A1.5 1.5 0 0 1 21.5 8.617v6.765l-.013.19a1.5 1.5 0 0 1-.699 1.085 1.5 1.5 0 0 1-1.459.066L15.5 14.809V16a2.5 2.5 0 0 1-2.5 2.5H5A2.5 2.5 0 0 1 2.5 16V8A2.5 2.5 0 0 1 5 5.5z"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M13 5.5A2.5 2.5 0 0 1 15.5 8v1.19l3.83-1.914.175-.074A1.5 1.5 0 0 1 21.5 8.617v6.765l-.013.19a1.5 1.5 0 0 1-.699 1.085 1.5 1.5 0 0 1-1.459.066L15.5 14.809V16a2.5 2.5 0 0 1-2.5 2.5H5A2.5 2.5 0 0 1 2.5 16V8A2.5 2.5 0 0 1 5 5.5z"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

@@ -33,7 +33,9 @@ const IconFastForwardRegular = ({color, size = 24, ...rest}: IconProps): JSX.Ele
                     />
                 </svg>
             );
-        } else if (skinName.match(/^vivo/i)) {
+        }
+
+        if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -42,16 +44,16 @@ const IconFastForwardRegular = ({color, size = 24, ...rest}: IconProps): JSX.Ele
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M2.25 6.102c0-1.007 1.112-1.574 1.917-1.059l.156.119 6.74 5.898a1.25 1.25 0 0 1 0 1.88l-6.74 5.9c-.808.706-2.072.132-2.073-.941zm1.5 11.245L9.86 12 3.75 6.654zm9.5-11.245c0-1.007 1.112-1.574 1.917-1.059l.156.119 6.74 5.898a1.25 1.25 0 0 1 0 1.88l-6.74 5.9c-.808.706-2.072.132-2.073-.941zm1.5 11.245L20.86 12l-6.11-5.347z"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M2.25 6.102c0-1.007 1.112-1.574 1.917-1.059l.156.119 6.74 5.898a1.25 1.25 0 0 1 0 1.88l-6.74 5.9c-.808.706-2.072.132-2.073-.941zm1.5 11.245L9.86 12 3.75 6.654zm9.5-11.245c0-1.007 1.112-1.574 1.917-1.059l.156.119 6.74 5.898a1.25 1.25 0 0 1 0 1.88l-6.74 5.9c-.808.706-2.072.132-2.073-.941zm1.5 11.245L20.86 12l-6.11-5.347z"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

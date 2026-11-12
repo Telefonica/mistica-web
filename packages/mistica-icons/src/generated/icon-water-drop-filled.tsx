@@ -33,7 +33,9 @@ const IconWaterDropFilled = ({color, size = 24, ...rest}: IconProps): JSX.Elemen
                     />
                 </svg>
             );
-        } else if (skinName.match(/^vivo/i)) {
+        }
+
+        if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -42,16 +44,16 @@ const IconWaterDropFilled = ({color, size = 24, ...rest}: IconProps): JSX.Elemen
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M11.5 2.5a.5.5 0 0 1 .416.223l4.875 7.307.013.02c.663 1.109 1.413 2.132 1.618 3.481a6.9 6.9 0 0 1-.543 3.889 6.95 6.95 0 0 1-2.583 2.972 7.05 7.05 0 0 1-7.592 0 6.95 6.95 0 0 1-2.583-2.972 6.9 6.9 0 0 1-.543-3.889c.205-1.349.955-2.372 1.618-3.48l.013-.02 4.875-7.308A.5.5 0 0 1 11.5 2.5"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M11.5 2.5a.5.5 0 0 1 .416.223l4.875 7.307.013.02c.663 1.109 1.413 2.132 1.618 3.481a6.9 6.9 0 0 1-.543 3.889 6.95 6.95 0 0 1-2.583 2.972 7.05 7.05 0 0 1-7.592 0 6.95 6.95 0 0 1-2.583-2.972 6.9 6.9 0 0 1-.543-3.889c.205-1.349.955-2.372 1.618-3.48l.013-.02 4.875-7.308A.5.5 0 0 1 11.5 2.5"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

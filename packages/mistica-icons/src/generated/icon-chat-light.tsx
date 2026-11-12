@@ -33,7 +33,9 @@ const IconChatLight = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
                     />
                 </svg>
             );
-        } else if (skinName.match(/^vivo/i)) {
+        }
+
+        if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -46,16 +48,16 @@ const IconChatLight = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M6.327 4.87c3.779-2.436 8.994-2.143 12.404.765 3.556 3.034 4.057 7.987 1.121 11.55-2.847 3.454-8.033 4.51-12.24 2.6l-4.456.949a.752.752 0 0 1-.868-.97l1.186-3.561C1.17 12.453 2.237 7.76 5.966 5.115zm11.43 1.906c-2.99-2.55-7.673-2.743-10.923-.438h-.001C3.617 8.62 2.84 12.603 4.92 15.68a.75.75 0 0 1 .09.657l-.885 2.657 3.418-.727.123-.017a.75.75 0 0 1 .36.076c3.67 1.781 8.238.853 10.668-2.096 2.397-2.908 2.017-6.934-.937-9.454"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M6.327 4.87c3.779-2.436 8.994-2.143 12.404.765 3.556 3.034 4.057 7.987 1.121 11.55-2.847 3.454-8.033 4.51-12.24 2.6l-4.456.949a.752.752 0 0 1-.868-.97l1.186-3.561C1.17 12.453 2.237 7.76 5.966 5.115zm11.43 1.906c-2.99-2.55-7.673-2.743-10.923-.438h-.001C3.617 8.62 2.84 12.603 4.92 15.68a.75.75 0 0 1 .09.657l-.885 2.657 3.418-.727.123-.017a.75.75 0 0 1 .36.076c3.67 1.781 8.238.853 10.668-2.096 2.397-2.908 2.017-6.934-.937-9.454"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

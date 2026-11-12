@@ -33,7 +33,9 @@ const IconCarLight = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
                     />
                 </svg>
             );
-        } else if (skinName.match(/^vivo/i)) {
+        }
+
+        if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -42,16 +44,16 @@ const IconCarLight = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M14 5.25a.75.75 0 0 1 .586.281l3.775 4.719H19A2.75 2.75 0 0 1 21.75 13v4a.75.75 0 0 1-.75.75h-1.356a2.747 2.747 0 0 1-5.288 0H9.644a2.748 2.748 0 0 1-5.288 0H3a.75.75 0 0 1-.75-.75v-6a.8.8 0 0 1 .054-.278l2-5 .05-.103A.75.75 0 0 1 5 5.25zm-7 10.5a1.25 1.25 0 1 0 0 2.5 1.25 1.25 0 0 0 0-2.5m10 0a1.25 1.25 0 1 0 0 2.5 1.25 1.25 0 0 0 0-2.5m-13.25.5h.606a2.748 2.748 0 0 1 5.288 0h4.712a2.747 2.747 0 0 1 5.288 0h.606V13A1.25 1.25 0 0 0 19 11.75H3.75zm.357-6h7.143v-3.5H5.508zm8.643 0h3.69l-2.801-3.5h-.889z"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M14 5.25a.75.75 0 0 1 .586.281l3.775 4.719H19A2.75 2.75 0 0 1 21.75 13v4a.75.75 0 0 1-.75.75h-1.356a2.747 2.747 0 0 1-5.288 0H9.644a2.748 2.748 0 0 1-5.288 0H3a.75.75 0 0 1-.75-.75v-6a.8.8 0 0 1 .054-.278l2-5 .05-.103A.75.75 0 0 1 5 5.25zm-7 10.5a1.25 1.25 0 1 0 0 2.5 1.25 1.25 0 0 0 0-2.5m10 0a1.25 1.25 0 1 0 0 2.5 1.25 1.25 0 0 0 0-2.5m-13.25.5h.606a2.748 2.748 0 0 1 5.288 0h4.712a2.747 2.747 0 0 1 5.288 0h.606V13A1.25 1.25 0 0 0 19 11.75H3.75zm.357-6h7.143v-3.5H5.508zm8.643 0h3.69l-2.801-3.5h-.889z"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

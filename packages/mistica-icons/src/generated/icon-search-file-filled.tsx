@@ -33,21 +33,21 @@ const IconSearchFileFilled = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M16.5 14.25a3.25 3.25 0 0 1 2.766 4.955l2.264 2.265a.75.75 0 0 1-1.06 1.06l-2.265-2.264A3.248 3.248 0 0 1 13.25 17.5a3.25 3.25 0 0 1 3.25-3.25m0 1.5a1.75 1.75 0 1 0 0 3.5 1.75 1.75 0 0 0 0-3.5"
-                    />
-                    <path
-                        fill={fillColor}
-                        d="M12.65 2.5a.6.6 0 0 1 .6.6V7A1.75 1.75 0 0 0 15 8.75h3.9a.6.6 0 0 1 .6.6v4.468a4.749 4.749 0 1 0-5.558 7.682H7A2.5 2.5 0 0 1 4.5 19V5A2.5 2.5 0 0 1 7 2.5z"
-                    />
-                    <path fill={fillColor} d="M18.957 7.25H15a.25.25 0 0 1-.25-.25V3.043z" />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M16.5 14.25a3.25 3.25 0 0 1 2.766 4.955l2.264 2.265a.75.75 0 0 1-1.06 1.06l-2.265-2.264A3.248 3.248 0 0 1 13.25 17.5a3.25 3.25 0 0 1 3.25-3.25m0 1.5a1.75 1.75 0 1 0 0 3.5 1.75 1.75 0 0 0 0-3.5"
+                />
+                <path
+                    fill={fillColor}
+                    d="M12.65 2.5a.6.6 0 0 1 .6.6V7A1.75 1.75 0 0 0 15 8.75h3.9a.6.6 0 0 1 .6.6v4.468a4.749 4.749 0 1 0-5.558 7.682H7A2.5 2.5 0 0 1 4.5 19V5A2.5 2.5 0 0 1 7 2.5z"
+                />
+                <path fill={fillColor} d="M18.957 7.25H15a.25.25 0 0 1-.25-.25V3.043z" />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

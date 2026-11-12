@@ -33,16 +33,16 @@ const IconLightningRegular = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M12.394 2.559A.75.75 0 0 1 13.75 3v6.25H19a.75.75 0 0 1 .607 1.192l-8 11A.75.75 0 0 1 10.25 21v-6.25H5a.75.75 0 0 1-.606-1.191zM6.473 13.25H11a.75.75 0 0 1 .75.75v4.694l5.778-7.944H13a.75.75 0 0 1-.75-.75V5.306z"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M12.394 2.559A.75.75 0 0 1 13.75 3v6.25H19a.75.75 0 0 1 .607 1.192l-8 11A.75.75 0 0 1 10.25 21v-6.25H5a.75.75 0 0 1-.606-1.191zM6.473 13.25H11a.75.75 0 0 1 .75.75v4.694l5.778-7.944H13a.75.75 0 0 1-.75-.75V5.306z"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

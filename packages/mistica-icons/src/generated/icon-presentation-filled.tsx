@@ -33,16 +33,16 @@ const IconPresentationFilled = ({color, size = 24, ...rest}: IconProps): JSX.Ele
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M21 3.25a.75.75 0 0 1 0 1.5h-.5V14a2.5 2.5 0 0 1-2.5 2.5h-5.25v2.75H15a.75.75 0 0 1 0 1.5H9a.75.75 0 0 1 0-1.5h2.25V16.5H6A2.5 2.5 0 0 1 3.5 14V4.75H3a.75.75 0 0 1 0-1.5zm-4.47 4.22a.75.75 0 0 0-1.06 0L13 9.94l-1.47-1.47a.75.75 0 0 0-1.004-.052l-.056.052-3 3a.75.75 0 1 0 1.06 1.06L11 10.06l1.47 1.47a.75.75 0 0 0 1.06 0l3-3a.75.75 0 0 0 0-1.06"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M21 3.25a.75.75 0 0 1 0 1.5h-.5V14a2.5 2.5 0 0 1-2.5 2.5h-5.25v2.75H15a.75.75 0 0 1 0 1.5H9a.75.75 0 0 1 0-1.5h2.25V16.5H6A2.5 2.5 0 0 1 3.5 14V4.75H3a.75.75 0 0 1 0-1.5zm-4.47 4.22a.75.75 0 0 0-1.06 0L13 9.94l-1.47-1.47a.75.75 0 0 0-1.004-.052l-.056.052-3 3a.75.75 0 1 0 1.06 1.06L11 10.06l1.47 1.47a.75.75 0 0 0 1.06 0l3-3a.75.75 0 0 0 0-1.06"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();

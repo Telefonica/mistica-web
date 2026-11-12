@@ -37,7 +37,9 @@ const IconSharedMobileDataFilled = ({color, size = 24, ...rest}: IconProps): JSX
                     />
                 </svg>
             );
-        } else if (skinName.match(/^vivo/i)) {
+        }
+
+        if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                     <path
@@ -50,20 +52,20 @@ const IconSharedMobileDataFilled = ({color, size = 24, ...rest}: IconProps): JSX
                     />
                 </svg>
             );
-        } else {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-                    <path
-                        fill={fillColor}
-                        d="M21.13 16.262q.01 0 .018.003l.04.011q.05.012.098.03a.75.75 0 0 1 .362.324q.025.04.044.083a.8.8 0 0 1 .058.287v4.5a.75.75 0 0 1-1.5 0v-2.69l-3.72 3.72a.75.75 0 0 1-1.06-1.06l3.72-3.72H16.5a.746.746 0 0 1-.734-.599.76.76 0 0 1 .112-.57.76.76 0 0 1 .622-.331H21q.067 0 .13.012"
-                    />
-                    <path
-                        fill={fillColor}
-                        d="M16 2.5A2.5 2.5 0 0 1 18.5 5v9.5a.25.25 0 0 1-.25.25H16.5a2.25 2.25 0 0 0-1.139 4.189c.157.091.205.312.076.44l-1.028 1.03c-.26.26-.442.57-.548.899a.27.27 0 0 1-.252.192H8A2.5 2.5 0 0 1 5.5 19V5A2.5 2.5 0 0 1 8 2.5zM12 16c-.55 0-1 .45-1 1s.45 1 1 1 1-.45 1-1-.45-1-1-1"
-                    />
-                </svg>
-            );
         }
+
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    fill={fillColor}
+                    d="M21.13 16.262q.01 0 .018.003l.04.011q.05.012.098.03a.75.75 0 0 1 .362.324q.025.04.044.083a.8.8 0 0 1 .058.287v4.5a.75.75 0 0 1-1.5 0v-2.69l-3.72 3.72a.75.75 0 0 1-1.06-1.06l3.72-3.72H16.5a.746.746 0 0 1-.734-.599.76.76 0 0 1 .112-.57.76.76 0 0 1 .622-.331H21q.067 0 .13.012"
+                />
+                <path
+                    fill={fillColor}
+                    d="M16 2.5A2.5 2.5 0 0 1 18.5 5v9.5a.25.25 0 0 1-.25.25H16.5a2.25 2.25 0 0 0-1.139 4.189c.157.091.205.312.076.44l-1.028 1.03c-.26.26-.442.57-.548.899a.27.27 0 0 1-.252.192H8A2.5 2.5 0 0 1 5.5 19V5A2.5 2.5 0 0 1 8 2.5zM12 16c-.55 0-1 .45-1 1s.45 1 1 1 1-.45 1-1-.45-1-1-1"
+                />
+            </svg>
+        );
     };
 
     const svgContent = getSvgContent();
