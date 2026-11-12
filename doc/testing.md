@@ -18,10 +18,11 @@ effectively removes unused code.
 
 ## Unit tests
 
-`yarn test` runs the React unit suite with Jest. The next PR in the migration stack moves these tests to
-Playwright Test and removes Jest. Browser, screenshot and SSR tests already use Playwright Test directly.
-Install Chromium with `yarn playwright install chromium`, or `yarn playwright install --with-deps chromium` on
-Linux.
+`yarn test` runs the component and utility tests with Jest in jsdom and writes coverage to
+`reports/coverage/lcov.info`.
+
+Browser, screenshot and SSR tests use Playwright Test. Install Chromium with
+`yarn playwright install chromium`, or `yarn playwright install --with-deps chromium` on Linux.
 
 ## Acceptance and screenshot tests
 
@@ -39,10 +40,9 @@ Each page gets an isolated browser context. `openStoryPage` configures the viewp
 agent, color scheme and safe area overrides. Queries in `screen` and `within` return Playwright locators. Use
 their native methods such as `fill`, `pressSequentially`, `selectOption` and `setInputFiles`.
 
-Screenshot assertions use Playwright's pixel comparison and reuse the existing reference images.
-Parameterized cases have unique reference filenames. Normal
-test runs never create or update reference images. Review differences in `reports/playwright` or open
-`yarn playwright show-report reports/playwright-html`.
+Screenshot assertions use Playwright's pixel comparison and reuse the existing reference images. Parameterized
+cases have unique reference filenames. Normal test runs never create or update reference images. Review
+differences in `reports/playwright` or open `yarn playwright show-report reports/playwright-html`.
 
 Generate reference images in the official `mcr.microsoft.com/playwright:v1.64.1-noble` container, matching CI.
 Update the container tag and pinned Playwright dependencies together when upgrading Chromium:
