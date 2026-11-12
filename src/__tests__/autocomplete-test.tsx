@@ -66,6 +66,39 @@ test('shows options on focus and on input', async () => {
     expect(getOptions()).toHaveLength(DEFAULT_SUGGESTIONS.length);
 });
 
+test('closes suggestions without changing the value when disabled while open', async () => {
+    const changes: string[] = [];
+    const picker = (disabled: boolean) => (
+        <ThemeContextProvider theme={makeTheme()}>
+            <Autocomplete
+                disabled={disabled}
+                getSuggestions={defaultGetSuggestions}
+                label="City"
+                name="city"
+                onChangeValue={(value) => changes.push(value)}
+                value="Alpha"
+            />
+        </ThemeContextProvider>
+    );
+    const {rerender} = render(picker(false));
+
+    await userEvent.click(getInput());
+    const option = screen.getByRole('option', {name: 'Bravo'});
+    rerender(picker(true));
+    fireEvent.click(option);
+
+    expect(changes).toEqual([]);
+    expect(getInput()).toHaveAttribute('aria-expanded', 'false');
+    expect(getListbox()).not.toBeVisible();
+
+    rerender(picker(false));
+    expect(getListbox()).not.toBeVisible();
+    getInput().blur();
+    await userEvent.click(getInput());
+    await userEvent.click(screen.getByRole('option', {name: 'Bravo'}));
+    expect(changes).toEqual(['Bravo']);
+});
+
 test('keyboard navigation: ArrowDown/ArrowUp set active option and aria-activedescendant', async () => {
     renderWithTheme(<AutocompleteWrapper />);
 
