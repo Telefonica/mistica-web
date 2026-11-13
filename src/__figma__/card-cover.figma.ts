@@ -121,7 +121,8 @@ export default {
         />
     `,
     imports: [
-        'import {CoverCard, ButtonPrimary, ButtonSecondary, ButtonLink, IconLightningRegular} from "@telefonica/mistica";',
+        'import {CoverCard, ButtonPrimary, ButtonSecondary, ButtonLink} from "@telefonica/mistica";',
+        'import IconLightningRegular from "@telefonica/mistica-icons/icon-lightning-regular";',
     ],
     id: 'card-cover',
     metadata: {nestable: false},

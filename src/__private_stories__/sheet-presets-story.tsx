@@ -1,5 +1,6 @@
 import * as React from 'react';
-import {Box, ButtonPrimary, Circle, IconMobileDeviceRegular, SheetRoot, skinVars, Stack, Text3} from '..';
+import {Box, ButtonPrimary, Circle, SheetRoot, skinVars, Stack, Text3} from '..';
+import IconMobileDeviceRegular from '@telefonica/mistica-icons/icon-mobile-device-regular';
 import RadioListSheet from '../sheet-radio-list';
 import InfoSheet from '../sheet-info';
 import ActionsSheet from '../sheet-actions';
