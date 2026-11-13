@@ -11,14 +11,11 @@ import {
     Avatar,
     NavigationBreadcrumbs,
     ButtonPrimary,
-    IconPhotoCameraRegular,
     ButtonSecondary,
     ButtonDanger,
     ButtonLink,
     Callout,
-    IconBoxLight,
     DataCard,
-    IconLightningRegular,
     ButtonLinkDanger,
     PageBullets,
     Checkbox,
@@ -50,15 +47,18 @@ import {
     Header,
     Placeholder,
     NegativeBox,
-    IconInvoicePlanFileRegular,
     Meter,
     Timeline,
     TimelineItem,
-    IconShopRegular,
     CoverCard,
-    IconExportRegular,
     FileUpload,
 } from '..';
+import IconPhotoCameraRegular from '@telefonica/mistica-icons/icon-photo-camera-regular';
+import IconBoxLight from '@telefonica/mistica-icons/icon-box-light';
+import IconLightningRegular from '@telefonica/mistica-icons/icon-lightning-regular';
+import IconInvoicePlanFileRegular from '@telefonica/mistica-icons/icon-invoice-plan-file-regular';
+import IconShopRegular from '@telefonica/mistica-icons/icon-shop-regular';
+import IconExportRegular from '@telefonica/mistica-icons/icon-export-regular';
 import avatarImg from '../__stories__/images/avatar.jpg';
 import usingVrImg from '../__stories__/images/using-vr.jpg';
 

@@ -4,11 +4,11 @@ import {
     NavigationBarAction,
     NavigationBarActionGroup,
     useScreenSize,
-    IconQuestionRegular,
-    IconCloseRegular,
     Text2,
     Placeholder,
 } from '..';
+import IconQuestionRegular from '@telefonica/mistica-icons/icon-question-regular';
+import IconCloseRegular from '@telefonica/mistica-icons/icon-close-regular';
 import {vars} from '../skins/skin-contract.css';
 
 import type {PadSize} from '../box';
