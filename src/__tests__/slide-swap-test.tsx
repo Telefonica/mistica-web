@@ -101,7 +101,7 @@ test('SlideSwap announces the visible content on every swap, but not on mount', 
     expect(screen.getByRole('status')).toHaveTextContent('Sending…');
 
     rerender(<AnnouncingSlideSwap showSwappedContent={false} />);
-    expect(screen.getByRole('status')).toHaveTextContent('Send');
+    expect(screen.getByRole('status')).toHaveTextContent(/^Send$/);
 });
 
 test('SlideSwap clears the announcement after a second, so it is not left next to the visible content', () => {

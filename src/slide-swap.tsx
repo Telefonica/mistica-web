@@ -9,9 +9,9 @@ import {getPrefixedDataAttributes} from './utils/dom';
 
 import type {DataAttributes} from './utils/types';
 
-const DEFAULT_DURATION = 300;
+const DEFAULT_DURATION_IN_MS = 300;
 const OFFSET = '2rem';
-const ANNOUNCEMENT_DURATION = 1000;
+const ANNOUNCEMENT_DURATION_IN_MS = 1000;
 
 type Props = {
     /** content shown when `showSwappedContent` is false */
@@ -53,7 +53,7 @@ const SlideSwap = ({
     showSwappedContent,
     direction = 'up',
     align = 'center',
-    duration = DEFAULT_DURATION,
+    duration = DEFAULT_DURATION_IN_MS,
     onTransitionEnd,
     announceSwap = false,
     className,
@@ -78,11 +78,15 @@ const SlideSwap = ({
         if (lastShowSwappedContentRef.current === showSwappedContent) {
             return;
         }
+
         lastShowSwappedContentRef.current = showSwappedContent;
-        if (announceSwap) {
-            const visibleContent = showSwappedContent ? swappedContentRef.current : primaryContentRef.current;
-            setAnnouncement(visibleContent?.textContent?.trim() ?? '');
+
+        if (!announceSwap) {
+            return;
         }
+
+        const visibleContent = showSwappedContent ? swappedContentRef.current : primaryContentRef.current;
+        setAnnouncement(visibleContent?.textContent?.trim() ?? '');
     }, [showSwappedContent, announceSwap]);
 
     // clear the announcement once it has been read, so virtual cursor navigation doesn't find it next to
@@ -91,7 +95,7 @@ const SlideSwap = ({
         if (!announcement) {
             return;
         }
-        const timeoutId = setTimeout(() => setAnnouncement(''), ANNOUNCEMENT_DURATION);
+        const timeoutId = setTimeout(() => setAnnouncement(''), ANNOUNCEMENT_DURATION_IN_MS);
         return () => clearTimeout(timeoutId);
     }, [announcement]);
 
