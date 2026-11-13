@@ -22,16 +22,21 @@ concurrency:
 jobs:
     build:
         runs-on: ubuntu-latest
-        container: telefonica/web-builder:chromium93.0.4577-node24-1.0.0
+        container:
+            image: mcr.microsoft.com/playwright:v1.64.1-noble
+            options: --ipc=host
 
         steps:
             - uses: actions/checkout@v6
               with:
                   persist-credentials: false
 
+            - uses: actions/setup-node@v6
+              with:
+                  node-version: 24
+            - run: corepack enable
+
             - name: Install dependencies
-              env:
-                  PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: 'true'
               run: yarn install --immutable --immutable-cache
 
             - run: yarn lint
@@ -40,17 +45,27 @@ jobs:
             - run: yarn build
             - run: yarn ts-check
             - run: yarn test --ci
-            - run: NO_BUILD=true yarn test-ssr --ci
+            - run: NO_BUILD=true yarn test-ssr
 
             - uses: actions/upload-artifact@v4
               if: always()
               with:
                   name: failed-screenshots-ssr
-                  path: src/**/__diff_output__/*-diff.png
+                  path: reports/playwright/**/*-diff.png
+
+            - uses: actions/upload-artifact@v4
+              if: failure()
+              with:
+                  name: playwright-report-build
+                  path: |
+                      reports/playwright
+                      reports/playwright-html
 
     build-acceptance:
         runs-on: ubuntu-latest
-        container: telefonica/web-builder:chromium93.0.4577-node24-1.0.0
+        container:
+            image: mcr.microsoft.com/playwright:v1.64.1-noble
+            options: --ipc=host
         strategy:
             matrix:
                 shard: [1, 2, 3]
@@ -61,23 +76,33 @@ jobs:
               with:
                   persist-credentials: false
 
+            - uses: actions/setup-node@v6
+              with:
+                  node-version: 24
+            - run: corepack enable
+
             - name: Install dependencies
-              env:
-                  PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: 'true'
               run: yarn install --immutable --immutable-cache
 
             - run: yarn storybook-static
-            - run: yarn test-acceptance --ci --shard=${{ matrix.shard }}/${{ strategy.job-total }}
+            - run: yarn test-acceptance --shard=${{ matrix.shard }}/${{ strategy.job-total }}
 
             - uses: actions/upload-artifact@v4
               if: always()
               with:
                   name: failed-screenshots-${{ matrix.shard }}
-                  path: src/**/__diff_output__/*-diff.png
+                  path: reports/playwright/**/*-diff.png
+
+            - uses: actions/upload-artifact@v4
+              if: failure()
+              with:
+                  name: playwright-report-${{ matrix.shard }}
+                  path: |
+                      reports/playwright
+                      reports/playwright-html
 
     build-upload-failed-screenshots:
         runs-on: ubuntu-latest
-        container: telefonica/web-builder:chromium93.0.4577-node24-1.0.0
         needs: [build, build-acceptance]
         if: '!cancelled()'
 
@@ -86,9 +111,12 @@ jobs:
               with:
                   persist-credentials: false
 
+            - uses: actions/setup-node@v6
+              with:
+                  node-version: 24
+            - run: corepack enable
+
             - name: Install dependencies
-              env:
-                  PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: 'true'
               run: yarn install --immutable --immutable-cache
 
             - if: needs.build.result == 'failure' || needs.build-acceptance.result == 'failure'
@@ -96,7 +124,7 @@ jobs:
               with:
                   pattern: failed-screenshots-*
                   merge-multiple: true
-                  path: src/
+                  path: reports/playwright/
 
             - name: 'Upload failed screenshot diffs'
               uses: './.github/actions/upload-failed-screenshots'

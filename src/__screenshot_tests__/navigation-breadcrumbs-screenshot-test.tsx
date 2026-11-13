@@ -1,19 +1,22 @@
+import {test, expectScreenshot} from '../test-utils/playwright';
 import {openStoryPage, screen} from '../test-utils';
 
-test.each`
-    device          | inverse  | dark
-    ${'DESKTOP'}    | ${false} | ${false}
-    ${'MOBILE_IOS'} | ${false} | ${false}
-    ${'MOBILE_IOS'} | ${true}  | ${false}
-    ${'MOBILE_IOS'} | ${false} | ${true}
-`('Breadcrumbs - device: $device - inverse: $inverse - dark: $dark', async ({device, inverse, dark}) => {
-    await openStoryPage({
-        id: 'components-breadcrumbs--default',
-        device,
-        isDarkMode: dark,
-        args: {variantOutside: inverse ? 'brand' : 'default'},
-    });
+for (const testCase of [
+    {device: 'DESKTOP', inverse: false, dark: false},
+    {device: 'MOBILE_IOS', inverse: false, dark: false},
+    {device: 'MOBILE_IOS', inverse: true, dark: false},
+    {device: 'MOBILE_IOS', inverse: false, dark: true},
+] as const) {
+    const {device, inverse, dark} = testCase;
+    test(`Breadcrumbs - device: ${testCase.device} - inverse: ${testCase.inverse} - dark: ${testCase.dark}`, async () => {
+        await openStoryPage({
+            id: 'components-breadcrumbs--default',
+            device,
+            isDarkMode: dark,
+            args: {variantOutside: inverse ? 'brand' : 'default'},
+        });
 
-    const element = await screen.findByTestId('story');
-    expect(await element.screenshot()).toMatchImageSnapshot();
-});
+        const element = await screen.findByTestId('story');
+        await expectScreenshot(element);
+    });
+}

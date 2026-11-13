@@ -1,5 +1,4 @@
 import * as React from 'react';
-import * as url from 'url';
 import ReactDomServer from 'react-dom/server';
 import path from 'path';
 import webpack from 'webpack';
@@ -118,8 +117,8 @@ export const compileSsrClient = ({build = true}: {build: boolean}): Promise<webp
 
 export const createServer = (): http.Server => {
     const server = http.createServer((req, res) => {
-        const parsedUrl = url.parse(req.url || '', true);
-        const pathParts = (parsedUrl.pathname || '').split('/');
+        const parsedUrl = new URL(req.url || '/', 'http://localhost');
+        const pathParts = parsedUrl.pathname.split('/');
         const moduleName = pathParts[pathParts.length - 1];
 
         if (moduleName === 'favicon.ico') {
@@ -143,12 +142,12 @@ export const createServer = (): http.Server => {
         }
 
         if (moduleName.endsWith('.jpg') || moduleName.endsWith('.png')) {
-            serveFileInPath(path.join(__dirname, '..', '__stories__', 'images', parsedUrl.path as string));
+            serveFileInPath(path.join(__dirname, '..', '__stories__', 'images', parsedUrl.pathname));
             return;
         }
 
         if (moduleName.endsWith('.css')) {
-            serveFileInPath(path.join(__dirname, '..', '..', 'css', parsedUrl.path as string));
+            serveFileInPath(path.join(__dirname, '..', '..', 'css', parsedUrl.pathname));
             return;
         }
 
@@ -167,7 +166,9 @@ export const createServer = (): http.Server => {
         const renderedComponent = ReactDomServer.renderToString(
             <ThemeContextProvider
                 theme={{
-                    skin: getSkinByName(String(parsedUrl.query.skin || MOVISTAR_SKIN) as KnownSkinName),
+                    skin: getSkinByName(
+                        String(parsedUrl.searchParams.get('skin') || MOVISTAR_SKIN) as KnownSkinName
+                    ),
                     i18n: {locale: 'es-ES', phoneNumberFormattingRegionCode: 'ES'},
                     platformOverrides: {
                         userAgent,

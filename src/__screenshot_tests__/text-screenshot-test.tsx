@@ -1,3 +1,4 @@
+import {test, expectScreenshot} from '../test-utils/playwright';
 import {openStoryPage, screen} from '../test-utils';
 
 import type {Device} from '../test-utils';
@@ -5,9 +6,9 @@ import type {Device} from '../test-utils';
 const TESTABLE_DEVICES: Array<Device> = ['MOBILE_IOS', 'DESKTOP'];
 const SKINS = ['Movistar', 'O2', 'Vivo', 'Telefonica', 'Blau', 'Esimflag'] as const;
 
-test.each(TESTABLE_DEVICES.flatMap((device) => SKINS.map((skin) => ({device, skin}))))(
-    'Text in $device with $skin skin',
-    async ({device, skin}) => {
+for (const testCase of TESTABLE_DEVICES.flatMap((device) => SKINS.map((skin) => ({device, skin})))) {
+    const {device, skin} = testCase;
+    test(`Text in ${testCase.device} with ${testCase.skin} skin`, async () => {
         await openStoryPage({
             id: 'components-text--text-components',
             device,
@@ -16,10 +17,9 @@ test.each(TESTABLE_DEVICES.flatMap((device) => SKINS.map((skin) => ({device, ski
 
         const element = await screen.findByTestId('text');
 
-        const image = await element.screenshot();
-        expect(image).toMatchImageSnapshot();
-    }
-);
+        await expectScreenshot(element);
+    });
+}
 
 test('Text wrapping', async () => {
     await openStoryPage({
@@ -29,8 +29,7 @@ test('Text wrapping', async () => {
 
     const element = await screen.findByTestId('text');
 
-    const image = await element.screenshot();
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(element);
 });
 
 test('Text wrapping - multiple line breaks', async () => {
@@ -44,6 +43,5 @@ test('Text wrapping - multiple line breaks', async () => {
 
     const element = await screen.findByTestId('text');
 
-    const image = await element.screenshot();
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(element);
 });

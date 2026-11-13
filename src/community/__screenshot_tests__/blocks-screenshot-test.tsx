@@ -1,3 +1,4 @@
+import {test, expectScreenshot} from '../../test-utils/playwright';
 import {openStoryPage, screen} from '../../test-utils';
 
 test('Blocks Highlighted Value Block', async () => {
@@ -5,9 +6,7 @@ test('Blocks Highlighted Value Block', async () => {
 
     const stepper = await screen.findByTestId('highlighted-value-block');
 
-    const image = await stepper.screenshot();
-
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(stepper);
 });
 
 test('Blocks Information Block', async () => {
@@ -15,27 +14,23 @@ test('Blocks Information Block', async () => {
 
     const stepper = await screen.findByTestId('information-block');
 
-    const image = await stepper.screenshot();
-
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(stepper);
 });
 
-test.each`
-    stackingGroup
-    ${false}      | ${true}
-`('Blocks Progress Block', async ({stackingGroup}) => {
-    await openStoryPage({
-        id: 'community-vivo-blocks--block-progress',
-        device: 'MOBILE_IOS',
-        args: {stackingGroup},
+for (const testCase of [{stackingGroup: false}, {stackingGroup: true}] as const) {
+    const {stackingGroup} = testCase;
+    test(`Blocks Progress Block (${JSON.stringify(testCase)})`, async () => {
+        await openStoryPage({
+            id: 'community-vivo-blocks--block-progress',
+            device: 'MOBILE_IOS',
+            args: {stackingGroup},
+        });
+
+        const stepper = await screen.findByTestId('progress-block');
+
+        await expectScreenshot(stepper);
     });
-
-    const stepper = await screen.findByTestId('progress-block');
-
-    const image = await stepper.screenshot();
-
-    expect(image).toMatchImageSnapshot();
-});
+}
 
 test('Blocks Row Block', async () => {
     await openStoryPage({
@@ -46,9 +41,7 @@ test('Blocks Row Block', async () => {
 
     const stepper = await screen.findByTestId('row-block');
 
-    const image = await stepper.screenshot();
-
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(stepper);
 });
 
 test('Blocks Simple Block', async () => {
@@ -56,9 +49,7 @@ test('Blocks Simple Block', async () => {
 
     const stepper = await screen.findByTestId('simple-block');
 
-    const image = await stepper.screenshot();
-
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(stepper);
 });
 
 test('Blocks Value Block', async () => {
@@ -66,7 +57,5 @@ test('Blocks Value Block', async () => {
 
     const stepper = await screen.findByTestId('value-block');
 
-    const image = await stepper.screenshot();
-
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(stepper);
 });

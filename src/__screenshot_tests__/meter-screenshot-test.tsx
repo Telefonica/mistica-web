@@ -1,52 +1,74 @@
+import {test, expectScreenshot} from '../test-utils/playwright';
 import {openStoryPage, screen} from '../test-utils';
 import {normalizeVariant} from '../theme-variant-context';
 
-test.each`
-    values                 | type          | themeVariant | extraContent
-    ${[0]}                 | ${'linear'}   | ${'default'} | ${''}
-    ${[0]}                 | ${'circular'} | ${'default'} | ${''}
-    ${[0]}                 | ${'angular'}  | ${'default'} | ${''}
-    ${[100]}               | ${'linear'}   | ${'default'} | ${''}
-    ${[100]}               | ${'circular'} | ${'default'} | ${''}
-    ${[100]}               | ${'angular'}  | ${'default'} | ${''}
-    ${[33, 33]}            | ${'linear'}   | ${'default'} | ${''}
-    ${[33, 33]}            | ${'circular'} | ${'default'} | ${''}
-    ${[33, 33]}            | ${'angular'}  | ${'default'} | ${''}
-    ${[33, 33]}            | ${'linear'}   | ${'inverse'} | ${''}
-    ${[33, 33]}            | ${'circular'} | ${'inverse'} | ${''}
-    ${[33, 33]}            | ${'angular'}  | ${'inverse'} | ${''}
-    ${[33, 33]}            | ${'linear'}   | ${'media'}   | ${''}
-    ${[33, 33]}            | ${'circular'} | ${'media'}   | ${''}
-    ${[33, 33]}            | ${'angular'}  | ${'media'}   | ${''}
-    ${[20, 20, 20, 20, 0]} | ${'linear'}   | ${'default'} | ${''}
-    ${[20, 20, 20, 20, 0]} | ${'circular'} | ${'default'} | ${''}
-    ${[20, 20, 20, 20, 0]} | ${'angular'}  | ${'default'} | ${''}
-    ${[33, 33]}            | ${'linear'}   | ${'default'} | ${'This is a small slot'}
-    ${[33, 33]}            | ${'linear'}   | ${'default'} | ${'This is a super long slot This is a super long slot This is a super long slot This is a super long slot'}
-    ${[33, 33]}            | ${'angular'}  | ${'default'} | ${'This is a small slot'}
-    ${[33, 33]}            | ${'angular'}  | ${'default'} | ${'This is a super long slot This is a super long slot This is a super long slot This is a super long slot'}
-    ${[33, 33]}            | ${'circular'} | ${'default'} | ${'This is a small slot'}
-    ${[33, 33]}            | ${'circular'} | ${'default'} | ${'This is a super long slot This is a super long slot This is a super long slot This is a super long slot'}
-`('Meter $themeVariant $type $values', async ({themeVariant, values, type, extraContent}) => {
-    await openStoryPage({
-        id: 'components-data-visualizations-meter--meter-story',
-        args: {
-            variantOutside: normalizeVariant(themeVariant),
-            width: 200,
-            type,
-            valuesCount: values.length,
-            ...values.reduce(
-                (acc: Array<number>, value: number, index: number) => ({
-                    ...acc,
-                    [`value${index + 1}`]: value,
-                }),
-                {}
-            ),
-            extraContent,
+for (const [caseIndex, testCase] of (
+    [
+        {values: [0], type: 'linear', themeVariant: 'default', extraContent: ''},
+        {values: [0], type: 'circular', themeVariant: 'default', extraContent: ''},
+        {values: [0], type: 'angular', themeVariant: 'default', extraContent: ''},
+        {values: [100], type: 'linear', themeVariant: 'default', extraContent: ''},
+        {values: [100], type: 'circular', themeVariant: 'default', extraContent: ''},
+        {values: [100], type: 'angular', themeVariant: 'default', extraContent: ''},
+        {values: [33, 33], type: 'linear', themeVariant: 'default', extraContent: ''},
+        {values: [33, 33], type: 'circular', themeVariant: 'default', extraContent: ''},
+        {values: [33, 33], type: 'angular', themeVariant: 'default', extraContent: ''},
+        {values: [33, 33], type: 'linear', themeVariant: 'inverse', extraContent: ''},
+        {values: [33, 33], type: 'circular', themeVariant: 'inverse', extraContent: ''},
+        {values: [33, 33], type: 'angular', themeVariant: 'inverse', extraContent: ''},
+        {values: [33, 33], type: 'linear', themeVariant: 'media', extraContent: ''},
+        {values: [33, 33], type: 'circular', themeVariant: 'media', extraContent: ''},
+        {values: [33, 33], type: 'angular', themeVariant: 'media', extraContent: ''},
+        {values: [20, 20, 20, 20, 0], type: 'linear', themeVariant: 'default', extraContent: ''},
+        {values: [20, 20, 20, 20, 0], type: 'circular', themeVariant: 'default', extraContent: ''},
+        {values: [20, 20, 20, 20, 0], type: 'angular', themeVariant: 'default', extraContent: ''},
+        {values: [33, 33], type: 'linear', themeVariant: 'default', extraContent: 'This is a small slot'},
+        {
+            values: [33, 33],
+            type: 'linear',
+            themeVariant: 'default',
+            extraContent:
+                'This is a super long slot This is a super long slot This is a super long slot This is a super long slot',
         },
-    });
+        {values: [33, 33], type: 'angular', themeVariant: 'default', extraContent: 'This is a small slot'},
+        {
+            values: [33, 33],
+            type: 'angular',
+            themeVariant: 'default',
+            extraContent:
+                'This is a super long slot This is a super long slot This is a super long slot This is a super long slot',
+        },
+        {values: [33, 33], type: 'circular', themeVariant: 'default', extraContent: 'This is a small slot'},
+        {
+            values: [33, 33],
+            type: 'circular',
+            themeVariant: 'default',
+            extraContent:
+                'This is a super long slot This is a super long slot This is a super long slot This is a super long slot',
+        },
+    ] as const
+).entries()) {
+    const {themeVariant, values, type, extraContent} = testCase;
+    test(`Meter ${testCase.themeVariant} ${testCase.type} ${testCase.values} (case ${caseIndex + 1})`, async () => {
+        await openStoryPage({
+            id: 'components-data-visualizations-meter--meter-story',
+            args: {
+                variantOutside: normalizeVariant(themeVariant),
+                width: 200,
+                type,
+                valuesCount: values.length,
+                ...values.reduce(
+                    (acc: Record<string, number>, value: number, index: number) => ({
+                        ...acc,
+                        [`value${index + 1}`]: value,
+                    }),
+                    {}
+                ),
+                extraContent,
+            },
+        });
 
-    const stepper = await screen.findByTestId('Meter');
-    const image = await stepper.screenshot();
-    expect(image).toMatchImageSnapshot();
-});
+        const stepper = await screen.findByTestId('Meter');
+        await expectScreenshot(stepper);
+    });
+}

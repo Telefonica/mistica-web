@@ -81,6 +81,7 @@
         ".storybook",
         "playroom",
         "src/test-utils/**",
+        "playwright*.config.ts",
         "setup-test-env.tsx",
         "examples",
         "packages"
