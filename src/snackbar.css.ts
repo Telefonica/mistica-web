@@ -58,7 +58,10 @@ export const wrapper = style([
 ]);
 
 export const wrapperCritical = sprinkles({background: vars.colors.feedbackErrorBackground});
-export const wrapperInfo = sprinkles({background: vars.colors.feedbackInfoBackground});
+export const wrapperInfo = style([
+    sprinkles({background: vars.colors.feedbackInfoBackground}),
+    {boxShadow: `0 0 0 1px ${vars.colors.popupBorder}`},
+]);
 
 export const wrapperOpen = style({
     opacity: 1,

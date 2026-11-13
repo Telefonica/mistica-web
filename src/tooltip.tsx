@@ -25,11 +25,11 @@ import type {DataAttributes, TrackingEvent} from './utils/types';
 
 const getBorderStyle = (variant: NonDeprecatedVariant): React.CSSProperties => {
     const borderColor = {
-        default: vars.colors.border,
-        alternative: vars.colors.border,
-        brand: vars.colors.backgroundContainer,
-        negative: vars.colors.backgroundContainer,
-        media: vars.colors.backgroundContainer,
+        default: vars.colors.tooltipBorder,
+        alternative: vars.colors.tooltipBorder,
+        brand: vars.colors.popupBorder,
+        negative: vars.colors.popupBorder,
+        media: vars.colors.popupBorder,
     }[variant];
     return {border: `1px solid ${borderColor}`};
 };

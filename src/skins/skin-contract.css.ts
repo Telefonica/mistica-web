@@ -60,6 +60,8 @@ const colors: Colors = {
     skeletonWave: '',
     borderLow: '',
     border: '',
+    popupBorder: '',
+    tooltipBorder: '',
     borderHigh: '',
     borderSelected: '',
     coverBackgroundHover: '',

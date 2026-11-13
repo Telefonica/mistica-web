@@ -20,7 +20,7 @@ export const optionsList = style([
         zIndex: 2,
         left: 0,
         right: 0,
-        boxShadow: '0px 2px 4px 0px #00000033',
+        boxShadow: `0 0 0 1px ${vars.colors.popupBorder}, 0px 2px 4px 0px #00000033`,
         marginTop: 0,
         backgroundColor: vars.colors.backgroundContainer,
         listStyle: 'none',

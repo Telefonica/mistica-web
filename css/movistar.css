@@ -14,6 +14,7 @@
     --mistica-movistar-blue800: #0149b3;
     --mistica-movistar-grey100: #faf7f5;
     --mistica-movistar-grey200: #f3eeea;
+    --mistica-movistar-blueLight: #d3eeff;
     --mistica-movistar-grey300: #dfdbd6;
     --mistica-movistar-grey600: #605e5c;
     --mistica-movistar-red: #c10000;
@@ -23,7 +24,6 @@
     --mistica-movistar-blue100: #f4f7f8;
     --mistica-movistar-blue300: #80b3ff;
     --mistica-movistar-grey500: #807d7b;
-    --mistica-movistar-blueLight: #d3eeff;
     --mistica-movistar-blueDark: #022d67;
     --mistica-movistar-emerald: #048239;
     --mistica-movistar-yellow600: #bfa960;
@@ -214,6 +214,8 @@
     --mistica-color-textActivated: var(--mistica-movistar-blueHigh);
     --mistica-color-textBrand: var(--mistica-movistar-blueHigh);
     --mistica-color-inputBorder: var(--mistica-movistar-grey500);
+    --mistica-color-popupBorder: rgba(var(--mistica-movistar-raw-white), 0);
+    --mistica-color-tooltipBorder: var(--mistica-movistar-grey300);
     --mistica-color-inputBorderInverse: var(--mistica-movistar-white);
     --mistica-color-inputBorderNegative: var(--mistica-movistar-white);
     --mistica-color-inputBorderBrand: var(--mistica-movistar-white);
@@ -661,6 +663,8 @@
     --mistica-color-textActivated: var(--mistica-movistar-blue300);
     --mistica-color-textBrand: var(--mistica-movistar-blue300);
     --mistica-color-inputBorder: var(--mistica-movistar-grey400);
+    --mistica-color-popupBorder: var(--mistica-movistar-grey400);
+    --mistica-color-tooltipBorder: var(--mistica-movistar-grey400);
     --mistica-color-inputBorderInverse: var(--mistica-movistar-grey400);
     --mistica-color-inputBorderNegative: var(--mistica-movistar-grey400);
     --mistica-color-inputBorderBrand: var(--mistica-movistar-grey400);
@@ -1026,6 +1030,8 @@
         --mistica-color-textActivated: var(--mistica-movistar-blue300);
         --mistica-color-textBrand: var(--mistica-movistar-blue300);
         --mistica-color-inputBorder: var(--mistica-movistar-grey400);
+        --mistica-color-popupBorder: var(--mistica-movistar-grey400);
+        --mistica-color-tooltipBorder: var(--mistica-movistar-grey400);
         --mistica-color-inputBorderInverse: var(--mistica-movistar-grey400);
         --mistica-color-inputBorderNegative: var(--mistica-movistar-grey400);
         --mistica-color-inputBorderBrand: var(--mistica-movistar-grey400);
@@ -1357,6 +1363,8 @@
         --mistica-color-textActivated: var(--mistica-movistar-blueHigh);
         --mistica-color-textBrand: var(--mistica-movistar-blueHigh);
         --mistica-color-inputBorder: var(--mistica-movistar-grey500);
+        --mistica-color-popupBorder: rgba(var(--mistica-movistar-raw-white), 0);
+        --mistica-color-tooltipBorder: var(--mistica-movistar-grey300);
         --mistica-color-inputBorderInverse: var(--mistica-movistar-white);
         --mistica-color-inputBorderNegative: var(--mistica-movistar-white);
         --mistica-color-inputBorderBrand: var(--mistica-movistar-white);
