@@ -55,9 +55,8 @@ test('custom controls only select the card through selected', async () => {
     });
 });
 
-for (const testCase of ['data', 'media', 'cover', 'naked', 'advanced']) {
-    const card = testCase;
-    test(`card body selects ${testCase} and owns keyboard focus`, async () => {
+for (const card of ['data', 'media', 'cover', 'naked', 'advanced']) {
+    test(`card body selects ${card} and owns keyboard focus`, async () => {
         const page = await openStoryPage({
             id: 'components-cards-selection--selection',
             device: 'DESKTOP',
@@ -78,9 +77,8 @@ for (const testCase of ['data', 'media', 'cover', 'naked', 'advanced']) {
     });
 }
 
-for (const testCase of ['data', 'media', 'cover', 'naked', 'advanced']) {
-    const card = testCase;
-    test(`default selectors appear at the top right of the ${testCase} card`, async () => {
+for (const card of ['data', 'media', 'cover', 'naked', 'advanced']) {
+    test(`default selectors appear at the top right of the ${card} card`, async () => {
         for (const control of ['checkbox', 'switch', 'radio']) {
             await openStoryPage({
                 id: 'components-cards-selection--selection',
@@ -120,9 +118,8 @@ for (const testCase of ['data', 'media', 'cover', 'naked', 'advanced']) {
     });
 }
 
-for (const testCase of ['checkbox', 'switch', 'radio']) {
-    const control = testCase;
-    test(`custom ${testCase} render stays in the slot`, async () => {
+for (const control of ['checkbox', 'switch', 'radio']) {
+    test(`custom ${control} render stays in the slot`, async () => {
         await openStoryPage({
             id: 'components-cards-selection--selection',
             device: 'DESKTOP',
@@ -153,9 +150,8 @@ test('checking a slot control does not add a selection outline', async () => {
     expect(outline.width).toBe('0px');
 });
 
-for (const testCase of ['checkbox', 'switch', 'radio']) {
-    const control = testCase;
-    test(`${testCase} fills a cover card with aspect ratio`, async () => {
+for (const control of ['checkbox', 'switch', 'radio']) {
+    test(`${control} fills a cover card with aspect ratio`, async () => {
         const page = await openStoryPage({
             id: 'components-cards-selection--selection',
             device: 'MOBILE_IOS',
