@@ -1,3 +1,4 @@
+import {test, expectScreenshot} from '../test-utils/playwright';
 import {openStoryPage, screen} from '../test-utils';
 
 const normalizeArgs = (args: Record<string, any>) => {
@@ -8,17 +9,16 @@ const normalizeArgs = (args: Record<string, any>) => {
     };
 };
 
-test.each`
-    givenStoryPageArgs
-    ${{inverse: false}}
-    ${{inverse: true}}
-    ${{inverse: false, size: 60}}
-    ${{inverse: true, size: 60}}
-    ${{inverse: false, size: 100}}
-    ${{inverse: true, size: 100}}
-`(
-    `Skeleton circle given inverse $givenStoryPageArgs.inverse and size of $givenStoryPageArgs.size`,
-    async ({givenStoryPageArgs}) => {
+for (const testCase of [
+    {givenStoryPageArgs: {inverse: false}},
+    {givenStoryPageArgs: {inverse: true}},
+    {givenStoryPageArgs: {inverse: false, size: 60}},
+    {givenStoryPageArgs: {inverse: true, size: 60}},
+    {givenStoryPageArgs: {inverse: false, size: 100}},
+    {givenStoryPageArgs: {inverse: true, size: 100}},
+] as const) {
+    const {givenStoryPageArgs} = testCase;
+    test(`Skeleton circle given inverse ${testCase.givenStoryPageArgs.inverse} and size of ${testCase.givenStoryPageArgs.size}`, async () => {
         await openStoryPage({
             id: 'components-skeletons-skeletoncircle',
             device: 'MOBILE_IOS',
@@ -26,35 +26,36 @@ test.each`
         });
 
         const element = await screen.findByTestId('skeleton-circle');
-        expect(await element.screenshot()).toMatchImageSnapshot();
-    }
-);
-
-test.each`
-    givenStoryPageArgs
-    ${{inverse: false}}
-    ${{inverse: true}}
-`(`Skeleton row given inverse $givenStoryPageArgs.inverse`, async ({givenStoryPageArgs}) => {
-    await openStoryPage({
-        id: 'components-skeletons-skeletonrow',
-        device: 'MOBILE_IOS',
-        args: normalizeArgs(givenStoryPageArgs),
+        await expectScreenshot(element);
     });
+}
 
-    const element = await screen.findByTestId('skeleton-row');
-    expect(await element.screenshot()).toMatchImageSnapshot();
-});
+for (const testCase of [
+    {givenStoryPageArgs: {inverse: false}},
+    {givenStoryPageArgs: {inverse: true}},
+] as const) {
+    const {givenStoryPageArgs} = testCase;
+    test(`Skeleton row given inverse ${testCase.givenStoryPageArgs.inverse}`, async () => {
+        await openStoryPage({
+            id: 'components-skeletons-skeletonrow',
+            device: 'MOBILE_IOS',
+            args: normalizeArgs(givenStoryPageArgs),
+        });
 
-test.each`
-    givenStoryPageArgs
-    ${{inverse: false}}
-    ${{inverse: true}}
-    ${{inverse: false, height: 70}}
-    ${{inverse: true, height: 70}}
-    ${{inverse: true, height: 70, width: 30}}
-`(
-    `Skeleton rectangle given inverse $givenStoryPageArgs.inverse and height $givenStoryPageArgs.height and width $givenStoryPageArgs.width`,
-    async ({givenStoryPageArgs}) => {
+        const element = await screen.findByTestId('skeleton-row');
+        await expectScreenshot(element);
+    });
+}
+
+for (const testCase of [
+    {givenStoryPageArgs: {inverse: false}},
+    {givenStoryPageArgs: {inverse: true}},
+    {givenStoryPageArgs: {inverse: false, height: 70}},
+    {givenStoryPageArgs: {inverse: true, height: 70}},
+    {givenStoryPageArgs: {inverse: true, height: 70, width: 30}},
+] as const) {
+    const {givenStoryPageArgs} = testCase;
+    test(`Skeleton rectangle given inverse ${testCase.givenStoryPageArgs.inverse} and height ${testCase.givenStoryPageArgs.height} and width ${testCase.givenStoryPageArgs.width}`, async () => {
         await openStoryPage({
             id: 'components-skeletons-skeletonrectangle',
             device: 'MOBILE_IOS',
@@ -62,36 +63,40 @@ test.each`
         });
 
         const element = await screen.findByTestId('skeleton-rectangle');
-        expect(await element.screenshot()).toMatchImageSnapshot();
-    }
-);
-
-test.each`
-    givenStoryPageArgs
-    ${{inverse: false}}
-    ${{inverse: true}}
-`(`Skeleton text given inverse $givenStoryPageArgs.inverse`, async ({givenStoryPageArgs}) => {
-    await openStoryPage({
-        id: 'components-skeletons-skeletontext',
-        device: 'MOBILE_IOS',
-        args: normalizeArgs(givenStoryPageArgs),
+        await expectScreenshot(element);
     });
+}
 
-    const element = await screen.findByTestId('skeleton-text');
-    expect(await element.screenshot()).toMatchImageSnapshot();
-});
+for (const testCase of [
+    {givenStoryPageArgs: {inverse: false}},
+    {givenStoryPageArgs: {inverse: true}},
+] as const) {
+    const {givenStoryPageArgs} = testCase;
+    test(`Skeleton text given inverse ${testCase.givenStoryPageArgs.inverse}`, async () => {
+        await openStoryPage({
+            id: 'components-skeletons-skeletontext',
+            device: 'MOBILE_IOS',
+            args: normalizeArgs(givenStoryPageArgs),
+        });
 
-test.each`
-    givenStoryPageArgs
-    ${{inverse: false}}
-    ${{inverse: true}}
-`(`Skeleton line given inverse $givenStoryPageArgs.inverse`, async ({givenStoryPageArgs}) => {
-    await openStoryPage({
-        id: 'components-skeletons-skeletonline',
-        device: 'MOBILE_IOS',
-        args: normalizeArgs(givenStoryPageArgs),
+        const element = await screen.findByTestId('skeleton-text');
+        await expectScreenshot(element);
     });
+}
 
-    const element = await screen.findByTestId('skeleton-line');
-    expect(await element.screenshot()).toMatchImageSnapshot();
-});
+for (const testCase of [
+    {givenStoryPageArgs: {inverse: false}},
+    {givenStoryPageArgs: {inverse: true}},
+] as const) {
+    const {givenStoryPageArgs} = testCase;
+    test(`Skeleton line given inverse ${testCase.givenStoryPageArgs.inverse}`, async () => {
+        await openStoryPage({
+            id: 'components-skeletons-skeletonline',
+            device: 'MOBILE_IOS',
+            args: normalizeArgs(givenStoryPageArgs),
+        });
+
+        const element = await screen.findByTestId('skeleton-line');
+        await expectScreenshot(element);
+    });
+}

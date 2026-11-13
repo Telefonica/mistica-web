@@ -1,3 +1,4 @@
+import {test, expectScreenshot} from '../test-utils/playwright';
 import {
     BLAU_SKIN,
     ESIMFLAG_SKIN,
@@ -8,7 +9,6 @@ import {
     VIVO_SKIN,
 } from '../skins/constants';
 import {openStoryPage, screen} from '../test-utils';
-import {normalizeVariant} from '../theme-variant-context';
 
 const STORY_IDS: Record<any, string> = {
     cover: 'components-cards-covercard--default',
@@ -45,47 +45,130 @@ const argsReset = {
     videoAutoPlay: false,
 };
 
-test.each`
-    type
-    ${'cover'}
-    ${'data'}
-    ${'media'}
-    ${'naked'}
-`('Card typologies - $type', async ({type}) => {
-    await openStoryPage({
-        id: STORY_IDS[type],
-        device: 'MOBILE_IOS',
-        args: argsReset,
+for (const testCase of [{type: 'cover'}, {type: 'data'}, {type: 'media'}, {type: 'naked'}] as const) {
+    const {type} = testCase;
+    test(`Card typologies - ${testCase.type}`, async () => {
+        await openStoryPage({
+            id: STORY_IDS[type],
+            device: 'MOBILE_IOS',
+            args: argsReset,
+        });
+
+        const card = await screen.findByTestId(TEST_IDS[type]);
+        await expectScreenshot(card);
     });
+}
 
-    const card = await screen.findByTestId(TEST_IDS[type]);
-    const image = await card.screenshot();
-    expect(image).toMatchImageSnapshot();
-});
-
-test.each`
-    type       | size         | variant        | asset          | topActions | mediaPosition | description
-    ${'data'}  | ${'display'} | ${'undefined'} | ${'icon'}      | ${true}    | ${'top'}      | ${'Data card with display size'}
-    ${'data'}  | ${'default'} | ${'undefined'} | ${'icon'}      | ${true}    | ${'top'}      | ${'Data card with default size'}
-    ${'data'}  | ${'default'} | ${'inverse'}   | ${'icon'}      | ${true}    | ${'top'}      | ${'Data card with default size and inverse variant - see topActions'}
-    ${'data'}  | ${'snap'}    | ${'undefined'} | ${'icon'}      | ${true}    | ${'top'}      | ${'Data card with snap size'}
-    ${'cover'} | ${'display'} | ${'undefined'} | ${'icon'}      | ${true}    | ${'top'}      | ${'Cover card with display size'}
-    ${'cover'} | ${'display'} | ${'undefined'} | ${'icon'}      | ${false}   | ${'top'}      | ${'Cover card with display size - without topActions'}
-    ${'cover'} | ${'display'} | ${'undefined'} | ${'undefined'} | ${false}   | ${'top'}      | ${'Cover card with display size - without topActions or asset'}
-    ${'cover'} | ${'default'} | ${'undefined'} | ${'icon'}      | ${true}    | ${'top'}      | ${'Cover card with default size'}
-    ${'cover'} | ${'snap'}    | ${'undefined'} | ${'icon'}      | ${true}    | ${'top'}      | ${'Cover card with snap size'}
-    ${'media'} | ${'display'} | ${'undefined'} | ${'icon'}      | ${true}    | ${'top'}      | ${'Media card with display size'}
-    ${'media'} | ${'snap'}    | ${'undefined'} | ${'icon'}      | ${true}    | ${'top'}      | ${'Media card with snap size'}
-`(
-    'Card anatomy - $description',
-    async ({type, size, variant, asset, topActions, mediaPosition, description}) => {
+for (const testCase of [
+    {
+        type: 'data',
+        size: 'display',
+        variant: 'undefined',
+        asset: 'icon',
+        topActions: true,
+        mediaPosition: 'top',
+        description: 'Data card with display size',
+    },
+    {
+        type: 'data',
+        size: 'default',
+        variant: 'undefined',
+        asset: 'icon',
+        topActions: true,
+        mediaPosition: 'top',
+        description: 'Data card with default size',
+    },
+    {
+        type: 'data',
+        size: 'default',
+        variant: 'inverse',
+        asset: 'icon',
+        topActions: true,
+        mediaPosition: 'top',
+        description: 'Data card with default size and inverse variant - see topActions',
+    },
+    {
+        type: 'data',
+        size: 'snap',
+        variant: 'undefined',
+        asset: 'icon',
+        topActions: true,
+        mediaPosition: 'top',
+        description: 'Data card with snap size',
+    },
+    {
+        type: 'cover',
+        size: 'display',
+        variant: 'undefined',
+        asset: 'icon',
+        topActions: true,
+        mediaPosition: 'top',
+        description: 'Cover card with display size',
+    },
+    {
+        type: 'cover',
+        size: 'display',
+        variant: 'undefined',
+        asset: 'icon',
+        topActions: false,
+        mediaPosition: 'top',
+        description: 'Cover card with display size - without topActions',
+    },
+    {
+        type: 'cover',
+        size: 'display',
+        variant: 'undefined',
+        asset: 'undefined',
+        topActions: false,
+        mediaPosition: 'top',
+        description: 'Cover card with display size - without topActions or asset',
+    },
+    {
+        type: 'cover',
+        size: 'default',
+        variant: 'undefined',
+        asset: 'icon',
+        topActions: true,
+        mediaPosition: 'top',
+        description: 'Cover card with default size',
+    },
+    {
+        type: 'cover',
+        size: 'snap',
+        variant: 'undefined',
+        asset: 'icon',
+        topActions: true,
+        mediaPosition: 'top',
+        description: 'Cover card with snap size',
+    },
+    {
+        type: 'media',
+        size: 'display',
+        variant: 'undefined',
+        asset: 'icon',
+        topActions: true,
+        mediaPosition: 'top',
+        description: 'Media card with display size',
+    },
+    {
+        type: 'media',
+        size: 'snap',
+        variant: 'undefined',
+        asset: 'icon',
+        topActions: true,
+        mediaPosition: 'top',
+        description: 'Media card with snap size',
+    },
+] as const) {
+    const {type, size, variant, asset, topActions, mediaPosition, description} = testCase;
+    test(`Card anatomy - ${testCase.description}`, async () => {
         await openStoryPage({
             id: STORY_IDS[type],
             device: 'MOBILE_IOS',
             args: {
                 ...argsReset,
                 size,
-                variant: normalizeVariant(variant),
+                variant: variant === 'inverse' ? 'brand' : variant,
                 asset,
                 topActions,
                 mediaPosition,
@@ -95,119 +178,147 @@ test.each`
         });
 
         const card = await screen.findByTestId(TEST_IDS[type]);
-        const image = await card.screenshot();
-        expect(image).toMatchImageSnapshot();
-    }
-);
-
-test.each`
-    type       | mediaPosition | description
-    ${'media'} | ${'left'}     | ${'Media card with footer and media on the left'}
-    ${'media'} | ${'right'}    | ${'Media card with footer and media on the right'}
-    ${'naked'} | ${'left'}     | ${'Naked card with footer and media on the left'}
-    ${'naked'} | ${'right'}    | ${'Naked card with footer and media on the right'}
-`('Card anatomy - $description', async ({type, mediaPosition, description}) => {
-    await openStoryPage({
-        id: STORY_IDS[type],
-        device: 'MOBILE_IOS',
-        args: {
-            ...argsReset,
-            imageSrc: 'beach',
-            videoSrc: 'beach',
-            // In acceptance tests, videos never autoplay, but `videoAutoPlay: false` forces the
-            // card into "paused" state after load (changing the overlay icon and breaking snapshots).
-            videoAutoPlay: true,
-            topActions: false,
-            onClose: true,
-            showFooter: true,
-            footerSlot: true,
-            mediaPosition,
-            description,
-        },
+        await expectScreenshot(card);
     });
+}
 
-    const card = await screen.findByTestId(TEST_IDS[type]);
-    const image = await card.screenshot();
-    expect(image).toMatchImageSnapshot();
-});
+for (const testCase of [
+    {type: 'media', mediaPosition: 'left', description: 'Media card with footer and media on the left'},
+    {type: 'media', mediaPosition: 'right', description: 'Media card with footer and media on the right'},
+    {type: 'naked', mediaPosition: 'left', description: 'Naked card with footer and media on the left'},
+    {type: 'naked', mediaPosition: 'right', description: 'Naked card with footer and media on the right'},
+] as const) {
+    const {type, mediaPosition, description} = testCase;
+    test(`Card anatomy - ${testCase.description}`, async () => {
+        await openStoryPage({
+            id: STORY_IDS[type],
+            device: 'MOBILE_IOS',
+            args: {
+                ...argsReset,
+                imageSrc: 'beach',
+                videoSrc: 'beach',
+                // In acceptance tests, videos never autoplay, but `videoAutoPlay: false` forces the
+                // card into "paused" state after load (changing the overlay icon and breaking snapshots).
+                videoAutoPlay: true,
+                topActions: false,
+                onClose: true,
+                showFooter: true,
+                footerSlot: true,
+                mediaPosition,
+                description,
+            },
+        });
 
-test.each`
-    type       | mediaPosition | mediaWidth | description
-    ${'naked'} | ${'top'}      | ${'150px'} | ${'Naked card with circledImage and media on the top'}
-    ${'naked'} | ${'left'}     | ${'150px'} | ${'Naked card with circledImage and media on the left'}
-    ${'naked'} | ${'right'}    | ${'150px'} | ${'Naked card with circledImage and media on the right'}
-`('Card anatomy - $description', async ({type, mediaPosition, mediaWidth, description}) => {
-    await openStoryPage({
-        id: STORY_IDS[type],
-        device: 'MOBILE_IOS',
-        args: {
-            ...argsReset,
-            imageSrc: 'beach',
-            topActions: false,
-            onClose: true,
-            showFooter: true,
-            footerSlot: true,
-            mediaPosition,
-            mediaWidth,
-            description,
-            circledImage: true,
-        },
+        const card = await screen.findByTestId(TEST_IDS[type]);
+        await expectScreenshot(card);
     });
+}
 
-    const card = await screen.findByTestId(TEST_IDS[type]);
-    const image = await card.screenshot();
-    expect(image).toMatchImageSnapshot();
-});
+for (const testCase of [
+    {
+        type: 'naked',
+        mediaPosition: 'top',
+        mediaWidth: '150px',
+        description: 'Naked card with circledImage and media on the top',
+    },
+    {
+        type: 'naked',
+        mediaPosition: 'left',
+        mediaWidth: '150px',
+        description: 'Naked card with circledImage and media on the left',
+    },
+    {
+        type: 'naked',
+        mediaPosition: 'right',
+        mediaWidth: '150px',
+        description: 'Naked card with circledImage and media on the right',
+    },
+] as const) {
+    const {type, mediaPosition, mediaWidth, description} = testCase;
+    test(`Card anatomy - ${testCase.description}`, async () => {
+        await openStoryPage({
+            id: STORY_IDS[type],
+            device: 'MOBILE_IOS',
+            args: {
+                ...argsReset,
+                imageSrc: 'beach',
+                topActions: false,
+                onClose: true,
+                showFooter: true,
+                footerSlot: true,
+                mediaPosition,
+                mediaWidth,
+                description,
+                circledImage: true,
+            },
+        });
 
-test.each`
-    type       | variant          | backgroundColor | description
-    ${'data'}  | ${'default'}     | ${''}           | ${'Data card with default variant'}
-    ${'data'}  | ${'inverse'}     | ${''}           | ${'Data card with inverse variant'}
-    ${'data'}  | ${'media'}       | ${''}           | ${'Data card with media variant'}
-    ${'data'}  | ${'alternative'} | ${''}           | ${'Data card with alternative variant'}
-    ${'cover'} | ${'media'}       | ${'red'}        | ${'Cover card with background color'}
-`('Card background - $description', async ({type, variant, backgroundColor, description}) => {
-    await openStoryPage({
-        id: STORY_IDS[type],
-        device: 'MOBILE_IOS',
-        args: {
-            ...argsReset,
-            variant: normalizeVariant(variant),
-            backgroundColor,
-            description,
-            topActions: true,
-            onClose: true,
-            slot: true,
-            imageSrc: 'undefined',
-        },
+        const card = await screen.findByTestId(TEST_IDS[type]);
+        await expectScreenshot(card);
     });
+}
 
-    const card = await screen.findByTestId(TEST_IDS[type]);
-    const image = await card.screenshot();
-    expect(image).toMatchImageSnapshot();
-});
+for (const testCase of [
+    {type: 'data', variant: 'default', backgroundColor: '', description: 'Data card with default variant'},
+    {type: 'data', variant: 'inverse', backgroundColor: '', description: 'Data card with inverse variant'},
+    {type: 'data', variant: 'media', backgroundColor: '', description: 'Data card with media variant'},
+    {
+        type: 'data',
+        variant: 'alternative',
+        backgroundColor: '',
+        description: 'Data card with alternative variant',
+    },
+    {
+        type: 'cover',
+        variant: 'media',
+        backgroundColor: 'red',
+        description: 'Cover card with background color',
+    },
+] as const) {
+    const {type, variant, backgroundColor, description} = testCase;
+    test(`Card background - ${testCase.description}`, async () => {
+        await openStoryPage({
+            id: STORY_IDS[type],
+            device: 'MOBILE_IOS',
+            args: {
+                ...argsReset,
+                variant: variant === 'inverse' ? 'brand' : variant,
+                backgroundColor,
+                description,
+                topActions: true,
+                onClose: true,
+                slot: true,
+                imageSrc: 'undefined',
+            },
+        });
 
-test.each`
-    type      | slotAlignment | description
-    ${'data'} | ${'content'}  | ${'Data card with content slot alignment'}
-    ${'data'} | ${'bottom'}   | ${'Data card with bottom slot alignment'}
-`('Card slot alignment - $description', async ({type, slotAlignment, description}) => {
-    await openStoryPage({
-        id: STORY_IDS[type],
-        device: 'MOBILE_IOS',
-        args: {
-            ...argsReset,
-            aspectRatio: '9 10',
-            slotAlignment,
-            slot: true,
-            description,
-        },
+        const card = await screen.findByTestId(TEST_IDS[type]);
+        await expectScreenshot(card);
     });
+}
 
-    const card = await screen.findByTestId(TEST_IDS[type]);
-    const image = await card.screenshot();
-    expect(image).toMatchImageSnapshot();
-});
+for (const testCase of [
+    {type: 'data', slotAlignment: 'content', description: 'Data card with content slot alignment'},
+    {type: 'data', slotAlignment: 'bottom', description: 'Data card with bottom slot alignment'},
+] as const) {
+    const {type, slotAlignment, description} = testCase;
+    test(`Card slot alignment - ${testCase.description}`, async () => {
+        await openStoryPage({
+            id: STORY_IDS[type],
+            device: 'MOBILE_IOS',
+            args: {
+                ...argsReset,
+                aspectRatio: '9 10',
+                slotAlignment,
+                slot: true,
+                description,
+            },
+        });
+
+        const card = await screen.findByTestId(TEST_IDS[type]);
+        await expectScreenshot(card);
+    });
+}
 
 test('Card text lines limit', async () => {
     await openStoryPage({
@@ -230,8 +341,7 @@ test('Card text lines limit', async () => {
     });
 
     const card = await screen.findByTestId(TEST_IDS.data);
-    const image = await card.screenshot();
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(card);
 });
 
 test('Card footer is forced with buttons and onPress', async () => {
@@ -249,20 +359,48 @@ test('Card footer is forced with buttons and onPress', async () => {
     });
 
     const card = await screen.findByTestId(TEST_IDS.data);
-    const image = await card.screenshot();
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(card);
 });
 
-test.each`
-    variantOutside | variant      | footerVariant | footerBackgroundColor | description
-    ${'default'}   | ${'default'} | ${''}         | ${''}                 | ${'Card with default variant'}
-    ${'default'}   | ${'inverse'} | ${''}         | ${''}                 | ${'Card with inverse variant'}
-    ${'default'}   | ${'default'} | ${''}         | ${'red'}              | ${'Card with background color'}
-    ${'default'}   | ${'default'} | ${'inverse'}  | ${''}                 | ${'Card with inverse footer variant and default outside'}
-    ${'inverse'}   | ${'default'} | ${'inverse'}  | ${''}                 | ${'Card with inverse footer variant and inverse outside'}
-`(
-    'Card footer and divider - $description',
-    async ({variantOutside, variant, footerVariant, footerBackgroundColor, description}) => {
+for (const testCase of [
+    {
+        variantOutside: 'default',
+        variant: 'default',
+        footerVariant: '',
+        footerBackgroundColor: '',
+        description: 'Card with default variant',
+    },
+    {
+        variantOutside: 'default',
+        variant: 'inverse',
+        footerVariant: '',
+        footerBackgroundColor: '',
+        description: 'Card with inverse variant',
+    },
+    {
+        variantOutside: 'default',
+        variant: 'default',
+        footerVariant: '',
+        footerBackgroundColor: 'red',
+        description: 'Card with background color',
+    },
+    {
+        variantOutside: 'default',
+        variant: 'default',
+        footerVariant: 'inverse',
+        footerBackgroundColor: '',
+        description: 'Card with inverse footer variant and default outside',
+    },
+    {
+        variantOutside: 'inverse',
+        variant: 'default',
+        footerVariant: 'inverse',
+        footerBackgroundColor: '',
+        description: 'Card with inverse footer variant and inverse outside',
+    },
+] as const) {
+    const {variantOutside, variant, footerVariant, footerBackgroundColor, description} = testCase;
+    test(`Card footer and divider - ${testCase.description}`, async () => {
         await openStoryPage({
             id: STORY_IDS.data,
             device: 'MOBILE_IOS',
@@ -271,9 +409,9 @@ test.each`
                 headline: '',
                 pretitle: '',
                 title: 'Footer and divider',
-                variantOutside: normalizeVariant(variantOutside),
-                variant: normalizeVariant(variant),
-                footerVariant: normalizeVariant(footerVariant),
+                variantOutside: variantOutside === 'inverse' ? 'brand' : variantOutside,
+                variant: variant === 'inverse' ? 'brand' : variant,
+                footerVariant: footerVariant === 'inverse' ? 'brand' : footerVariant,
                 footerBackgroundColor,
                 description,
                 topActions: false,
@@ -284,87 +422,109 @@ test.each`
         });
 
         const card = await screen.findByTestId('card-container');
-        const image = await card.screenshot();
-        expect(image).toMatchImageSnapshot();
-    }
-);
-
-test.each`
-    type       | variantOutside | variant      | description
-    ${'cover'} | ${'default'}   | ${'default'} | ${'Cover card with default outside and default variant'}
-    ${'cover'} | ${'default'}   | ${'inverse'} | ${'Cover card with default outside and inverse variant'}
-    ${'cover'} | ${'inverse'}   | ${'default'} | ${'Cover card with inverse outside and default variant'}
-    ${'cover'} | ${'inverse'}   | ${'inverse'} | ${'Cover card with inverse outside and inverse variant'}
-`('Card outside variant - $description', async ({type, variant, variantOutside, description}) => {
-    await openStoryPage({
-        id: STORY_IDS[type],
-        device: 'MOBILE_IOS',
-        args: {
-            ...argsReset,
-            variant: normalizeVariant(variant),
-            variantOutside: normalizeVariant(variantOutside),
-            description,
-            showFooter: true,
-            footerSlot: true,
-            imageSrc: 'empty string',
-        },
+        await expectScreenshot(card);
     });
+}
 
-    const card = await screen.findByTestId('card-container');
-    const image = await card.screenshot();
-    expect(image).toMatchImageSnapshot();
-});
+for (const testCase of [
+    {
+        type: 'cover',
+        variantOutside: 'default',
+        variant: 'default',
+        description: 'Cover card with default outside and default variant',
+    },
+    {
+        type: 'cover',
+        variantOutside: 'default',
+        variant: 'inverse',
+        description: 'Cover card with default outside and inverse variant',
+    },
+    {
+        type: 'cover',
+        variantOutside: 'inverse',
+        variant: 'default',
+        description: 'Cover card with inverse outside and default variant',
+    },
+    {
+        type: 'cover',
+        variantOutside: 'inverse',
+        variant: 'inverse',
+        description: 'Cover card with inverse outside and inverse variant',
+    },
+] as const) {
+    const {type, variant, variantOutside, description} = testCase;
+    test(`Card outside variant - ${testCase.description}`, async () => {
+        await openStoryPage({
+            id: STORY_IDS[type],
+            device: 'MOBILE_IOS',
+            args: {
+                ...argsReset,
+                variant: variant === 'inverse' ? 'brand' : variant,
+                variantOutside: variantOutside === 'inverse' ? 'brand' : variantOutside,
+                description,
+                showFooter: true,
+                footerSlot: true,
+                imageSrc: 'empty string',
+            },
+        });
 
-test.each`
-    skin
-    ${MOVISTAR_SKIN}
-    ${O2_SKIN}
-    ${VIVO_SKIN}
-    ${VIVO_EVOLUTION_SKIN}
-    ${TELEFONICA_SKIN}
-    ${BLAU_SKIN}
-    ${ESIMFLAG_SKIN}
-`('Card cover footer with image background - $skin', async ({skin}) => {
-    await openStoryPage({
-        id: STORY_IDS.cover,
-        device: 'MOBILE_IOS',
-        skin,
-        args: {
-            ...argsReset,
-            showFooter: true,
-            footerSlot: false,
-            imageSrc: 'person portrait',
-        },
+        const card = await screen.findByTestId('card-container');
+        await expectScreenshot(card);
     });
+}
 
-    const card = await screen.findByTestId('card-container');
-    const image = await card.screenshot();
-    expect(image).toMatchImageSnapshot();
-});
+for (const testCase of [
+    {skin: MOVISTAR_SKIN},
+    {skin: O2_SKIN},
+    {skin: VIVO_SKIN},
+    {skin: VIVO_EVOLUTION_SKIN},
+    {skin: TELEFONICA_SKIN},
+    {skin: BLAU_SKIN},
+    {skin: ESIMFLAG_SKIN},
+] as const) {
+    const {skin} = testCase;
+    test(`Card cover footer with image background - ${testCase.skin}`, async () => {
+        await openStoryPage({
+            id: STORY_IDS.cover,
+            device: 'MOBILE_IOS',
+            skin,
+            args: {
+                ...argsReset,
+                showFooter: true,
+                footerSlot: false,
+                imageSrc: 'person portrait',
+            },
+        });
 
-test.each`
-    gradientOverlayColor
-    ${'#F00'}
-    ${'#00FF00'}
-    ${'rgba(255, 255, 0, 1)'}
-    ${'transparent'}
-`('Card cover with custom gradientOverlayColor - $gradientOverlayColor', async ({gradientOverlayColor}) => {
-    await openStoryPage({
-        id: STORY_IDS.cover,
-        device: 'MOBILE_IOS',
-        args: {
-            ...argsReset,
-            showFooter: true,
-            footerSlot: false,
-            imageSrc: 'beach',
-            gradientOverlayColor,
-        },
+        const card = await screen.findByTestId('card-container');
+        await expectScreenshot(card);
     });
+}
 
-    const card = await screen.findByTestId(TEST_IDS.cover);
-    const image = await card.screenshot();
-    expect(image).toMatchImageSnapshot();
-});
+for (const testCase of [
+    {gradientOverlayColor: '#F00'},
+    {gradientOverlayColor: '#00FF00'},
+    {gradientOverlayColor: 'rgba(255, 255, 0, 1)'},
+    {gradientOverlayColor: 'transparent'},
+] as const) {
+    const {gradientOverlayColor} = testCase;
+    test(`Card cover with custom gradientOverlayColor - ${testCase.gradientOverlayColor}`, async () => {
+        await openStoryPage({
+            id: STORY_IDS.cover,
+            device: 'MOBILE_IOS',
+            args: {
+                ...argsReset,
+                showFooter: true,
+                footerSlot: false,
+                imageSrc: 'beach',
+                gradientOverlayColor,
+            },
+        });
+
+        const card = await screen.findByTestId(TEST_IDS.cover);
+        await expectScreenshot(card);
+    });
+}
 
 test('NakedCard over inverse', async () => {
     await openStoryPage({
@@ -377,8 +537,7 @@ test('NakedCard over inverse', async () => {
     });
 
     const card = await screen.findByTestId(TEST_IDS.naked);
-    const image = await card.screenshot();
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(card);
 });
 
 test('DataCard with segregateTouchableContent', async () => {
@@ -398,49 +557,54 @@ test('DataCard with segregateTouchableContent', async () => {
     (await screen.findByRole('button', {name: 'Pretitle'})).focus();
 
     const card = await screen.findByTestId(TEST_IDS.data);
-    expect(await card.screenshot()).toMatchImageSnapshot();
+    await expectScreenshot(card);
 });
 
-test.each`
-    card          | control
-    ${'data'}     | ${'checkbox'}
-    ${'media'}    | ${'switch'}
-    ${'cover'}    | ${'radio'}
-    ${'naked'}    | ${'checkbox'}
-    ${'advanced'} | ${'checkbox'}
-`('Selectable $card cards with $control selector', async ({card, control}) => {
-    await openStoryPage({
-        id: 'components-cards-selection--selection',
-        device: 'MOBILE_IOS',
-        args: {card, control},
+for (const testCase of [
+    {card: 'data', control: 'checkbox'},
+    {card: 'media', control: 'switch'},
+    {card: 'cover', control: 'radio'},
+    {card: 'naked', control: 'checkbox'},
+    {card: 'advanced', control: 'checkbox'},
+] as const) {
+    const {card, control} = testCase;
+    test(`Selectable ${testCase.card} cards with ${testCase.control} selector`, async () => {
+        await openStoryPage({
+            id: 'components-cards-selection--selection',
+            device: 'MOBILE_IOS',
+            args: {card, control},
+        });
+        const container = await screen.findByTestId('card-container');
+        await (await screen.findByRole(control, {name: 'First This is a description'})).click();
+        await expectScreenshot(container);
     });
-    const container = await screen.findByTestId('card-container');
-    await (await screen.findByRole(control, {name: 'First This is a description'})).click();
-    expect(await container.screenshot()).toMatchImageSnapshot();
-});
+}
 
 test('Custom card selection and lock action', async () => {
     await openStoryPage({id: 'components-cards-selection--custom-selection', device: 'MOBILE_IOS'});
     const container = await screen.findByTestId('card-container');
-    expect(await container.screenshot()).toMatchImageSnapshot();
+    await expectScreenshot(container);
     await (await screen.findByRole('button', {name: 'Select card'})).click();
     await (await screen.findByRole('button', {name: 'Add favorite'})).click();
     await (await screen.findByRole('button', {name: 'Lock'})).click();
-    expect(await container.screenshot()).toMatchImageSnapshot();
+    await expectScreenshot(container);
 });
 
-test.each(['data', 'advanced'])('Selectable %s card with keyboard focus', async (card) => {
-    const page = await openStoryPage({
-        id: 'components-cards-selection--selection',
-        device: 'DESKTOP',
-        args: {card},
+for (const testCase of ['data', 'advanced']) {
+    const card = testCase;
+    test(`Selectable ${testCase} card with keyboard focus`, async () => {
+        const page = await openStoryPage({
+            id: 'components-cards-selection--selection',
+            device: 'DESKTOP',
+            args: {card},
+        });
+        const surface = await screen.findByRole('checkbox', {name: 'First This is a description'});
+        await surface.focus();
+        await page.keyboard.press('Space');
+        const container = await screen.findByTestId('card-container');
+        await expectScreenshot(container);
     });
-    const surface = await screen.findByRole('checkbox', {name: 'First This is a description'});
-    await surface.focus();
-    await page.keyboard.press('Space');
-    const container = await screen.findByTestId('card-container');
-    expect(await container.screenshot()).toMatchImageSnapshot();
-});
+}
 
 test('Selectable card with custom render in slot', async () => {
     await openStoryPage({
@@ -451,31 +615,33 @@ test('Selectable card with custom render in slot', async () => {
     const [control] = await screen.findAllByRole('checkbox', {name: 'Custom control'});
     await control.click();
     const container = await screen.findByTestId('card-container');
-    expect(await container.screenshot()).toMatchImageSnapshot();
+    await expectScreenshot(container);
 });
 
-test.each`
-    skin                   | device
-    ${BLAU_SKIN}           | ${'MOBILE_ANDROID'}
-    ${BLAU_SKIN}           | ${'MOBILE_IOS'}
-    ${VIVO_SKIN}           | ${'MOBILE_ANDROID'}
-    ${VIVO_SKIN}           | ${'MOBILE_IOS'}
-    ${VIVO_EVOLUTION_SKIN} | ${'MOBILE_ANDROID'}
-    ${VIVO_EVOLUTION_SKIN} | ${'MOBILE_IOS'}
-`('Selectable advanced card with switch - $skin - $device', async ({skin, device}) => {
-    await openStoryPage({
-        id: 'components-cards-selection--advanced-switch',
-        skin,
-        device,
-        viewport: {width: 360, height: 640, deviceScaleFactor: 2},
+for (const testCase of [
+    {skin: BLAU_SKIN, device: 'MOBILE_ANDROID'},
+    {skin: BLAU_SKIN, device: 'MOBILE_IOS'},
+    {skin: VIVO_SKIN, device: 'MOBILE_ANDROID'},
+    {skin: VIVO_SKIN, device: 'MOBILE_IOS'},
+    {skin: VIVO_EVOLUTION_SKIN, device: 'MOBILE_ANDROID'},
+    {skin: VIVO_EVOLUTION_SKIN, device: 'MOBILE_IOS'},
+] as const) {
+    const {skin, device} = testCase;
+    test(`Selectable advanced card with switch - ${testCase.skin} - ${testCase.device}`, async () => {
+        await openStoryPage({
+            id: 'components-cards-selection--advanced-switch',
+            skin,
+            device,
+            viewport: {width: 360, height: 640, deviceScaleFactor: 2},
+        });
+        const card = await screen.findByTestId('AdvancedDataCard');
+        await expectScreenshot(card);
     });
-    const card = await screen.findByTestId('AdvancedDataCard');
-    expect(await card.screenshot()).toMatchImageSnapshot();
-});
+}
 
-test.each(['checkbox', 'switch', 'radio'])(
-    'Selectable cover cards with %s and aspect ratio',
-    async (control) => {
+for (const testCase of ['checkbox', 'switch', 'radio']) {
+    const control = testCase;
+    test(`Selectable cover cards with ${testCase} and aspect ratio`, async () => {
         await openStoryPage({
             id: 'components-cards-selection--selection',
             device: 'MOBILE_IOS',
@@ -483,6 +649,6 @@ test.each(['checkbox', 'switch', 'radio'])(
         });
         await (await screen.findByRole(control, {name: 'First This is a description'})).click();
         const container = await screen.findByTestId('card-container');
-        expect(await container.screenshot()).toMatchImageSnapshot();
-    }
-);
+        await expectScreenshot(container);
+    });
+}

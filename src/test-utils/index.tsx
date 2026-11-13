@@ -1,17 +1,20 @@
 import path from 'path';
 import fs from 'fs';
-import os from 'os';
-import {openPage, serverHostName, screen, getGlobalPage, PageApi} from '@telefonica/acceptance-testing';
+import {openPage, screen, getGlobalPage} from './browser';
+import {test, expect, getSSRPort} from './playwright';
 import {MOVISTAR_SKIN} from '../skins/constants';
 import {kebabCase} from 'lodash';
 
-import type {TestViewport} from '@telefonica/acceptance-testing';
+import type {TestViewport, PageApi} from './browser';
+import type {ScreenshotOptions} from './playwright';
 
-export type {ElementHandle} from '@telefonica/acceptance-testing';
+export type {Locator} from 'playwright';
+export {within, getGlobalPage} from './browser';
 
-export {screen, PageApi};
+export {screen};
+export type {PageApi};
 
-export type StoryArgs = {[key: string]: string | number | boolean};
+export type StoryArgs = {[key: string]: string | number | boolean | undefined};
 
 const MOBILE_DEVICE_IOS_SMALL = 'MOBILE_IOS_SMALL';
 const MOBILE_DEVICE_IOS_INSET = 'MOBILE_IOS_INSET';
@@ -52,7 +55,6 @@ const DEVICES: DeviceCollection = {
             deviceScaleFactor: 2,
             isMobile: true,
             hasTouch: true,
-            isLandscape: false,
         },
     },
     [MOBILE_DEVICE_IOS]: {
@@ -65,7 +67,6 @@ const DEVICES: DeviceCollection = {
             deviceScaleFactor: 2,
             isMobile: true,
             hasTouch: true,
-            isLandscape: false,
         },
     },
     [MOBILE_DEVICE_IOS_INSET]: {
@@ -78,7 +79,6 @@ const DEVICES: DeviceCollection = {
             deviceScaleFactor: 2,
             isMobile: true,
             hasTouch: true,
-            isLandscape: false,
             safeAreaInset: {
                 // smallest iPhone's bottom inset height on vertical position (iPhone 13 mini)
                 bottom: '34px',
@@ -95,7 +95,6 @@ const DEVICES: DeviceCollection = {
             deviceScaleFactor: 2,
             isMobile: true,
             hasTouch: true,
-            isLandscape: false,
         },
     },
     [TABLET_DEVICE]: {
@@ -107,7 +106,6 @@ const DEVICES: DeviceCollection = {
             deviceScaleFactor: 1,
             isMobile: true,
             hasTouch: true,
-            isLandscape: false,
         },
         userAgent: '',
     },
@@ -120,7 +118,6 @@ const DEVICES: DeviceCollection = {
             deviceScaleFactor: 1,
             isMobile: false,
             hasTouch: false,
-            isLandscape: false,
         },
     },
     [LARGE_DESKTOP_DEVICE]: {
@@ -131,7 +128,6 @@ const DEVICES: DeviceCollection = {
             deviceScaleFactor: 1,
             isMobile: false,
             hasTouch: false,
-            isLandscape: false,
         },
     },
     [EXTRA_LARGE_DESKTOP_DEVICE]: {
@@ -142,7 +138,6 @@ const DEVICES: DeviceCollection = {
             deviceScaleFactor: 1,
             isMobile: false,
             hasTouch: false,
-            isLandscape: false,
         },
     },
 };
@@ -203,32 +198,32 @@ const hydrateSSRPage = async (page: PageApi): Promise<void> => {
     });
 };
 
-const checkHydrationMismatch = async (page: PageApi): Promise<void> => {
-    const {testPath, currentTestName} = expect.getState();
-    const tmpdir = os.tmpdir();
-    const snapshotId = kebabCase(`${path.basename(testPath)}-${currentTestName}-snap`);
-    const baselineImagePath = path.join(tmpdir, `${snapshotId}.png`);
-    await page.screenshot({path: baselineImagePath});
+const SCREENSHOT_STABILITY_INTERVAL = 250;
+const SCREENSHOT_STABILITY_TIMEOUT = 30000;
 
+const checkHydrationMismatch = async (page: PageApi, screenshotConfig?: ScreenshotOptions): Promise<void> => {
+    const info = test.info();
+    const name = `${kebabCase(info.titlePath.join(' '))}-hydration.png`;
+    const baselineImagePath = info.snapshotPath(name, {kind: 'screenshot'});
+    fs.mkdirSync(path.dirname(baselineImagePath), {recursive: true});
+    await page.waitForLoadState('networkidle');
+    let baseline: Buffer = Buffer.alloc(0);
+    await expect
+        .poll(
+            async () => {
+                const current = await page.screenshot({caret: 'initial'});
+                const stable = current.equals(baseline);
+                baseline = current;
+                return stable;
+            },
+            {intervals: [SCREENSHOT_STABILITY_INTERVAL], timeout: SCREENSHOT_STABILITY_TIMEOUT}
+        )
+        .toBe(true);
+    fs.writeFileSync(baselineImagePath, baseline);
     await hydrateSSRPage(page);
-    const hydrateImage = await page.screenshot();
-
+    await page.evaluate(() => document.fonts.ready.then(() => undefined));
     try {
-        expect(hydrateImage).toMatchImageSnapshot({
-            // use the saved ssr snapshot as the baseline
-            customSnapshotsDir: tmpdir,
-            customSnapshotIdentifier: snapshotId,
-            customDiffDir: path.join(
-                __dirname,
-                '..',
-                '__acceptance_tests__',
-                '__image_snapshots__',
-                '__diff_output__'
-            ),
-        });
-    } catch (error: any) {
-        Error.captureStackTrace(error, checkHydrationMismatch);
-        throw error;
+        await expect(page).toHaveScreenshot(name, {caret: 'initial', ...screenshotConfig});
     } finally {
         fs.unlinkSync(baselineImagePath);
     }
@@ -243,6 +238,7 @@ export const openSSRPage = async ({
     device = TABLET_DEVICE,
     skin = MOVISTAR_SKIN,
     checkHidrationVisualMismatch = true,
+    hydrationScreenshotConfig,
     prefersColorScheme,
     waitUntil,
 }: {
@@ -250,14 +246,14 @@ export const openSSRPage = async ({
     device?: Device;
     skin?: string;
     checkHidrationVisualMismatch?: boolean;
+    hydrationScreenshotConfig?: ScreenshotOptions;
     prefersColorScheme?: 'light' | 'dark';
-    waitUntil?: 'load' | 'domcontentloaded' | 'networkidle0' | 'networkidle2';
+    waitUntil?: 'load' | 'domcontentloaded' | 'networkidle' | 'commit';
 }): Promise<PageApi> => {
-    const globalPage = getGlobalPage();
-    const port = (global as any)['__SSR_SERVER__'].address().port;
+    const port = getSSRPort();
 
     // Capture browser console.error and console.warn calls that React could trigger when calling hydrate()
-    globalPage.on('console', async (msg) => {
+    const onConsole = async (msg: import('playwright').ConsoleMessage) => {
         const type = msg.type();
         const args = [...(await Promise.all(msg.args().map((h: any) => h.jsonValue())))];
         if (args.length === 0) {
@@ -269,21 +265,22 @@ export const openSSRPage = async ({
         if (type === 'warning') {
             console.warn(...args);
         }
-    });
+    };
 
     const page = await openPage({
-        url: `http://${serverHostName}:${port}/${name}?skin=${skin}`,
+        onConsole,
+        url: `http://localhost:${port}/${name}?skin=${skin}`,
         userAgent: DEVICES[device].userAgent,
         viewport: DEVICES[device].viewport,
         waitUntil,
     });
 
     if (prefersColorScheme) {
-        await page.emulateMediaFeatures([{name: 'prefers-color-scheme', value: prefersColorScheme}]);
+        await page.emulateMedia({colorScheme: prefersColorScheme});
     }
 
     if (checkHidrationVisualMismatch) {
-        await checkHydrationMismatch(page);
+        await checkHydrationMismatch(page, hydrationScreenshotConfig);
     } else {
         await hydrateSSRPage(page);
     }
@@ -292,7 +289,7 @@ export const openSSRPage = async ({
 };
 
 export const setRootFontSize = (px: number): Promise<void> =>
-    page.$eval('html', (e, px) => e.setAttribute('style', `font-size: ${px}px;`), px);
+    getGlobalPage().$eval('html', (e, px) => e.setAttribute('style', `font-size: ${px}px;`), px);
 
 export const waitFor = <T,>(
     expectation: () => Promise<T> | T,
@@ -322,10 +319,4 @@ export const waitFor = <T,>(
     });
 };
 
-// about SSIM: https://github.com/americanexpress/jest-image-snapshot#%EF%B8%8F-api
-// We use this config for screenshot tests that tend to be flaky in CI because of subtle differences in the rendering
-export const ssimScreenshotConfig = {
-    comparisonMethod: 'ssim',
-    failureThreshold: 0.001,
-    failureThresholdType: 'percent',
-} as const;
+export {renderingTolerance} from './playwright';

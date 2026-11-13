@@ -1,3 +1,4 @@
+import {test, expectScreenshot} from '../test-utils/playwright';
 import {openStoryPage, screen} from '../test-utils';
 
 import type {Device, StoryArgs} from '../test-utils';
@@ -119,13 +120,15 @@ const CASES: ReadonlyArray<{name: string; device: Device; args: StoryArgs}> = [
     },
 ];
 
-test.each(CASES)('Pagination $name - $device', async ({args, device}) => {
-    await openStoryPage({id: STORY_ID, device, args});
+for (const testCase of CASES) {
+    const {args, device} = testCase;
+    test(`Pagination ${testCase.name} - ${testCase.device}`, async () => {
+        await openStoryPage({id: STORY_ID, device, args});
 
-    const pagination = await screen.findByTestId('Pagination');
-    const image = await pagination.screenshot();
-    expect(image).toMatchImageSnapshot();
-});
+        const pagination = await screen.findByTestId('Pagination');
+        await expectScreenshot(pagination);
+    });
+}
 
 test('Pagination NavOnlySmall - MOBILE_IOS_SMALL', async () => {
     await openStoryPage({
@@ -140,6 +143,5 @@ test('Pagination NavOnlySmall - MOBILE_IOS_SMALL', async () => {
     });
 
     const pagination = await screen.findByTestId('Pagination');
-    const image = await pagination.screenshot();
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(pagination);
 });

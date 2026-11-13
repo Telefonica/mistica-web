@@ -1,17 +1,19 @@
+import {test, expectScreenshot} from '../test-utils/playwright';
 import {openStoryPage, screen, setRootFontSize} from '../test-utils';
 
 const DEVICE = ['DESKTOP', 'MOBILE_IOS'] as const;
 
-test.each`
-    minTimeUnit  | maxTimeUnit
-    ${'seconds'} | ${'hours'}
-    ${'minutes'} | ${'days'}
-    ${'seconds'} | ${'days'}
-    ${'minutes'} | ${'days'}
-    ${'seconds'} | ${'seconds'}
-`(
-    'TextTimer - minTimeUnit = $minTimeUnit, maxTimeUnit = $maxTimeUnit',
-    async ({minTimeUnit, maxTimeUnit}) => {
+for (const [caseIndex, testCase] of (
+    [
+        {minTimeUnit: 'seconds', maxTimeUnit: 'hours'},
+        {minTimeUnit: 'minutes', maxTimeUnit: 'days'},
+        {minTimeUnit: 'seconds', maxTimeUnit: 'days'},
+        {minTimeUnit: 'minutes', maxTimeUnit: 'days'},
+        {minTimeUnit: 'seconds', maxTimeUnit: 'seconds'},
+    ] as const
+).entries()) {
+    const {minTimeUnit, maxTimeUnit} = testCase;
+    test(`TextTimer - minTimeUnit = ${testCase.minTimeUnit}, maxTimeUnit = ${testCase.maxTimeUnit} (case ${caseIndex + 1})`, async () => {
         await openStoryPage({
             id: 'components-timer--text-timer-story',
             args: {minTimeUnit, maxTimeUnit},
@@ -19,42 +21,46 @@ test.each`
 
         const timer = await screen.findByTestId('timer');
 
-        const image = await timer.screenshot();
-        expect(image).toMatchImageSnapshot();
-    }
-);
-
-test.each`
-    minTimeUnit  | maxTimeUnit
-    ${'seconds'} | ${'hours'}
-    ${'minutes'} | ${'days'}
-    ${'seconds'} | ${'days'}
-    ${'minutes'} | ${'days'}
-    ${'seconds'} | ${'seconds'}
-`('Timer - minTimeUnit = $minTimeUnit, maxTimeUnit = $maxTimeUnit', async ({minTimeUnit, maxTimeUnit}) => {
-    await openStoryPage({
-        id: 'components-timer--timer-story',
-        args: {minTimeUnit, maxTimeUnit},
+        await expectScreenshot(timer);
     });
+}
 
-    const timer = await screen.findByTestId('timer');
+for (const [caseIndex, testCase] of (
+    [
+        {minTimeUnit: 'seconds', maxTimeUnit: 'hours'},
+        {minTimeUnit: 'minutes', maxTimeUnit: 'days'},
+        {minTimeUnit: 'seconds', maxTimeUnit: 'days'},
+        {minTimeUnit: 'minutes', maxTimeUnit: 'days'},
+        {minTimeUnit: 'seconds', maxTimeUnit: 'seconds'},
+    ] as const
+).entries()) {
+    const {minTimeUnit, maxTimeUnit} = testCase;
+    test(`Timer - minTimeUnit = ${testCase.minTimeUnit}, maxTimeUnit = ${testCase.maxTimeUnit} (case ${caseIndex + 1})`, async () => {
+        await openStoryPage({
+            id: 'components-timer--timer-story',
+            args: {minTimeUnit, maxTimeUnit},
+        });
 
-    const image = await timer.screenshot();
-    expect(image).toMatchImageSnapshot();
-});
+        const timer = await screen.findByTestId('timer');
 
-test.each(DEVICE)('Timer - boxed (%s)', async (device) => {
-    await openStoryPage({
-        id: 'components-timer--timer-story',
-        device,
-        args: {minTimeUnit: 'seconds', maxTimeUnit: 'days', boxed: true},
+        await expectScreenshot(timer);
     });
+}
 
-    const timer = await screen.findByTestId('timer');
+for (const [caseIndex, testCase] of DEVICE.entries()) {
+    const device = testCase;
+    test(`Timer - boxed (${testCase}) (case ${caseIndex + 1})`, async () => {
+        await openStoryPage({
+            id: 'components-timer--timer-story',
+            device,
+            args: {minTimeUnit: 'seconds', maxTimeUnit: 'days', boxed: true},
+        });
 
-    const image = await timer.screenshot();
-    expect(image).toMatchImageSnapshot();
-});
+        const timer = await screen.findByTestId('timer');
+
+        await expectScreenshot(timer);
+    });
+}
 
 test('Timer - boxed over media', async () => {
     await openStoryPage({
@@ -65,8 +71,7 @@ test('Timer - boxed over media', async () => {
 
     const timer = await screen.findByTestId('timer');
 
-    const image = await timer.screenshot();
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(timer);
 });
 
 test('Timer - boxed with big fontSize', async () => {
@@ -79,8 +84,7 @@ test('Timer - boxed with big fontSize', async () => {
 
     const timer = await screen.findByTestId('timer');
 
-    const image = await timer.screenshot();
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(timer);
 });
 
 test('Timer - wraps if needed', async () => {
@@ -93,6 +97,5 @@ test('Timer - wraps if needed', async () => {
 
     const timer = await screen.findByTestId('timer');
 
-    const image = await timer.screenshot();
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(timer);
 });

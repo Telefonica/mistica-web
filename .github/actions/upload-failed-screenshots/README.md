@@ -20,7 +20,7 @@ This action uploads failed screenshots to azure
 
 Glob to match diff image files
 
-Defaults to `**/__diff_output__/*-diff.png`
+Defaults to `reports/playwright/**/*-diff.png`
 
 ## Outputs
 
@@ -36,5 +36,5 @@ if: always()
 with:
   azure-account-name: ${{ secrets.AZURE_ACCOUNT_NAME }}
   azure-account-key: ${{ secrets.AZURE_ACCOUNT_KEY }}
-  glob: '**/__diff_output__/*-diff.png'
+  glob: 'reports/playwright/**/*-diff.png'
 ```

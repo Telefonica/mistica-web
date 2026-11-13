@@ -1,3 +1,4 @@
+import {test, expectScreenshot} from '../test-utils/playwright';
 import {openStoryPage, screen} from '../test-utils';
 
 const SKINS = ['Movistar', 'Vivo', 'O2'] as const;
@@ -13,13 +14,16 @@ const getCases = () => {
     return cases;
 };
 
-test.each(getCases())('TextPresets as CSS vars in %s (%s)', async (skin, device) => {
-    await openStoryPage({
-        id: 'private-textpresets-css-vars--default',
-        skin: skin as (typeof SKINS)[number],
-        device: device as (typeof DEVICES)[number],
-    });
+for (const testCase of getCases()) {
+    const [skin, device] = testCase;
+    test(`TextPresets as CSS vars in ${testCase[0]} (${testCase[1]})`, async () => {
+        await openStoryPage({
+            id: 'private-textpresets-css-vars--default',
+            skin: skin as (typeof SKINS)[number],
+            device: device as (typeof DEVICES)[number],
+        });
 
-    const story = await screen.findByTestId('story');
-    expect(await story.screenshot()).toMatchImageSnapshot();
-});
+        const story = await screen.findByTestId('story');
+        await expectScreenshot(story);
+    });
+}

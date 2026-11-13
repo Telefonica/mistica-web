@@ -1,3 +1,4 @@
+import {test, expectScreenshot} from '../test-utils/playwright';
 import {openStoryPage, screen} from '../test-utils';
 
 test('Card slot alignment', async () => {
@@ -5,7 +6,5 @@ test('Card slot alignment', async () => {
 
     const story = await screen.findByTestId('story');
 
-    const image = await story.screenshot();
-
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(story);
 });

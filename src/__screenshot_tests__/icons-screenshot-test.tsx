@@ -1,3 +1,4 @@
+import {test, expectScreenshot} from '../test-utils/playwright';
 import {openStoryPage} from '../test-utils';
 
 const SKINS = ['Movistar', 'O2', 'Blau'] as const;
@@ -13,14 +14,16 @@ const getCases = () => {
     return cases;
 };
 
-test.each(getCases())('Icons catalog for %s (%s)', async (skin, type) => {
-    const page = await openStoryPage({
-        id: 'icons-catalog--catalog',
-        device: 'DESKTOP',
-        skin: skin as (typeof SKINS)[number],
-        args: {light: type === 'light', regular: type === 'regular', filled: type === 'filled', size: 32},
-    });
+for (const testCase of getCases()) {
+    const [skin, type] = testCase;
+    test(`Icons catalog for ${testCase[0]} (${testCase[1]})`, async () => {
+        const page = await openStoryPage({
+            id: 'icons-catalog--catalog',
+            device: 'DESKTOP',
+            skin: skin as (typeof SKINS)[number],
+            args: {light: type === 'light', regular: type === 'regular', filled: type === 'filled', size: 32},
+        });
 
-    const icons = await page.screenshot({fullPage: true});
-    expect(icons).toMatchImageSnapshot();
-});
+        await expectScreenshot(page, {...{fullPage: true}});
+    });
+}

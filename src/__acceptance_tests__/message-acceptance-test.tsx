@@ -1,11 +1,11 @@
-import {openStoryPage, screen, waitFor} from '../test-utils';
-import {getGlobalPage} from '@telefonica/acceptance-testing';
-import {AxePuppeteer} from '@axe-core/puppeteer';
+import {test, expect} from '../test-utils/playwright';
+import {openStoryPage, screen, waitFor, getGlobalPage} from '../test-utils';
+import AxeBuilder from '@axe-core/playwright';
 import assert from 'assert';
 
-import type {ElementHandle} from '../test-utils';
+import type {Locator} from '../test-utils';
 
-const getBounds = async (element: ElementHandle) => {
+const getBounds = async (element: Locator) => {
     const bounds = await element.boundingBox();
     assert(bounds, 'Element has no bounding box');
     return {...bounds, left: bounds.x, right: bounds.x + bounds.width};
@@ -13,22 +13,21 @@ const getBounds = async (element: ElementHandle) => {
 
 const story = 'components-message--default';
 
-test.each(['Movistar', 'O2', 'Vivo', 'Vivo-evolution', 'Blau'] as const)(
-    'Message conversation has accessible contrast in %s',
-    async (skin) => {
+for (const skin of ['Movistar', 'O2', 'Vivo', 'Vivo-evolution', 'Blau'] as const) {
+    test(`Message conversation has accessible contrast in ${skin}`, async () => {
         await openStoryPage({id: 'components-message--conversation', device: 'MOBILE_IOS', skin});
-        const result = await new AxePuppeteer(getGlobalPage()).withRules(['color-contrast']).analyze();
+        const result = await new AxeBuilder({page: getGlobalPage()}).withRules(['color-contrast']).analyze();
         expect(result.violations).toEqual([]);
-    }
-);
+    });
+}
 
-test.each([
+for (const testCase of [
     {type: 'incoming', boxed: true, inset: 16, edge: 'left'},
     {type: 'outgoing', boxed: true, inset: 16, edge: 'right'},
     {type: 'outgoing', boxed: false, inset: 0, edge: 'right'},
-] as const)(
-    'Short error messages stay within the mobile viewport: $type boxed=$boxed',
-    async ({type, boxed, inset, edge}) => {
+] as const) {
+    const {type, boxed, inset, edge} = testCase;
+    test(`Short error messages stay within the mobile viewport: ${testCase.type} boxed=${testCase.boxed}`, async () => {
         await openStoryPage({
             id: story,
             device: 'MOBILE_IOS',
@@ -66,8 +65,8 @@ test.each([
             )
         ).toBe(false);
         expect(await error.evaluate((element) => element.scrollWidth > element.clientWidth)).toBe(false);
-    }
-);
+    });
+}
 
 test('Message wraps within its maximum width on mobile with side actions', async () => {
     await openStoryPage({
@@ -94,9 +93,8 @@ test('Message wraps within its maximum width on mobile with side actions', async
     expect(hasOverflow).toBe(false);
 });
 
-test.each(['brand', 'negative', 'media'])(
-    'Unboxed sender uses the content color over %s',
-    async (variantOutside) => {
+for (const variantOutside of ['brand', 'negative', 'media']) {
+    test(`Unboxed sender uses the content color over ${variantOutside}`, async () => {
         await openStoryPage({
             id: story,
             device: 'MOBILE_IOS',
@@ -115,8 +113,8 @@ test.each(['brand', 'negative', 'media'])(
         const contentColor = await content.evaluate((node) => getComputedStyle(node).color);
         expect(await sender.evaluate((node) => getComputedStyle(node).color)).toBe(contentColor);
         expect(await timestamp.evaluate((node) => getComputedStyle(node).color)).toBe(contentColor);
-    }
-);
+    });
+}
 
 test('Message uses an inline timestamp for short text', async () => {
     await openStoryPage({
@@ -154,9 +152,8 @@ test('Outgoing assets align with the bubble when a footer is present', async () 
     expect(avatarBounds.y + avatarBounds.height).toBeCloseTo(bubbleBounds.y + bubbleBounds.height, 0);
 });
 
-test.each([true, false])(
-    'Outgoing footer actions align to the bubble right edge (boxed: %s)',
-    async (boxed) => {
+for (const boxed of [true, false]) {
+    test(`Outgoing footer actions align to the bubble right edge (boxed: ${boxed})`, async () => {
         await openStoryPage({
             id: story,
             device: 'MOBILE_IOS',
@@ -171,20 +168,21 @@ test.each([true, false])(
         });
         expect(actionBounds.x + actionBounds.width).toBeCloseTo(bubbleBounds.x + bubbleBounds.width, 0);
         expect(actionBounds.y).toBeGreaterThanOrEqual(bubbleBounds.y + bubbleBounds.height);
-    }
-);
+    });
+}
 
-test.each(['incoming', 'outgoing'])('Message renders oversized avatars at 40px: %s', async (type) => {
-    await openStoryPage({id: story, device: 'MOBILE_IOS', args: {type, avatarSize: 190}});
-    const avatar = await screen.findByTestId('Avatar');
-    const bounds = await getBounds(avatar);
-    expect(bounds.width).toBe(40);
-    expect(bounds.height).toBe(40);
-});
+for (const type of ['incoming', 'outgoing']) {
+    test(`Message renders oversized avatars at 40px: ${type}`, async () => {
+        await openStoryPage({id: story, device: 'MOBILE_IOS', args: {type, avatarSize: 190}});
+        const avatar = await screen.findByTestId('Avatar');
+        const bounds = await getBounds(avatar);
+        expect(bounds.width).toBe(40);
+        expect(bounds.height).toBe(40);
+    });
+}
 
-test.each(['MOBILE_IOS', 'DESKTOP'] as const)(
-    'Short error text hugs its content without forcing the minimum width: %s',
-    async (device) => {
+for (const device of ['MOBILE_IOS', 'DESKTOP'] as const) {
+    test(`Short error text hugs its content without forcing the minimum width: ${device}`, async () => {
         await openStoryPage({
             id: story,
             device,
@@ -218,8 +216,8 @@ test.each(['MOBILE_IOS', 'DESKTOP'] as const)(
         const errorInset = 16;
         expect(insets.left).toBeCloseTo(errorInset, 0);
         expect(insets.right).toBeCloseTo(errorInset, 0);
-    }
-);
+    });
+}
 
 test('Short error helper grows beyond its minimum width without wrapping unnecessarily', async () => {
     const errorMessage = 'Error message with longer text';
@@ -256,61 +254,68 @@ test('Short error helper grows beyond its minimum width without wrapping unneces
     ).toBe(false);
 });
 
-test.each([true, false])('Content slots preserve their own typography (boxed: %s)', async (boxed) => {
-    await openStoryPage({
-        id: 'components-message--content-typography',
-        device: 'MOBILE_IOS',
-        args: {boxed, variantOutside: 'brand'},
-    });
-    const typography = async (text: string) => {
-        const element = await screen.findByText(text);
-        return element.evaluate((node) => {
-            const style = getComputedStyle(node);
-            return {
-                fontSize: style.fontSize,
-                lineHeight: style.lineHeight,
-                fontWeight: style.fontWeight,
-                fontFamily: style.fontFamily,
-                color: style.color,
-            };
+for (const boxed of [true, false]) {
+    test(`Content slots preserve their own typography (boxed: ${boxed})`, async () => {
+        await openStoryPage({
+            id: 'components-message--content-typography',
+            device: 'MOBILE_IOS',
+            args: {boxed, variantOutside: 'brand'},
         });
-    };
-    const defaultTypography = await typography('Default text');
-    expect(await typography('Plain content')).toEqual(await typography('Plain reference'));
-    expect(await typography('Inherited text')).toEqual(await typography('Inherited reference'));
-    const customTypography = await typography('Custom text');
-    const referenceTypography = await typography('Custom reference');
-    expect(customTypography.fontSize).toBe(referenceTypography.fontSize);
-    expect(customTypography.fontWeight).toBe(referenceTypography.fontWeight);
-    expect(customTypography.fontWeight).not.toBe(defaultTypography.fontWeight);
-});
-
-test.each(['incoming', 'outgoing'])('Message keeps its bubble fill on hover and press: %s', async (type) => {
-    await openStoryPage({
-        id: story,
-        device: 'DESKTOP',
-        args: {type, variantOutside: 'negative', interaction: 'onPress'},
+        const typography = async (text: string) => {
+            const element = await screen.findByText(text);
+            return element.evaluate((node) => {
+                const style = getComputedStyle(node);
+                return {
+                    fontSize: style.fontSize,
+                    lineHeight: style.lineHeight,
+                    fontWeight: style.fontWeight,
+                    fontFamily: style.fontFamily,
+                    color: style.color,
+                };
+            });
+        };
+        const defaultTypography = await typography('Default text');
+        expect(await typography('Plain content')).toEqual(await typography('Plain reference'));
+        expect(await typography('Inherited text')).toEqual(await typography('Inherited reference'));
+        const customTypography = await typography('Custom text');
+        const referenceTypography = await typography('Custom reference');
+        expect(customTypography.fontSize).toBe(referenceTypography.fontSize);
+        expect(customTypography.fontWeight).toBe(referenceTypography.fontWeight);
+        expect(customTypography.fontWeight).not.toBe(defaultTypography.fontWeight);
     });
-    const bubble = await screen.findByTestId('MessageBubble');
-    const background = await bubble.evaluate((element) => getComputedStyle(element).backgroundColor);
-    await bubble.hover();
-    expect(await bubble.evaluate((element) => getComputedStyle(element).backgroundColor)).toBe(background);
-    expect(
-        (await new AxePuppeteer(getGlobalPage()).withRules(['color-contrast']).analyze()).violations
-    ).toEqual([]);
-    await getGlobalPage().mouse.down();
-    try {
+}
+
+for (const type of ['incoming', 'outgoing']) {
+    test(`Message keeps its bubble fill on hover and press: ${type}`, async () => {
+        await openStoryPage({
+            id: story,
+            device: 'DESKTOP',
+            args: {type, variantOutside: 'negative', interaction: 'onPress'},
+        });
+        const bubble = await screen.findByTestId('MessageBubble');
+        const background = await bubble.evaluate((element) => getComputedStyle(element).backgroundColor);
+        await bubble.hover();
         expect(await bubble.evaluate((element) => getComputedStyle(element).backgroundColor)).toBe(
             background
         );
         expect(
-            (await new AxePuppeteer(getGlobalPage()).withRules(['color-contrast']).analyze()).violations
+            (await new AxeBuilder({page: getGlobalPage()}).withRules(['color-contrast']).analyze()).violations
         ).toEqual([]);
-    } finally {
-        await getGlobalPage().mouse.move(0, 0);
-        await getGlobalPage().mouse.up();
-    }
-});
+        await getGlobalPage().mouse.down();
+        try {
+            expect(await bubble.evaluate((element) => getComputedStyle(element).backgroundColor)).toBe(
+                background
+            );
+            expect(
+                (await new AxeBuilder({page: getGlobalPage()}).withRules(['color-contrast']).analyze())
+                    .violations
+            ).toEqual([]);
+        } finally {
+            await getGlobalPage().mouse.move(0, 0);
+            await getGlobalPage().mouse.up();
+        }
+    });
+}
 
 test('Outgoing errors follow the footer slot and footer actions', async () => {
     await openStoryPage({id: 'components-message--error-with-slots', device: 'MOBILE_IOS'});
@@ -328,14 +333,14 @@ test('Outgoing errors follow the footer slot and footer actions', async () => {
     expect(errorBounds.y).toBeGreaterThanOrEqual(actionBounds.y + actionBounds.height);
 });
 
-test.each([
+for (const testCase of [
     {type: 'incoming', boxed: true, leading: 'asset', trailing: 'bubble', expectedGap: 8},
     {type: 'outgoing', boxed: true, leading: 'bubble', trailing: 'asset', expectedGap: 8},
     {type: 'incoming', boxed: false, leading: 'asset', trailing: 'bubble', expectedGap: 12},
     {type: 'outgoing', boxed: false, leading: 'bubble', trailing: 'asset', expectedGap: 12},
-] as const)(
-    'Message asset spacing matches its boxed variant: %o',
-    async ({type, boxed, leading, trailing, expectedGap}) => {
+] as const) {
+    const {type, boxed, leading, trailing, expectedGap} = testCase;
+    test(`Message asset spacing matches its boxed variant (${type}, boxed=${boxed})`, async () => {
         await openStoryPage({id: story, device: 'MOBILE_IOS', args: {type, boxed, assetType: 'avatar'}});
 
         const asset = await getBounds(await screen.findByTestId('Avatar'));
@@ -344,83 +349,94 @@ test.each([
         const actualGap = bounds[trailing].left - bounds[leading].right;
 
         expect(actualGap).toBeCloseTo(expectedGap, 0);
-    }
-);
-
-test.each([true, false])('Oversized content stays inside the message (boxed: %s)', async (boxed) => {
-    await openStoryPage({id: 'components-message--content-overflow', device: 'MOBILE_IOS', args: {boxed}});
-    const image = await screen.findByRole('img', {name: 'Portrait'});
-    const bounds = await image.evaluate((node) => {
-        const message = node.closest('[data-testid="Message"]') as HTMLElement;
-        const imageRect = node.getBoundingClientRect();
-        const messageRect = message.getBoundingClientRect();
-        return {width: messageRect.width, imageRight: imageRect.right, right: messageRect.right};
     });
-    expect(bounds.width).toBeLessThanOrEqual(200);
-    expect(bounds.imageRight).toBeLessThanOrEqual(bounds.right);
-});
+}
 
-test.each(['incoming', 'outgoing'])('Error uses the side actions width: %s', async (type) => {
-    await openStoryPage({
-        id: story,
-        device: 'MOBILE_IOS',
-        args: {
-            type,
-            assetType: 'none',
-            senderName: '',
-            error: true,
-            errorMessage: 'An error message that needs the whole row width to remain readable',
-            actions: true,
-            actionsCount: 2,
-            actionsPosition: 'side',
-        },
+for (const boxed of [true, false]) {
+    test(`Oversized content stays inside the message (boxed: ${boxed})`, async () => {
+        await openStoryPage({
+            id: 'components-message--content-overflow',
+            device: 'MOBILE_IOS',
+            args: {boxed},
+        });
+        const image = await screen.findByRole('img', {name: 'Portrait'});
+        const bounds = await image.evaluate((node) => {
+            const message = node.closest('[data-testid="Message"]') as HTMLElement;
+            const imageRect = node.getBoundingClientRect();
+            const messageRect = message.getBoundingClientRect();
+            return {width: messageRect.width, imageRight: imageRect.right, right: messageRect.right};
+        });
+        expect(bounds.width).toBeLessThanOrEqual(200);
+        expect(bounds.imageRight).toBeLessThanOrEqual(bounds.right);
     });
-    const bubble = await screen.findByTestId('MessageBubble');
-    const error = await screen.findByRole('alert');
-    const message = await screen.findByTestId('Message');
-    await waitFor(async () => {
-        const bubbleBounds = await getBounds(bubble);
-        const errorBounds = await getBounds(error);
-        const messageBounds = await getBounds(message);
-        expect(errorBounds.width).toBeCloseTo(messageBounds.width, 0);
-        expect(errorBounds.width).toBeGreaterThan(bubbleBounds.width);
-        expect(errorBounds.y - bubbleBounds.y - bubbleBounds.height).toBeCloseTo(4, 0);
-    });
-});
+}
 
-test.each([
+for (const type of ['incoming', 'outgoing']) {
+    test(`Error uses the side actions width: ${type}`, async () => {
+        await openStoryPage({
+            id: story,
+            device: 'MOBILE_IOS',
+            args: {
+                type,
+                assetType: 'none',
+                senderName: '',
+                error: true,
+                errorMessage: 'An error message that needs the whole row width to remain readable',
+                actions: true,
+                actionsCount: 2,
+                actionsPosition: 'side',
+            },
+        });
+        const bubble = await screen.findByTestId('MessageBubble');
+        const error = await screen.findByRole('alert');
+        const message = await screen.findByTestId('Message');
+        await waitFor(async () => {
+            const bubbleBounds = await getBounds(bubble);
+            const errorBounds = await getBounds(error);
+            const messageBounds = await getBounds(message);
+            expect(errorBounds.width).toBeCloseTo(messageBounds.width, 0);
+            expect(errorBounds.width).toBeGreaterThan(bubbleBounds.width);
+            expect(errorBounds.y - bubbleBounds.y - bubbleBounds.height).toBeCloseTo(4, 0);
+        });
+    });
+}
+
+for (const testCase of [
     {type: 'incoming', edge: 'left'},
     {type: 'outgoing', edge: 'right'},
-] as const)('Error preserves legibility with a narrow maxWidth: $type', async ({type, edge}) => {
-    await openStoryPage({
-        id: story,
-        device: 'MOBILE_IOS',
-        args: {
-            type,
-            contentText: 'Ok',
-            maxWidth: '100px',
-            assetType: 'none',
-            senderName: '',
-            error: true,
-            errorMessage: 'This message could not be sent please try again',
-        },
+] as const) {
+    const {type, edge} = testCase;
+    test(`Error preserves legibility with a narrow maxWidth: ${testCase.type}`, async () => {
+        await openStoryPage({
+            id: story,
+            device: 'MOBILE_IOS',
+            args: {
+                type,
+                contentText: 'Ok',
+                maxWidth: '100px',
+                assetType: 'none',
+                senderName: '',
+                error: true,
+                errorMessage: 'This message could not be sent please try again',
+            },
+        });
+        await waitFor(async () => {
+            const error = await getBounds(await screen.findByRole('alert'));
+            const message = await getBounds(await screen.findByTestId('Message'));
+            const minimumErrorWidth = 184;
+            expect(error.width).toBeCloseTo(minimumErrorWidth, 0);
+            expect(message.width).toBeLessThanOrEqual(100);
+            expect(error[edge]).toBeCloseTo(message[edge], 0);
+        });
     });
-    await waitFor(async () => {
-        const error = await getBounds(await screen.findByRole('alert'));
-        const message = await getBounds(await screen.findByTestId('Message'));
-        const minimumErrorWidth = 184;
-        expect(error.width).toBeCloseTo(minimumErrorWidth, 0);
-        expect(message.width).toBeLessThanOrEqual(100);
-        expect(error[edge]).toBeCloseTo(message[edge], 0);
-    });
-});
+}
 
-test.each([
+for (const testCase of [
     {type: 'incoming', leading: 'slot', trailing: 'action'},
     {type: 'outgoing', leading: 'action', trailing: 'slot'},
-] as const)(
-    'Side slot uses at most 40 percent and keeps the action gap: $type',
-    async ({type, leading, trailing}) => {
+] as const) {
+    const {type, leading, trailing} = testCase;
+    test(`Side slot uses at most 40 percent and keeps the action gap: ${testCase.type}`, async () => {
         await openStoryPage({id: 'components-message--side-slot-sizing', device: 'MOBILE_IOS', args: {type}});
         const slot = await screen.findByRole('img', {name: 'Side attachment'});
         const slotBounds = await getBounds(slot);
@@ -436,46 +452,52 @@ test.each([
         const bounds = {action: actionBounds, slot: slotBounds};
         const gap = bounds[trailing].left - bounds[leading].right;
         expect(gap).toBeCloseTo(actionGap, 0);
-    }
-);
+    });
+}
 
-test.each([
+for (const testCase of [
     {type: 'incoming', boxed: true, error: false, footerWidth: 160, expectedWidth: 160},
     {type: 'outgoing', boxed: true, error: false, footerWidth: 160, expectedWidth: 160},
     {type: 'incoming', boxed: false, error: true, footerWidth: 160, expectedWidth: 160},
     {type: 'outgoing', boxed: true, error: true, footerWidth: 160, expectedWidth: 160},
     {type: 'incoming', boxed: true, error: false, footerWidth: 400, expectedWidth: 240},
     {type: 'outgoing', boxed: false, error: true, footerWidth: 400, expectedWidth: 240},
-])('Bubble grows to fit the footer within maxWidth: %o', async ({expectedWidth, ...args}) => {
-    await openStoryPage({id: 'components-message--footer-sizing', device: 'MOBILE_IOS', args});
-    await waitFor(async () => {
-        const bubble = await getBounds(await screen.findByTestId('MessageBubble'));
-        const footer = await getBounds(await screen.findByRole('img', {name: 'Attachment'}));
-        expect(bubble.width).toBeCloseTo(expectedWidth, 0);
-        expect(footer.width).toBeCloseTo(bubble.width, 0);
-        expect(footer.x).toBeCloseTo(bubble.x, 0);
+]) {
+    const {expectedWidth, ...args} = testCase;
+    const {type, boxed, error, footerWidth} = args;
+    test(`Bubble fits the footer within maxWidth (${type}, boxed=${boxed}, error=${error}, footerWidth=${footerWidth})`, async () => {
+        await openStoryPage({id: 'components-message--footer-sizing', device: 'MOBILE_IOS', args});
+        await waitFor(async () => {
+            const bubble = await getBounds(await screen.findByTestId('MessageBubble'));
+            const footer = await getBounds(await screen.findByRole('img', {name: 'Attachment'}));
+            expect(bubble.width).toBeCloseTo(expectedWidth, 0);
+            expect(footer.width).toBeCloseTo(bubble.width, 0);
+            expect(footer.x).toBeCloseTo(bubble.x, 0);
+        });
     });
-});
+}
 
-test.each(['incoming', 'outgoing'])('Short bubble grows to fit both footer actions: %s', async (type) => {
-    await openStoryPage({
-        id: 'components-message--footer-sizing',
-        device: 'MOBILE_IOS',
-        args: {type, footerSlot: false, error: true},
+for (const type of ['incoming', 'outgoing']) {
+    test(`Short bubble grows to fit both footer actions: ${type}`, async () => {
+        await openStoryPage({
+            id: 'components-message--footer-sizing',
+            device: 'MOBILE_IOS',
+            args: {type, footerSlot: false, error: true},
+        });
+        await waitFor(async () => {
+            const bubble = await getBounds(await screen.findByTestId('MessageBubble'));
+            const copy = await screen.findByRole('button', {name: 'Copy'});
+            const reminder = await screen.findByRole('button', {name: 'Reminder'});
+            const bounds = async (button: typeof copy) =>
+                button.evaluate((node) => {
+                    const rect = (node.parentElement as HTMLElement).getBoundingClientRect();
+                    return {left: rect.left, right: rect.right, top: rect.top};
+                });
+            const first = await bounds(copy);
+            const last = await bounds(reminder);
+            expect(first.top).toBe(last.top);
+            expect(bubble.width).toBeCloseTo(last.right - first.left, 0);
+            expect(bubble.x).toBeCloseTo(first.left, 0);
+        });
     });
-    await waitFor(async () => {
-        const bubble = await getBounds(await screen.findByTestId('MessageBubble'));
-        const copy = await screen.findByRole('button', {name: 'Copy'});
-        const reminder = await screen.findByRole('button', {name: 'Reminder'});
-        const bounds = async (button: typeof copy) =>
-            button.evaluate((node) => {
-                const rect = (node.parentElement as HTMLElement).getBoundingClientRect();
-                return {left: rect.left, right: rect.right, top: rect.top};
-            });
-        const first = await bounds(copy);
-        const last = await bounds(reminder);
-        expect(first.top).toBe(last.top);
-        expect(bubble.width).toBeCloseTo(last.right - first.left, 0);
-        expect(bubble.x).toBeCloseTo(first.left, 0);
-    });
-});
+}

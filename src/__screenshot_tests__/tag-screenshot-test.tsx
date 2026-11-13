@@ -1,3 +1,4 @@
+import {test, expectScreenshot} from '../test-utils/playwright';
 import {openStoryPage, screen, setRootFontSize} from '../test-utils';
 
 const BADGE_OPTIONS = [1, 10, true];
@@ -10,8 +11,7 @@ test('Tags', async () => {
 
     const tag = await screen.findByTestId('tags');
 
-    const image = await tag.screenshot();
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(tag);
 });
 
 test('Tags without icon', async () => {
@@ -23,8 +23,7 @@ test('Tags without icon', async () => {
 
     const tag = await screen.findByTestId('tags');
 
-    const image = await tag.screenshot();
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(tag);
 });
 
 test('Tags inverse', async () => {
@@ -36,8 +35,7 @@ test('Tags inverse', async () => {
 
     const tag = await screen.findByTestId('tags');
 
-    const image = await tag.screenshot();
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(tag);
 });
 
 test('Tags dark mode', async () => {
@@ -49,8 +47,7 @@ test('Tags dark mode', async () => {
 
     const tag = await screen.findByTestId('tags');
 
-    const image = await tag.screenshot();
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(tag);
 });
 
 test('Tags inverse and dark mode', async () => {
@@ -63,8 +60,7 @@ test('Tags inverse and dark mode', async () => {
 
     const tag = await screen.findByTestId('tags');
 
-    const image = await tag.screenshot();
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(tag);
 });
 
 test('Tags short label', async () => {
@@ -76,8 +72,7 @@ test('Tags short label', async () => {
 
     const tag = await screen.findByTestId('tags');
 
-    const image = await tag.screenshot();
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(tag);
 });
 
 test('Tags long label', async () => {
@@ -89,8 +84,7 @@ test('Tags long label', async () => {
 
     const tag = await screen.findByTestId('tags');
 
-    const image = await tag.screenshot();
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(tag);
 });
 
 test('Tags with large fontSize', async () => {
@@ -103,22 +97,23 @@ test('Tags with large fontSize', async () => {
 
     const tag = await screen.findByTestId('tags');
 
-    const image = await tag.screenshot();
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(tag);
 });
 
-test.each(BADGE_OPTIONS)('Tags with badge={%s}', async (badge) => {
-    await openStoryPage({
-        id: 'components-tag--default',
-        device: 'DESKTOP',
-        args: {badge},
+for (const testCase of BADGE_OPTIONS) {
+    const badge = testCase;
+    test(`Tags with badge={${testCase}}`, async () => {
+        await openStoryPage({
+            id: 'components-tag--default',
+            device: 'DESKTOP',
+            args: {badge},
+        });
+
+        const tag = await screen.findByTestId('tags');
+
+        await expectScreenshot(tag);
     });
-
-    const tag = await screen.findByTestId('tags');
-
-    const image = await tag.screenshot();
-    expect(image).toMatchImageSnapshot();
-});
+}
 
 test('Tags with badge and large fontSize', async () => {
     await openStoryPage({
@@ -131,8 +126,7 @@ test('Tags with badge and large fontSize', async () => {
 
     const tag = await screen.findByTestId('tags');
 
-    const image = await tag.screenshot();
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(tag);
 });
 
 test('Tags with custom colors', async () => {
@@ -151,8 +145,7 @@ test('Tags with custom colors', async () => {
 
     const tag = await screen.findByTestId('tags');
 
-    const image = await tag.screenshot();
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(tag);
 });
 
 test('Tags small variant', async () => {
@@ -164,8 +157,7 @@ test('Tags small variant', async () => {
 
     const tag = await screen.findByTestId('tags');
 
-    const image = await tag.screenshot();
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(tag);
 });
 
 test('Tags small variant without icon', async () => {
@@ -177,19 +169,20 @@ test('Tags small variant without icon', async () => {
 
     const tag = await screen.findByTestId('tags');
 
-    const image = await tag.screenshot();
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(tag);
 });
 
-test.each(BADGE_OPTIONS)('Tags small variant with badge={%s}', async (badge) => {
-    await openStoryPage({
-        id: 'components-tag--default',
-        device: 'DESKTOP',
-        args: {small: true, badge},
+for (const testCase of BADGE_OPTIONS) {
+    const badge = testCase;
+    test(`Tags small variant with badge={${testCase}}`, async () => {
+        await openStoryPage({
+            id: 'components-tag--default',
+            device: 'DESKTOP',
+            args: {small: true, badge},
+        });
+
+        const tag = await screen.findByTestId('tags');
+
+        await expectScreenshot(tag);
     });
-
-    const tag = await screen.findByTestId('tags');
-
-    const image = await tag.screenshot();
-    expect(image).toMatchImageSnapshot();
-});
+}

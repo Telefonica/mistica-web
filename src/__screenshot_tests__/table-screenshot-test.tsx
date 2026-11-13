@@ -1,3 +1,4 @@
+import {test, expectScreenshot} from '../test-utils/playwright';
 import {openStoryPage} from '../test-utils';
 
 const cases = [
@@ -289,13 +290,15 @@ const cases = [
     ],
 ] as const;
 
-test.each(cases)('Table %s', async (_name, {device, args, fullPageScreenshot}) => {
-    const page = await openStoryPage({
-        id: 'components-table--default',
-        device,
-        args,
-    });
+for (const testCase of cases) {
+    const [, {device, args, fullPageScreenshot}] = testCase;
+    test(`Table ${testCase[0]}`, async () => {
+        const page = await openStoryPage({
+            id: 'components-table--default',
+            device,
+            args,
+        });
 
-    const image = await page.screenshot({fullPage: fullPageScreenshot});
-    expect(image).toMatchImageSnapshot();
-});
+        await expectScreenshot(page, {...{fullPage: fullPageScreenshot}});
+    });
+}
