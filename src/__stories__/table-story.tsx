@@ -1,5 +1,6 @@
 import * as React from 'react';
-import {ResponsiveLayout, Box, Table, Tag, IconLightningRegular} from '..';
+import {ResponsiveLayout, Box, Table, Tag} from '..';
+import IconLightningRegular from '@telefonica/mistica-icons/icon-lightning-regular';
 
 import type {Variant} from '../theme-variant-context';
 

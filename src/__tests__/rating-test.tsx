@@ -4,10 +4,10 @@ import {Rating, InfoRating} from '../rating';
 import userEvent from '@testing-library/user-event';
 import ThemeContextProvider from '../theme-context-provider';
 import {makeTheme} from './test-utils';
-import IconStarRegular from '../generated/mistica-icons/icon-star-regular';
-import IconStarFilled from '../generated/mistica-icons/icon-star-filled';
-import IconLightningRegular from '../generated/mistica-icons/icon-lightning-regular';
-import IconLightningFilled from '../generated/mistica-icons/icon-lightning-filled';
+import IconStarRegular from '@telefonica/mistica-icons/icon-star-regular';
+import IconStarFilled from '@telefonica/mistica-icons/icon-star-filled';
+import IconLightningRegular from '@telefonica/mistica-icons/icon-lightning-regular';
+import IconLightningFilled from '@telefonica/mistica-icons/icon-lightning-filled';
 import {vars} from '../skins/skin-contract.css';
 import {Text2} from '../text';
 

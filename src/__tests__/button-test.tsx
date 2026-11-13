@@ -4,7 +4,7 @@ import {fireEvent, render, screen, waitFor} from '@testing-library/react';
 import ThemeContextProvider from '../theme-context-provider';
 import {makeTheme} from './test-utils';
 import userEvent from '@testing-library/user-event';
-import IconPhotoCameraRegular from '../generated/mistica-icons/icon-photo-camera-regular';
+import IconPhotoCameraRegular from '@telefonica/mistica-icons/icon-photo-camera-regular';
 import {MemoryRouter, useLocation, Link as ReactRouterLink} from 'react-router-dom';
 import {redirect as redirectSpy} from '../utils/browser';
 
