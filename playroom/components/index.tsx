@@ -4,6 +4,7 @@ import {
     IconSettingsRegular,
     Overlay,
     useTheme,
+    useDensity,
     useScreenSize,
     Tabs,
     ThemeContextProvider,
@@ -20,18 +21,21 @@ import {
     Portal,
     O2Logo,
     EsimflagLogo,
+    Tooltip,
 } from '../../src';
 import {Movistar, Telefonica, Blau, Vivo, Vivo_Evolution, O2, Esimflag} from '../themes';
-import {useOverrideTheme} from '../frame-component';
+import {useOverrideTheme, useOverrideDensity} from '../frame-component';
 import IconSun from '../icons/icon-sun';
 import IconMoon from '../icons/icon-moon';
+import IconDensityCompact from '../icons/icon-density-compact';
+import IconDensityCozy from '../icons/icon-density-cozy';
 import IconAppleOn from '../icons/icon-apple-on';
 import IconAppleOff from '../icons/icon-apple-off';
 import IconCode from '../icons/icon-code';
 import * as styles from '../preview-tools.css';
 import {CSSTransition} from 'react-transition-group';
 
-import type {ThemeConfig, ColorScheme, KnownSkinName, IconProps} from '../../src';
+import type {ThemeConfig, ColorScheme, KnownSkinName, IconProps, Density} from '../../src';
 
 export * from '../../src';
 export * from '../../src/community';
@@ -96,6 +100,8 @@ type PreviewToolsControlsProps = {
     onSkinNameChange: (newSkinName: ValidSkinName) => void;
     colorScheme: ColorScheme;
     onColorSchemeChange: (newColorScheme: ColorScheme) => void;
+    density: Density;
+    onDensityChange: (newDensity: Density) => void;
     onEditStoryPress: () => void;
     showPlatformSelector: boolean;
     forceTabs?: boolean;
@@ -111,6 +117,8 @@ const PreviewToolsControls = React.forwardRef<HTMLDivElement, PreviewToolsContro
             onSkinNameChange,
             colorScheme,
             onColorSchemeChange,
+            density,
+            onDensityChange,
             onEditStoryPress,
             forceTabs,
         },
@@ -135,42 +143,80 @@ const PreviewToolsControls = React.forwardRef<HTMLDivElement, PreviewToolsContro
                     />
                     <Inline space={0} alignItems="center">
                         {showPlatformSelector && (
-                            <ToggleIconButton
-                                checkedProps={{
-                                    Icon: IconAppleOn as (props: IconProps) => JSX.Element,
-                                    'aria-label': 'Change platform to android',
-                                }}
-                                uncheckedProps={{
-                                    Icon: IconAppleOff as (props: IconProps) => JSX.Element,
-                                    'aria-label': 'Change platform to iOS',
-                                }}
-                                checked={os === 'ios'}
-                                onChange={(checked) => onOsChange(checked ? 'ios' : 'android')}
+                            <Tooltip
+                                target={
+                                    <ToggleIconButton
+                                        checkedProps={{
+                                            Icon: IconAppleOn as (props: IconProps) => JSX.Element,
+                                            'aria-label': 'Change platform to android',
+                                        }}
+                                        uncheckedProps={{
+                                            Icon: IconAppleOff as (props: IconProps) => JSX.Element,
+                                            'aria-label': 'Change platform to iOS',
+                                        }}
+                                        checked={os === 'ios'}
+                                        onChange={(checked) => onOsChange(checked ? 'ios' : 'android')}
+                                    />
+                                }
+                                description={os === 'ios' ? 'Change to Android' : 'Change to iOS'}
                             />
                         )}
-                        <ToggleIconButton
-                            checkedProps={{
-                                Icon: IconSun as (props: IconProps) => JSX.Element,
-                                'aria-label': 'Switch to light mode',
-                            }}
-                            uncheckedProps={{
-                                Icon: IconMoon as (props: IconProps) => JSX.Element,
-                                'aria-label': 'Switch to dark mode',
-                            }}
-                            checked={colorScheme === alternativeColorScheme}
-                            onChange={(checked) => {
-                                if (checked) {
-                                    onColorSchemeChange(alternativeColorScheme);
-                                } else {
-                                    onColorSchemeChange(systemColorScheme);
-                                }
-                            }}
+                        <Tooltip
+                            target={
+                                <ToggleIconButton
+                                    checkedProps={{
+                                        Icon: IconDensityCozy as (props: IconProps) => JSX.Element,
+                                        'aria-label': 'Switch to compact density',
+                                    }}
+                                    uncheckedProps={{
+                                        Icon: IconDensityCompact as (props: IconProps) => JSX.Element,
+                                        'aria-label': 'Switch to cozy density',
+                                    }}
+                                    checked={density === 'compact'}
+                                    onChange={(checked) => onDensityChange(checked ? 'compact' : 'cozy')}
+                                />
+                            }
+                            description={
+                                density === 'compact' ? 'Change to cozy density' : 'Change to compact density'
+                            }
                         />
-                        <IconButton
-                            bleedRight
-                            aria-label="Edit in Playroom"
-                            Icon={IconCode as (props: IconProps) => JSX.Element}
-                            onPress={onEditStoryPress}
+                        <Tooltip
+                            target={
+                                <ToggleIconButton
+                                    checkedProps={{
+                                        Icon: IconSun as (props: IconProps) => JSX.Element,
+                                        'aria-label': 'Switch to light mode',
+                                    }}
+                                    uncheckedProps={{
+                                        Icon: IconMoon as (props: IconProps) => JSX.Element,
+                                        'aria-label': 'Switch to dark mode',
+                                    }}
+                                    checked={colorScheme === alternativeColorScheme}
+                                    onChange={(checked) => {
+                                        if (checked) {
+                                            onColorSchemeChange(alternativeColorScheme);
+                                        } else {
+                                            onColorSchemeChange(systemColorScheme);
+                                        }
+                                    }}
+                                />
+                            }
+                            description={
+                                colorScheme === alternativeColorScheme
+                                    ? 'Change to light mode'
+                                    : 'Change to dark mode'
+                            }
+                        />
+                        <Tooltip
+                            target={
+                                <IconButton
+                                    bleedRight
+                                    aria-label="Edit in Playroom"
+                                    Icon={IconCode as (props: IconProps) => JSX.Element}
+                                    onPress={onEditStoryPress}
+                                />
+                            }
+                            description="Edit in Playroom"
                         />
                     </Inline>
                 </div>
@@ -190,42 +236,82 @@ const PreviewToolsControls = React.forwardRef<HTMLDivElement, PreviewToolsContro
                     <div className={styles.flexSpacer} />
                     <Inline space={8} alignItems="center" fullWidth>
                         {showPlatformSelector && (
-                            <ToggleIconButton
-                                checkedProps={{
-                                    Icon: IconAppleOn as (props: IconProps) => JSX.Element,
-                                    'aria-label': 'Change platform to android',
-                                }}
-                                uncheckedProps={{
-                                    Icon: IconAppleOff as (props: IconProps) => JSX.Element,
-                                    'aria-label': 'Change platform to iOS',
-                                }}
-                                checked={os === 'ios'}
-                                onChange={(checked) => onOsChange(checked ? 'ios' : 'android')}
+                            <Tooltip
+                                target={
+                                    <ToggleIconButton
+                                        checkedProps={{
+                                            Icon: IconAppleOn as (props: IconProps) => JSX.Element,
+                                            'aria-label': 'Change platform to android',
+                                        }}
+                                        uncheckedProps={{
+                                            Icon: IconAppleOff as (props: IconProps) => JSX.Element,
+                                            'aria-label': 'Change platform to iOS',
+                                        }}
+                                        checked={os === 'ios'}
+                                        onChange={(checked) => onOsChange(checked ? 'ios' : 'android')}
+                                    />
+                                }
+                                description={os === 'ios' ? 'Change to Android' : 'Change to iOS'}
                             />
                         )}
-                        <ToggleIconButton
-                            checkedProps={{
-                                Icon: IconSun as (props: IconProps) => JSX.Element,
-                                'aria-label': 'Change color scheme',
-                            }}
-                            uncheckedProps={{
-                                Icon: IconMoon as (props: IconProps) => JSX.Element,
-                                'aria-label': 'Change color scheme',
-                            }}
-                            checked={colorScheme === alternativeColorScheme}
-                            onChange={(checked) => {
-                                if (checked) {
-                                    onColorSchemeChange(alternativeColorScheme);
-                                } else {
-                                    onColorSchemeChange(systemColorScheme);
-                                }
-                            }}
+                        <Tooltip
+                            target={
+                                <ToggleIconButton
+                                    checkedProps={{
+                                        Icon: IconDensityCozy as (props: IconProps) => JSX.Element,
+                                        'aria-label': 'Switch to compact density',
+                                    }}
+                                    uncheckedProps={{
+                                        Icon: IconDensityCompact as (props: IconProps) => JSX.Element,
+                                        'aria-label': 'Switch to cozy density',
+                                    }}
+                                    checked={density === 'compact'}
+                                    onChange={(checked) => onDensityChange(checked ? 'compact' : 'cozy')}
+                                />
+                            }
+                            description={
+                                density === 'compact' ? 'Change to cozy density' : 'Change to compact density'
+                            }
                         />
-                        <IconButton
-                            bleedRight
-                            aria-label="Edit in Playroom"
-                            Icon={IconCode as (props: IconProps) => JSX.Element}
-                            onPress={onEditStoryPress}
+
+                        <Tooltip
+                            target={
+                                <ToggleIconButton
+                                    checkedProps={{
+                                        Icon: IconSun as (props: IconProps) => JSX.Element,
+                                        'aria-label': 'Change color scheme',
+                                    }}
+                                    uncheckedProps={{
+                                        Icon: IconMoon as (props: IconProps) => JSX.Element,
+                                        'aria-label': 'Change color scheme',
+                                    }}
+                                    checked={colorScheme === alternativeColorScheme}
+                                    onChange={(checked) => {
+                                        if (checked) {
+                                            onColorSchemeChange(alternativeColorScheme);
+                                        } else {
+                                            onColorSchemeChange(systemColorScheme);
+                                        }
+                                    }}
+                                />
+                            }
+                            description={
+                                colorScheme === alternativeColorScheme
+                                    ? 'Change to light mode'
+                                    : 'Change to dark mode'
+                            }
+                        />
+
+                        <Tooltip
+                            target={
+                                <IconButton
+                                    bleedRight
+                                    aria-label="Edit in Playroom"
+                                    Icon={IconCode as (props: IconProps) => JSX.Element}
+                                    onPress={onEditStoryPress}
+                                />
+                            }
+                            description="Edit in Playroom"
                         />
                     </Inline>
                 </div>
@@ -266,7 +352,9 @@ const PreviewToolsComponent = ({
     const [skinName, setSkinName] = React.useState<ValidSkinName>(initialSkinName as ValidSkinName);
     const [os, setOs] = React.useState<'android' | 'ios' | 'desktop'>(initialOs);
     const [colorScheme, setColorScheme] = React.useState<ColorScheme>('light');
+    const [density, setDensity] = React.useState<Density>(useDensity());
     const overrideTheme = useOverrideTheme();
+    const overrideDensity = useOverrideDensity();
 
     const [showControls, setShowControls] = React.useState(false);
     const controlsRef = React.useRef<HTMLDivElement | null>(null);
@@ -298,6 +386,10 @@ const PreviewToolsComponent = ({
             platformOverrides: {platform: os},
         });
     }, [overrideTheme, os, skinName, forceMobile, colorScheme, forceDesktop]);
+
+    React.useEffect(() => {
+        overrideDensity(density);
+    }, [overrideDensity, density]);
 
     const editStory = () => {
         try {
@@ -339,6 +431,8 @@ const PreviewToolsComponent = ({
                 onEditStoryPress={editStory}
                 onColorSchemeChange={setColorScheme}
                 colorScheme={colorScheme}
+                density={density}
+                onDensityChange={setDensity}
                 forceTabs={forceTabs}
             />
         </ThemeContextProvider>
