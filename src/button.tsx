@@ -455,8 +455,8 @@ const BaseButton = React.forwardRef<
             : undefined),
         ...(props.bleedY
             ? {
-                  marginTop: `calc(-1 * (${styles.borderSize} + ${props.small ? styles.buttonPaddingY.small : styles.buttonPaddingY.default}))`,
-                  marginBottom: `calc(-1 * (${styles.borderSize} + ${props.small ? styles.buttonPaddingY.small : styles.buttonPaddingY.default}))`,
+                  marginTop: `calc(-1 * (${styles.borderSize} + ${props.small ? styles.buttonPaddingTop.small : styles.buttonPaddingTop.default}))`,
+                  marginBottom: `calc(-1 * (${styles.borderSize} + ${props.small ? styles.buttonPaddingBottom.small : styles.buttonPaddingBottom.default}))`,
               }
             : undefined),
 

@@ -1,7 +1,18 @@
 import * as fs from 'node:fs';
 import * as path from 'node:path';
+import {DEFAULT_DENSITY, DENSITIES, DENSITY_ATTRIBUTE} from '../../src/density/definitions.ts';
+import {isBreakpointValue, mapDensityLeaves, normalizeTextTokenValue, resolveDensity} from './density.ts';
 
-import type {ColorDescription, DesignTokens, GradientDescription, RadiusDescription} from './token-types.ts';
+import type {
+    Breakpoint,
+    BreakpointValue,
+    ColorDescription,
+    Density,
+    DensityValue,
+    DesignTokens,
+    GradientDescription,
+    RadiusDescription,
+} from './token-types.ts';
 
 const pxToRem = (px: number): string => `${(px / 16).toFixed(3)}rem`;
 
@@ -26,21 +37,33 @@ const fromHexToRgb = (hexColor: string): [number, number, number] => {
     throw Error(`Bad hex color, ${hexColor}`);
 };
 
-export const buildRadius = (radiusDescription: RadiusDescription): string => {
-    if (radiusDescription.value.endsWith('%')) {
-        return radiusDescription.value;
+const buildRadiusScalar = (radius: string): string => {
+    if (radius.endsWith('%')) {
+        return radius;
     }
-    if (radiusDescription.value === 'circle') {
+    if (radius === 'circle') {
         return '50%';
     }
-    if (radiusDescription.value.endsWith('px')) {
-        return radiusDescription.value;
+    if (radius.endsWith('px')) {
+        return radius;
     }
-    if (/\d+/.test(radiusDescription.value)) {
-        return `${radiusDescription.value}px`;
+    if (/\d+/.test(radius)) {
+        return `${radius}px`;
     }
 
-    throw new Error(`Unknown radius format: ${radiusDescription.value}`);
+    throw new Error(`Unknown radius format: ${radius}`);
+};
+
+/**
+ * mistica-web has no responsive border radius, so a radius can change with the density only.
+ */
+export const buildRadius = (radiusDescription: RadiusDescription): string | DensityValue<string> => {
+    if (isBreakpointValue(radiusDescription.value)) {
+        throw new Error(
+            `A border radius with breakpoints is not supported: ${JSON.stringify(radiusDescription.value)}`
+        );
+    }
+    return mapDensityLeaves(radiusDescription.value, buildRadiusScalar);
 };
 
 const prefix = 'mistica-';
@@ -55,11 +78,43 @@ const tabletMediaQuery = '@media (min-width: 768px)';
 const desktopMediaQuery = '@media (min-width: 1024px)';
 const largeDesktopMediaQuery = '@media (min-width: 1512px)';
 
+type DensityNumber = number | DensityValue<number>;
+
+type FontWeight = 'light' | 'regular' | 'medium' | 'bold';
+
 type TextPreset = {
-    size?: {mobile: number; desktop: number};
-    lineHeight?: {mobile: number; desktop: number};
-    weight?: 'light' | 'regular' | 'medium' | 'bold';
+    size?: BreakpointValue<DensityNumber>;
+    lineHeight?: BreakpointValue<DensityNumber>;
+    weight?: FontWeight | DensityValue<FontWeight>;
 };
+
+type CssVars = Record<string, string>;
+
+const fontWeights = {light: 300, regular: 400, medium: 500, bold: 700};
+
+const toCssDeclarations = (cssVars: CssVars): string =>
+    Object.entries(cssVars)
+        .map(([name, value]) => `${name}: ${value};`)
+        .join('\n');
+
+/**
+ * The names of the vars whose value in some density mode differs from the default mode. The vars of every
+ * mode come in the same order of breakpoints.
+ */
+const findVarNamesThatChangeWithDensity = (varsByMode: Record<Density, Array<CssVars>>): Array<string> => {
+    const defaultModeVars = varsByMode[DEFAULT_DENSITY];
+    const varNames = new Set(defaultModeVars.flatMap((cssVars) => Object.keys(cssVars)));
+    return Array.from(varNames).filter((varName) =>
+        DENSITIES.some((mode) =>
+            varsByMode[mode].some((cssVars, index) => cssVars[varName] !== defaultModeVars[index][varName])
+        )
+    );
+};
+
+const pickVars = (cssVars: CssVars, varNames: Array<string>): CssVars =>
+    Object.fromEntries(
+        varNames.filter((varName) => varName in cssVars).map((varName) => [varName, cssVars[varName]])
+    );
 
 export const generateSkinCssSrc = (skinName: string, DESIGN_TOKENS_FOLDER: string): string => {
     const designTokensFile = fs.readFileSync(path.join(DESIGN_TOKENS_FOLDER, `${skinName}.json`), 'utf8');
@@ -140,12 +195,16 @@ export const generateSkinCssSrc = (skinName: string, DESIGN_TOKENS_FOLDER: strin
         })
         .join('\n');
 
-    const borderRadii = Object.entries(designTokens.radius)
-        .map(
-            ([radiusName, radiusDescription]) =>
-                `${buildBorderRadiusVarName(radiusName)}: ${buildRadius(radiusDescription)};`
-        )
-        .join('\n');
+    const builtRadii = Object.entries(designTokens.radius).map(
+        ([radiusName, radiusDescription]) => [radiusName, buildRadius(radiusDescription)] as const
+    );
+    const buildBorderRadiusVars = (mode: Density): CssVars =>
+        Object.fromEntries(
+            builtRadii.map(([radiusName, radius]) => [
+                buildBorderRadiusVarName(radiusName),
+                resolveDensity(radius, mode),
+            ])
+        );
 
     const textPresets: Record<string, TextPreset> = {
         1: {
@@ -201,44 +260,80 @@ export const generateSkinCssSrc = (skinName: string, DESIGN_TOKENS_FOLDER: strin
 
             textPresets[presetName] = {
                 ...(textPresets[presetName] ?? {}),
-                [textAttribute]: value,
+                [textAttribute]: normalizeTextTokenValue(textAttribute, value),
             } as TextPreset;
         });
     });
 
-    const textVars = Object.entries(textPresets)
-        .map(([presetName, preset]) => {
-            const sizeVar = preset.size
-                ? `${buildFontSizeVarName(presetName)}: ${pxToRem(preset.size.mobile)};`
-                : '';
-            const lineHeightVar = preset.lineHeight
-                ? `${buildLineHeightVarName(presetName)}: ${pxToRem(preset.lineHeight.mobile)};`
-                : '';
-            const weightVar = preset.weight
-                ? `${buildFontWeightVarName(presetName)}: ${
-                      {
-                          light: 300,
-                          regular: 400,
-                          medium: 500,
-                          bold: 700,
-                      }[preset.weight]
-                  };`
-                : '';
-            return [sizeVar, lineHeightVar, weightVar].filter(Boolean).join('\n');
-        })
-        .join('\n');
+    const buildTextVars = (breakpoint: Breakpoint, mode: Density, {withWeight = false} = {}): CssVars =>
+        Object.fromEntries(
+            Object.entries(textPresets).flatMap(([presetName, preset]) => [
+                ...(preset.size
+                    ? [
+                          [
+                              buildFontSizeVarName(presetName),
+                              pxToRem(resolveDensity(preset.size[breakpoint], mode)),
+                          ],
+                      ]
+                    : []),
+                ...(preset.lineHeight
+                    ? [
+                          [
+                              buildLineHeightVarName(presetName),
+                              pxToRem(resolveDensity(preset.lineHeight[breakpoint], mode)),
+                          ],
+                      ]
+                    : []),
+                ...(withWeight && preset.weight
+                    ? [
+                          [
+                              buildFontWeightVarName(presetName),
+                              String(fontWeights[resolveDensity(preset.weight, mode)]),
+                          ],
+                      ]
+                    : []),
+            ])
+        );
 
-    const desktopTextVars = Object.entries(textPresets)
-        .map(([presetName, preset]) => {
-            const sizeVar = preset.size
-                ? `${buildFontSizeVarName(presetName)}: ${pxToRem(preset.size.desktop)};`
-                : '';
-            const lineHeightVar = preset.lineHeight
-                ? `${buildLineHeightVarName(presetName)}: ${pxToRem(preset.lineHeight.desktop)};`
-                : '';
-            return [sizeVar, lineHeightVar].filter(Boolean).join('\n');
-        })
-        .join('\n');
+    const varsByDensityMode = Object.fromEntries(
+        DENSITIES.map((mode) => [
+            mode,
+            [
+                {...buildBorderRadiusVars(mode), ...buildTextVars('mobile', mode, {withWeight: true})},
+                buildTextVars('desktop', mode),
+            ],
+        ])
+    ) as Record<Density, Array<CssVars>>;
+    const varNamesThatChangeWithDensity = findVarNamesThatChangeWithDensity(varsByDensityMode);
+
+    // The rules of every mode, the default one too, let a subtree go back to the default mode inside another one
+    const densityRules =
+        varNamesThatChangeWithDensity.length === 0
+            ? ''
+            : DENSITIES.map((mode) => {
+                  const densitySelector = `[${DENSITY_ATTRIBUTE}="${mode}"]`;
+                  const selector = `${skinSelector}${densitySelector}, ${skinSelector} ${densitySelector}`;
+                  const [mobileVars, desktopVars] = varsByDensityMode[mode];
+                  // The css is mobile first: the base rule also matches on desktop, so a desktop value equal to
+                  // the mobile one needs no declaration
+                  const desktopVarNames = varNamesThatChangeWithDensity.filter(
+                      (varName) => desktopVars[varName] !== mobileVars[varName]
+                  );
+                  const desktopDeclarations = toCssDeclarations(pickVars(desktopVars, desktopVarNames));
+                  const desktopRule = desktopDeclarations
+                      ? `
+${desktopMediaQuery} {
+    ${selector} {
+        ${desktopDeclarations}
+    }
+}`
+                      : '';
+                  return `
+${selector} {
+    ${toCssDeclarations(pickVars(mobileVars, varNamesThatChangeWithDensity))}
+}
+${desktopRule}`;
+              }).join('\n');
 
     return `
 ${skinSelector} {
@@ -252,10 +347,10 @@ ${skinSelector} {
     ${lightColors}
 
     /* Border radius */
-    ${borderRadii}
+    ${toCssDeclarations(buildBorderRadiusVars(DEFAULT_DENSITY))}
 
     /* Text */
-    ${textVars}
+    ${toCssDeclarations(buildTextVars('mobile', DEFAULT_DENSITY, {withWeight: true}))}
 }
 
 ${skinSelector}${colorSchemeSelector('dark')} {
@@ -275,9 +370,10 @@ ${skinSelector}${colorSchemeSelector('dark')} {
 ${desktopMediaQuery} {
     ${skinSelector} {
         /* Text */
-        ${desktopTextVars}
+        ${toCssDeclarations(buildTextVars('desktop', DEFAULT_DENSITY))}
     }
 }
+${densityRules}
 `;
 };
 
