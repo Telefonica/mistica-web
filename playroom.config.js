@@ -80,6 +80,8 @@ const config = {
     themes: './playroom/themes.tsx',
     snippets: './playroom/snippets.tsx',
     frameComponent: './playroom/frame-component.tsx',
+    // Playroom only supports boolean toggles: unchecked is cozy (default density), checked is compact
+    frameSettings: [{id: 'compactDensity', label: 'Compact density', defaultValue: false}],
     scope: './playroom/use-scope.tsx',
     widths: getWidths(),
     defaultEditorPosition: 'left',
