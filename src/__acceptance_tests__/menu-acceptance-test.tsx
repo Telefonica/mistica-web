@@ -59,9 +59,8 @@ test('Menu uses bottom-start with default placement and alignment', async () => 
     });
 });
 
-for (const testCase of [100, 200, 600]) {
-    const width = testCase;
-    test(`Menu constrains width=${testCase} to its size limits`, async () => {
+for (const width of [100, 200, 600]) {
+    test(`Menu constrains width=${width} to its size limits`, async () => {
         const {getBounds} = await openMenu({width, placement: 'right'});
         await waitFor(async () => {
             const {target, menu} = await getBounds();
@@ -165,9 +164,8 @@ for (const testCase of placements.flatMap((placement) =>
     });
 }
 
-for (const testCase of placements) {
-    const placement = testCase;
-    test(`Menu limits height and scrolls in ${testCase}`, async () => {
+for (const placement of placements) {
+    test(`Menu limits height and scrolls in ${placement}`, async () => {
         const {menu, getBounds} = await openMenu({placement, menuOptionsCount: 30});
         const bounds = await getBounds();
         expect(bounds.menu.top).toBeGreaterThanOrEqual(0);
@@ -185,9 +183,8 @@ for (const testCase of placements) {
     });
 }
 
-for (const testCase of ['left', 'right']) {
-    const horizontalPosition = testCase;
-    test(`Menu defaults to alignment matching horizontalPosition=${testCase}`, async () => {
+for (const horizontalPosition of ['left', 'right']) {
+    test(`Menu defaults to alignment matching horizontalPosition=${horizontalPosition}`, async () => {
         const {getBounds} = await openMenu({horizontalPosition, verticalPosition: 'top'});
         const {target, menu} = await getBounds();
         expectPlacement('bottom', target, menu);

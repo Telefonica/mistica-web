@@ -13,9 +13,8 @@ const getBounds = async (element: Locator) => {
 
 const story = 'components-message--default';
 
-for (const testCase of ['Movistar', 'O2', 'Vivo', 'Vivo-evolution', 'Blau'] as const) {
-    const skin = testCase;
-    test(`Message conversation has accessible contrast in ${testCase}`, async () => {
+for (const skin of ['Movistar', 'O2', 'Vivo', 'Vivo-evolution', 'Blau'] as const) {
+    test(`Message conversation has accessible contrast in ${skin}`, async () => {
         await openStoryPage({id: 'components-message--conversation', device: 'MOBILE_IOS', skin});
         const result = await new AxeBuilder({page: getGlobalPage()}).withRules(['color-contrast']).analyze();
         expect(result.violations).toEqual([]);
@@ -94,9 +93,8 @@ test('Message wraps within its maximum width on mobile with side actions', async
     expect(hasOverflow).toBe(false);
 });
 
-for (const testCase of ['brand', 'negative', 'media']) {
-    const variantOutside = testCase;
-    test(`Unboxed sender uses the content color over ${testCase}`, async () => {
+for (const variantOutside of ['brand', 'negative', 'media']) {
+    test(`Unboxed sender uses the content color over ${variantOutside}`, async () => {
         await openStoryPage({
             id: story,
             device: 'MOBILE_IOS',
@@ -154,9 +152,8 @@ test('Outgoing assets align with the bubble when a footer is present', async () 
     expect(avatarBounds.y + avatarBounds.height).toBeCloseTo(bubbleBounds.y + bubbleBounds.height, 0);
 });
 
-for (const testCase of [true, false]) {
-    const boxed = testCase;
-    test(`Outgoing footer actions align to the bubble right edge (boxed: ${testCase})`, async () => {
+for (const boxed of [true, false]) {
+    test(`Outgoing footer actions align to the bubble right edge (boxed: ${boxed})`, async () => {
         await openStoryPage({
             id: story,
             device: 'MOBILE_IOS',
@@ -174,9 +171,8 @@ for (const testCase of [true, false]) {
     });
 }
 
-for (const testCase of ['incoming', 'outgoing']) {
-    const type = testCase;
-    test(`Message renders oversized avatars at 40px: ${testCase}`, async () => {
+for (const type of ['incoming', 'outgoing']) {
+    test(`Message renders oversized avatars at 40px: ${type}`, async () => {
         await openStoryPage({id: story, device: 'MOBILE_IOS', args: {type, avatarSize: 190}});
         const avatar = await screen.findByTestId('Avatar');
         const bounds = await getBounds(avatar);
@@ -185,9 +181,8 @@ for (const testCase of ['incoming', 'outgoing']) {
     });
 }
 
-for (const testCase of ['MOBILE_IOS', 'DESKTOP'] as const) {
-    const device = testCase;
-    test(`Short error text hugs its content without forcing the minimum width: ${testCase}`, async () => {
+for (const device of ['MOBILE_IOS', 'DESKTOP'] as const) {
+    test(`Short error text hugs its content without forcing the minimum width: ${device}`, async () => {
         await openStoryPage({
             id: story,
             device,
@@ -259,9 +254,8 @@ test('Short error helper grows beyond its minimum width without wrapping unneces
     ).toBe(false);
 });
 
-for (const testCase of [true, false]) {
-    const boxed = testCase;
-    test(`Content slots preserve their own typography (boxed: ${testCase})`, async () => {
+for (const boxed of [true, false]) {
+    test(`Content slots preserve their own typography (boxed: ${boxed})`, async () => {
         await openStoryPage({
             id: 'components-message--content-typography',
             device: 'MOBILE_IOS',
@@ -291,9 +285,8 @@ for (const testCase of [true, false]) {
     });
 }
 
-for (const testCase of ['incoming', 'outgoing']) {
-    const type = testCase;
-    test(`Message keeps its bubble fill on hover and press: ${testCase}`, async () => {
+for (const type of ['incoming', 'outgoing']) {
+    test(`Message keeps its bubble fill on hover and press: ${type}`, async () => {
         await openStoryPage({
             id: story,
             device: 'DESKTOP',
@@ -347,7 +340,7 @@ for (const testCase of [
     {type: 'outgoing', boxed: false, leading: 'bubble', trailing: 'asset', expectedGap: 12},
 ] as const) {
     const {type, boxed, leading, trailing, expectedGap} = testCase;
-    test(`Message asset spacing matches its boxed variant: ${JSON.stringify(testCase)}`, async () => {
+    test(`Message asset spacing matches its boxed variant (${type}, boxed=${boxed})`, async () => {
         await openStoryPage({id: story, device: 'MOBILE_IOS', args: {type, boxed, assetType: 'avatar'}});
 
         const asset = await getBounds(await screen.findByTestId('Avatar'));
@@ -359,9 +352,8 @@ for (const testCase of [
     });
 }
 
-for (const testCase of [true, false]) {
-    const boxed = testCase;
-    test(`Oversized content stays inside the message (boxed: ${testCase})`, async () => {
+for (const boxed of [true, false]) {
+    test(`Oversized content stays inside the message (boxed: ${boxed})`, async () => {
         await openStoryPage({
             id: 'components-message--content-overflow',
             device: 'MOBILE_IOS',
@@ -379,9 +371,8 @@ for (const testCase of [true, false]) {
     });
 }
 
-for (const testCase of ['incoming', 'outgoing']) {
-    const type = testCase;
-    test(`Error uses the side actions width: ${testCase}`, async () => {
+for (const type of ['incoming', 'outgoing']) {
+    test(`Error uses the side actions width: ${type}`, async () => {
         await openStoryPage({
             id: story,
             device: 'MOBILE_IOS',
@@ -473,7 +464,8 @@ for (const testCase of [
     {type: 'outgoing', boxed: false, error: true, footerWidth: 400, expectedWidth: 240},
 ]) {
     const {expectedWidth, ...args} = testCase;
-    test(`Bubble grows to fit the footer within maxWidth: ${JSON.stringify(testCase)}`, async () => {
+    const {type, boxed, error, footerWidth} = args;
+    test(`Bubble fits the footer within maxWidth (${type}, boxed=${boxed}, error=${error}, footerWidth=${footerWidth})`, async () => {
         await openStoryPage({id: 'components-message--footer-sizing', device: 'MOBILE_IOS', args});
         await waitFor(async () => {
             const bubble = await getBounds(await screen.findByTestId('MessageBubble'));
@@ -485,9 +477,8 @@ for (const testCase of [
     });
 }
 
-for (const testCase of ['incoming', 'outgoing']) {
-    const type = testCase;
-    test(`Short bubble grows to fit both footer actions: ${testCase}`, async () => {
+for (const type of ['incoming', 'outgoing']) {
+    test(`Short bubble grows to fit both footer actions: ${type}`, async () => {
         await openStoryPage({
             id: 'components-message--footer-sizing',
             device: 'MOBILE_IOS',

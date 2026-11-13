@@ -45,9 +45,8 @@ test('TextField with suggestions', async () => {
     await expect(getValue(screen.findByLabelText('Label'))).resolves.toBe('Algeria');
 });
 
-for (const testCase of STORY_TYPES) {
-    const storyType = testCase;
-    test(`IntegerField (${testCase})`, async () => {
+for (const storyType of STORY_TYPES) {
+    test(`IntegerField (${storyType})`, async () => {
         await openStoryPage(getStoryOfType('integerfield', storyType));
 
         const field = await screen.findByLabelText('Label');
@@ -57,9 +56,8 @@ for (const testCase of STORY_TYPES) {
     });
 }
 
-for (const testCase of STORY_TYPES) {
-    const storyType = testCase;
-    test(`DecimalField (${testCase})`, async () => {
+for (const storyType of STORY_TYPES) {
+    test(`DecimalField (${storyType})`, async () => {
         await openStoryPage(getStoryOfType('decimalfield', storyType));
 
         const field = await screen.findByLabelText('Label');
@@ -95,9 +93,8 @@ for (const testCase of STORY_TYPES) {
     });
 }
 
-for (const testCase of STORY_TYPES) {
-    const storyType = testCase;
-    test(`CreditCardNumberField (${testCase})`, async () => {
+for (const storyType of STORY_TYPES) {
+    test(`CreditCardNumberField (${storyType})`, async () => {
         await openStoryPage(getStoryOfType('creditcardnumberfield', storyType));
 
         const field = await screen.findByLabelText('Label');
@@ -119,9 +116,8 @@ for (const testCase of STORY_TYPES) {
     });
 }
 
-for (const testCase of STORY_TYPES) {
-    const storyType = testCase;
-    test(`CreditCardExpirationField (${testCase})`, async () => {
+for (const storyType of STORY_TYPES) {
+    test(`CreditCardExpirationField (${storyType})`, async () => {
         const page = await openStoryPage(getStoryOfType('creditcardexpirationfield', storyType));
 
         const field = await screen.findByLabelText('Label');
@@ -153,9 +149,8 @@ for (const testCase of STORY_TYPES) {
     });
 }
 
-for (const testCase of STORY_TYPES) {
-    const storyType = testCase;
-    test(`PasswordField (${testCase})`, async () => {
+for (const storyType of STORY_TYPES) {
+    test(`PasswordField (${storyType})`, async () => {
         await openStoryPage(getStoryOfType('passwordfield', storyType));
 
         const field = await screen.findByLabelText('Label');
@@ -193,9 +188,8 @@ for (const testCase of STORY_TYPES) {
     });
 }
 
-for (const testCase of STORY_TYPES) {
-    const storyType = testCase;
-    test(`DateField (${testCase})`, async () => {
+for (const storyType of STORY_TYPES) {
+    test(`DateField (${storyType})`, async () => {
         await openStoryPage({...getStoryOfType('datefield', storyType), device: 'DESKTOP'});
         const field = await screen.findByLabelText('Label');
         await field.focus();
@@ -205,9 +199,8 @@ for (const testCase of STORY_TYPES) {
     });
 }
 
-for (const testCase of STORY_TYPES) {
-    const storyType = testCase;
-    test(`PhoneNumberField (${testCase})`, async () => {
+for (const storyType of STORY_TYPES) {
+    test(`PhoneNumberField (${storyType})`, async () => {
         await openStoryPage(getStoryOfType('phonenumberfield', storyType));
 
         const field = await screen.findByLabelText('Label');
@@ -232,9 +225,8 @@ for (const testCase of STORY_TYPES) {
     });
 }
 
-for (const testCase of STORY_TYPES) {
-    const storyType = testCase;
-    test(`SearchField (${testCase})`, async () => {
+for (const storyType of STORY_TYPES) {
+    test(`SearchField (${storyType})`, async () => {
         await openStoryPage(getStoryOfType('searchfield', storyType));
 
         const field = await screen.findByLabelText('Label');
@@ -246,9 +238,8 @@ for (const testCase of STORY_TYPES) {
     });
 }
 
-for (const testCase of STORY_TYPES) {
-    const storyType = testCase;
-    test(`SearchField width does not change when clear icon appears (${testCase})`, async () => {
+for (const storyType of STORY_TYPES) {
+    test(`SearchField width does not change when clear icon appears (${storyType})`, async () => {
         await openStoryPage(getStoryOfType('searchfield', storyType));
 
         const fieldWrapper = await screen.findByTestId('search-field');
@@ -264,9 +255,8 @@ for (const testCase of STORY_TYPES) {
     });
 }
 
-for (const testCase of STORY_TYPES) {
-    const storyType = testCase;
-    test(`PinField (${testCase})`, async () => {
+for (const storyType of STORY_TYPES) {
+    test(`PinField (${storyType})`, async () => {
         await openStoryPage(getStoryOfType('pinfield', storyType));
 
         const fieldGroup = await screen.findByLabelText('OTP');
@@ -277,9 +267,8 @@ for (const testCase of STORY_TYPES) {
         await screen.findByText('rawValue: (string) "123456"');
     });
 }
-for (const testCase of STORY_TYPES) {
-    const storyType = testCase;
-    test(`PinField (hideCode) (${testCase})`, async () => {
+for (const storyType of STORY_TYPES) {
+    test(`PinField (hideCode) (${storyType})`, async () => {
         await openStoryPage({...getStoryOfType('pinfield', storyType), args: {hideCode: true}});
 
         const fieldGroup = await screen.findByLabelText('PIN');

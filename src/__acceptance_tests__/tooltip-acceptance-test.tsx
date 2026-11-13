@@ -12,7 +12,7 @@ const BORDER_RADIUS = 8;
 const LONG_DESCRIPTION = 'A long description that wraps onto several lines '.repeat(100);
 
 const openTooltip = async (component: string, args: StoryArgs = {}, testViewport = viewport) => {
-    const page = await openStoryPage({
+    await openStoryPage({
         id: `components-${component.toLowerCase()}--default`,
         device: 'DESKTOP',
         viewport: testViewport,
@@ -27,7 +27,7 @@ const openTooltip = async (component: string, args: StoryArgs = {}, testViewport
             element.firstElementChild?.firstElementChild?.getBoundingClientRect().toJSON()
         ),
     });
-    return {page, tooltip, getBounds};
+    return {tooltip, getBounds};
 };
 
 const expectPosition = (position: string, target: DOMRect, tooltip: DOMRect) => {
@@ -46,9 +46,8 @@ const expectPosition = (position: string, target: DOMRect, tooltip: DOMRect) => 
     }
 };
 
-for (const testCase of ['Tooltip', 'Popover']) {
-    const component = testCase;
-    test.describe(`${testCase} positioning`, () => {
+for (const component of ['Tooltip', 'Popover']) {
+    test.describe(`${component} positioning`, () => {
         for (const testCase of positions.flatMap((position) =>
             alignments.map((alignment) => ({position, alignment}))
         )) {
@@ -128,15 +127,14 @@ for (const testCase of ['Tooltip', 'Popover']) {
             const {position, alignment} = testCase;
             test(`shifts within position=${testCase.position} with alignment=${testCase.alignment}`, async () => {
                 const isVertical = position === 'top' || position === 'bottom';
+                const isStartAligned = alignment === 'start';
+                const horizontalEdge = isStartAligned ? 'right' : 'left';
+                const verticalEdge = isStartAligned ? 'bottom' : 'top';
                 const {getBounds} = await openTooltip(component, {
                     position,
                     alignment,
-                    targetHorizontalPosition: isVertical
-                        ? alignment === 'start'
-                            ? 'right'
-                            : 'left'
-                        : 'center',
-                    targetVerticalPosition: isVertical ? 'center' : alignment === 'start' ? 'bottom' : 'top',
+                    targetHorizontalPosition: isVertical ? horizontalEdge : 'center',
+                    targetVerticalPosition: isVertical ? 'center' : verticalEdge,
                 });
                 await waitFor(async () => {
                     const {target, tooltip} = await getBounds();
@@ -175,9 +173,8 @@ for (const testCase of ['Tooltip', 'Popover']) {
             });
         }
 
-        for (const testCase of positions) {
-            const position = testCase;
-            test(`scrolls tall content in ${testCase}`, async () => {
+        for (const position of positions) {
+            test(`scrolls tall content in ${position}`, async () => {
                 const {tooltip, getBounds} = await openTooltip(
                     component,
                     {position, description: LONG_DESCRIPTION},
@@ -204,9 +201,8 @@ for (const testCase of ['Tooltip', 'Popover']) {
     });
 }
 
-for (const testCase of ['Tooltip', 'Popover']) {
-    const component = testCase;
-    test(`${testCase} flips when open content grows`, async () => {
+for (const component of ['Tooltip', 'Popover']) {
+    test(`${component} flips when open content grows`, async () => {
         await openStoryPage({
             id: 'private-tooltip--growing-content',
             device: 'DESKTOP',
@@ -235,9 +231,8 @@ for (const testCase of ['Tooltip', 'Popover']) {
     });
 }
 
-for (const testCase of ['top', 'left']) {
-    const position = testCase;
-    test(`small Tooltip keeps its arrow clear of Vivo corners in ${testCase}`, async () => {
+for (const position of ['top', 'left']) {
+    test(`small Tooltip keeps its arrow clear of Vivo corners in ${position}`, async () => {
         await openStoryPage({
             id: 'components-tooltip--default',
             device: 'DESKTOP',
@@ -265,9 +260,8 @@ for (const testCase of ['top', 'left']) {
     });
 }
 
-for (const testCase of ['Tooltip', 'Popover']) {
-    const component = testCase;
-    test(`${testCase} exposes its default position and alignment in Storybook`, async () => {
+for (const component of ['Tooltip', 'Popover']) {
+    test(`${component} exposes its default position and alignment in Storybook`, async () => {
         const {getBounds} = await openTooltip(component, {position: 'default', alignment: 'default'});
         await waitFor(async () => {
             const {target, tooltip} = await getBounds();
@@ -282,9 +276,8 @@ for (const testCase of ['Tooltip', 'Popover'].flatMap((component) =>
 )) {
     const {component, skin} = testCase;
     test.describe(`${testCase.component} mobile positioning with ${testCase.skin}`, () => {
-        for (const testCase of ['default', 'brand']) {
-            const variantOutside = testCase;
-            test(`remains stable in the ${testCase} variant`, async () => {
+        for (const variantOutside of ['default', 'brand']) {
+            test(`remains stable in the ${variantOutside} variant`, async () => {
                 const page = await openStoryPage({
                     id: `components-${component.toLowerCase()}--default`,
                     device: 'MOBILE_IOS',
