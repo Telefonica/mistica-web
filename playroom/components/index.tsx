@@ -340,6 +340,8 @@ type PreviewToolsProps = {
     floating?: boolean;
     position?: 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left';
     showPlatformSelector?: boolean;
+    hideColorScheme?: boolean;
+    hideDensity?: boolean;
     forceMobile?: boolean;
     forceDesktop?: boolean;
     forceTabs?: boolean;
@@ -357,6 +359,8 @@ const PreviewToolsComponent = ({
     floating,
     position = 'top-right',
     showPlatformSelector = false,
+    hideColorScheme = false,
+    hideDensity = false,
     forceMobile = false,
     forceDesktop = false,
     forceTabs = false,
@@ -456,8 +460,8 @@ const PreviewToolsComponent = ({
                 density={density}
                 onDensityChange={setDensity}
                 forceTabs={forceTabs}
-                showColorSchemeToggle={forceColorScheme === 'auto'}
-                showDensityToggle={forceDensity === 'auto'}
+                showColorSchemeToggle={!hideColorScheme && forceColorScheme === 'auto'}
+                showDensityToggle={!hideDensity && forceDensity === 'auto'}
             />
         </ThemeContextProvider>
     );
