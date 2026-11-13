@@ -11,6 +11,9 @@ import {
     Text3,
     skinVars,
 } from '..';
+import IconCheckRegular from '@telefonica/mistica-icons/icon-check-regular';
+import IconMoonRegular from '@telefonica/mistica-icons/icon-moon-regular';
+import IconSunRegular from '@telefonica/mistica-icons/icon-sun-regular';
 
 export default {
     title: 'Utilities/Animations/SlideSwap',
