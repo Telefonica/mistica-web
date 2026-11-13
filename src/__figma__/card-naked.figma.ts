@@ -98,7 +98,8 @@ export default {
         />
     `,
     imports: [
-        'import {NakedCard, ButtonPrimary, ButtonSecondary, ButtonLink, IconLightningRegular} from "@telefonica/mistica";',
+        'import {NakedCard, ButtonPrimary, ButtonSecondary, ButtonLink} from "@telefonica/mistica";',
+        'import IconLightningRegular from "@telefonica/mistica-icons/icon-lightning-regular";',
     ],
     id: 'card-naked',
     metadata: {nestable: false},

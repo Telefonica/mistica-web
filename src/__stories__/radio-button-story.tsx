@@ -1,5 +1,6 @@
 import * as React from 'react';
-import {Stack, RadioGroup, RadioButton, Inline, Text3, IconHandRightRegular, ResponsiveLayout, Box} from '..';
+import {Stack, RadioGroup, RadioButton, Inline, Text3, ResponsiveLayout, Box} from '..';
+import IconHandRightRegular from '@telefonica/mistica-icons/icon-hand-right-regular';
 
 import type {Variant} from '../theme-variant-context';
 
