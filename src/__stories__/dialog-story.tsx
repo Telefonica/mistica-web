@@ -1,15 +1,6 @@
 import * as React from 'react';
-import {
-    ButtonPrimary,
-    ButtonLayout,
-    useDialog,
-    IconInformationUserLight,
-    ButtonLink,
-    Stack,
-    skinVars,
-    Select,
-    Text1,
-} from '..';
+import {ButtonPrimary, ButtonLayout, useDialog, ButtonLink, Stack, skinVars, Select, Text1} from '..';
+import IconInformationUserLight from '@telefonica/mistica-icons/icon-information-user-light';
 
 export default {
     title: 'Components/Modals',

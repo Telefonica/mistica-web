@@ -1,7 +1,7 @@
 'use client';
 import * as React from 'react';
-import IconChevronLeftRegular from './generated/mistica-icons/icon-chevron-left-regular';
-import IconChevronRightRegular from './generated/mistica-icons/icon-chevron-right-regular';
+import IconChevronLeftRegular from '@telefonica/mistica-icons/icon-chevron-left-regular';
+import IconChevronRightRegular from '@telefonica/mistica-icons/icon-chevron-right-regular';
 import {useIsInViewport, useIsomorphicLayoutEffect, useScreenSize, useTheme} from './hooks';
 import Inline from './inline';
 import classNames from 'classnames';
@@ -16,9 +16,9 @@ import {VIVO_SKIN, VIVO_EVOLUTION_SKIN} from './skins/constants';
 import {applyCssVars} from './utils/css';
 import {ResetResponsiveLayout} from './responsive-layout';
 import {InternalIconButton, ToggleIconButton} from './icon-button';
-import IconPauseFilled from './generated/mistica-icons/icon-pause-filled';
-import IconPlayFilled from './generated/mistica-icons/icon-play-filled';
-import IconReloadRegular from './generated/mistica-icons/icon-reload-regular';
+import IconPauseFilled from '@telefonica/mistica-icons/icon-pause-filled';
+import IconPlayFilled from '@telefonica/mistica-icons/icon-play-filled';
+import IconReloadRegular from '@telefonica/mistica-icons/icon-reload-regular';
 import * as tokens from './text-tokens';
 import {isClientSide} from './utils/environment';
 

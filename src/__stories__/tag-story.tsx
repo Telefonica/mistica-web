@@ -1,17 +1,11 @@
 import * as React from 'react';
-import {
-    Stack,
-    Tag,
-    IconStarFilled,
-    IconTimeFilled,
-    IconOfferPercentFilled,
-    IconCheckRegular,
-    IconCloseRegular,
-    IconAlertRegular,
-    ResponsiveLayout,
-    Box,
-    skinVars,
-} from '..';
+import {Stack, Tag, ResponsiveLayout, Box, skinVars} from '..';
+import IconStarFilled from '@telefonica/mistica-icons/icon-star-filled';
+import IconTimeFilled from '@telefonica/mistica-icons/icon-time-filled';
+import IconOfferPercentFilled from '@telefonica/mistica-icons/icon-offer-percent-filled';
+import IconCheckRegular from '@telefonica/mistica-icons/icon-check-regular';
+import IconCloseRegular from '@telefonica/mistica-icons/icon-close-regular';
+import IconAlertRegular from '@telefonica/mistica-icons/icon-alert-regular';
 
 import type {Variant} from '../theme-variant-context';
 

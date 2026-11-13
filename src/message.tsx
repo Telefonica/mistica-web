@@ -6,7 +6,7 @@ import Touchable from './touchable';
 import Avatar from './avatar';
 import {Text1, Text2} from './text';
 import {IconButton} from './icon-button';
-import IconWarningRegular from './generated/mistica-icons/icon-warning-regular';
+import IconWarningRegular from '@telefonica/mistica-icons/icon-warning-regular';
 import ScreenReaderOnly from './screen-reader-only';
 import {ThemeVariant, useThemeVariant} from './theme-variant-context';
 import {useElementDimensions, useTheme} from './hooks';

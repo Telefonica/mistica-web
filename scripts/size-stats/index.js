@@ -7,6 +7,8 @@ const gzipSize = require('gzip-size');
 
 const PATH_REPO_ROOT = join(__dirname, '../..');
 const PATH_DIST_ES = join(PATH_REPO_ROOT, 'dist-es');
+// the icons live in their own package now, and a consumer that uses every icon downloads both
+const PATH_ICONS_DIST_ES = join(PATH_REPO_ROOT, 'packages/mistica-icons/dist-es');
 const PATH_APP = join(__dirname, 'app-test-lib-overhead');
 const PATH_APP_BUILD = join(PATH_APP, 'dist');
 
@@ -38,12 +40,15 @@ const calcStats = () => {
     const appWithMistica = getTotalSize([join(PATH_APP_BUILD, 'main.js')]);
     const appWithMisticaGzip = getTotalSize([join(PATH_APP_BUILD, 'main.js')], {gzip: true});
 
-    const distEsJsFilenames = glob.sync(join(PATH_DIST_ES, '**/*.js'));
+    const distEsJsFilenames = [
+        ...glob.sync(join(PATH_DIST_ES, '**/*.js')),
+        ...glob.sync(join(PATH_ICONS_DIST_ES, '**/*.js')),
+    ];
 
     return {
         totalJs: getTotalSize(distEsJsFilenames),
         jsWithoutIcons: getTotalSize(distEsJsFilenames, {
-            exclude: [/\/generated\/mistica-icons\/.*/, /\/dist-es\/index.js$/],
+            exclude: [/mistica-icons\/dist-es\/.*/, /\/dist-es\/index.js$/],
         }),
         libOverhead: appWithMistica - appInitial,
         libOverheadGzip: appWithMisticaGzip - appInitialGzip,
