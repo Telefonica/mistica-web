@@ -105,6 +105,8 @@ type PreviewToolsControlsProps = {
     onEditStoryPress: () => void;
     showPlatformSelector: boolean;
     forceTabs?: boolean;
+    showColorSchemeToggle: boolean;
+    showDensityToggle: boolean;
 };
 
 const PreviewToolsControls = React.forwardRef<HTMLDivElement, PreviewToolsControlsProps>(
@@ -121,6 +123,8 @@ const PreviewToolsControls = React.forwardRef<HTMLDivElement, PreviewToolsContro
             onDensityChange,
             onEditStoryPress,
             forceTabs,
+            showColorSchemeToggle,
+            showDensityToggle,
         },
         ref
     ) => {
@@ -161,52 +165,58 @@ const PreviewToolsControls = React.forwardRef<HTMLDivElement, PreviewToolsContro
                                 description={os === 'ios' ? 'Change to Android' : 'Change to iOS'}
                             />
                         )}
-                        <Tooltip
-                            target={
-                                <ToggleIconButton
-                                    checkedProps={{
-                                        Icon: IconDensityCozy as (props: IconProps) => JSX.Element,
-                                        'aria-label': 'Switch to compact density',
-                                    }}
-                                    uncheckedProps={{
-                                        Icon: IconDensityCompact as (props: IconProps) => JSX.Element,
-                                        'aria-label': 'Switch to cozy density',
-                                    }}
-                                    checked={density === 'compact'}
-                                    onChange={(checked) => onDensityChange(checked ? 'compact' : 'cozy')}
-                                />
-                            }
-                            description={
-                                density === 'compact' ? 'Change to cozy density' : 'Change to compact density'
-                            }
-                        />
-                        <Tooltip
-                            target={
-                                <ToggleIconButton
-                                    checkedProps={{
-                                        Icon: IconSun as (props: IconProps) => JSX.Element,
-                                        'aria-label': 'Switch to light mode',
-                                    }}
-                                    uncheckedProps={{
-                                        Icon: IconMoon as (props: IconProps) => JSX.Element,
-                                        'aria-label': 'Switch to dark mode',
-                                    }}
-                                    checked={colorScheme === alternativeColorScheme}
-                                    onChange={(checked) => {
-                                        if (checked) {
-                                            onColorSchemeChange(alternativeColorScheme);
-                                        } else {
-                                            onColorSchemeChange(systemColorScheme);
-                                        }
-                                    }}
-                                />
-                            }
-                            description={
-                                colorScheme === alternativeColorScheme
-                                    ? 'Change to light mode'
-                                    : 'Change to dark mode'
-                            }
-                        />
+                        {showDensityToggle && (
+                            <Tooltip
+                                target={
+                                    <ToggleIconButton
+                                        checkedProps={{
+                                            Icon: IconDensityCozy as (props: IconProps) => JSX.Element,
+                                            'aria-label': 'Switch to compact density',
+                                        }}
+                                        uncheckedProps={{
+                                            Icon: IconDensityCompact as (props: IconProps) => JSX.Element,
+                                            'aria-label': 'Switch to cozy density',
+                                        }}
+                                        checked={density === 'compact'}
+                                        onChange={(checked) => onDensityChange(checked ? 'compact' : 'cozy')}
+                                    />
+                                }
+                                description={
+                                    density === 'compact'
+                                        ? 'Change to cozy density'
+                                        : 'Change to compact density'
+                                }
+                            />
+                        )}
+                        {showColorSchemeToggle && (
+                            <Tooltip
+                                target={
+                                    <ToggleIconButton
+                                        checkedProps={{
+                                            Icon: IconSun as (props: IconProps) => JSX.Element,
+                                            'aria-label': 'Switch to light mode',
+                                        }}
+                                        uncheckedProps={{
+                                            Icon: IconMoon as (props: IconProps) => JSX.Element,
+                                            'aria-label': 'Switch to dark mode',
+                                        }}
+                                        checked={colorScheme === alternativeColorScheme}
+                                        onChange={(checked) => {
+                                            if (checked) {
+                                                onColorSchemeChange(alternativeColorScheme);
+                                            } else {
+                                                onColorSchemeChange(systemColorScheme);
+                                            }
+                                        }}
+                                    />
+                                }
+                                description={
+                                    colorScheme === alternativeColorScheme
+                                        ? 'Change to light mode'
+                                        : 'Change to dark mode'
+                                }
+                            />
+                        )}
                         <Tooltip
                             target={
                                 <IconButton
@@ -254,53 +264,59 @@ const PreviewToolsControls = React.forwardRef<HTMLDivElement, PreviewToolsContro
                                 description={os === 'ios' ? 'Change to Android' : 'Change to iOS'}
                             />
                         )}
-                        <Tooltip
-                            target={
-                                <ToggleIconButton
-                                    checkedProps={{
-                                        Icon: IconDensityCozy as (props: IconProps) => JSX.Element,
-                                        'aria-label': 'Switch to compact density',
-                                    }}
-                                    uncheckedProps={{
-                                        Icon: IconDensityCompact as (props: IconProps) => JSX.Element,
-                                        'aria-label': 'Switch to cozy density',
-                                    }}
-                                    checked={density === 'compact'}
-                                    onChange={(checked) => onDensityChange(checked ? 'compact' : 'cozy')}
-                                />
-                            }
-                            description={
-                                density === 'compact' ? 'Change to cozy density' : 'Change to compact density'
-                            }
-                        />
+                        {showDensityToggle && (
+                            <Tooltip
+                                target={
+                                    <ToggleIconButton
+                                        checkedProps={{
+                                            Icon: IconDensityCozy as (props: IconProps) => JSX.Element,
+                                            'aria-label': 'Switch to compact density',
+                                        }}
+                                        uncheckedProps={{
+                                            Icon: IconDensityCompact as (props: IconProps) => JSX.Element,
+                                            'aria-label': 'Switch to cozy density',
+                                        }}
+                                        checked={density === 'compact'}
+                                        onChange={(checked) => onDensityChange(checked ? 'compact' : 'cozy')}
+                                    />
+                                }
+                                description={
+                                    density === 'compact'
+                                        ? 'Change to cozy density'
+                                        : 'Change to compact density'
+                                }
+                            />
+                        )}
 
-                        <Tooltip
-                            target={
-                                <ToggleIconButton
-                                    checkedProps={{
-                                        Icon: IconSun as (props: IconProps) => JSX.Element,
-                                        'aria-label': 'Change color scheme',
-                                    }}
-                                    uncheckedProps={{
-                                        Icon: IconMoon as (props: IconProps) => JSX.Element,
-                                        'aria-label': 'Change color scheme',
-                                    }}
-                                    checked={colorScheme === alternativeColorScheme}
-                                    onChange={(checked) => {
-                                        if (checked) {
-                                            onColorSchemeChange(alternativeColorScheme);
-                                        } else {
-                                            onColorSchemeChange(systemColorScheme);
-                                        }
-                                    }}
-                                />
-                            }
-                            description={
-                                colorScheme === alternativeColorScheme
-                                    ? 'Change to light mode'
-                                    : 'Change to dark mode'
-                            }
-                        />
+                        {showColorSchemeToggle && (
+                            <Tooltip
+                                target={
+                                    <ToggleIconButton
+                                        checkedProps={{
+                                            Icon: IconSun as (props: IconProps) => JSX.Element,
+                                            'aria-label': 'Change color scheme',
+                                        }}
+                                        uncheckedProps={{
+                                            Icon: IconMoon as (props: IconProps) => JSX.Element,
+                                            'aria-label': 'Change color scheme',
+                                        }}
+                                        checked={colorScheme === alternativeColorScheme}
+                                        onChange={(checked) => {
+                                            if (checked) {
+                                                onColorSchemeChange(alternativeColorScheme);
+                                            } else {
+                                                onColorSchemeChange(systemColorScheme);
+                                            }
+                                        }}
+                                    />
+                                }
+                                description={
+                                    colorScheme === alternativeColorScheme
+                                        ? 'Change to light mode'
+                                        : 'Change to dark mode'
+                                }
+                            />
+                        )}
 
                         <Tooltip
                             target={
@@ -327,6 +343,8 @@ type PreviewToolsProps = {
     forceMobile?: boolean;
     forceDesktop?: boolean;
     forceTabs?: boolean;
+    forceColorScheme?: 'auto' | ColorScheme;
+    forceDensity?: 'auto' | Density;
     hide?: boolean;
     showBorder?: boolean;
     children: React.ReactNode;
@@ -342,6 +360,8 @@ const PreviewToolsComponent = ({
     forceMobile = false,
     forceDesktop = false,
     forceTabs = false,
+    forceColorScheme = 'auto',
+    forceDensity = 'auto',
     hide,
     showBorder = false,
 }: PreviewToolsProps): JSX.Element => {
@@ -351,8 +371,10 @@ const PreviewToolsComponent = ({
     } = useTheme();
     const [skinName, setSkinName] = React.useState<ValidSkinName>(initialSkinName as ValidSkinName);
     const [os, setOs] = React.useState<'android' | 'ios' | 'desktop'>(initialOs);
-    const [colorScheme, setColorScheme] = React.useState<ColorScheme>('light');
-    const [density, setDensity] = React.useState<Density>(useDensity());
+    const [selectedColorScheme, setColorScheme] = React.useState<ColorScheme>('light');
+    const [selectedDensity, setDensity] = React.useState<Density>(useDensity());
+    const colorScheme = forceColorScheme === 'auto' ? selectedColorScheme : forceColorScheme;
+    const density = forceDensity === 'auto' ? selectedDensity : forceDensity;
     const overrideTheme = useOverrideTheme();
     const overrideDensity = useOverrideDensity();
 
@@ -434,6 +456,8 @@ const PreviewToolsComponent = ({
                 density={density}
                 onDensityChange={setDensity}
                 forceTabs={forceTabs}
+                showColorSchemeToggle={forceColorScheme === 'auto'}
+                showDensityToggle={forceDensity === 'auto'}
             />
         </ThemeContextProvider>
     );
