@@ -5,7 +5,6 @@ import {
     ButtonSecondary,
     DensityProvider,
     IconButton,
-    IconLightningRegular,
     Inline,
     Popover,
     ResponsiveLayout,
@@ -15,6 +14,7 @@ import {
     Title2,
     useDensity,
 } from '..';
+import IconLightningRegular from '@telefonica/mistica-icons/icon-lightning-regular';
 
 import type {Density} from '..';
 
