@@ -7,6 +7,8 @@ process.env.NODE_ENV = 'test';
 export default defineConfig({
     ...config,
     name: 'ssr',
+    // SSR renders the built packages without the aliases to TypeScript sources.
+    tsconfig: './src/test-utils/tsconfig.ssr.json',
     testMatch: '**/__acceptance_tests__/*-ssr-acceptance-test.tsx',
     testIgnore: [],
     webServer: undefined,
