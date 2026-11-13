@@ -107,7 +107,8 @@ export default {
         />
     `,
     imports: [
-        'import {MediaCard, ButtonPrimary, ButtonSecondary, ButtonLink, IconLightningRegular} from "@telefonica/mistica";',
+        'import {MediaCard, ButtonPrimary, ButtonSecondary, ButtonLink} from "@telefonica/mistica";',
+        'import IconLightningRegular from "@telefonica/mistica-icons/icon-lightning-regular";',
     ],
     id: 'card-media',
     metadata: {nestable: false},
