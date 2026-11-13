@@ -4,9 +4,15 @@
  *
  * @semantic-release/npm writes the "version" field of both manifests, one instance for each
  * package. It does not know about the ranges between them, so this plugin writes those.
+ *
+ * The ranges are part of the yarn.lock keys, so the plugin refreshes the lockfile too. Without it,
+ * every `yarn install --immutable` after the release commit fails. This plugin runs before
+ * @semantic-release/npm, so it writes the "version" fields as well: Yarn only links the icons
+ * workspace when its version satisfies the new range.
  */
 const fs = require('fs').promises;
 const path = require('path');
+const {execSync} = require('child_process');
 
 const versionFilePath = require.resolve('../src/package-version.tsx');
 const rootPackagePath = require.resolve('../package.json');
@@ -37,6 +43,7 @@ const prepare = async (config, context) => {
     await writeRange(
         rootPackagePath,
         (manifest) => {
+            manifest.version = nextRelease.version;
             manifest.dependencies['@telefonica/mistica-icons'] = range;
         },
         logger
@@ -45,10 +52,14 @@ const prepare = async (config, context) => {
     await writeRange(
         iconsPackagePath,
         (manifest) => {
+            manifest.version = nextRelease.version;
             manifest.peerDependencies['@telefonica/mistica'] = range;
         },
         logger
     );
+
+    logger.log('Updating yarn.lock with the new ranges');
+    execSync('yarn install --mode=update-lockfile', {stdio: 'inherit'});
 };
 
 module.exports = {prepare};
