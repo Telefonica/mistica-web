@@ -32,6 +32,12 @@ type PropsTemplate8plus4 = {
     right: React.ReactNode;
 };
 
+type PropsTemplate7plus5 = {
+    template: '7+5';
+    left: React.ReactNode;
+    right: React.ReactNode;
+};
+
 type PropsTemplate4plus6 = {
     template: '4+6';
     left: React.ReactNode;
@@ -65,6 +71,7 @@ type Props = CommonProps &
         | PropsChildren
         | PropsTemplate6plus6
         | PropsTemplate8plus4
+        | PropsTemplate7plus5
         | PropsTemplate4plus6
         | PropsTemplate5plus4
         | PropsTemplate3plus9
@@ -120,6 +127,19 @@ const GridLayout = ({
                 </DesktopContainerTypeContextProvider>
                 <DesktopContainerTypeContextProvider value="small">
                     <div {...spanStyles(4)}>{right}</div>
+                </DesktopContainerTypeContextProvider>
+            </div>
+        );
+    }
+
+    if (template === '7+5') {
+        return (
+            <div {...gridStyles} {...prefixedDataAttributes}>
+                <DesktopContainerTypeContextProvider value="medium">
+                    <div {...spanStyles(7)}>{left}</div>
+                </DesktopContainerTypeContextProvider>
+                <DesktopContainerTypeContextProvider value="small">
+                    <div {...spanStyles(5)}>{right}</div>
                 </DesktopContainerTypeContextProvider>
             </div>
         );

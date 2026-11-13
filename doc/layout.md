@@ -466,7 +466,7 @@ A 12-column grid with predefined templates for common page layouts. Must be used
 
 Available templates:
 
-- Split layouts (use `left`/`right` props): `'6+6'`, `'8+4'`, `'5+4'`, `'4+6'`, `'3+9'`
+- Split layouts (use `left`/`right` props): `'6+6'`, `'8+4'`, `'7+5'`, `'5+4'`, `'4+6'`, `'3+9'`
 - Centered single-column layouts (use `children`): `'10'`, `'8'`
 - No template (raw 12-column grid, use `children`)
 

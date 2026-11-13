@@ -126,6 +126,16 @@
         var(--mistica-vivo-evolution-raw-vivoPurple900),
         0.5
     );
+    --mistica-color-messageBubbleBackgroundOutgoing: var(--mistica-vivo-evolution-vivoNeutral25);
+    --mistica-color-messageBubbleBackgroundOutgoingBrand: var(--mistica-vivo-evolution-vivoNeutral25);
+    --mistica-color-messageBubbleBackgroundOutgoingAlternative: var(--mistica-vivo-evolution-vivoNeutral25);
+    --mistica-color-messageBubbleBackgroundOutgoingNegative: var(--mistica-vivo-evolution-vivoNeutral25);
+    --mistica-color-messageBubbleBackgroundOutgoingMedia: var(--mistica-vivo-evolution-vivoNeutral25);
+    --mistica-color-messageBubbleBackgroundIncoming: var(--mistica-vivo-evolution-vivoNeutral25);
+    --mistica-color-messageBubbleBackgroundIncomingBrand: var(--mistica-vivo-evolution-vivoNeutral0);
+    --mistica-color-messageBubbleBackgroundIncomingAlternative: var(--mistica-vivo-evolution-vivoNeutral0);
+    --mistica-color-messageBubbleBackgroundIncomingNegative: var(--mistica-vivo-evolution-vivoNeutral0);
+    --mistica-color-messageBubbleBackgroundIncomingMedia: var(--mistica-vivo-evolution-vivoNeutral0);
     --mistica-color-skeletonWave: var(--mistica-vivo-evolution-vivoNeutral100);
     --mistica-color-borderLow: var(--mistica-vivo-evolution-vivoNeutral25);
     --mistica-color-border: var(--mistica-vivo-evolution-vivoNeutral200);
@@ -625,6 +635,16 @@
         var(--mistica-vivo-evolution-raw-vivoNeutral0),
         0.05
     );
+    --mistica-color-messageBubbleBackgroundOutgoing: var(--mistica-vivo-evolution-vivoNeutral900);
+    --mistica-color-messageBubbleBackgroundOutgoingBrand: var(--mistica-vivo-evolution-vivoNeutral900);
+    --mistica-color-messageBubbleBackgroundOutgoingAlternative: var(--mistica-vivo-evolution-vivoNeutral900);
+    --mistica-color-messageBubbleBackgroundOutgoingNegative: var(--mistica-vivo-evolution-vivoNeutral900);
+    --mistica-color-messageBubbleBackgroundOutgoingMedia: var(--mistica-vivo-evolution-vivoNeutral900);
+    --mistica-color-messageBubbleBackgroundIncoming: var(--mistica-vivo-evolution-vivoNeutral900);
+    --mistica-color-messageBubbleBackgroundIncomingBrand: var(--mistica-vivo-evolution-vivoNeutral900);
+    --mistica-color-messageBubbleBackgroundIncomingAlternative: var(--mistica-vivo-evolution-vivoNeutral900);
+    --mistica-color-messageBubbleBackgroundIncomingNegative: var(--mistica-vivo-evolution-vivoNeutral900);
+    --mistica-color-messageBubbleBackgroundIncomingMedia: var(--mistica-vivo-evolution-vivoNeutral900);
     --mistica-color-skeletonWave: var(--mistica-vivo-evolution-vivoNeutral600);
     --mistica-color-borderLow: var(--mistica-vivo-evolution-vivoNeutral950);
     --mistica-color-border: var(--mistica-vivo-evolution-vivoNeutral900);
@@ -1066,6 +1086,20 @@
             var(--mistica-vivo-evolution-raw-vivoNeutral0),
             0.05
         );
+        --mistica-color-messageBubbleBackgroundOutgoing: var(--mistica-vivo-evolution-vivoNeutral900);
+        --mistica-color-messageBubbleBackgroundOutgoingBrand: var(--mistica-vivo-evolution-vivoNeutral900);
+        --mistica-color-messageBubbleBackgroundOutgoingAlternative: var(
+            --mistica-vivo-evolution-vivoNeutral900
+        );
+        --mistica-color-messageBubbleBackgroundOutgoingNegative: var(--mistica-vivo-evolution-vivoNeutral900);
+        --mistica-color-messageBubbleBackgroundOutgoingMedia: var(--mistica-vivo-evolution-vivoNeutral900);
+        --mistica-color-messageBubbleBackgroundIncoming: var(--mistica-vivo-evolution-vivoNeutral900);
+        --mistica-color-messageBubbleBackgroundIncomingBrand: var(--mistica-vivo-evolution-vivoNeutral900);
+        --mistica-color-messageBubbleBackgroundIncomingAlternative: var(
+            --mistica-vivo-evolution-vivoNeutral900
+        );
+        --mistica-color-messageBubbleBackgroundIncomingNegative: var(--mistica-vivo-evolution-vivoNeutral900);
+        --mistica-color-messageBubbleBackgroundIncomingMedia: var(--mistica-vivo-evolution-vivoNeutral900);
         --mistica-color-skeletonWave: var(--mistica-vivo-evolution-vivoNeutral600);
         --mistica-color-borderLow: var(--mistica-vivo-evolution-vivoNeutral950);
         --mistica-color-border: var(--mistica-vivo-evolution-vivoNeutral900);
@@ -1524,6 +1558,20 @@
             var(--mistica-vivo-evolution-raw-vivoPurple900),
             0.5
         );
+        --mistica-color-messageBubbleBackgroundOutgoing: var(--mistica-vivo-evolution-vivoNeutral25);
+        --mistica-color-messageBubbleBackgroundOutgoingBrand: var(--mistica-vivo-evolution-vivoNeutral25);
+        --mistica-color-messageBubbleBackgroundOutgoingAlternative: var(
+            --mistica-vivo-evolution-vivoNeutral25
+        );
+        --mistica-color-messageBubbleBackgroundOutgoingNegative: var(--mistica-vivo-evolution-vivoNeutral25);
+        --mistica-color-messageBubbleBackgroundOutgoingMedia: var(--mistica-vivo-evolution-vivoNeutral25);
+        --mistica-color-messageBubbleBackgroundIncoming: var(--mistica-vivo-evolution-vivoNeutral25);
+        --mistica-color-messageBubbleBackgroundIncomingBrand: var(--mistica-vivo-evolution-vivoNeutral0);
+        --mistica-color-messageBubbleBackgroundIncomingAlternative: var(
+            --mistica-vivo-evolution-vivoNeutral0
+        );
+        --mistica-color-messageBubbleBackgroundIncomingNegative: var(--mistica-vivo-evolution-vivoNeutral0);
+        --mistica-color-messageBubbleBackgroundIncomingMedia: var(--mistica-vivo-evolution-vivoNeutral0);
         --mistica-color-skeletonWave: var(--mistica-vivo-evolution-vivoNeutral100);
         --mistica-color-borderLow: var(--mistica-vivo-evolution-vivoNeutral25);
         --mistica-color-border: var(--mistica-vivo-evolution-vivoNeutral200);

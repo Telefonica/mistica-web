@@ -70,6 +70,7 @@ tablet), and each direct child carries a `col-[start/span_N]` class. Read the `s
 | ---------------------------- | ------------------------------------------------- |
 | 6, 6                         | `template="6+6"` (`left` / `right`)               |
 | 8, 4                         | `template="8+4"` (`left` / `right`)               |
+| 7, 5                         | `template="7+5"` (`left` / `right`)               |
 | 4, 6                         | `template="4+6"` (`left` / `right`)               |
 | 3, 9                         | `template="3+9"` (`left` / `right`)               |
 | 5, 4                         | `template="5+4"` (`left` / `right`)               |

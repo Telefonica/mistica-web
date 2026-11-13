@@ -1,5 +1,6 @@
 'use client';
 import * as React from 'react';
+import {getSharedContext} from './utils/shared-context';
 
 export type NonDeprecatedVariant = 'default' | 'brand' | 'negative' | 'alternative' | 'media';
 
@@ -19,7 +20,7 @@ export const normalizeVariant = <T extends Variant>(variant: T): T extends 'inve
     return variant as T extends 'inverse' ? 'brand' : T;
 };
 
-const ThemeVariantContext = React.createContext<Variant>('default');
+const ThemeVariantContext = getSharedContext<Variant>('theme-variant', 'default');
 
 type ThemeVariantProps = {
     variant?: Variant;

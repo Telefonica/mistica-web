@@ -1,4 +1,4 @@
-import IconHomeRegular from '../generated/mistica-icons/icon-home-regular';
+import IconHomeRegular from '@telefonica/mistica-icons/icon-home-regular';
 
 import type {
     SidenavEntry,
