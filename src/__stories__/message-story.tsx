@@ -1,8 +1,11 @@
 import * as React from 'react';
+import IconCheckRegular from '@telefonica/mistica-icons/icon-check-regular';
+import IconCopyRegular from '@telefonica/mistica-icons/icon-copy-regular';
+import IconMobileDeviceRegular from '@telefonica/mistica-icons/icon-mobile-device-regular';
+import IconTimeRegular from '@telefonica/mistica-icons/icon-time-regular';
 import {
     Avatar,
     Image,
-    IconMobileDeviceRegular,
     Box,
     Message,
     ResponsiveLayout,
@@ -11,9 +14,6 @@ import {
     Text1,
     Text3,
     ThemeVariant,
-    IconCopyRegular,
-    IconCheckRegular,
-    IconTimeRegular,
     Placeholder,
     skinVars,
 } from '..';

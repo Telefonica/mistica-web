@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {createRoot} from 'react-dom/client';
-import {ThemeContextProvider, IconTruckFilled, getMovistarSkin, textTokens} from '@telefonica/mistica';
+import {ThemeContextProvider, getMovistarSkin, textTokens} from '@telefonica/mistica';
+import IconTruckFilled from '@telefonica/mistica-icons/icon-truck-filled';
 
 /*
 Using React.createElement so we don't need to compile JSX

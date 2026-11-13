@@ -4,7 +4,6 @@ import {
     ButtonPrimary,
     ButtonLink,
     Tag,
-    IconMobileDeviceRegular,
     ResponsiveLayout,
     Box,
     Stack,
@@ -12,9 +11,10 @@ import {
     Circle,
     skinVars,
     Carousel,
-    IconStarFilled,
-    IconStarRegular,
 } from '..';
+import IconMobileDeviceRegular from '@telefonica/mistica-icons/icon-mobile-device-regular';
+import IconStarFilled from '@telefonica/mistica-icons/icon-star-filled';
+import IconStarRegular from '@telefonica/mistica-icons/icon-star-regular';
 import {Placeholder} from '../placeholder';
 import tennisImg from '../__stories__/images/tennis.jpg';
 import beachVideo from '../__stories__/videos/beach.mp4';
