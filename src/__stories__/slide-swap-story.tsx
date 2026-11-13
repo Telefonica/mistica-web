@@ -3,7 +3,6 @@ import {
     Box,
     ButtonPrimary,
     SlideSwap,
-    IconCheckRegular,
     Inline,
     ResponsiveLayout,
     Spinner,
@@ -11,8 +10,6 @@ import {
     Text2,
     Text3,
     skinVars,
-    IconMoonRegular,
-    IconSunRegular,
 } from '..';
 
 export default {
