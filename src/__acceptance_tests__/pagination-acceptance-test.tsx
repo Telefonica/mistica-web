@@ -120,7 +120,7 @@ for (const testCase of [
     },
 ]) {
     const {totalPages, currentPage, surroundingPageCount, expectedDesktop, expectedMobile} = testCase;
-    test(`Pagination keeps the same list when resizing: ${JSON.stringify(testCase)}`, async () => {
+    test(`Pagination keeps the same list when resizing (page ${currentPage} of ${totalPages}, ${surroundingPageCount} surrounding)`, async () => {
         const page = await openStoryPage({
             id: STORY_ID,
             device: 'DESKTOP',
