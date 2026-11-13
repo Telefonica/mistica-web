@@ -1,16 +1,8 @@
 import * as React from 'react';
-import {
-    ButtonPrimary,
-    ButtonLink,
-    IconMobileDeviceRegular,
-    skinVars,
-    Circle,
-    Tag,
-    IconStarFilled,
-    IconStarRegular,
-    ButtonSecondary,
-    ThemeVariant,
-} from '..';
+import {ButtonPrimary, ButtonLink, skinVars, Circle, Tag, ButtonSecondary, ThemeVariant} from '..';
+import IconMobileDeviceRegular from '@telefonica/mistica-icons/icon-mobile-device-regular';
+import IconStarFilled from '@telefonica/mistica-icons/icon-star-filled';
+import IconStarRegular from '@telefonica/mistica-icons/icon-star-regular';
 import {InternalCard} from '../card-internal';
 import {Placeholder} from '../placeholder';
 import avatarImg from '../__stories__/images/avatar.jpg';
