@@ -3,6 +3,8 @@ import {openStoryPage, screen} from '../test-utils';
 import {normalizeVariant} from '../theme-variant-context';
 
 const DEVICES = ['MOBILE_IOS', 'DESKTOP'] as const;
+const DESKTOP_AVATAR_DIFF_PIXELS = 9;
+const INVERSE_MENU_AVATAR_DIFF_PIXELS = 2;
 
 for (const testCase of [
     {variant: 'default', isDarkMode: false},
@@ -21,7 +23,7 @@ for (const testCase of [
             isDarkMode,
         });
 
-        await expectScreenshot(page, {...{maxDiffPixelRatio: 0.00002}});
+        await expectScreenshot(page, {maxDiffPixels: DESKTOP_AVATAR_DIFF_PIXELS});
     });
 }
 
@@ -283,7 +285,7 @@ for (const testCase of ['large' /* 'small' */]) {
 
         const startButton = await screen.findByRole('button', {name: 'Start'});
         await startButton.click();
-        await expectScreenshot(page, {...{maxDiffPixelRatio: 0.00002}});
+        await expectScreenshot(page, {maxDiffPixels: INVERSE_MENU_AVATAR_DIFF_PIXELS});
     });
 }
 

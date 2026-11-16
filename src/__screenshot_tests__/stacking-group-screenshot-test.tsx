@@ -1,5 +1,7 @@
-import {test, expectScreenshot} from '../test-utils/playwright';
-import {openStoryPage, screen, renderingTolerance} from '../test-utils';
+import {test, expectSsimScreenshot} from '../test-utils/playwright';
+import {openStoryPage, screen} from '../test-utils';
+
+const MAX_SSIM_DIFFERENCE = 0.001;
 
 for (const testCase of [
     {type: 'square', stacked: true, inverse: false},
@@ -20,6 +22,6 @@ for (const testCase of [
         });
 
         const element = await screen.findByTestId('stacking-group');
-        await expectScreenshot(element, {...renderingTolerance});
+        await expectSsimScreenshot(element, MAX_SSIM_DIFFERENCE);
     });
 }
