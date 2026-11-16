@@ -139,6 +139,7 @@
         "rollup-plugin-preserve-directives": "^0.2.0",
         "semantic-release": "^19.0.2",
         "serve-handler": "^6.1.5",
+        "ssim.js": "3.5.0",
         "storybook": "^10.2.8",
         "style-loader": "^4.0.0",
         "swc-loader": "^0.2.3",
