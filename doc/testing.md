@@ -18,57 +18,30 @@ effectively removes unused code.
 
 ## Unit tests
 
-`yarn test` runs the component and utility tests with Jest in jsdom and writes coverage to
-`reports/coverage/lcov.info`.
-
-Browser, screenshot and SSR tests use Playwright Test. Install Chromium with
-`yarn playwright install chromium`, or `yarn playwright install --with-deps chromium` on Linux.
+Unit tests usually don't require CSS because they test component functionality. Some Mistica components have
+different layouts in mobile and desktop, and there are cases in which we use CSS styles to achieve this
+result. If you are trying to test something that depends on these styles, you can either import `mistica.css`
+classes in the HTML content you render in the test or write acceptance/screenshot tests instead.
 
 ## Acceptance and screenshot tests
 
-```sh
-yarn test-acceptance
-yarn test-acceptance button-screenshot --workers=1
-yarn test-acceptance --headed
-```
+Install Chromium with `yarn playwright install chromium`. Run `yarn test-acceptance` to start Storybook and
+run the tests. Use `--headed` to see the browser or `--ui` to open Playwright's test explorer.
 
-The runner starts Storybook automatically, or reuses a local instance on port 6006. With `CI=true`, it serves
-the static build instead; run `yarn storybook-static` first. `--ui` opens Playwright's test explorer;
-`--headed` displays the browser while tests run.
+`openStoryPage` adds `acceptance-test` to the user agent so `isRunningAcceptanceTest` returns true.
 
-Each page gets an isolated browser context. `openStoryPage` configures the viewport, touch support, user
-agent, color scheme and safe area overrides. Queries in `screen` and `within` return Playwright locators. Use
-their native methods such as `fill`, `pressSequentially`, `selectOption` and `setInputFiles`.
-
-Screenshot assertions use Playwright's pixel comparison and reuse the existing reference images. Parameterized
-cases have unique reference filenames. Normal test runs never create or update reference images. Review
-differences in `reports/playwright` or open `yarn playwright show-report reports/playwright-html`.
-
-Generate reference images in the official `mcr.microsoft.com/playwright:v1.64.1-noble` container, matching CI.
-Update the container tag and pinned Playwright dependencies together when upgrading Chromium:
+Screenshot differences are saved under `reports/playwright/`. To update the reference images, use the
+`update_screenshots` workflow or run the following commands in the Playwright container used by CI.
 
 ```sh
 yarn storybook-static
 CI=true yarn test-acceptance --update-snapshots
 ```
 
-The `update_screenshots` workflow runs the same command. Browser or OS upgrades require reviewing the updated
-references; do not replace Linux references with screenshots taken on macOS or Windows.
-
-`isRunningAcceptanceTest` returns true when the user agent includes `acceptance-test`. `openStoryPage` adds
-this marker automatically.
-
 ## Server rendering
 
-`yarn test-ssr` builds the server-rendered examples and compares their appearance before and after hydration.
-It also checks browser console output. After `yarn build`, use `NO_BUILD=true yarn test-ssr` to reuse the
-compiled library. Hydration baselines are temporary files under `reports`, not committed reference images.
-
-## Accessibility audits
-
-Accessibility audits use `@axe-core/playwright`. Run `yarn audit-accessibility` after building Storybook. The
-`label-content-name-mismatch` rule is enabled: visible labels must be included in accessible names, including
-in Storybook examples. Keep labels meaningful instead of using `aria-label` as a test selector.
+`yarn test-ssr` builds the library and checks the server-rendered pages before and after hydration. Run
+`NO_BUILD=true yarn test-ssr` to reuse the output of `yarn build`.
 
 ## Questions?
 
