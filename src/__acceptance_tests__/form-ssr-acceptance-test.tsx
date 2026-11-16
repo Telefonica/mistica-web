@@ -1,11 +1,8 @@
 import {test} from '../test-utils/playwright';
 import {openSSRPage} from '../test-utils';
 
-import type {Device} from '../test-utils';
-
-for (const testCase of ['TABLET', 'MOBILE_IOS'] as Array<Device>) {
-    const device = testCase;
-    test(`ssr form on tablet ${testCase}`, async () => {
+for (const device of ['TABLET', 'MOBILE_IOS'] as const) {
+    test(`ssr form on tablet ${device}`, async () => {
         await openSSRPage({name: 'form', device});
     });
 }
