@@ -3,9 +3,9 @@ import {within, openStoryPage, screen, waitFor} from '../test-utils';
 
 import type {Locator, PageApi} from '../test-utils';
 
-const clearAndType = async (element: Locator, text: string) => {
+const clearAndType = async (page: PageApi, element: Locator, text: string) => {
     await element.click({clickCount: 3});
-    await element.pressSequentially(text);
+    await page.keyboard.type(text);
 };
 
 const getValue = async (element: Promise<Locator> | Locator) => (await element).inputValue();
@@ -28,14 +28,14 @@ test('Autocomplete', async () => {
 });
 
 test('TextField with suggestions', async () => {
-    await openStoryPage({
+    const page = await openStoryPage({
         ...getStoryOfType('textfield', 'controlled'),
         args: {suggestions: true},
     });
 
     const field = await screen.findByLabelText('Label');
 
-    await clearAndType(field, 'a'); // start typing to trigger suggestions list
+    await clearAndType(page, field, 'a'); // start typing to trigger suggestions list
     const items = await screen.findAllByRole('option');
     expect(items).toHaveLength(5);
 
@@ -47,32 +47,32 @@ test('TextField with suggestions', async () => {
 
 for (const storyType of STORY_TYPES) {
     test(`IntegerField (${storyType})`, async () => {
-        await openStoryPage(getStoryOfType('integerfield', storyType));
+        const page = await openStoryPage(getStoryOfType('integerfield', storyType));
 
         const field = await screen.findByLabelText('Label');
 
-        await clearAndType(field, '+-1,2.3e4$5i%');
+        await clearAndType(page, field, '+-1,2.3e4$5i%');
         expect(await getValue(field)).toBe('12345');
     });
 }
 
 for (const storyType of STORY_TYPES) {
     test(`DecimalField (${storyType})`, async () => {
-        await openStoryPage(getStoryOfType('decimalfield', storyType));
+        const page = await openStoryPage(getStoryOfType('decimalfield', storyType));
 
         const field = await screen.findByLabelText('Label');
 
-        await clearAndType(field, '123,456');
+        await clearAndType(page, field, '123,456');
         expect(await getValue(field)).toBe('123,456');
 
-        await clearAndType(field, '123.456');
+        await clearAndType(page, field, '123.456');
         expect(await getValue(field)).toBe('123,456');
 
-        await clearAndType(field, '+-123e.4,5.6i');
+        await clearAndType(page, field, '+-123e.4,5.6i');
         expect(await getValue(field)).toBe('123,456');
 
         // test editing the number to set the decimal char in a previous pos
-        await clearAndType(field, '124,5');
+        await clearAndType(page, field, '124,5');
         expect(await getValue(field)).toBe('124,5');
         await field.evaluate((el) => {
             // set the caret position on a digit before the ,
@@ -82,7 +82,7 @@ for (const storyType of STORY_TYPES) {
         expect(await getValue(field)).toBe('12,345');
 
         // test editing the number to set the decimal char in a later pos
-        await clearAndType(field, '1,24');
+        await clearAndType(page, field, '1,24');
         expect(await getValue(field)).toBe('1,24');
         await field.evaluate((el) => {
             // set the caret position on a digit after the ,
@@ -95,17 +95,17 @@ for (const storyType of STORY_TYPES) {
 
 for (const storyType of STORY_TYPES) {
     test(`CreditCardNumberField (${storyType})`, async () => {
-        await openStoryPage(getStoryOfType('creditcardnumberfield', storyType));
+        const page = await openStoryPage(getStoryOfType('creditcardnumberfield', storyType));
 
         const field = await screen.findByLabelText('Label');
 
-        await clearAndType(field, '1234567890123456');
+        await clearAndType(page, field, '1234567890123456');
         expect(await getValue(field)).toBe('1234 5678 9012 3456');
 
-        await clearAndType(field, '1234-567.8 9012/34abc567 890');
+        await clearAndType(page, field, '1234-567.8 9012/34abc567 890');
         expect(await getValue(field)).toBe('1234 5678 9012 3456');
 
-        await clearAndType(field, '123456789012');
+        await clearAndType(page, field, '123456789012');
         expect(await getValue(field)).toBe('1234 5678 9012');
         await field.evaluate((el) => {
             // set the caret position after the first block
@@ -122,19 +122,19 @@ for (const storyType of STORY_TYPES) {
 
         const field = await screen.findByLabelText('Label');
 
-        await clearAndType(field, '1234');
+        await clearAndType(page, field, '1234');
         expect(await getValue(field)).toBe('12/34');
 
-        await clearAndType(field, ' ');
+        await clearAndType(page, field, ' ');
         expect(await getValue(field)).toBe('');
 
-        await clearAndType(field, '934');
+        await clearAndType(page, field, '934');
         expect(await getValue(field)).toBe('09/34');
 
-        await clearAndType(field, '12///34/56');
+        await clearAndType(page, field, '12///34/56');
         expect(await getValue(field)).toBe('12/34');
 
-        await clearAndType(field, '222');
+        await clearAndType(page, field, '222');
         expect(await getValue(field)).toBe('02/22');
 
         await page.keyboard.press('Backspace');
@@ -151,11 +151,11 @@ for (const storyType of STORY_TYPES) {
 
 for (const storyType of STORY_TYPES) {
     test(`PasswordField (${storyType})`, async () => {
-        await openStoryPage(getStoryOfType('passwordfield', storyType));
+        const page = await openStoryPage(getStoryOfType('passwordfield', storyType));
 
         const field = await screen.findByLabelText('Label');
 
-        await clearAndType(field, 'patata123');
+        await clearAndType(page, field, 'patata123');
         expect(await getValue(field)).toBe('patata123');
 
         await field.evaluate((el) => {
@@ -201,20 +201,20 @@ for (const storyType of STORY_TYPES) {
 
 for (const storyType of STORY_TYPES) {
     test(`PhoneNumberField (${storyType})`, async () => {
-        await openStoryPage(getStoryOfType('phonenumberfield', storyType));
+        const page = await openStoryPage(getStoryOfType('phonenumberfield', storyType));
 
         const field = await screen.findByLabelText('Label');
 
-        await clearAndType(field, '654834455');
+        await clearAndType(page, field, '654834455');
         expect(await getValue(field)).toBe('654 83 44 55');
 
-        await clearAndType(field, '+34 (654) 83-44 / 55');
+        await clearAndType(page, field, '+34 (654) 83-44 / 55');
         expect(await getValue(field)).toBe('+34 654 83 44 55');
 
-        await clearAndType(field, '#1 *2');
+        await clearAndType(page, field, '#1 *2');
         expect(await getValue(field)).toBe('#1*2');
 
-        await clearAndType(field, '6542211');
+        await clearAndType(page, field, '6542211');
         expect(await getValue(field)).toBe('654 22 11');
         await field.evaluate((el) => {
             // set the caret position after the 654 prefix
@@ -227,11 +227,11 @@ for (const storyType of STORY_TYPES) {
 
 for (const storyType of STORY_TYPES) {
     test(`SearchField (${storyType})`, async () => {
-        await openStoryPage(getStoryOfType('searchfield', storyType));
+        const page = await openStoryPage(getStoryOfType('searchfield', storyType));
 
         const field = await screen.findByLabelText('Label');
 
-        await clearAndType(field, 'something');
+        await clearAndType(page, field, 'something');
         expect(await getValue(field)).toBe('something');
         await (await screen.findByLabelText('Borrar búsqueda')).click();
         expect(await getValue(field)).toBe('');
@@ -240,14 +240,14 @@ for (const storyType of STORY_TYPES) {
 
 for (const storyType of STORY_TYPES) {
     test(`SearchField width does not change when clear icon appears (${storyType})`, async () => {
-        await openStoryPage(getStoryOfType('searchfield', storyType));
+        const page = await openStoryPage(getStoryOfType('searchfield', storyType));
 
         const fieldWrapper = await screen.findByTestId('search-field');
         const field = await screen.findByLabelText('Label');
 
         const emptyWidth = await fieldWrapper.evaluate((element) => element.getBoundingClientRect().width);
 
-        await clearAndType(field, 'something');
+        await clearAndType(page, field, 'something');
 
         const filledWidth = await fieldWrapper.evaluate((element) => element.getBoundingClientRect().width);
 
@@ -368,7 +368,7 @@ test('TextField preventCopy', async () => {
 
     let field = await screen.findByLabelText('Label');
 
-    await clearAndType(field, 'first input text');
+    await clearAndType(page, field, 'first input text');
 
     await copyFieldContentToClipboard(page, field);
     await field.fill('');
@@ -386,7 +386,7 @@ test('TextField preventCopy', async () => {
 
     field = await screen.findByLabelText('Label');
 
-    await clearAndType(field, 'second input text');
+    await clearAndType(page, field, 'second input text');
 
     await copyFieldContentToClipboard(page, field);
     await field.fill('');
