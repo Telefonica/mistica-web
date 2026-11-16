@@ -20,6 +20,7 @@ export type SnackbarCloseHandler = (result: {action: CloseAction}) => unknown;
 
 const DEFAULT_DURATION_WITHOUT_BUTTON = 5000;
 const DEFAULT_DURATION_WITH_BUTTON = 10000;
+const DEFAULT_POSITION = 'bottom-center';
 
 export type Props = {
     buttonText?: string;
@@ -28,6 +29,11 @@ export type Props = {
     duration?: 'PERSISTENT';
     message: string;
     onClose?: SnackbarCloseHandler;
+    /**
+     * Web viewport position. Defaults to `bottom-center`. On mobile and tablet,
+     * the position selects the top or bottom edge and the snackbar uses its responsive width.
+     */
+    position?: 'bottom-center' | 'bottom-left' | 'bottom-right' | 'top-center' | 'top-left' | 'top-right';
     type?: SnackbarType;
     children?: void;
     dataAttributes?: DataAttributes;
@@ -47,6 +53,7 @@ const SnackbarComponent = React.forwardRef<ImperativeHandle, Props>(
             closeButtonLabel,
             duration,
             onClose,
+            position = DEFAULT_POSITION,
             type,
             withDismiss = false,
             dataAttributes,
@@ -62,6 +69,7 @@ const SnackbarComponent = React.forwardRef<ImperativeHandle, Props>(
         const elementRef = React.useRef<HTMLDivElement>(null);
         const shouldShowDismissButton = (duration === 'PERSISTENT' && !buttonText) || withDismiss;
         const defaultDuration = buttonText ? DEFAULT_DURATION_WITH_BUTTON : DEFAULT_DURATION_WITHOUT_BUTTON;
+        const positionClassName = styles.position[position];
 
         const onCloseRef = React.useRef(onClose);
         React.useEffect(() => {
@@ -108,6 +116,9 @@ const SnackbarComponent = React.forwardRef<ImperativeHandle, Props>(
                         role="alert"
                         className={classNames(
                             styles.wrapper,
+                            typeof positionClassName === 'string'
+                                ? positionClassName
+                                : styles.position[DEFAULT_POSITION],
                             type === 'CRITICAL' ? styles.wrapperCritical : styles.wrapperInfo,
                             {[styles.wrapperOpen]: isOpen}
                         )}
@@ -190,6 +201,7 @@ const Snackbar = React.forwardRef<ImperativeHandle & HTMLDivElement, Props>(
             closeButtonLabel,
             duration,
             onClose: onCloseProp = () => {},
+            position,
             type = 'INFORMATIVE',
             withDismiss,
             dataAttributes,
@@ -246,6 +258,7 @@ const Snackbar = React.forwardRef<ImperativeHandle & HTMLDivElement, Props>(
                 buttonText={buttonText}
                 buttonAccessibilityLabel={buttonAccessibilityLabel}
                 closeButtonLabel={closeButtonLabel}
+                position={position}
                 type={type}
                 onClose={onCloseRef.current}
                 withDismiss={withDismiss}

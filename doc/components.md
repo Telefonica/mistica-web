@@ -511,12 +511,18 @@ dialog({
 
 ### Snackbar
 
+Use `position` on `<Snackbar>` or in `openSnackbar` to place a web snackbar at
+`bottom-center` (the default), `bottom-left`, `bottom-right`, `top-center`,
+`top-left`, or `top-right`. On mobile and tablet, the position selects the
+top or bottom edge and the snackbar uses its responsive width.
+
 ```tsx
 const {openSnackbar} = useSnackbar();
 
 openSnackbar({
   message: 'Item saved',
   type: 'INFORMATIVE',
+  position: 'top-right',
   buttonText: 'Undo',
   withDismiss: true,
 });

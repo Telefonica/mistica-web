@@ -1,0 +1,62 @@
+import {openStoryPage, screen, waitFor} from '../test-utils';
+
+import type {Device} from '../test-utils';
+
+const DESKTOP_VIEWPORT_INSET = 40;
+const COMPACT_VIEWPORT_INSET = 8;
+
+const openSnackbar = async (position: string, device: Device = 'DESKTOP') => {
+    await openStoryPage({
+        id: 'components-snackbar--default',
+        device,
+        args: {position, persistent: true},
+    });
+    await (await screen.findByRole('button', {name: 'Open Snackbar'})).click();
+    const snackbar = await screen.findByRole('alert');
+
+    return () =>
+        snackbar.evaluate((element) => {
+            const {top, right, bottom, left} = element.getBoundingClientRect();
+            const {clientWidth, clientHeight} = document.documentElement;
+
+            return {top, bottom: clientHeight - bottom, left, right: clientWidth - right};
+        });
+};
+
+test.each([
+    ['default', 'bottom', 'center'],
+    ['bottom-center', 'bottom', 'center'],
+    ['bottom-left', 'bottom', 'left'],
+    ['bottom-right', 'bottom', 'right'],
+    ['top-center', 'top', 'center'],
+    ['top-left', 'top', 'left'],
+    ['top-right', 'top', 'right'],
+] as const)('Snackbar position=%s on desktop', async (position, vertical, horizontal) => {
+    const getInsets = await openSnackbar(position);
+
+    await waitFor(async () => {
+        const insets = await getInsets();
+
+        expect(insets[vertical]).toBeCloseTo(DESKTOP_VIEWPORT_INSET);
+        if (horizontal === 'center') {
+            expect(insets.left).toBeCloseTo(insets.right);
+        } else {
+            expect(insets[horizontal]).toBeCloseTo(DESKTOP_VIEWPORT_INSET);
+        }
+    });
+});
+
+test.each(['top-right', 'bottom-left'] as const)(
+    'Snackbar position=%s uses both horizontal insets on mobile',
+    async (position) => {
+        const getInsets = await openSnackbar(position, 'MOBILE_IOS_SMALL');
+
+        await waitFor(async () => {
+            const {top, bottom, left, right} = await getInsets();
+
+            expect(position === 'top-right' ? top : bottom).toBeCloseTo(COMPACT_VIEWPORT_INSET);
+            expect(left).toBeCloseTo(COMPACT_VIEWPORT_INSET);
+            expect(right).toBeCloseTo(COMPACT_VIEWPORT_INSET);
+        });
+    }
+);
