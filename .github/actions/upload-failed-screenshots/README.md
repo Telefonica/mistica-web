@@ -36,5 +36,4 @@ if: always()
 with:
   azure-account-name: ${{ secrets.AZURE_ACCOUNT_NAME }}
   azure-account-key: ${{ secrets.AZURE_ACCOUNT_KEY }}
-  glob: 'reports/playwright/**/*-diff.png'
 ```
