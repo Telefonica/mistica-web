@@ -45,6 +45,7 @@ jobs:
             - run: yarn build
             - run: yarn ts-check
             - run: yarn test --ci
+            # Playwright reads CI=true from GitHub Actions.
             - run: NO_BUILD=true yarn test-ssr
 
             - uses: actions/upload-artifact@v4
@@ -52,14 +53,6 @@ jobs:
               with:
                   name: failed-screenshots-ssr
                   path: reports/playwright/**/*-diff.png
-
-            - uses: actions/upload-artifact@v4
-              if: failure()
-              with:
-                  name: playwright-report-build
-                  path: |
-                      reports/playwright
-                      reports/playwright-html
 
     build-acceptance:
         runs-on: ubuntu-latest
@@ -92,14 +85,6 @@ jobs:
               with:
                   name: failed-screenshots-${{ matrix.shard }}
                   path: reports/playwright/**/*-diff.png
-
-            - uses: actions/upload-artifact@v4
-              if: failure()
-              with:
-                  name: playwright-report-${{ matrix.shard }}
-                  path: |
-                      reports/playwright
-                      reports/playwright-html
 
     build-upload-failed-screenshots:
         runs-on: ubuntu-latest
