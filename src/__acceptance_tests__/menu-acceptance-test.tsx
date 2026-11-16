@@ -88,11 +88,10 @@ test('Menu treats zero width as automatic width', async () => {
     expect(menu.width).toBeLessThanOrEqual(MENU_MAX_WIDTH);
 });
 
-for (const testCase of placements.flatMap((placement) =>
+for (const {placement, alignment} of placements.flatMap((placement) =>
     alignments.map((alignment) => ({placement, alignment}))
 )) {
-    const {placement, alignment} = testCase;
-    test(`Menu placement=${testCase.placement} alignment=${testCase.alignment}`, async () => {
+    test(`Menu placement=${placement} alignment=${alignment}`, async () => {
         const {getBounds} = await openMenu({placement, alignment});
         await waitFor(async () => {
             const {target, menu} = await getBounds();
@@ -114,16 +113,12 @@ for (const testCase of placements.flatMap((placement) =>
     });
 }
 
-// prettier-ignore
-const flipCases = [
-    // placement, horizontalPosition, verticalPosition, expectedPlacement
-    ['top',       'center',           'top',            'bottom'],
-    ['bottom',    'center',           'bottom',         'top'],
-    ['left',      'left',             'center',         'right'],
-    ['right',     'right',            'center',         'left'],
-] as const;
-
-for (const [placement, horizontalPosition, verticalPosition, expectedPlacement] of flipCases) {
+for (const [placement, horizontalPosition, verticalPosition, expectedPlacement] of [
+    ['top', 'center', 'top', 'bottom'],
+    ['bottom', 'center', 'bottom', 'top'],
+    ['left', 'left', 'center', 'right'],
+    ['right', 'right', 'center', 'left'],
+]) {
     test(`Menu flips from ${placement} to ${expectedPlacement}`, async () => {
         const {getBounds} = await openMenu({
             placement,
@@ -138,11 +133,10 @@ for (const [placement, horizontalPosition, verticalPosition, expectedPlacement] 
     });
 }
 
-for (const testCase of placements.flatMap((placement) =>
+for (const {placement, alignment} of placements.flatMap((placement) =>
     alignments.map((alignment) => ({placement, alignment}))
 )) {
-    const {placement, alignment} = testCase;
-    test(`Menu shifts within ${testCase.placement} without changing alignment=${testCase.alignment}`, async () => {
+    test(`Menu shifts within ${placement} without changing alignment=${alignment}`, async () => {
         const isVertical = placement === 'top' || placement === 'bottom';
         const {getBounds} = await openMenu({
             placement,
@@ -194,13 +188,12 @@ for (const horizontalPosition of ['left', 'right']) {
     });
 }
 
-for (const testCase of ['left', 'right'].flatMap((placement) =>
+for (const {placement, verticalPosition, width} of ['left', 'right'].flatMap((placement) =>
     ['top', 'bottom'].flatMap((verticalPosition) =>
         [240, 360].map((width) => ({placement, verticalPosition, width}))
     )
 )) {
-    const {placement, verticalPosition, width} = testCase;
-    test(`Menu placement=${testCase.placement} falls back vertically at ${testCase.verticalPosition} with viewport width=${testCase.width}`, async () => {
+    test(`Menu placement=${placement} falls back vertically at ${verticalPosition} with viewport width=${width}`, async () => {
         const {menu, getBounds} = await openMenu(
             {placement, verticalPosition, menuOptionsCount: 30, description: true},
             {...viewport, width}
