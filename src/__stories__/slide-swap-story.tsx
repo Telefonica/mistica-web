@@ -31,14 +31,20 @@ export default {
         duration: {
             control: {type: 'range', min: 0, max: 2000, step: 100},
         },
-        announceSwap: {
-            control: {type: 'boolean'},
+        primaryAnnouncement: {
+            control: {type: 'text'},
+            table: {category: 'announcements'},
+        },
+        swappedAnnouncement: {
+            control: {type: 'text'},
+            table: {category: 'announcements'},
         },
         // these are driven by the story itself, not by the controls panel
         children: {table: {disable: true}},
         swappedContent: {table: {disable: true}},
         showSwappedContent: {table: {disable: true}},
         onTransitionEnd: {table: {disable: true}},
+        announcements: {table: {disable: true}},
         className: {table: {disable: true}},
         dataAttributes: {table: {disable: true}},
     },
@@ -48,10 +54,17 @@ type Args = {
     direction: 'up' | 'down';
     align: 'left' | 'center' | 'right';
     duration: number;
-    announceSwap: boolean;
+    primaryAnnouncement: string;
+    swappedAnnouncement: string;
 };
 
-export const Default: StoryComponent<Args> = ({direction, align, duration, announceSwap}) => {
+export const Default: StoryComponent<Args> = ({
+    direction,
+    align,
+    duration,
+    primaryAnnouncement,
+    swappedAnnouncement,
+}) => {
     const [showSwappedContent, setShowSwappedContent] = React.useState(false);
     const [transitionEndCount, setTransitionEndCount] = React.useState(0);
 
@@ -69,11 +82,12 @@ export const Default: StoryComponent<Args> = ({direction, align, duration, annou
                         direction={direction}
                         align={align}
                         duration={duration}
-                        announceSwap={announceSwap}
+                        announcements={{primary: primaryAnnouncement, swapped: swappedAnnouncement}}
                         onTransitionEnd={() => setTransitionEndCount((count) => count + 1)}
                         swappedContent={
                             <Inline space={8} alignItems="center">
-                                <Spinner size={20} delay="0s" />
+                                {/* SlideSwap announces this content, so the Spinner must not announce itself too */}
+                                <Spinner size={20} delay="0s" aria-live="off" />
                                 <Text3 regular>Sending…</Text3>
                             </Inline>
                         }
@@ -123,5 +137,6 @@ Default.args = {
     direction: 'up',
     align: 'center',
     duration: 300,
-    announceSwap: true,
+    primaryAnnouncement: '',
+    swappedAnnouncement: 'Sending message',
 };
