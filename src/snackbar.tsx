@@ -30,8 +30,8 @@ export type Props = {
     message: string;
     onClose?: SnackbarCloseHandler;
     /**
-     * Web viewport position. Defaults to `bottom-center`. On mobile and tablet,
-     * the position selects the top or bottom edge and the snackbar uses its responsive width.
+     * Web viewport position on desktop. Defaults to `bottom-center`.
+     * On mobile and tablet, the snackbar always appears at the bottom.
      */
     position?: 'bottom-center' | 'bottom-left' | 'bottom-right' | 'top-center' | 'top-left' | 'top-right';
     type?: SnackbarType;

@@ -50,12 +50,16 @@ export const wrapper = style([
         opacity: 0,
         transform: `translateY(${slideOffset})`,
         transition: `transform ${TRANSITION_TIME_IN_MS}ms ease-in-out, opacity ${TRANSITION_TIME_IN_MS}ms ease-in-out`,
-        vars: {[viewportInset]: DESKTOP_VIEWPORT_INSET},
+        vars: {
+            [viewportInset]: DESKTOP_VIEWPORT_INSET,
+            [slideOffset]: `${TRANSITION_DISTANCE}px`,
+        },
 
         '@media': {
             [mq.tabletOrSmaller]: {
                 left: viewportInset,
                 right: viewportInset,
+                bottom: viewportInset,
                 minWidth: 0,
                 vars: {[viewportInset]: COMPACT_VIEWPORT_INSET},
             },
@@ -64,14 +68,15 @@ export const wrapper = style([
 ]);
 
 const top = style({
-    top: viewportInset,
-    vars: {[slideOffset]: `${-TRANSITION_DISTANCE}px`},
+    '@media': {
+        [mq.desktopOrBigger]: {
+            top: viewportInset,
+            vars: {[slideOffset]: `${-TRANSITION_DISTANCE}px`},
+        },
+    },
 });
 
-const bottom = style({
-    bottom: viewportInset,
-    vars: {[slideOffset]: `${TRANSITION_DISTANCE}px`},
-});
+const bottom = style({bottom: viewportInset});
 
 const left = style({
     '@media': {[mq.desktopOrBigger]: {left: viewportInset}},

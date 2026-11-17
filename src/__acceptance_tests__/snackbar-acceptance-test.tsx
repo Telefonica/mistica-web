@@ -46,15 +46,15 @@ test.each([
     });
 });
 
-test.each(['top-right', 'bottom-left'] as const)(
-    'Snackbar position=%s uses both horizontal insets on mobile',
-    async (position) => {
-        const getInsets = await openSnackbar(position, 'MOBILE_IOS_SMALL');
+test.each(['MOBILE_IOS_SMALL', 'TABLET'] as const)(
+    'Snackbar stays at the bottom with position=top-right on %s',
+    async (device) => {
+        const getInsets = await openSnackbar('top-right', device);
 
         await waitFor(async () => {
-            const {top, bottom, left, right} = await getInsets();
+            const {bottom, left, right} = await getInsets();
 
-            expect(position === 'top-right' ? top : bottom).toBeCloseTo(COMPACT_VIEWPORT_INSET);
+            expect(bottom).toBeCloseTo(COMPACT_VIEWPORT_INSET);
             expect(left).toBeCloseTo(COMPACT_VIEWPORT_INSET);
             expect(right).toBeCloseTo(COMPACT_VIEWPORT_INSET);
         });
