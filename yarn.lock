@@ -4571,7 +4571,6 @@ __metadata:
     semantic-release: ^19.0.2
     semver-compare: ^1.0.0
     serve-handler: ^6.1.5
-    ssim.js: 3.5.0
     storybook: ^10.2.8
     style-loader: ^4.0.0
     swc-loader: ^0.2.3
@@ -18475,13 +18474,6 @@ __metadata:
   version: 1.0.3
   resolution: "sprintf-js@npm:1.0.3"
   checksum: 19d79aec211f09b99ec3099b5b2ae2f6e9cdefe50bc91ac4c69144b6d3928a640bb6ae5b3def70c2e85a2c3d9f5ec2719921e3a59d3ca3ef4b2fd1a4656a0df3
-  languageName: node
-  linkType: hard
-
-"ssim.js@npm:3.5.0":
-  version: 3.5.0
-  resolution: "ssim.js@npm:3.5.0"
-  checksum: 3f3a63ac8bec9c45e9f72252b786dcb4c91d7a74316b49c20e7935fd6e3869541e9324233b00eb0ab6bd15701016becd62740a5fb8c98f7b5115a9237efb2d4a
   languageName: node
   linkType: hard
 

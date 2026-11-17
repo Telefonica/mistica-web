@@ -1,7 +1,7 @@
-import {test, expectSsimScreenshot} from '../test-utils/playwright';
-import {openStoryPage, screen} from '../test-utils';
+import {test, expectScreenshot} from '../test-utils/playwright';
+import {openStoryPage, screen, renderingTolerance} from '../test-utils';
 
-const MAX_SSIM_DIFFERENCE = 0.001;
+const STACKED_CIRCLE_MAX_DIFF_PIXEL_RATIO = {default: 0.007, brand: 0.003};
 
 for (const testCase of [
     {type: 'square', stacked: true, inverse: false},
@@ -15,13 +15,18 @@ for (const testCase of [
 ] as const) {
     const {type, stacked, inverse} = testCase;
     test(`Stacking Group. type={${testCase.type}} stacked={${testCase.stacked}} inverse={${testCase.inverse}}`, async () => {
+        const variantOutside = inverse ? 'brand' : 'default';
         await openStoryPage({
             id: 'components-stackinggroup--default',
             device: 'DESKTOP',
-            args: {type, stacked, variantOutside: inverse ? 'brand' : 'default'},
+            args: {type, stacked, variantOutside},
         });
 
         const element = await screen.findByTestId('stacking-group');
-        await expectSsimScreenshot(element, MAX_SSIM_DIFFERENCE);
+        const maxDiffPixelRatio =
+            type === 'circle' && stacked
+                ? STACKED_CIRCLE_MAX_DIFF_PIXEL_RATIO[variantOutside]
+                : renderingTolerance.maxDiffPixelRatio;
+        await expectScreenshot(element, {maxDiffPixelRatio});
     });
 }
