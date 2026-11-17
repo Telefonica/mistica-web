@@ -30,12 +30,12 @@ type Props = {
      */
     onTransitionEnd?: () => void;
     /**
-     * Announces the text of the content that becomes visible to screen readers on every swap, using an
-     * assertive live region that is cleared after a second. Nothing is announced on mount. Disabled by
-     * default, as not every swap is meaningful (e.g. decorative icons) and some consumers, like Button,
-     * handle their own announcements.
+     * Texts announced to screen readers when each content becomes visible, through a polite live region
+     * that is cleared after a second. Nothing is announced on mount, nor for a content without text.
+     * Don't set a text for a content that announces itself (e.g. a Spinner with `aria-live`), or screen
+     * readers will read both.
      */
-    announceSwap?: boolean;
+    announcements?: {primary?: string; swapped?: string};
     className?: string;
     dataAttributes?: DataAttributes;
 };
@@ -46,6 +46,11 @@ type Props = {
  *
  * Both contents share the same grid cell, so the container is sized to fit the largest one and
  * doesn't resize while the transition runs.
+ *
+ * Only the content that appears is announced, and each content must have one source of announcement:
+ * either a text in `announcements`, or a live region of its own. Both contents are always mounted, and
+ * screen readers don't reliably announce a live region that only stops being aria-hidden, so a content
+ * that announces itself must mount, or change, its live region when it appears.
  */
 const SlideSwap = ({
     children,
@@ -55,14 +60,18 @@ const SlideSwap = ({
     align = 'center',
     duration = DEFAULT_DURATION_IN_MS,
     onTransitionEnd,
-    announceSwap = false,
+    announcements,
     className,
     dataAttributes,
 }: Props): JSX.Element => {
     const primaryContentRef = React.useRef<HTMLDivElement>(null);
     const swappedContentRef = React.useRef<HTMLDivElement>(null);
     const lastShowSwappedContentRef = React.useRef(showSwappedContent);
-    const [announcement, setAnnouncement] = React.useState('');
+    // the id changes on every announcement, so the text node is replaced and screen readers announce it
+    // even when the text is the same as the previous one
+    const [announcement, setAnnouncement] = React.useState({text: '', id: 0});
+    const primaryAnnouncement = announcements?.primary ?? '';
+    const swappedAnnouncement = announcements?.swapped ?? '';
 
     // aria-hidden doesn't prevent the hidden content from receiving focus. The styles hide it once its
     // transition ends, and inert also blocks it while it fades out. The attribute is set through the DOM
@@ -81,21 +90,21 @@ const SlideSwap = ({
 
         lastShowSwappedContentRef.current = showSwappedContent;
 
-        if (!announceSwap) {
-            return;
-        }
-
-        const visibleContent = showSwappedContent ? swappedContentRef.current : primaryContentRef.current;
-        setAnnouncement(visibleContent?.textContent?.trim() ?? '');
-    }, [showSwappedContent, announceSwap]);
+        const visibleAnnouncement = showSwappedContent ? swappedAnnouncement : primaryAnnouncement;
+        // a content without text clears the previous one, so it doesn't describe the content that is gone
+        setAnnouncement(({id}) => ({text: visibleAnnouncement, id: id + 1}));
+    }, [showSwappedContent, primaryAnnouncement, swappedAnnouncement]);
 
     // clear the announcement once it has been read, so virtual cursor navigation doesn't find it next to
     // the visible content
     React.useEffect(() => {
-        if (!announcement) {
+        if (!announcement.text) {
             return;
         }
-        const timeoutId = setTimeout(() => setAnnouncement(''), ANNOUNCEMENT_DURATION_IN_MS);
+        const timeoutId = setTimeout(
+            () => setAnnouncement(({id}) => ({text: '', id})),
+            ANNOUNCEMENT_DURATION_IN_MS
+        );
         return () => clearTimeout(timeoutId);
     }, [announcement]);
 
@@ -130,12 +139,11 @@ const SlideSwap = ({
             >
                 {swappedContent}
             </div>
-            {announceSwap && (
-                // always mounted while enabled, so screen readers pick up its changes. It is assertive because
-                // VoiceOver reads polite announcements twice when the page runs inside an iframe (e.g. Storybook)
+            {announcements && (
+                // always mounted while there are announcements, so screen readers pick up its changes
                 <ScreenReaderOnly>
-                    <div role="status" aria-live="assertive">
-                        {announcement}
+                    <div role="status" aria-live="polite">
+                        <React.Fragment key={announcement.id}>{announcement.text}</React.Fragment>
                     </div>
                 </ScreenReaderOnly>
             )}

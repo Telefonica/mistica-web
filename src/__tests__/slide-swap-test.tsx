@@ -70,38 +70,70 @@ test('SlideSwap calls onTransitionEnd once per swap, ignoring transitions from i
     expect(onTransitionEnd).toHaveBeenCalledTimes(1);
 });
 
-const AnnouncingSlideSwap = ({showSwappedContent}: {showSwappedContent: boolean}) => (
+const AnnouncingSlideSwap = ({
+    showSwappedContent,
+    swappedContent = <span>Sending…</span>,
+}: {
+    showSwappedContent: boolean;
+    swappedContent?: React.ReactNode;
+}) => (
     <ThemeContextProvider theme={makeTheme()}>
         <SlideSwap
-            announceSwap
+            announcements={{swapped: 'Sending message'}}
             showSwappedContent={showSwappedContent}
-            swappedContent={
-                <span>
-                    <b>Sending…</b>
-                </span>
-            }
+            swappedContent={swappedContent}
         >
             <span>Send</span>
         </SlideSwap>
     </ThemeContextProvider>
 );
 
-test('SlideSwap does not render a live region when announceSwap is not set', () => {
-    render(<SlideSwapWrapper showSwappedContent={false} />);
+test('SlideSwap does not render a live region without announcements', () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <SlideSwap showSwappedContent={false} swappedContent={<span>Sending…</span>}>
+                <span>Send</span>
+            </SlideSwap>
+        </ThemeContextProvider>
+    );
 
     expect(screen.queryByRole('status')).not.toBeInTheDocument();
 });
 
-test('SlideSwap announces the visible content on every swap, but not on mount', () => {
+test('SlideSwap announces the text of the content that appears, but not on mount nor without a text', () => {
     const {rerender} = render(<AnnouncingSlideSwap showSwappedContent={false} />);
-
     expect(screen.getByRole('status')).toHaveTextContent(/^$/);
 
     rerender(<AnnouncingSlideSwap showSwappedContent />);
-    expect(screen.getByRole('status')).toHaveTextContent('Sending…');
+    expect(screen.getByRole('status')).toHaveTextContent(/^Sending message$/);
 
+    // the primary content has no announcement, so the text of the swapped content is cleared
     rerender(<AnnouncingSlideSwap showSwappedContent={false} />);
-    expect(screen.getByRole('status')).toHaveTextContent(/^Send$/);
+    expect(screen.getByRole('status')).toHaveTextContent(/^$/);
+});
+
+test('SlideSwap replaces the announcement when the content that appears has the same text', () => {
+    const SameTextSlideSwap = ({showSwappedContent}: {showSwappedContent: boolean}) => (
+        <ThemeContextProvider theme={makeTheme()}>
+            <SlideSwap
+                announcements={{primary: 'Updated', swapped: 'Updated'}}
+                showSwappedContent={showSwappedContent}
+                swappedContent={<span>B</span>}
+            >
+                <span>A</span>
+            </SlideSwap>
+        </ThemeContextProvider>
+    );
+    const {rerender} = render(<SameTextSlideSwap showSwappedContent={false} />);
+
+    rerender(<SameTextSlideSwap showSwappedContent />);
+    // eslint-disable-next-line testing-library/no-node-access
+    const firstTextNode = screen.getByRole('status').firstChild;
+
+    rerender(<SameTextSlideSwap showSwappedContent={false} />);
+    expect(screen.getByRole('status')).toHaveTextContent(/^Updated$/);
+    // eslint-disable-next-line testing-library/no-node-access
+    expect(screen.getByRole('status').firstChild).not.toBe(firstTextNode);
 });
 
 test('SlideSwap clears the announcement after a second, so it is not left next to the visible content', () => {
@@ -109,8 +141,34 @@ test('SlideSwap clears the announcement after a second, so it is not left next t
     const {rerender} = render(<AnnouncingSlideSwap showSwappedContent={false} />);
 
     rerender(<AnnouncingSlideSwap showSwappedContent />);
-    expect(screen.getByRole('status')).toHaveTextContent('Sending…');
+    expect(screen.getByRole('status')).toHaveTextContent(/^Sending message$/);
 
     React.act(() => jest.advanceTimersByTime(1000));
     expect(screen.getByRole('status')).toHaveTextContent(/^$/);
+});
+
+test('SlideSwap warns when the content that appears has an announcement and a live region of its own', () => {
+    const warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});
+    const swappedContent = <span aria-live="polite">Sending…</span>;
+    const {rerender} = render(
+        <AnnouncingSlideSwap showSwappedContent={false} swappedContent={swappedContent} />
+    );
+
+    rerender(<AnnouncingSlideSwap showSwappedContent swappedContent={swappedContent} />);
+    expect(warnSpy).toHaveBeenCalledTimes(1);
+
+    warnSpy.mockRestore();
+});
+
+test('SlideSwap does not warn when the live region of the content is off', () => {
+    const warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});
+    const swappedContent = <span aria-live="off">Sending…</span>;
+    const {rerender} = render(
+        <AnnouncingSlideSwap showSwappedContent={false} swappedContent={swappedContent} />
+    );
+
+    rerender(<AnnouncingSlideSwap showSwappedContent swappedContent={swappedContent} />);
+    expect(warnSpy).not.toHaveBeenCalled();
+
+    warnSpy.mockRestore();
 });

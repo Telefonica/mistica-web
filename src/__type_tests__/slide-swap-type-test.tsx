@@ -21,3 +21,12 @@ import {SlideSwap} from '..';
 <SlideSwap fake showSwappedContent={false} swappedContent="loading">
     Text
 </SlideSwap>;
+
+<SlideSwap showSwappedContent={false} swappedContent="loading" announcements={{swapped: 'Loading'}}>
+    Text
+</SlideSwap>;
+
+// @ts-expect-error - announcements must be texts
+<SlideSwap showSwappedContent={false} swappedContent="loading" announcements={{swapped: <b>Loading</b>}}>
+    Text
+</SlideSwap>;

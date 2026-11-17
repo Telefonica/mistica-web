@@ -4635,11 +4635,11 @@ export default [
         code: `
         <Stack space={16}>
           <SlideSwap
-            announceSwap
             showSwappedContent={getState("swapped", false)}
+            announcements={{swapped: "Sending message"}}
             swappedContent={
               <Inline space={8} alignItems="center">
-                <Spinner size={20} delay="0s" />
+                <Spinner size={20} delay="0s" aria-live="off" />
                 <Text3 regular>Sending…</Text3>
               </Inline>
             }
