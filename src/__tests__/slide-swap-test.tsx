@@ -107,9 +107,33 @@ test('SlideSwap announces the text of the content that appears, but not on mount
     rerender(<AnnouncingSlideSwap showSwappedContent />);
     expect(screen.getByRole('status')).toHaveTextContent(/^Sending message$/);
 
-    // the primary content has no announcement
+    // the primary content has no announcement, so the text of the swapped content is cleared
     rerender(<AnnouncingSlideSwap showSwappedContent={false} />);
-    expect(screen.getByRole('status')).toHaveTextContent(/^Sending message$/);
+    expect(screen.getByRole('status')).toHaveTextContent(/^$/);
+});
+
+test('SlideSwap replaces the announcement when the content that appears has the same text', () => {
+    const SameTextSlideSwap = ({showSwappedContent}: {showSwappedContent: boolean}) => (
+        <ThemeContextProvider theme={makeTheme()}>
+            <SlideSwap
+                announcements={{primary: 'Updated', swapped: 'Updated'}}
+                showSwappedContent={showSwappedContent}
+                swappedContent={<span>B</span>}
+            >
+                <span>A</span>
+            </SlideSwap>
+        </ThemeContextProvider>
+    );
+    const {rerender} = render(<SameTextSlideSwap showSwappedContent={false} />);
+
+    rerender(<SameTextSlideSwap showSwappedContent />);
+    // eslint-disable-next-line testing-library/no-node-access
+    const firstTextNode = screen.getByRole('status').firstChild;
+
+    rerender(<SameTextSlideSwap showSwappedContent={false} />);
+    expect(screen.getByRole('status')).toHaveTextContent(/^Updated$/);
+    // eslint-disable-next-line testing-library/no-node-access
+    expect(screen.getByRole('status').firstChild).not.toBe(firstTextNode);
 });
 
 test('SlideSwap clears the announcement after a second, so it is not left next to the visible content', () => {

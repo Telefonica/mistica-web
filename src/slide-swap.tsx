@@ -67,7 +67,9 @@ const SlideSwap = ({
     const primaryContentRef = React.useRef<HTMLDivElement>(null);
     const swappedContentRef = React.useRef<HTMLDivElement>(null);
     const lastShowSwappedContentRef = React.useRef(showSwappedContent);
-    const [announcement, setAnnouncement] = React.useState('');
+    // the id changes on every announcement, so the text node is replaced and screen readers announce it
+    // even when the text is the same as the previous one
+    const [announcement, setAnnouncement] = React.useState({text: '', id: 0});
     const primaryAnnouncement = announcements?.primary ?? '';
     const swappedAnnouncement = announcements?.swapped ?? '';
 
@@ -89,20 +91,20 @@ const SlideSwap = ({
         lastShowSwappedContentRef.current = showSwappedContent;
 
         const visibleAnnouncement = showSwappedContent ? swappedAnnouncement : primaryAnnouncement;
-        if (!visibleAnnouncement) {
-            return;
-        }
-
-        setAnnouncement(visibleAnnouncement);
+        // a content without text clears the previous one, so it doesn't describe the content that is gone
+        setAnnouncement(({id}) => ({text: visibleAnnouncement, id: id + 1}));
     }, [showSwappedContent, primaryAnnouncement, swappedAnnouncement]);
 
     // clear the announcement once it has been read, so virtual cursor navigation doesn't find it next to
     // the visible content
     React.useEffect(() => {
-        if (!announcement) {
+        if (!announcement.text) {
             return;
         }
-        const timeoutId = setTimeout(() => setAnnouncement(''), ANNOUNCEMENT_DURATION_IN_MS);
+        const timeoutId = setTimeout(
+            () => setAnnouncement(({id}) => ({text: '', id})),
+            ANNOUNCEMENT_DURATION_IN_MS
+        );
         return () => clearTimeout(timeoutId);
     }, [announcement]);
 
@@ -141,7 +143,7 @@ const SlideSwap = ({
                 // always mounted while there are announcements, so screen readers pick up its changes
                 <ScreenReaderOnly>
                     <div role="status" aria-live="polite">
-                        {announcement}
+                        <React.Fragment key={announcement.id}>{announcement.text}</React.Fragment>
                     </div>
                 </ScreenReaderOnly>
             )}
