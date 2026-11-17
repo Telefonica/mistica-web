@@ -513,7 +513,8 @@ dialog({
 
 Use `position` on `<Snackbar>` or in `openSnackbar` to place a desktop web snackbar at
 `bottom-center` (the default), `bottom-left`, `bottom-right`, `top-center`,
-`top-left`, or `top-right`. On mobile and tablet, the snackbar always appears at the bottom.
+`top-left`, or `top-right`. On desktop, the snackbar sits 40 px from each edge it is anchored to.
+On mobile and tablet, it always spans the available width at the bottom with 8 px side margins.
 
 ```tsx
 const {openSnackbar} = useSnackbar();

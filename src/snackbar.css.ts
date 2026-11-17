@@ -9,6 +9,7 @@ export const TRANSITION_TIME_IN_MS = 300;
 const DESKTOP_VIEWPORT_INSET = '40px';
 const COMPACT_VIEWPORT_INSET = '8px';
 const TRANSITION_DISTANCE = 100;
+const tabletWidthOrSmaller = `only screen and (max-width: ${mq.mediaQueriesConfig.desktopMinWidth - 1}px)`;
 const viewportInset = createVar();
 const slideOffset = createVar();
 
@@ -56,6 +57,9 @@ export const wrapper = style([
         },
 
         '@media': {
+            [tabletWidthOrSmaller]: {
+                maxWidth: 'none',
+            },
             [mq.tabletOrSmaller]: {
                 left: viewportInset,
                 right: viewportInset,

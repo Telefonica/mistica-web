@@ -1,14 +1,16 @@
 import {openStoryPage, screen, waitFor} from '../test-utils';
 
-import type {Device} from '../test-utils';
-
 const DESKTOP_VIEWPORT_INSET = 40;
 const COMPACT_VIEWPORT_INSET = 8;
+const WIDE_TABLET_VIEWPORT = {width: 1000, height: 700};
 
-const openSnackbar = async (position: string, device: Device = 'DESKTOP') => {
+type SnackbarViewport = Pick<Parameters<typeof openStoryPage>[0], 'device' | 'viewport'>;
+
+const openSnackbar = async (position: string, viewport: SnackbarViewport = {}) => {
     await openStoryPage({
         id: 'components-snackbar--default',
-        device,
+        device: 'DESKTOP',
+        ...viewport,
         args: {position, persistent: true},
     });
     await (await screen.findByRole('button', {name: 'Open Snackbar'})).click();
@@ -46,10 +48,10 @@ test.each([
     });
 });
 
-test.each(['MOBILE_IOS_SMALL', 'TABLET'] as const)(
-    'Snackbar stays at the bottom with position=top-right on %s',
-    async (device) => {
-        const getInsets = await openSnackbar('top-right', device);
+test.each([{device: 'MOBILE_IOS_SMALL'}, {device: 'TABLET', viewport: WIDE_TABLET_VIEWPORT}] as const)(
+    'Snackbar fills the bottom with position=top-right on $device',
+    async (viewport) => {
+        const getInsets = await openSnackbar('top-right', viewport);
 
         await waitFor(async () => {
             const {bottom, left, right} = await getInsets();
