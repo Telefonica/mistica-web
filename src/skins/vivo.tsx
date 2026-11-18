@@ -755,7 +755,7 @@ export const getVivoSkin: GetKnownSkin = () => {
                 weight: 'medium',
             },
             feedbackScreenDescription: {
-                lineHeight: {desktop: {density: {compact: 24, cozy: 24}}, mobile: 24},
+                lineHeight: {desktop: 24, mobile: 24},
                 size: {desktop: {density: {compact: 16, cozy: 18}}, mobile: 16},
                 weight: 'regular',
             },
@@ -765,7 +765,7 @@ export const getVivoSkin: GetKnownSkin = () => {
                 weight: 'medium',
             },
             headerPretitle: {
-                lineHeight: {desktop: {density: {compact: 24, cozy: 24}}, mobile: 24},
+                lineHeight: {desktop: 24, mobile: 24},
                 size: {desktop: {density: {compact: 16, cozy: 18}}, mobile: 16},
                 weight: 'regular',
             },
@@ -779,7 +779,7 @@ export const getVivoSkin: GetKnownSkin = () => {
                 size: {desktop: {density: {compact: 12, cozy: 14}}, mobile: 12},
             },
             inputValue: {
-                lineHeight: {desktop: {density: {compact: 24, cozy: 24}}, mobile: 24},
+                lineHeight: {desktop: 24, mobile: 24},
                 size: {desktop: {density: {compact: 16, cozy: 18}}, mobile: 16},
             },
             link: {weight: 'medium'},
@@ -794,8 +794,8 @@ export const getVivoSkin: GetKnownSkin = () => {
                 size: {desktop: {density: {compact: 14, cozy: 16}}, mobile: 14},
             },
             tabsLabel: {
-                lineHeight: {desktop: {density: {compact: 24, cozy: 24}}, mobile: 24},
-                size: {desktop: {density: {compact: 18, cozy: 18}}, mobile: 18},
+                lineHeight: {desktop: 24, mobile: 24},
+                size: {desktop: 18, mobile: 18},
                 weight: 'medium',
             },
             text1: {
@@ -807,7 +807,7 @@ export const getVivoSkin: GetKnownSkin = () => {
                 size: {desktop: {density: {compact: 14, cozy: 16}}, mobile: 14},
             },
             text3: {
-                lineHeight: {desktop: {density: {compact: 24, cozy: 24}}, mobile: 24},
+                lineHeight: {desktop: 24, mobile: 24},
                 size: {desktop: {density: {compact: 16, cozy: 18}}, mobile: 16},
             },
             text4: {
@@ -850,7 +850,7 @@ export const getVivoSkin: GetKnownSkin = () => {
                 weight: 'medium',
             },
             title2: {
-                lineHeight: {desktop: {density: {compact: 24, cozy: 24}}, mobile: 24},
+                lineHeight: {desktop: 24, mobile: 24},
                 size: {desktop: {density: {compact: 16, cozy: 18}}, mobile: 16},
                 weight: 'medium',
             },
@@ -899,9 +899,9 @@ export const getVivoSkin: GetKnownSkin = () => {
                 right: {mobile: 16, desktop: 24},
             },
             inputPadding: {
-                top: {mobile: 8, desktop: 8},
+                top: {mobile: {density: {cozy: 8, compact: 3}}, desktop: {density: {cozy: 8, compact: 3}}},
                 right: {mobile: 16, desktop: 16},
-                bottom: {mobile: 8, desktop: 8},
+                bottom: {mobile: {density: {cozy: 8, compact: 3}}, desktop: {density: {cozy: 8, compact: 3}}},
                 left: {mobile: 12, desktop: 12},
             },
             tagPadding: {top: {mobile: 4, desktop: 4}, bottom: {mobile: 4, desktop: 4}},

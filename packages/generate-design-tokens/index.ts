@@ -1,5 +1,6 @@
 import * as fs from 'node:fs';
 import * as path from 'node:path';
+import {parseArgs} from 'node:util';
 import {generateSkinCssSrc, buildRadius, generateCommonCssSrc} from './css-generator.ts';
 import * as prettier from 'prettier';
 import {
@@ -7,6 +8,7 @@ import {
     normalizeTextTokenValue,
     normalizeToBreakpoints,
 } from './density.ts';
+import {validateTokenFiles} from './schema.ts';
 
 import type {
     ColorDescription,
@@ -23,15 +25,25 @@ import type {
  * To use a custom tokens folder:
  *
  *   node index.ts /path/to/mistica-design/tokens
- *   # or via yarn: yarn workspace generate-design-tokens generate /path/to/mistica-design/tokens
+ *   # or from the repository root, where a relative path starts: yarn generate-design-tokens ../mistica-design/tokens
  *
  * Can also use DESIGN_TOKENS_FOLDER env var: DESIGN_TOKENS_FOLDER="/path/to/tokens" node index.ts
+ *
+ * Before it writes any file, the script validates the tokens against tokens/schema/skin-schema.json. To
+ * generate without that validation:
+ *
+ *   node index.ts --skip-validation
  *
  * @see https://github.com/Telefonica/mistica-design
  */
 
+const {values: options, positionals} = parseArgs({
+    options: {'skip-validation': {type: 'boolean', default: false}},
+    allowPositionals: true,
+});
+
 const DESIGN_TOKENS_FOLDER = path.resolve(
-    process.argv[2] ||
+    positionals[0] ||
         process.env.DESIGN_TOKENS_FOLDER ||
         path.join(import.meta.dirname, '../../.github/mistica-design/tokens/')
 );
@@ -316,8 +328,7 @@ const listExistingSkins = (family: SkinFamily): Array<string> =>
         return exists;
     });
 
-const generateSkinFamily = async (family: SkinFamily): Promise<void> => {
-    const skinNames = listExistingSkins(family);
+const generateSkinFamily = async (family: SkinFamily, skinNames: Array<string>): Promise<void> => {
     if (skinNames.length === 0) {
         return;
     }
@@ -339,8 +350,25 @@ const generateSkinFamily = async (family: SkinFamily): Promise<void> => {
 };
 
 const main = async (): Promise<void> => {
-    await generateSkinFamily(OFFICIAL_SKINS_FAMILY);
-    await generateSkinFamily(COMMUNITY_SKINS_FAMILY);
+    const families = [OFFICIAL_SKINS_FAMILY, COMMUNITY_SKINS_FAMILY].map((family) => ({
+        family,
+        skinNames: listExistingSkins(family),
+    }));
+
+    if (options['skip-validation']) {
+        console.warn('Skipping the validation of the design tokens against the skin schema');
+    } else {
+        validateTokenFiles(
+            DESIGN_TOKENS_FOLDER,
+            families.flatMap(({family, skinNames}) =>
+                skinNames.map((skinName) => path.join(family.tokensFolder, `${skinName}.json`))
+            )
+        );
+    }
+
+    for (const {family, skinNames} of families) {
+        await generateSkinFamily(family, skinNames);
+    }
 };
 
 main().catch((error) => {

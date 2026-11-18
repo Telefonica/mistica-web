@@ -8,6 +8,7 @@
     },
     "dependencies": {
         "@telefonica/prettier-config": "^2.0.0",
+        "jsonschema": "^1.4.1",
         "prettier": "^3.3.3"
     },
     "devDependencies": {

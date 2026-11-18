@@ -747,13 +747,13 @@ export const getEsimflagSkin: GetKnownSkin = () => {
                 size: {desktop: {density: {compact: 14, cozy: 16}}, mobile: 14},
             },
             chipLabel: {
-                lineHeight: {desktop: {density: {compact: 24, cozy: 24}}, mobile: 24},
-                size: {desktop: {density: {compact: 16, cozy: 16}}, mobile: 16},
+                lineHeight: {desktop: 24, mobile: 24},
+                size: {desktop: 16, mobile: 16},
                 weight: 'medium',
             },
             chipLabelSmall: {
-                lineHeight: {desktop: {density: {compact: 20, cozy: 20}}, mobile: 20},
-                size: {desktop: {density: {compact: 14, cozy: 14}}, mobile: 14},
+                lineHeight: {desktop: 20, mobile: 20},
+                size: {desktop: 14, mobile: 14},
                 weight: 'medium',
             },
             drawerTitle: {
@@ -762,7 +762,7 @@ export const getEsimflagSkin: GetKnownSkin = () => {
                 weight: 'bold',
             },
             feedbackScreenDescription: {
-                lineHeight: {desktop: {density: {compact: 24, cozy: 24}}, mobile: 24},
+                lineHeight: {desktop: 24, mobile: 24},
                 size: {desktop: {density: {compact: 16, cozy: 18}}, mobile: 16},
                 weight: 'regular',
             },
@@ -772,7 +772,7 @@ export const getEsimflagSkin: GetKnownSkin = () => {
                 weight: 'bold',
             },
             headerPretitle: {
-                lineHeight: {desktop: {density: {compact: 24, cozy: 24}}, mobile: 24},
+                lineHeight: {desktop: 24, mobile: 24},
                 size: {desktop: {density: {compact: 16, cozy: 18}}, mobile: 16},
                 weight: 'regular',
             },
@@ -786,7 +786,7 @@ export const getEsimflagSkin: GetKnownSkin = () => {
                 size: {desktop: {density: {compact: 12, cozy: 14}}, mobile: 12},
             },
             inputValue: {
-                lineHeight: {desktop: {density: {compact: 24, cozy: 24}}, mobile: 24},
+                lineHeight: {desktop: 24, mobile: 24},
                 size: {desktop: {density: {compact: 16, cozy: 18}}, mobile: 16},
             },
             link: {weight: 'medium'},
@@ -801,7 +801,7 @@ export const getEsimflagSkin: GetKnownSkin = () => {
                 size: {desktop: {density: {compact: 14, cozy: 16}}, mobile: 14},
             },
             tabsLabel: {
-                lineHeight: {desktop: {density: {compact: 24, cozy: 24}}, mobile: 24},
+                lineHeight: {desktop: 24, mobile: 24},
                 size: {desktop: {density: {compact: 16, cozy: 18}}, mobile: 16},
                 weight: 'medium',
             },
@@ -814,7 +814,7 @@ export const getEsimflagSkin: GetKnownSkin = () => {
                 size: {desktop: {density: {compact: 14, cozy: 16}}, mobile: 14},
             },
             text3: {
-                lineHeight: {desktop: {density: {compact: 24, cozy: 24}}, mobile: 24},
+                lineHeight: {desktop: 24, mobile: 24},
                 size: {desktop: {density: {compact: 16, cozy: 18}}, mobile: 16},
             },
             text4: {
@@ -857,7 +857,7 @@ export const getEsimflagSkin: GetKnownSkin = () => {
                 weight: 'medium',
             },
             title2: {
-                lineHeight: {desktop: {density: {compact: 24, cozy: 24}}, mobile: 24},
+                lineHeight: {desktop: 24, mobile: 24},
                 size: {desktop: {density: {compact: 16, cozy: 18}}, mobile: 16},
                 weight: 'bold',
             },
@@ -906,9 +906,9 @@ export const getEsimflagSkin: GetKnownSkin = () => {
                 right: {mobile: 16, desktop: 24},
             },
             inputPadding: {
-                top: {mobile: 8, desktop: 8},
+                top: {mobile: {density: {cozy: 8, compact: 3}}, desktop: {density: {cozy: 8, compact: 3}}},
                 right: {mobile: 16, desktop: 16},
-                bottom: {mobile: 8, desktop: 8},
+                bottom: {mobile: {density: {cozy: 8, compact: 3}}, desktop: {density: {cozy: 8, compact: 3}}},
                 left: {mobile: 12, desktop: 12},
             },
             tagPadding: {top: {mobile: 4, desktop: 4}, bottom: {mobile: 4, desktop: 4}},

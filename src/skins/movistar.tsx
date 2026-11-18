@@ -720,39 +720,18 @@ export const getMovistarSkin: GetKnownSkin = () => {
         },
         textPresets: {
             button: {weight: 'medium'},
-            cardDescriptionDefault: {
-                lineHeight: {desktop: {density: {compact: 20, cozy: 20}}, mobile: 20},
-                size: {desktop: {density: {compact: 14, cozy: 14}}, mobile: 14},
-            },
-            cardDescriptionSnap: {
-                lineHeight: {desktop: {density: {compact: 20, cozy: 20}}, mobile: 20},
-                size: {desktop: {density: {compact: 14, cozy: 14}}, mobile: 14},
-            },
-            cardPretitleDefault: {
-                lineHeight: {desktop: {density: {compact: 20, cozy: 20}}, mobile: 20},
-                size: {desktop: {density: {compact: 14, cozy: 14}}, mobile: 14},
-            },
-            cardPretitleSnap: {
-                lineHeight: {desktop: {density: {compact: 20, cozy: 20}}, mobile: 20},
-                size: {desktop: {density: {compact: 14, cozy: 14}}, mobile: 14},
-            },
-            cardSubtitleDefault: {
-                lineHeight: {desktop: {density: {compact: 20, cozy: 20}}, mobile: 20},
-                size: {desktop: {density: {compact: 14, cozy: 14}}, mobile: 14},
-            },
-            cardSubtitleSnap: {
-                lineHeight: {desktop: {density: {compact: 20, cozy: 20}}, mobile: 20},
-                size: {desktop: {density: {compact: 14, cozy: 14}}, mobile: 14},
-            },
+            cardDescriptionDefault: {lineHeight: {desktop: 20, mobile: 20}, size: {desktop: 14, mobile: 14}},
+            cardDescriptionSnap: {lineHeight: {desktop: 20, mobile: 20}, size: {desktop: 14, mobile: 14}},
+            cardPretitleDefault: {lineHeight: {desktop: 20, mobile: 20}, size: {desktop: 14, mobile: 14}},
+            cardPretitleSnap: {lineHeight: {desktop: 20, mobile: 20}, size: {desktop: 14, mobile: 14}},
+            cardSubtitleDefault: {lineHeight: {desktop: 20, mobile: 20}, size: {desktop: 14, mobile: 14}},
+            cardSubtitleSnap: {lineHeight: {desktop: 20, mobile: 20}, size: {desktop: 14, mobile: 14}},
             cardTitle: {weight: 'bold'},
             cardTitleDefault: {
                 lineHeight: {desktop: {density: {compact: 22, cozy: 24}}, mobile: 22},
                 size: {desktop: {density: {compact: 16, cozy: 18}}, mobile: 16},
             },
-            cardTitleSnap: {
-                lineHeight: {desktop: {density: {compact: 20, cozy: 20}}, mobile: 20},
-                size: {desktop: {density: {compact: 14, cozy: 14}}, mobile: 14},
-            },
+            cardTitleSnap: {lineHeight: {desktop: 20, mobile: 20}, size: {desktop: 14, mobile: 14}},
             chipLabel: {
                 lineHeight: {desktop: {density: {compact: 20, cozy: 24}}, mobile: 20},
                 size: {desktop: {density: {compact: 14, cozy: 18}}, mobile: 14},
@@ -764,8 +743,8 @@ export const getMovistarSkin: GetKnownSkin = () => {
                 weight: 'medium',
             },
             drawerTitle: {
-                lineHeight: {desktop: {density: {compact: 26, cozy: 26}}, mobile: 26},
-                size: {desktop: {density: {compact: 20, cozy: 20}}, mobile: 20},
+                lineHeight: {desktop: 26, mobile: 26},
+                size: {desktop: 20, mobile: 20},
                 weight: 'bold',
             },
             feedbackScreenDescription: {
@@ -784,18 +763,12 @@ export const getMovistarSkin: GetKnownSkin = () => {
                 weight: 'regular',
             },
             indicator: {weight: 'medium'},
-            inputHelperText: {
-                lineHeight: {desktop: {density: {compact: 20, cozy: 20}}, mobile: 20},
-                size: {desktop: {density: {compact: 14, cozy: 14}}, mobile: 14},
-            },
+            inputHelperText: {lineHeight: {desktop: 20, mobile: 20}, size: {desktop: 14, mobile: 14}},
             inputLabel: {
                 lineHeight: {desktop: {density: {compact: 16, cozy: 20}}, mobile: 16},
                 size: {desktop: {density: {compact: 12, cozy: 14}}, mobile: 12},
             },
-            inputValue: {
-                lineHeight: {desktop: {density: {compact: 22, cozy: 22}}, mobile: 22},
-                size: {desktop: {density: {compact: 16, cozy: 16}}, mobile: 16},
-            },
+            inputValue: {lineHeight: {desktop: 22, mobile: 22}, size: {desktop: 16, mobile: 16}},
             link: {weight: 'medium'},
             loadingScreenTitle: {
                 lineHeight: {desktop: {density: {compact: 28, cozy: 32}}, mobile: 28},
@@ -808,7 +781,7 @@ export const getMovistarSkin: GetKnownSkin = () => {
                 size: {desktop: {density: {compact: 12, cozy: 14}}, mobile: 12},
             },
             tabsLabel: {
-                lineHeight: {desktop: {density: {compact: 24, cozy: 24}}, mobile: 24},
+                lineHeight: {desktop: 24, mobile: 24},
                 size: {desktop: {density: {compact: 16, cozy: 18}}, mobile: 16},
                 weight: 'medium',
             },
@@ -913,9 +886,9 @@ export const getMovistarSkin: GetKnownSkin = () => {
                 right: {mobile: 16, desktop: 16},
             },
             inputPadding: {
-                top: {mobile: 9, desktop: 3},
+                top: {mobile: {density: {cozy: 9, compact: 3}}, desktop: 3},
                 right: {mobile: 16, desktop: 16},
-                bottom: {mobile: 9, desktop: 3},
+                bottom: {mobile: {density: {cozy: 9, compact: 3}}, desktop: 3},
                 left: {mobile: 12, desktop: 12},
             },
             tagPadding: {top: {mobile: 2, desktop: 2}, bottom: {mobile: 2, desktop: 2}},
