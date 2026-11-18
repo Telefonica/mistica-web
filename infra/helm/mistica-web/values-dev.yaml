@@ -1,0 +1,12 @@
+docker:
+    project: uxevo-dev
+
+imagePullSecret:
+    name: harbor-pull
+
+route:
+    enabled: true
+    tls:
+        termination: edge
+        insecureEdgeTerminationPolicy: Redirect
+        acme: false

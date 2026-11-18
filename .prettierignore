@@ -9,6 +9,7 @@ storybook-static/
 .yarn/
 CHANGELOG.md
 reports
+infra/helm/**/templates/
 
 # next.js
 examples/next/.next/

@@ -1,0 +1,86 @@
+name: deploy-epg
+
+on:
+    push:
+        branches: [master, test/epg-deploy]
+    workflow_dispatch:
+
+permissions:
+    contents: read
+
+concurrency:
+    group: deploy-epg-${{ github.ref }}
+    cancel-in-progress: true
+
+jobs:
+    build-and-deploy:
+        runs-on: ${{ vars.CITADEL_DEFAULT_RUNNER }}
+        steps:
+            - uses: actions/checkout@v6
+              with:
+                  persist-credentials: false
+
+            - name: Install dependencies
+              env:
+                  PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: 'true'
+              run: yarn install --immutable --immutable-cache
+
+            - name: Build Storybook, Playroom and CSS examples
+              run: yarn build-static-site
+
+            - name: Set up Docker Buildx
+              uses: docker/setup-buildx-action@v3
+
+            - name: Docker login
+              uses: docker/login-action@v3
+              with:
+                  registry: ${{ secrets.DOCKER_REGISTRY }}
+                  username: ${{ secrets.DOCKER_USERNAME }}
+                  password: ${{ secrets.DOCKER_PASSWORD }}
+
+            - name: Build and push static site image
+              uses: docker/build-push-action@v6
+              with:
+                  context: .
+                  file: Dockerfile.epg
+                  push: true
+                  tags: ${{ secrets.DOCKER_REGISTRY }}/uxevo-dev/mistica-web/services/web:${{ github.sha }}
+
+            - name: Set up Helm
+              uses: azure/setup-helm@v4
+
+            - name: Write kubeconfig
+              env:
+                  KUBECONFIG_DATA: ${{ secrets.KUBECONFIG }}
+              run: |
+                  set -euo pipefail
+                  : "${KUBECONFIG_DATA:?Repository secret KUBECONFIG is required}"
+                  mkdir -p ~/.kube
+                  printf '%s' "$KUBECONFIG_DATA" | base64 -d > ~/.kube/config
+                  chmod 600 ~/.kube/config
+
+            - name: Deploy to EPG dev
+              env:
+                  DOCKER_REGISTRY: ${{ secrets.DOCKER_REGISTRY }}
+                  DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+                  DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+                  KUBECONFIG_DATA: ${{ secrets.KUBECONFIG }}
+                  IMAGE_TAG: ${{ github.sha }}
+                  OCP_NAMESPACE: uxevo-dev
+              run: |
+                  set -euo pipefail
+                  DOCKER_AUTH=$(printf '%s' "${DOCKER_USERNAME}:${DOCKER_PASSWORD}" | base64 | tr -d '\n')
+                  DOCKERCONFIGJSON=$(printf '{"auths":{"%s":{"auth":"%s"}}}' \
+                    "$DOCKER_REGISTRY" "$DOCKER_AUTH" | base64 | tr -d '\n')
+                  helm upgrade --install mistica-web ./infra/helm/mistica-web \
+                    --namespace "$OCP_NAMESPACE" \
+                    --wait \
+                    --timeout 5m \
+                    --set-string docker.registry="$DOCKER_REGISTRY" \
+                    --set-string image.tag="$IMAGE_TAG" \
+                    --set-string imagePullSecret.dockerconfigjson="$DOCKERCONFIGJSON" \
+                    -f infra/helm/mistica-web/values-dev.yaml
+
+            - name: Remove kubeconfig
+              if: always()
+              run: rm -f ~/.kube/config

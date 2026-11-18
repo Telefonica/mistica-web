@@ -1,0 +1,22 @@
+{{- if .Values.route.enabled }}
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: {{ include "mistica-web.resourceName" (list . "web") }}
+  labels:
+    {{- include "mistica-web.labels" . | nindent 4 }}
+  {{- if .Values.route.tls.acme }}
+  annotations:
+    kubernetes.io/tls-acme: "true"
+  {{- end }}
+spec:
+  to:
+    kind: Service
+    name: {{ include "mistica-web.resourceName" (list . "web") }}
+  port:
+    targetPort: http
+  tls:
+    termination: {{ .Values.route.tls.termination }}
+    insecureEdgeTerminationPolicy: {{ .Values.route.tls.insecureEdgeTerminationPolicy }}
+  wildcardPolicy: None
+{{- end }}

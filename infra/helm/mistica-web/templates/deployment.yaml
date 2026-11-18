@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "mistica-web.resourceName" (list . "web") }}
+  labels:
+    {{- include "mistica-web.labels" . | nindent 4 }}
+    app.kubernetes.io/component: web
+spec:
+  replicas: {{ .Values.service.replicas }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: {{ .Release.Name }}
+      app.kubernetes.io/component: web
+  template:
+    metadata:
+      labels:
+        {{- include "mistica-web.labels" . | nindent 8 }}
+        app.kubernetes.io/component: web
+    spec:
+      {{- if .Values.imagePullSecret.name }}
+      imagePullSecrets:
+        - name: {{ include "mistica-web.resourceName" (list . .Values.imagePullSecret.name) }}
+      {{- end }}
+      containers:
+        - name: web
+          image: {{ include "mistica-web.imageRef" . | quote }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.containerPort }}
+              protocol: TCP
+          resources:
+            {{- toYaml .Values.service.resources | nindent 12 }}
+          startupProbe:
+            httpGet:
+              path: /
+              port: http
+            periodSeconds: {{ .Values.service.probes.startup.periodSeconds }}
+            failureThreshold: {{ .Values.service.probes.startup.failureThreshold }}
+            timeoutSeconds: {{ .Values.service.probes.startup.timeoutSeconds }}
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+            periodSeconds: {{ .Values.service.probes.liveness.periodSeconds }}
+            failureThreshold: {{ .Values.service.probes.liveness.failureThreshold }}
+            timeoutSeconds: {{ .Values.service.probes.liveness.timeoutSeconds }}
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+            periodSeconds: {{ .Values.service.probes.readiness.periodSeconds }}
+            failureThreshold: {{ .Values.service.probes.readiness.failureThreshold }}
+            timeoutSeconds: {{ .Values.service.probes.readiness.timeoutSeconds }}
