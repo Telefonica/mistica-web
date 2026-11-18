@@ -62,6 +62,8 @@ jobs:
             - name: Deploy to EPG dev
               env:
                   DOCKER_REGISTRY: ${{ vars.DOCKER_REGISTRY }}
+                  DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+                  DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
                   IMAGE_TAG: ${{ github.sha }}
                   OCP_NAMESPACE: uxevo-dev
               run: |
