@@ -14,7 +14,7 @@ concurrency:
 
 jobs:
     build-and-deploy:
-        runs-on: ${{ vars.CITADEL_DEFAULT_RUNNER }}
+        runs-on: ${{ vars.CITADEL_DEFAULT_RUNNER || 'ubuntu-latest' }}
         steps:
             - uses: actions/checkout@v6
               with:
