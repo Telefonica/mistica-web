@@ -1,7 +1,7 @@
 import {openStoryPage, screen, waitFor} from '../test-utils';
 
 const DESKTOP_VIEWPORT_INSET = 40;
-const COMPACT_VIEWPORT_INSET = 8;
+const MOBILE_VIEWPORT_INSET = 8;
 const WIDE_TABLET_VIEWPORT = {width: 1000, height: 700};
 
 type SnackbarViewport = Pick<Parameters<typeof openStoryPage>[0], 'device' | 'viewport'>;
@@ -26,27 +26,38 @@ const openSnackbar = async (position: string, viewport: SnackbarViewport = {}) =
 };
 
 test.each([
-    ['default', 'bottom', 'center'],
-    ['bottom-center', 'bottom', 'center'],
-    ['bottom-left', 'bottom', 'left'],
-    ['bottom-right', 'bottom', 'right'],
-    ['top-center', 'top', 'center'],
-    ['top-left', 'top', 'left'],
-    ['top-right', 'top', 'right'],
-] as const)('Snackbar position=%s on desktop', async (position, vertical, horizontal) => {
+    ['default', 'bottom'],
+    ['bottom-center', 'bottom'],
+    ['top-center', 'top'],
+] as const)('Snackbar position=%s is centered on desktop', async (position, vertical) => {
     const getInsets = await openSnackbar(position);
 
     await waitFor(async () => {
         const insets = await getInsets();
 
         expect(insets[vertical]).toBeCloseTo(DESKTOP_VIEWPORT_INSET);
-        if (horizontal === 'center') {
-            expect(insets.left).toBeCloseTo(insets.right);
-        } else {
-            expect(insets[horizontal]).toBeCloseTo(DESKTOP_VIEWPORT_INSET);
-        }
+        expect(insets.left).toBeCloseTo(insets.right);
     });
 });
+
+test.each([
+    ['bottom-left', 'bottom', 'left'],
+    ['bottom-right', 'bottom', 'right'],
+    ['top-left', 'top', 'left'],
+    ['top-right', 'top', 'right'],
+] as const)(
+    'Snackbar position=%s is anchored to a corner on desktop',
+    async (position, vertical, horizontal) => {
+        const getInsets = await openSnackbar(position);
+
+        await waitFor(async () => {
+            const insets = await getInsets();
+
+            expect(insets[vertical]).toBeCloseTo(DESKTOP_VIEWPORT_INSET);
+            expect(insets[horizontal]).toBeCloseTo(DESKTOP_VIEWPORT_INSET);
+        });
+    }
+);
 
 test.each([{device: 'MOBILE_IOS_SMALL'}, {device: 'TABLET', viewport: WIDE_TABLET_VIEWPORT}] as const)(
     'Snackbar fills the bottom with position=top-right on $device',
@@ -56,9 +67,9 @@ test.each([{device: 'MOBILE_IOS_SMALL'}, {device: 'TABLET', viewport: WIDE_TABLE
         await waitFor(async () => {
             const {bottom, left, right} = await getInsets();
 
-            expect(bottom).toBeCloseTo(COMPACT_VIEWPORT_INSET);
-            expect(left).toBeCloseTo(COMPACT_VIEWPORT_INSET);
-            expect(right).toBeCloseTo(COMPACT_VIEWPORT_INSET);
+            expect(bottom).toBeCloseTo(MOBILE_VIEWPORT_INSET);
+            expect(left).toBeCloseTo(MOBILE_VIEWPORT_INSET);
+            expect(right).toBeCloseTo(MOBILE_VIEWPORT_INSET);
         });
     }
 );

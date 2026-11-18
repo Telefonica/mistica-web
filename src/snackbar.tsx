@@ -18,9 +18,17 @@ import type {DataAttributes} from './utils/types';
 
 export type SnackbarCloseHandler = (result: {action: CloseAction}) => unknown;
 
+type SnackbarPosition =
+    | 'bottom-center'
+    | 'bottom-left'
+    | 'bottom-right'
+    | 'top-center'
+    | 'top-left'
+    | 'top-right';
+
 const DEFAULT_DURATION_WITHOUT_BUTTON = 5000;
 const DEFAULT_DURATION_WITH_BUTTON = 10000;
-const DEFAULT_POSITION = 'bottom-center';
+const DEFAULT_POSITION: SnackbarPosition = 'bottom-center';
 
 export type Props = {
     buttonText?: string;
@@ -33,7 +41,7 @@ export type Props = {
      * Web viewport position on desktop. Defaults to `bottom-center`.
      * On mobile and tablet, the snackbar always appears at the bottom.
      */
-    position?: 'bottom-center' | 'bottom-left' | 'bottom-right' | 'top-center' | 'top-left' | 'top-right';
+    position?: SnackbarPosition;
     type?: SnackbarType;
     children?: void;
     dataAttributes?: DataAttributes;

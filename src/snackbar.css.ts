@@ -7,7 +7,7 @@ import {applyAlpha} from './utils/color';
 export const TRANSITION_TIME_IN_MS = 300;
 
 const DESKTOP_VIEWPORT_INSET = '40px';
-const COMPACT_VIEWPORT_INSET = '8px';
+const MOBILE_VIEWPORT_INSET = '8px';
 const TRANSITION_DISTANCE = 100;
 const tabletWidthOrSmaller = `only screen and (max-width: ${mq.mediaQueriesConfig.desktopMinWidth - 1}px)`;
 const viewportInset = createVar();
@@ -65,7 +65,7 @@ export const wrapper = style([
                 right: viewportInset,
                 bottom: viewportInset,
                 minWidth: 0,
-                vars: {[viewportInset]: COMPACT_VIEWPORT_INSET},
+                vars: {[viewportInset]: MOBILE_VIEWPORT_INSET},
             },
         },
     },
