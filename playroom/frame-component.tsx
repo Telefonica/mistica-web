@@ -23,6 +23,7 @@ import {Movistar as defaultThemeConfig} from './themes';
 import {CYBER_SKIN} from '../src/community';
 
 import type {ThemeConfig} from '../src';
+import type {PlayroomTheme} from './themes';
 
 type OverrideTheme = (theme: ThemeConfig) => void;
 
@@ -99,21 +100,25 @@ const App = ({children, skinName}: {children: React.ReactNode; skinName: string}
     );
 };
 
-type Props = {children: React.ReactNode; theme?: ThemeConfig};
+type Props = {children: React.ReactNode; theme?: PlayroomTheme};
 
-const FrameComponent = ({children, theme = defaultThemeConfig}: Props): React.ReactNode => (
-    <React.StrictMode>
-        <ThemeOverriderContextProvider>
-            {(overridenTheme) => (
-                <ThemeContextProvider theme={overridenTheme ?? theme}>
-                    <SheetRoot />
-                    <OverscrollColorProvider>
-                        <App skinName={(overridenTheme ?? theme).skin.name}>{children}</App>
-                    </OverscrollColorProvider>
-                </ThemeContextProvider>
-            )}
-        </ThemeOverriderContextProvider>
-    </React.StrictMode>
-);
+const FrameComponent = ({children, theme = defaultThemeConfig}: Props): React.ReactNode => {
+    // The PreviewTools override has no density control, so the frame keeps the density of the playroom theme
+    const {density, ...themeConfig} = theme;
+    return (
+        <React.StrictMode>
+            <ThemeOverriderContextProvider>
+                {(overridenTheme) => (
+                    <ThemeContextProvider theme={overridenTheme ?? themeConfig} density={density}>
+                        <SheetRoot />
+                        <OverscrollColorProvider>
+                            <App skinName={(overridenTheme ?? themeConfig).skin.name}>{children}</App>
+                        </OverscrollColorProvider>
+                    </ThemeContextProvider>
+                )}
+            </ThemeOverriderContextProvider>
+        </React.StrictMode>
+    );
+};
 
 export default FrameComponent;

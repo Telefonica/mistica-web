@@ -82,6 +82,7 @@ const config = {
     frameComponent: './playroom/frame-component.tsx',
     scope: './playroom/use-scope.tsx',
     widths: getWidths(),
+    defaultVisibleThemes: ['Movistar_iOS', 'Movistar', 'Movistar_iOS_compact', 'Movistar_compact'],
     defaultEditorPosition: 'left',
     exampleCode,
     webpackConfig: () => ({
