@@ -3,6 +3,7 @@ import {openStoryPage, screen, waitFor} from '../test-utils';
 const DESKTOP_VIEWPORT_INSET = 40;
 const MOBILE_VIEWPORT_INSET = 8;
 const WIDE_TABLET_VIEWPORT = {width: 1000, height: 700};
+const OPPOSITE_EDGE = {top: 'bottom', bottom: 'top', left: 'right', right: 'left'} as const;
 
 type SnackbarViewport = Pick<Parameters<typeof openStoryPage>[0], 'device' | 'viewport'>;
 
@@ -29,13 +30,14 @@ test.each([
     ['default', 'bottom'],
     ['bottom-center', 'bottom'],
     ['top-center', 'top'],
-] as const)('Snackbar position=%s is centered on desktop', async (position, vertical) => {
-    const getInsets = await openSnackbar(position);
+] as const)('Snackbar position=%s is centered on desktop', async (givenPosition, expectedClosestVertical) => {
+    const getInsets = await openSnackbar(givenPosition);
 
     await waitFor(async () => {
         const insets = await getInsets();
 
-        expect(insets[vertical]).toBeCloseTo(DESKTOP_VIEWPORT_INSET);
+        expect(insets[expectedClosestVertical]).toBeCloseTo(DESKTOP_VIEWPORT_INSET);
+        expect(insets[expectedClosestVertical]).toBeLessThan(insets[OPPOSITE_EDGE[expectedClosestVertical]]);
         expect(insets.left).toBeCloseTo(insets.right);
     });
 });
@@ -47,14 +49,20 @@ test.each([
     ['top-right', 'top', 'right'],
 ] as const)(
     'Snackbar position=%s is anchored to a corner on desktop',
-    async (position, vertical, horizontal) => {
-        const getInsets = await openSnackbar(position);
+    async (givenPosition, expectedClosestVertical, expectedClosestHorizontal) => {
+        const getInsets = await openSnackbar(givenPosition);
 
         await waitFor(async () => {
             const insets = await getInsets();
 
-            expect(insets[vertical]).toBeCloseTo(DESKTOP_VIEWPORT_INSET);
-            expect(insets[horizontal]).toBeCloseTo(DESKTOP_VIEWPORT_INSET);
+            expect(insets[expectedClosestVertical]).toBeCloseTo(DESKTOP_VIEWPORT_INSET);
+            expect(insets[expectedClosestHorizontal]).toBeCloseTo(DESKTOP_VIEWPORT_INSET);
+            expect(insets[expectedClosestVertical]).toBeLessThan(
+                insets[OPPOSITE_EDGE[expectedClosestVertical]]
+            );
+            expect(insets[expectedClosestHorizontal]).toBeLessThan(
+                insets[OPPOSITE_EDGE[expectedClosestHorizontal]]
+            );
         });
     }
 );
@@ -65,9 +73,10 @@ test.each([{device: 'MOBILE_IOS_SMALL'}, {device: 'TABLET', viewport: WIDE_TABLE
         const getInsets = await openSnackbar('top-right', viewport);
 
         await waitFor(async () => {
-            const {bottom, left, right} = await getInsets();
+            const {top, bottom, left, right} = await getInsets();
 
             expect(bottom).toBeCloseTo(MOBILE_VIEWPORT_INSET);
+            expect(bottom).toBeLessThan(top);
             expect(left).toBeCloseTo(MOBILE_VIEWPORT_INSET);
             expect(right).toBeCloseTo(MOBILE_VIEWPORT_INSET);
         });
