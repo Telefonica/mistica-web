@@ -34,7 +34,7 @@ jobs:
             - name: Docker login
               uses: docker/login-action@v3
               with:
-                  registry: ${{ secrets.DOCKER_REGISTRY }}
+                  registry: ${{ vars.DOCKER_REGISTRY }}
                   username: ${{ secrets.DOCKER_USERNAME }}
                   password: ${{ secrets.DOCKER_PASSWORD }}
 
@@ -44,7 +44,7 @@ jobs:
                   context: .
                   file: Dockerfile.epg
                   push: true
-                  tags: ${{ secrets.DOCKER_REGISTRY }}/uxevo-dev/mistica-web/services/web:${{ github.sha }}
+                  tags: ${{ vars.DOCKER_REGISTRY }}/uxevo-dev/mistica-web/services/web:${{ github.sha }}
 
             - name: Set up Helm
               uses: azure/setup-helm@v4
@@ -61,10 +61,7 @@ jobs:
 
             - name: Deploy to EPG dev
               env:
-                  DOCKER_REGISTRY: ${{ secrets.DOCKER_REGISTRY }}
-                  DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-                  DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-                  KUBECONFIG_DATA: ${{ secrets.KUBECONFIG }}
+                  DOCKER_REGISTRY: ${{ vars.DOCKER_REGISTRY }}
                   IMAGE_TAG: ${{ github.sha }}
                   OCP_NAMESPACE: uxevo-dev
               run: |
