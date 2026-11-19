@@ -82,7 +82,8 @@ const config = {
     frameComponent: './playroom/frame-component.tsx',
     scope: './playroom/use-scope.tsx',
     widths: getWidths(),
-    defaultVisibleThemes: ['Movistar_iOS', 'Movistar', 'Movistar_iOS_compact', 'Movistar_compact'],
+    // Too many frames make Playroom slow, so only one theme per brand is visible on the first load
+    defaultVisibleThemes: ['Movistar', 'Vivo_Evolution', 'O2', 'Telefonica', 'Esimflag', 'Blau'],
     defaultEditorPosition: 'left',
     exampleCode,
     webpackConfig: () => ({

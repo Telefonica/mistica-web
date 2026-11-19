@@ -22,26 +22,35 @@ import {
 import {Movistar as defaultThemeConfig} from './themes';
 import {CYBER_SKIN} from '../src/community';
 
-import type {ThemeConfig} from '../src';
+import type {ThemeConfig, Density} from '../src';
 import type {PlayroomTheme} from './themes';
 
 type OverrideTheme = (theme: ThemeConfig) => void;
 
+type OverrideDensity = (density: Density) => void;
+
 const ThemeOverriderContext = React.createContext<OverrideTheme>(() => {});
+const DensityOverriderContext = React.createContext<OverrideDensity>(() => {});
 
 type ThemeOverriderContextProviderProps = {
-    children: (theme: ThemeConfig | null) => React.ReactNode;
+    children: (theme: ThemeConfig | null, density: Density | null) => React.ReactNode;
 };
 
 const ThemeOverriderContextProvider = ({children}: ThemeOverriderContextProviderProps) => {
     const [theme, setTheme] = React.useState<ThemeConfig | null>(null);
+    const [density, setDensity] = React.useState<Density | null>(null);
 
     return (
-        <ThemeOverriderContext.Provider value={setTheme}>{children(theme)}</ThemeOverriderContext.Provider>
+        <ThemeOverriderContext.Provider value={setTheme}>
+            <DensityOverriderContext.Provider value={setDensity}>
+                {children(theme, density)}
+            </DensityOverriderContext.Provider>
+        </ThemeOverriderContext.Provider>
     );
 };
 
 export const useOverrideTheme = (): OverrideTheme => React.useContext(ThemeOverriderContext);
+export const useOverrideDensity = (): OverrideDensity => React.useContext(DensityOverriderContext);
 
 /**
  * The language cannot be fully determined from the skin name because
@@ -103,13 +112,15 @@ const App = ({children, skinName}: {children: React.ReactNode; skinName: string}
 type Props = {children: React.ReactNode; theme?: PlayroomTheme};
 
 const FrameComponent = ({children, theme = defaultThemeConfig}: Props): React.ReactNode => {
-    // The PreviewTools override has no density control, so the frame keeps the density of the playroom theme
     const {density, ...themeConfig} = theme;
     return (
         <React.StrictMode>
             <ThemeOverriderContextProvider>
-                {(overridenTheme) => (
-                    <ThemeContextProvider theme={overridenTheme ?? themeConfig} density={density}>
+                {(overridenTheme, overridenDensity) => (
+                    <ThemeContextProvider
+                        theme={overridenTheme ?? themeConfig}
+                        density={overridenDensity ?? density}
+                    >
                         <SheetRoot />
                         <OverscrollColorProvider>
                             <App skinName={(overridenTheme ?? themeConfig).skin.name}>{children}</App>
