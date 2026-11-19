@@ -27,8 +27,13 @@ import {SnackbarRoot} from './snackbar-context';
 import {mapToWeight} from './text';
 import * as mq from './media-queries.css';
 import {localeToLanguage} from './utils/locale';
+import {DEFAULT_DENSITY, DENSITIES, DENSITY_ATTRIBUTE, DENSITY_CATEGORIES} from './density/definitions';
+import {getSkinConfigForDensity} from './density/resolve';
+import {MaybeDensitySkinConfigContext} from './density/density-provider';
 
-import type {Colors, TextPresetsConfig} from './skins/types';
+import type {DensityCategory} from './density/definitions';
+import type {MaybeDensitySkinConfig, SkinConfigForDensity} from './density/resolve';
+import type {Colors, Density, MaybeDensityConfig, TextPresetsConfig} from './skins/types';
 import type {Theme, ThemeConfig} from './theme';
 import type {TextToken} from './text-tokens';
 
@@ -71,6 +76,8 @@ export const useIsOsDarkModeEnabled = (): boolean => {
 
 type Props = {
     theme: ThemeConfig;
+    /** The density of the whole theme. Use DensityProvider to override it in a subtree */
+    density?: Density;
     as?: string;
     withoutStyles?: boolean;
     children?: React.ReactNode;
@@ -117,14 +124,6 @@ const SetupStackingContext = () => {
     return <div ref={ref} style={{display: 'none'}} />;
 };
 
-type TextPresetsVars = {
-    [key in keyof TextPresetsConfig]: {
-        weight: string;
-        size: string;
-        lineHeight: string;
-    };
-};
-
 // Define the same colors in css variables as rgb components, to allow applying alpha aftherwards. See utils/color.tsx
 const makeRawColors = (colors: Colors): Colors =>
     Object.fromEntries(
@@ -138,7 +137,154 @@ const makeRawColors = (colors: Colors): Colors =>
         })
     ) as Colors;
 
-const ThemeContextProvider = ({theme, children, as, withoutStyles = false}: Props): JSX.Element => {
+type Breakpoint = 'mobile' | 'desktop';
+type BreakpointValues = Record<Breakpoint, number>;
+
+// The contract shape of a category, with the css values in place of the var names
+type CssValues<Contract> = {
+    [Key in keyof Contract]: Contract[Key] extends string ? string : CssValues<Contract[Key]>;
+};
+
+type CssVarValues = {[Category in DensityCategory]: CssValues<(typeof vars)[Category]>};
+
+type ContractValues = Parameters<typeof assignInlineVars<typeof vars>>[1];
+
+type CssVarValueBuilders = {
+    [Category in DensityCategory]: (
+        config: SkinConfigForDensity[Category],
+        breakpoint: Breakpoint
+    ) => CssVarValues[Category];
+};
+
+// The mapped type asks for a builder for each category of DENSITY_CATEGORIES
+const cssVarValueBuilders: CssVarValueBuilders = {
+    textPresets: (textPresets, breakpoint) =>
+        Object.fromEntries(
+            Object.entries(textPresets).map(([token, config]) => [
+                token,
+                {
+                    // Map light/regular/medium/bold to valid css fontWeight values
+                    ...(config.weight && {weight: String(mapToWeight[config.weight])}),
+                    ...(config.size && {size: `${config.size[breakpoint]}px`}),
+                    ...(config.lineHeight && {lineHeight: `${config.lineHeight[breakpoint]}px`}),
+                },
+            ])
+        ) as CssVarValues['textPresets'],
+    spacing: (spacing, breakpoint) =>
+        Object.fromEntries(
+            Object.entries(spacing).map(
+                ([token, values]: [string, BreakpointValues | Record<string, BreakpointValues>]) => {
+                    if (breakpoint in values) {
+                        return [token, `${(values as BreakpointValues)[breakpoint]}px`];
+                    }
+                    return [
+                        token,
+                        Object.fromEntries(
+                            Object.entries(values as Record<string, BreakpointValues>).map(
+                                ([side, sideValues]) => [side, `${sideValues[breakpoint]}px`]
+                            )
+                        ),
+                    ];
+                }
+            )
+        ) as CssVarValues['spacing'],
+    borderRadii: (borderRadii) => borderRadii as CssVarValues['borderRadii'],
+};
+
+const buildCategoryVars = <Category extends DensityCategory>(
+    category: Category,
+    config: SkinConfigForDensity,
+    breakpoint: Breakpoint
+): CssVarValues[Category] => cssVarValueBuilders[category](config[category], breakpoint);
+
+const buildCssVarValues = (config: SkinConfigForDensity, breakpoint: Breakpoint): CssVarValues =>
+    Object.fromEntries(
+        DENSITY_CATEGORIES.map((category) => [category, buildCategoryVars(category, config, breakpoint)])
+    ) as CssVarValues;
+
+// assignInlineVars walks the values and not the contract, so the values of the density categories are enough
+const assignCssVarValues = (cssVarValues: CssVarValues): Record<string, string> => ({
+    ...assignInlineVars(vars, cssVarValues as ContractValues),
+});
+
+/**
+ * The skin config of one density mode, and its css var values in each breakpoint.
+ */
+type SkinForDensity = {
+    config: SkinConfigForDensity;
+    desktopCssVarValues: CssVarValues;
+    mobileCssVarValues: CssVarValues;
+};
+
+const toCssDeclarations = (declarations: Record<string, string>): string =>
+    Object.entries(declarations)
+        .map(([name, value]) => `${name}:${value}`)
+        .join(';');
+
+/**
+ * Writes, for every density mode, the css vars that change with the density. A DensityProvider sets the density
+ * attribute on its wrapper, so these rules override the vars of the theme in its subtree.
+ *
+ * The desktop rule has every var that changes with the density, in any breakpoint. The mobile rule has only the
+ * vars whose mobile value differs from the desktop value of the same mode: the desktop rule also matches on
+ * mobile, and it hides the mobile value that the theme root sets in its media query.
+ */
+const buildDensityStyles = (selector: string, skinByDensity: Record<Density, SkinForDensity>): string => {
+    const densityVars = DENSITIES.map((density) => ({
+        density,
+        desktop: assignCssVarValues(skinByDensity[density].desktopCssVarValues),
+        mobile: assignCssVarValues(skinByDensity[density].mobileCssVarValues),
+    }));
+
+    const [referenceVars, ...otherVars] = densityVars;
+    const varNamesThatChange = Object.keys(referenceVars.desktop).filter((varName) =>
+        otherVars.some(
+            (densityVar) =>
+                densityVar.desktop[varName] !== referenceVars.desktop[varName] ||
+                densityVar.mobile[varName] !== referenceVars.mobile[varName]
+        )
+    );
+    if (varNamesThatChange.length === 0) {
+        return '';
+    }
+
+    const pick = (declarations: Record<string, string>, varNames: Array<string>) =>
+        toCssDeclarations(Object.fromEntries(varNames.map((varName) => [varName, declarations[varName]])));
+
+    return densityVars
+        .map(({density, desktop, mobile}) => {
+            // Only the DensityProvider wrappers and the portal containers have the attribute, and they are
+            // descendants of the theme element
+            const densitySelector = `${selector} [${DENSITY_ATTRIBUTE}="${density}"]`;
+            // The desktop rule matches the same element on mobile too, so a mobile value equal to the desktop one
+            // needs no declaration
+            const mobileVarNames = varNamesThatChange.filter(
+                (varName) => mobile[varName] !== desktop[varName]
+            );
+            const mobileRule =
+                mobileVarNames.length === 0
+                    ? ''
+                    : `
+                @media ${mq.tabletOrSmaller} {
+                    ${densitySelector} {
+                        ${pick(mobile, mobileVarNames)}
+                    }
+                }`;
+            return `
+                ${densitySelector} {
+                    ${pick(desktop, varNamesThatChange)}
+                }${mobileRule}`;
+        })
+        .join('\n');
+};
+
+const ThemeContextProvider = ({
+    theme,
+    density = DEFAULT_DENSITY,
+    children,
+    as,
+    withoutStyles = false,
+}: Props): JSX.Element => {
     const themeScopeId = React.useId();
     const isOsDarkModeEnabled = useIsOsDarkModeEnabled();
 
@@ -164,20 +310,46 @@ const ThemeContextProvider = ({theme, children, as, withoutStyles = false}: Prop
         [language]
     );
 
+    const maybeDensitySkinConfig = React.useMemo(
+        (): MaybeDensitySkinConfig => ({
+            textPresets: Object.fromEntries(
+                Object.entries(defaultTextPresetsConfig).map(([token, defaultConfig]) => [
+                    token,
+                    {...defaultConfig, ...theme.skin.textPresets?.[token as keyof TextPresetsConfig]},
+                ])
+            ) as MaybeDensityConfig<TextPresetsConfig>,
+            spacing: theme.skin.spacing ?? defaultSpacing,
+            borderRadii: theme.skin.borderRadii ?? defaultBorderRadiiConfig,
+        }),
+        [theme.skin]
+    );
+
+    // Every mode is resolved once per skin: the theme picks its own mode, and the density rules use all of them
+    const skinByDensity = React.useMemo(
+        () =>
+            Object.fromEntries(
+                DENSITIES.map((mode) => {
+                    const config = getSkinConfigForDensity(maybeDensitySkinConfig, mode);
+                    return [
+                        mode,
+                        {
+                            config,
+                            desktopCssVarValues: buildCssVarValues(config, 'desktop'),
+                            mobileCssVarValues: buildCssVarValues(config, 'mobile'),
+                        },
+                    ];
+                })
+            ) as Record<Density, SkinForDensity>,
+        [maybeDensitySkinConfig]
+    );
+    const {config: skinConfigForDensity, desktopCssVarValues, mobileCssVarValues} = skinByDensity[density];
+
     const contextTheme = React.useMemo((): Theme => {
         const platformOverrides = {
             platform: getPlatform(),
             insideNovumNativeApp: isInsideNovumNativeApp(),
             ...theme.platformOverrides,
         };
-
-        const textTokenValues = Object.entries(defaultTextPresetsConfig).map(([token, defaultConfig]) => {
-            return {
-                [token]: {...defaultConfig, ...theme.skin.textPresets?.[token as keyof TextPresetsConfig]},
-            };
-        });
-
-        const textPresets = Object.assign({}, ...textTokenValues) as TextPresetsConfig;
 
         return {
             skinName: theme.skin.name,
@@ -198,9 +370,8 @@ const ThemeContextProvider = ({theme, children, as, withoutStyles = false}: Prop
                 ...dimensions,
                 ...sanitizeDimensions(theme.dimensions),
             },
-            borderRadii: theme.skin.borderRadii ?? defaultBorderRadiiConfig,
-            textPresets,
-            spacing: theme.skin.spacing ?? defaultSpacing,
+            density,
+            ...skinConfigForDensity,
             themeVariants: theme.skin.themeVariants ?? defaultThemeVariantsConfig,
             componentProperties: theme.skin.componentProperties ?? defaultComponentPropertiesConfig,
             Link: getMisticaLinkComponent(theme.Link),
@@ -210,82 +381,14 @@ const ThemeContextProvider = ({theme, children, as, withoutStyles = false}: Prop
             t: translate,
             preventCopyInFormFields: theme.preventCopyInFormFields ?? false,
         };
-    }, [colors, theme, isDarkModeEnabled, translate]);
+    }, [colors, theme, isDarkModeEnabled, translate, density, skinConfigForDensity]);
 
-    const textPresetsVars = React.useMemo(() => {
-        // Get an object mapping textPresets tokens to objects containing the token's weight
-        // For example, {title1: {weight: '700'}}
-        const tokenValues = Object.entries(contextTheme.textPresets).map(([token, config]) => {
-            // Map light/regular/medium/bold to valid css fontWeight values
-            return {
-                [token]: {
-                    ...(config.weight && {weight: String(mapToWeight[config.weight])}),
-                    ...(config.size && {size: `${config.size.desktop}px`}),
-                    ...(config.lineHeight && {lineHeight: `${config.lineHeight.desktop}px`}),
-                },
-            };
-        });
+    const styleSelector = as ? `[data-mistica-theme="${themeScopeId}"]` : ':root';
 
-        return Object.assign({}, ...tokenValues) as TextPresetsVars;
-    }, [contextTheme]);
-
-    const textPresetsResponsiveVars = React.useMemo(() => {
-        const tokenValues = Object.entries(contextTheme.textPresets).map(([token, config]) => {
-            return {
-                [token]: {
-                    ...(config.weight && {weight: String(mapToWeight[config.weight])}),
-                    // Use mobile values for size/lineHeight
-                    ...(config.size && {size: `${config.size.mobile}px`}),
-                    ...(config.lineHeight && {lineHeight: `${config.lineHeight.mobile}px`}),
-                },
-            };
-        });
-
-        return Object.assign({}, ...tokenValues) as TextPresetsVars;
-    }, [contextTheme]);
-
-    const spacingDesktopVars = React.useMemo(
-        () =>
-            Object.fromEntries(
-                Object.entries(contextTheme.spacing).map(([token, values]) => {
-                    if ('desktop' in values) {
-                        return [token, `${(values as any).desktop}px`];
-                    }
-
-                    return [
-                        token,
-                        {
-                            ...('top' in values ? {top: `${(values as any).top.desktop}px`} : {}),
-                            ...('right' in values ? {right: `${(values as any).right.desktop}px`} : {}),
-                            ...('bottom' in values ? {bottom: `${(values as any).bottom.desktop}px`} : {}),
-                            ...('left' in values ? {left: `${(values as any).left.desktop}px`} : {}),
-                        },
-                    ];
-                })
-            ) as typeof vars.spacing,
-        [contextTheme]
-    );
-
-    const spacingMobileVars = React.useMemo(
-        () =>
-            Object.fromEntries(
-                Object.entries(contextTheme.spacing).map(([token, values]) => {
-                    if ('mobile' in values) {
-                        return [token, `${(values as any).mobile}px`];
-                    }
-
-                    return [
-                        token,
-                        {
-                            ...('top' in values ? {top: `${(values as any).top.mobile}px`} : {}),
-                            ...('right' in values ? {right: `${(values as any).right.mobile}px`} : {}),
-                            ...('bottom' in values ? {bottom: `${(values as any).bottom.mobile}px`} : {}),
-                            ...('left' in values ? {left: `${(values as any).left.mobile}px`} : {}),
-                        },
-                    ];
-                })
-            ) as typeof vars.spacing,
-        [contextTheme]
+    // The density rules change only with the skin, not with the color scheme or the density of the theme
+    const densityStyles = React.useMemo(
+        () => buildDensityStyles(styleSelector, skinByDensity),
+        [styleSelector, skinByDensity]
     );
 
     const renderStyles = (selector: string) => {
@@ -318,17 +421,15 @@ const ThemeContextProvider = ({theme, children, as, withoutStyles = false}: Prop
                     ${assignInlineVars(vars, {
                         colors: defaultColors,
                         rawColors: defaultRawColors,
-                        textPresets: textPresetsVars,
-                        borderRadii: theme.skin.borderRadii ?? defaultBorderRadiiConfig,
-                        spacing: spacingDesktopVars,
+                        ...desktopCssVarValues,
                     })}
                 }
                 @media ${mq.tabletOrSmaller} {
                     ${selector} {
-                        ${assignInlineVars(vars.textPresets, textPresetsResponsiveVars)}
-                        ${assignInlineVars(vars.spacing, spacingMobileVars)}
+                        ${toCssDeclarations(assignCssVarValues(mobileCssVarValues))}
                     }
                 }
+                ${densityStyles}
                 ${darkModeMediaQuery}
             `}
             </style>
@@ -340,42 +441,42 @@ const ThemeContextProvider = ({theme, children, as, withoutStyles = false}: Prop
             <ModalContextProvider>
                 <TooltipContextProvider>
                     <ThemeContext.Provider value={contextTheme}>
-                        <TrackingConfig eventFormat={contextTheme.analytics.eventFormat}>
-                            <AspectRatioSupportProvider>
-                                <DocumentVisibilityProvider>
-                                    <ScreenSizeContextProvider>
-                                        <DialogRoot>
-                                            <SnackbarRoot>
-                                                {as ? (
-                                                    <>
-                                                        {renderStyles(
-                                                            `[data-mistica-theme="${themeScopeId}"]`
-                                                        )}
-                                                        {React.createElement(
-                                                            as,
-                                                            {
-                                                                style: {
-                                                                    isolation: 'isolate',
+                        <MaybeDensitySkinConfigContext.Provider value={maybeDensitySkinConfig}>
+                            <TrackingConfig eventFormat={contextTheme.analytics.eventFormat}>
+                                <AspectRatioSupportProvider>
+                                    <DocumentVisibilityProvider>
+                                        <ScreenSizeContextProvider>
+                                            <DialogRoot>
+                                                <SnackbarRoot>
+                                                    {as ? (
+                                                        <>
+                                                            {renderStyles(styleSelector)}
+                                                            {React.createElement(
+                                                                as,
+                                                                {
+                                                                    style: {
+                                                                        isolation: 'isolate',
+                                                                    },
+                                                                    'data-mistica-theme': withoutStyles
+                                                                        ? undefined
+                                                                        : themeScopeId,
                                                                 },
-                                                                'data-mistica-theme': withoutStyles
-                                                                    ? undefined
-                                                                    : themeScopeId,
-                                                            },
-                                                            children
-                                                        )}
-                                                    </>
-                                                ) : (
-                                                    <>
-                                                        {renderStyles(':root')}
-                                                        {children}
-                                                    </>
-                                                )}
-                                            </SnackbarRoot>
-                                        </DialogRoot>
-                                    </ScreenSizeContextProvider>
-                                </DocumentVisibilityProvider>
-                            </AspectRatioSupportProvider>
-                        </TrackingConfig>
+                                                                children
+                                                            )}
+                                                        </>
+                                                    ) : (
+                                                        <>
+                                                            {renderStyles(styleSelector)}
+                                                            {children}
+                                                        </>
+                                                    )}
+                                                </SnackbarRoot>
+                                            </DialogRoot>
+                                        </ScreenSizeContextProvider>
+                                    </DocumentVisibilityProvider>
+                                </AspectRatioSupportProvider>
+                            </TrackingConfig>
+                        </MaybeDensitySkinConfigContext.Provider>
                     </ThemeContext.Provider>
                 </TooltipContextProvider>
             </ModalContextProvider>

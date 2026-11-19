@@ -62,6 +62,40 @@ Here is a description of every attribute:
 - `preventCopyInFormFields?`: this is used as the default value for `preventCopy` prop in form fields. `false`
   by default.
 
+## Density
+
+The density is not part of the `theme` object. It is a separate prop of `ThemeContextProvider`:
+
+```tsx
+<ThemeContextProvider theme={theme} density="compact">
+  <App />
+</ThemeContextProvider>
+```
+
+- `density?`: `'cozy'` (default) or `'compact'`. The compact density uses smaller spacing, text presets and
+  border radii. The skin defines the values of each density.
+
+Use `DensityProvider` to change the density of a part of your app only, and `useDensity` to read the current
+density:
+
+```tsx
+import {DensityProvider, useDensity} from '@telefonica/mistica';
+
+const DensityLabel = () => {
+  const density = useDensity(); // 'cozy' | 'compact'
+  return <Text2 regular>{density}</Text2>;
+};
+
+<ThemeContextProvider theme={theme}>
+  <DensityLabel /> {/* cozy */}
+  <DensityProvider density="compact">
+    <DensityLabel /> {/* compact */}
+  </DensityProvider>
+</ThemeContextProvider>;
+```
+
+`DensityProvider` renders a wrapper `div` with `display: contents`, so it does not change the layout.
+
 ## LinkComponent
 
 You can use a custom component or use a built in one. Mistica has built in support for: `Next12`, `Next13`,
@@ -158,5 +192,22 @@ const skin: Skin = {
 
 If you also need different default radii, override `borderRadii` in the custom skin rather than setting border
 radius ad hoc in component styles.
+
+In `textPresets`, `borderRadii` and `spacing`, a value can change with the [density](#density). Use the
+`{density: {cozy, compact}}` form. The `cozy` value is mandatory, and the compact density uses it when you do
+not give a `compact` value:
+
+```ts
+const skin: Skin = {
+  ...baseSkin,
+  textPresets: {
+    ...baseSkin.textPresets,
+    cardTitleDefault: {
+      lineHeight: {desktop: {density: {cozy: 24, compact: 22}}, mobile: 22},
+      size: {desktop: {density: {cozy: 18, compact: 16}}, mobile: 16},
+    },
+  },
+};
+```
 
 You can see an example in the [examples folder](../examples/custom-skin/).

@@ -3,11 +3,12 @@
     "type": "module",
     "packageManager": "yarn@3.6.1",
     "scripts": {
-        "generate": "node index.ts",
+        "generate": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON index.ts",
         "typecheck": "tsc"
     },
     "dependencies": {
         "@telefonica/prettier-config": "^2.0.0",
+        "jsonschema": "^1.4.1",
         "prettier": "^3.3.3"
     },
     "devDependencies": {
