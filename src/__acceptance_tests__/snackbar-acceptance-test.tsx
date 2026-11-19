@@ -1,6 +1,7 @@
+import {test, expect} from '../test-utils/playwright';
 import {openStoryPage, screen, waitFor} from '../test-utils';
 
-import type {ElementHandle} from '../test-utils';
+import type {Locator} from '../test-utils';
 
 const DESKTOP_VIEWPORT_INSET = 40;
 const MOBILE_VIEWPORT_INSET = 8;
@@ -23,7 +24,7 @@ const openSnackbar = async () => {
     return screen.findByRole('alert');
 };
 
-const getInsets = (snackbar: ElementHandle) =>
+const getInsets = (snackbar: Locator) =>
     snackbar.evaluate((element) => {
         const {top, right, bottom, left} = element.getBoundingClientRect();
         const {clientWidth, clientHeight} = document.documentElement;
@@ -31,13 +32,12 @@ const getInsets = (snackbar: ElementHandle) =>
         return {top, bottom: clientHeight - bottom, left, right: clientWidth - right};
     });
 
-test.each([
+for (const {givenPosition, expectedClosestVertical} of [
     {givenPosition: 'default', expectedClosestVertical: 'bottom'},
     {givenPosition: 'bottom-center', expectedClosestVertical: 'bottom'},
     {givenPosition: 'top-center', expectedClosestVertical: 'top'},
-] as const)(
-    'Snackbar position=$givenPosition is centered on desktop',
-    async ({givenPosition, expectedClosestVertical}) => {
+] as const) {
+    test(`Snackbar position=${givenPosition} is centered on desktop`, async () => {
         await openStory(givenPosition);
         const snackbar = await openSnackbar();
 
@@ -50,17 +50,16 @@ test.each([
             );
             expect(insets.left).toBeCloseTo(insets.right);
         });
-    }
-);
+    });
+}
 
-test.each([
+for (const {givenPosition, expectedClosestVertical, expectedClosestHorizontal} of [
     {givenPosition: 'bottom-left', expectedClosestVertical: 'bottom', expectedClosestHorizontal: 'left'},
     {givenPosition: 'bottom-right', expectedClosestVertical: 'bottom', expectedClosestHorizontal: 'right'},
     {givenPosition: 'top-left', expectedClosestVertical: 'top', expectedClosestHorizontal: 'left'},
     {givenPosition: 'top-right', expectedClosestVertical: 'top', expectedClosestHorizontal: 'right'},
-] as const)(
-    'Snackbar position=$givenPosition is anchored to a corner on desktop',
-    async ({givenPosition, expectedClosestVertical, expectedClosestHorizontal}) => {
+] as const) {
+    test(`Snackbar position=${givenPosition} is anchored to a corner on desktop`, async () => {
         await openStory(givenPosition);
         const snackbar = await openSnackbar();
 
@@ -76,12 +75,14 @@ test.each([
                 insets[OPPOSITE_EDGE[expectedClosestHorizontal]]
             );
         });
-    }
-);
+    });
+}
 
-test.each([{device: 'MOBILE_IOS_SMALL'}, {device: 'TABLET', viewport: WIDE_TABLET_VIEWPORT}] as const)(
-    'Snackbar fills the bottom with position=top-right on $device',
-    async (viewport) => {
+for (const viewport of [
+    {device: 'MOBILE_IOS_SMALL'},
+    {device: 'TABLET', viewport: WIDE_TABLET_VIEWPORT},
+] as const) {
+    test(`Snackbar fills the bottom with position=top-right on ${viewport.device}`, async () => {
         await openStory('top-right', viewport);
         const snackbar = await openSnackbar();
 
@@ -93,5 +94,5 @@ test.each([{device: 'MOBILE_IOS_SMALL'}, {device: 'TABLET', viewport: WIDE_TABLE
             expect(left).toBeCloseTo(MOBILE_VIEWPORT_INSET);
             expect(right).toBeCloseTo(MOBILE_VIEWPORT_INSET);
         });
-    }
-);
+    });
+}
