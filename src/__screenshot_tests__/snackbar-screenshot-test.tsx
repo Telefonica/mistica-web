@@ -1,6 +1,20 @@
 import {test, expectScreenshot} from '../test-utils/playwright';
 import {openStoryPage, screen} from '../test-utils';
 
+for (const position of ['top-right', 'bottom-left'] as const) {
+    test(`Snackbar position=${position} on desktop`, async () => {
+        const page = await openStoryPage({
+            id: 'components-snackbar--default',
+            device: 'DESKTOP',
+            args: {position, persistent: true},
+        });
+
+        await (await screen.findByRole('button', {name: 'Open Snackbar'})).click();
+        await screen.findByRole('alert');
+        await expectScreenshot(page);
+    });
+}
+
 test('informative', async () => {
     await openStoryPage({
         id: 'components-snackbar--default',

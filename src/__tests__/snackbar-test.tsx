@@ -6,6 +6,7 @@ import userEvent from '@testing-library/user-event';
 import ThemeContextProvider from '../theme-context-provider';
 import {makeTheme} from './test-utils';
 import * as bridge from '@tef-novum/webview-bridge';
+import * as styles from '../snackbar.css';
 
 test('Snackbar', async () => {
     const onCloseSpy = jest.fn();
@@ -24,6 +25,19 @@ test('Snackbar', async () => {
     await waitFor(() => {
         expect(onCloseSpy).toHaveBeenCalledWith({action: 'BUTTON'});
     });
+});
+
+test('Snackbar falls back to the default position for an unsupported value', async () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Snackbar
+                message="Some message"
+                position={'unsupported' as React.ComponentProps<typeof Snackbar>['position']}
+            />
+        </ThemeContextProvider>
+    );
+
+    expect(await screen.findByRole('alert')).toHaveClass(styles.position['bottom-center']);
 });
 
 test('Snackbar auto dismisses', async () => {
@@ -128,7 +142,7 @@ test('Snackbar always has dismiss button if it does not have action button and d
     expect(dismissButton).toBeInTheDocument();
 });
 
-test('nativeMessage is called when webview bridge is available', async () => {
+test('nativeMessage is called when webview bridge is available, even with a web position', async () => {
     jest.spyOn(bridge, 'isWebViewBridgeAvailable').mockReturnValue(true);
     const nativeMessageMock = jest.spyOn(bridge, 'nativeMessage').mockResolvedValue({action: 'DISMISS'});
 
@@ -136,7 +150,12 @@ test('nativeMessage is called when webview bridge is available', async () => {
 
     render(
         <ThemeContextProvider theme={makeTheme()}>
-            <Snackbar message="any-message" onClose={onCloseSpy} buttonText="any-button-text" />
+            <Snackbar
+                message="any-message"
+                onClose={onCloseSpy}
+                buttonText="any-button-text"
+                position="top-right"
+            />
         </ThemeContextProvider>
     );
 
