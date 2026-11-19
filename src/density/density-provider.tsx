@@ -44,4 +44,26 @@ export const DensityProvider = ({density, children}: DensityProviderProps): JSX.
     );
 };
 
+/**
+ * The roots of the imperative layers (dialog, snackbar, sheet) render far from the caller, so they give the layer
+ * the density that the caller had. Without a density, the layer keeps the density of the root.
+ */
+export const OptionalDensityProvider = ({
+    density,
+    children,
+}: {
+    density?: Density;
+    children: React.ReactNode;
+}): JSX.Element => {
+    if (!density) {
+        return <>{children}</>;
+    }
+    return <DensityProvider density={density}>{children}</DensityProvider>;
+};
+
 export const useDensity = (): Density => useTheme().density;
+
+/**
+ * For the hooks that can run outside a ThemeContextProvider and must not throw there (useDialog, useSnackbar)
+ */
+export const useOptionalDensity = (): Density | undefined => React.useContext(ThemeContext)?.density;

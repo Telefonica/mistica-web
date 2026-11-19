@@ -1,5 +1,6 @@
 export type NativeSheetImplementation = (typeof import('@tef-novum/webview-bridge'))['bottomSheet'];
 
+import type {Density} from './density/definitions';
 import type {TagType} from './tag';
 import type {ExclusifyUnion, Id} from './utils/utility-types';
 
@@ -83,7 +84,15 @@ export type SheetResultByType = {
     ACTIONS: {action: 'PRIMARY' | 'SECONDARY' | 'LINK' | 'DISMISS'};
 };
 
-export type SheetTypeWithProps<T extends SheetType> = Id<{type: T; props: SheetPropsByType[T]}>;
+export type SheetTypeWithProps<T extends SheetType> = Id<{
+    type: T;
+    props: SheetPropsByType[T];
+    /**
+     * showSheet is not a hook, so it can not read the density of the caller. Without this value, the sheet takes
+     * the density of SheetRoot. The native sheets ignore it.
+     */
+    density?: Density;
+}>;
 
 export type SheetTypeWithPropsUnion = {
     [T in SheetType]: SheetTypeWithProps<T>;

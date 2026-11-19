@@ -1,5 +1,6 @@
 import * as React from 'react';
-import {render, screen} from '@testing-library/react';
+import {act, render, screen, waitFor} from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import ThemeContextProvider from '../theme-context-provider';
 import {DensityProvider, useDensity} from '../density/density-provider';
 import {resolveDensityConfig} from '../density/resolve';
@@ -13,7 +14,11 @@ import {getO2Skin} from '../skins/o2';
 import {getVivoSkin} from '../skins/vivo';
 import {getVivoEvolutionSkin} from '../skins/vivo-evolution';
 import {getCyberSkin} from '../community/skins/cyber-skin';
-import {DENSITIES} from '../density/definitions';
+import {DENSITIES, DENSITY_ATTRIBUTE} from '../density/definitions';
+import {useDialog} from '../dialog-context';
+import {useSnackbar} from '../snackbar-context';
+import {SheetRoot, showSheet} from '../sheet-root';
+import {ButtonPrimary} from '../button';
 import {makeTheme} from './test-utils';
 
 import type {Theme} from '../theme';
@@ -105,6 +110,84 @@ test('a Portal takes the density of the nearest DensityProvider', async () => {
     /* eslint-enable testing-library/no-node-access */
     expect(globalPortal).toHaveAttribute('data-mistica-density', 'compact');
     expect(cozyPortal).toHaveAttribute('data-mistica-density', 'cozy');
+});
+
+// The layer container has no role, and data-mistica-density has no Testing Library query
+const getLayerDensity = (element: HTMLElement) =>
+    // eslint-disable-next-line testing-library/no-node-access
+    element.closest(`[${DENSITY_ATTRIBUTE}]`)?.getAttribute(DENSITY_ATTRIBUTE);
+
+test('a dialog opened with useDialog takes the density of the caller', async () => {
+    const DialogOpener = (): JSX.Element => {
+        const {dialog} = useDialog();
+        return (
+            <ButtonPrimary
+                onPress={() =>
+                    dialog({title: 'Title', message: 'Message', slot: <DensityReport name="dialog" />})
+                }
+            >
+                Open dialog
+            </ButtonPrimary>
+        );
+    };
+
+    render(
+        <ThemeContextProvider theme={theme}>
+            <DensityProvider density="compact">
+                <DialogOpener />
+            </DensityProvider>
+        </ThemeContextProvider>
+    );
+
+    await userEvent.click(screen.getByRole('button', {name: 'Open dialog'}));
+
+    expect(await screen.findByText('dialog: compact 8')).toBeInTheDocument();
+    expect(getLayerDensity(await screen.findByRole('dialog'))).toBe('compact');
+});
+
+test('a snackbar opened with useSnackbar takes the density of the caller', async () => {
+    const SnackbarOpener = (): JSX.Element => {
+        const {openSnackbar} = useSnackbar();
+        return (
+            <ButtonPrimary onPress={() => openSnackbar({message: 'Message'})}>Open snackbar</ButtonPrimary>
+        );
+    };
+
+    render(
+        <ThemeContextProvider theme={theme}>
+            <DensityProvider density="compact">
+                <SnackbarOpener />
+            </DensityProvider>
+        </ThemeContextProvider>
+    );
+
+    await userEvent.click(screen.getByRole('button', {name: 'Open snackbar'}));
+
+    expect(getLayerDensity(await screen.findByText('Message'))).toBe('compact');
+});
+
+test('showSheet takes the density of its params, or the density of SheetRoot', async () => {
+    render(
+        <ThemeContextProvider theme={theme}>
+            <SheetRoot />
+        </ThemeContextProvider>
+    );
+
+    const items = [{id: '1', title: 'Item 1', icon: {type: 'bullet' as const}}];
+
+    act(() => {
+        showSheet({type: 'INFO', density: 'compact', props: {title: 'Compact sheet', items}});
+    });
+    const compactSheet = await screen.findByRole('dialog', {name: 'Compact sheet'});
+    expect(getLayerDensity(compactSheet)).toBe('compact');
+
+    await userEvent.click(await screen.findByRole('button', {name: 'Cerrar'}));
+    await waitFor(() => expect(compactSheet).not.toBeInTheDocument(), {timeout: 5000});
+
+    act(() => {
+        showSheet({type: 'INFO', props: {title: 'Default sheet', items}});
+    });
+    expect(getLayerDensity(await screen.findByRole('dialog', {name: 'Default sheet'}))).toBe('cozy');
 });
 
 test('ThemeContextProvider writes density rules only for the vars that change with the density', () => {

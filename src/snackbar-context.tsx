@@ -2,11 +2,14 @@
 import * as React from 'react';
 import {isWebViewBridgeAvailable} from '@tef-novum/webview-bridge';
 import {showNativeSnackbar} from './snackbar-native';
+import {OptionalDensityProvider, useOptionalDensity} from './density/density-provider';
 
 import type {ImperativeHandle, Props as SnackbarProps, SnackbarCloseHandler} from './snackbar';
+import type {Density} from './density/definitions';
 
 type SnackbarEntry = SnackbarProps & {
     id: string;
+    density?: Density;
 };
 
 const SnackbarContext = React.createContext<{
@@ -51,21 +54,23 @@ export const SnackbarRoot = ({children}: {children: React.ReactNode}): JSX.Eleme
         <SnackbarContext.Provider value={value}>
             {children}
             {!!currentSnackbar && (
-                <React.Suspense fallback={null}>
-                    <Snackbar
-                        // remount when the snackbar changes. In native, this will make a new bridge call
-                        key={currentSnackbar.id}
-                        ref={snackbarRef}
-                        message={currentSnackbar.message}
-                        buttonText={currentSnackbar.buttonText}
-                        buttonAccessibilityLabel={currentSnackbar.buttonAccessibilityLabel}
-                        duration={currentSnackbar.duration}
-                        type={currentSnackbar.type}
-                        withDismiss={currentSnackbar.withDismiss}
-                        dataAttributes={currentSnackbar.dataAttributes}
-                        onClose={handleClose}
-                    />
-                </React.Suspense>
+                <OptionalDensityProvider density={currentSnackbar.density}>
+                    <React.Suspense fallback={null}>
+                        <Snackbar
+                            // remount when the snackbar changes. In native, this will make a new bridge call
+                            key={currentSnackbar.id}
+                            ref={snackbarRef}
+                            message={currentSnackbar.message}
+                            buttonText={currentSnackbar.buttonText}
+                            buttonAccessibilityLabel={currentSnackbar.buttonAccessibilityLabel}
+                            duration={currentSnackbar.duration}
+                            type={currentSnackbar.type}
+                            withDismiss={currentSnackbar.withDismiss}
+                            dataAttributes={currentSnackbar.dataAttributes}
+                            onClose={handleClose}
+                        />
+                    </React.Suspense>
+                </OptionalDensityProvider>
             )}
         </SnackbarContext.Provider>
     );
@@ -76,6 +81,8 @@ export const useSnackbar = (): {
     snackbars: ReadonlyArray<Readonly<SnackbarEntry>>;
 } => {
     const {snackbars, setSnackbars} = React.useContext(SnackbarContext);
+    // SnackbarRoot renders the snackbar out of the subtree of the caller, so it needs the density of the caller
+    const density = useOptionalDensity();
 
     const openSnackbar = React.useCallback(
         (params: SnackbarProps) => {
@@ -85,10 +92,10 @@ export const useSnackbar = (): {
                 });
             } else {
                 const uniqueIdentifier = Date.now() + '-' + Math.random();
-                setSnackbars((snackbars) => [...snackbars, {...params, id: uniqueIdentifier}]);
+                setSnackbars((snackbars) => [...snackbars, {...params, id: uniqueIdentifier, density}]);
             }
         },
-        [setSnackbars]
+        [setSnackbars, density]
     );
 
     return {
