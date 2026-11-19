@@ -10,7 +10,7 @@ export default {
 
 export const Default: StoryComponent = () => {
     const src = usingVrImg;
-    const srcSet = `${usingVrImg} 600w, ${beachImg} 1300w, ${laptopImg} 3000w`;
+    const srcSet = `${usingVrImg} 800w, ${beachImg} 1300w, ${laptopImg} 3000w`;
 
     return (
         <Stack space={16}>

@@ -34,7 +34,13 @@ export default defineConfig({
         timezoneId: 'UTC',
         trace: 'retain-on-failure',
         launchOptions: {
-            args: ['--font-render-hinting=none', '--disable-lcd-text', '--disable-smooth-scrolling'],
+            env: {...process.env, LANG: 'es_ES.UTF-8', LANGUAGE: 'es_ES:es'},
+            args: [
+                '--lang=es-ES',
+                '--font-render-hinting=none',
+                '--disable-lcd-text',
+                '--disable-smooth-scrolling',
+            ],
         },
     },
     webServer: {
