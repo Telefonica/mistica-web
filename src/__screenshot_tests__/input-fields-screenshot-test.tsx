@@ -397,6 +397,20 @@ test.each(['top', 'bottom'])('Autocomplete menu renders on %s', async (verticalP
     expect(await page.screenshot({fullPage: true})).toMatchImageSnapshot();
 });
 
+test.each(['top', 'bottom'])('Autocomplete menu renders on %s in dark mode', async (verticalPosition) => {
+    await openStoryPage({
+        id: 'components-input-fields-autocomplete--controlled',
+        device: 'MOBILE_IOS',
+        args: {verticalPosition},
+        isDarkMode: true,
+    });
+
+    const field = await screen.findByRole('combobox', {name: 'Label'});
+    await field.focus();
+
+    expect(await page.screenshot({fullPage: true})).toMatchImageSnapshot();
+});
+
 test('Autocomplete scrolls to active option on keyboard navigation', async () => {
     await openStoryPage({
         id: 'components-input-fields-autocomplete--controlled',
