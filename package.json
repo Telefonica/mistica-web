@@ -17,7 +17,6 @@
         "src/**",
         "!src/generated/**",
         "!src/**/__tests__/**",
-        "!src/**/__component_tests__/**",
         "!src/**/__acceptance_tests__/**",
         "!src/**/__screenshot_tests__/**",
         "!src/**/__type_tests__/**",
