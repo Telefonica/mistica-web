@@ -1,37 +1,118 @@
-import {test, expect} from '../test-utils/component';
+import * as React from 'react';
+import {act, render, screen} from '@testing-library/react';
+import SearchField from '../search-field';
+import ThemeContextProvider from '../theme-context-provider';
+import {makeTheme} from './test-utils';
+import userEvent from '@testing-library/user-event';
 
-test('Should show suggestions on focus when shouldShowSuggestions is "focus"', async ({mount, page}) => {
-    const component = await mount('search-field/Suggestions');
-    await expect(page.getByRole('menuitem', {name: 'Apple'})).toHaveCount(0);
-    await component.getByRole('combobox', {name: 'Search', exact: true}).click();
-    await expect(page.getByRole('menuitem', {name: 'Apple'})).toHaveCount(1);
+const getSuggestions = (value: string) => {
+    const allSuggestions = ['Apple', 'Banana', 'Orange'];
+    return allSuggestions.filter((item) => item.toLowerCase().includes(value.toLowerCase()));
+};
+
+test('Should show suggestions on focus when shouldShowSuggestions is "focus"', async () => {
+    await act(async () =>
+        render(
+            <ThemeContextProvider theme={makeTheme()}>
+                <SearchField
+                    getSuggestions={getSuggestions}
+                    shouldShowSuggestions="focus"
+                    label="Search"
+                    name="search"
+                />
+            </ThemeContextProvider>
+        )
+    );
+
+    expect(screen.queryByRole('menuitem', {name: 'Apple'})).not.toBeInTheDocument();
+
+    await userEvent.click(await screen.findByLabelText('Search'));
+
+    expect(await screen.findByRole('menuitem', {name: 'Apple'})).toBeInTheDocument();
 });
-test('Should show suggestions on type when shouldShowSuggestions is 2', async ({mount, page}) => {
-    const component = await mount('search-field/Suggestions', {shouldShowSuggestions: 2});
-    const input = component.getByRole('combobox', {name: 'Search', exact: true});
-    await input.click();
-    await expect(page.getByRole('menuitem', {name: 'Apple'})).toHaveCount(0);
-    await input.pressSequentially('A');
-    await expect(page.getByRole('menuitem', {name: 'Apple'})).toHaveCount(0);
-    await input.pressSequentially('p');
-    await expect(page.getByRole('menuitem', {name: 'Apple'})).toHaveCount(1);
+
+test('Should show suggestions on type when shouldShowSuggestions is 2', async () => {
+    await act(async () =>
+        render(
+            <ThemeContextProvider theme={makeTheme()}>
+                <SearchField
+                    getSuggestions={getSuggestions}
+                    shouldShowSuggestions={2}
+                    label="Search"
+                    name="search"
+                />
+            </ThemeContextProvider>
+        )
+    );
+
+    await userEvent.click(await screen.findByLabelText('Search'));
+    expect(screen.queryByRole('menuitem', {name: 'Apple'})).not.toBeInTheDocument();
+
+    await userEvent.type(await screen.findByLabelText('Search'), 'A');
+    expect(screen.queryByRole('menuitem', {name: 'Apple'})).not.toBeInTheDocument();
+
+    await userEvent.type(await screen.findByLabelText('Search'), 'p');
+    expect(await screen.findByRole('menuitem', {name: 'Apple'})).toBeInTheDocument();
 });
-test('Should reload suggestions when clearing the field', async ({mount, page}) => {
-    const component = await mount('search-field/Suggestions');
-    await component.getByRole('combobox', {name: 'Search', exact: true}).pressSequentially('invent');
-    await expect(page.getByRole('menuitem', {name: 'Apple'})).toHaveCount(0);
-    await component.getByRole('button', {name: 'Borrar búsqueda'}).click();
-    await expect(page.getByRole('menuitem', {name: 'Apple'})).toHaveCount(1);
+
+test('Should reload suggestions when clearing the field', async () => {
+    await act(async () =>
+        render(
+            <ThemeContextProvider theme={makeTheme()}>
+                <SearchField
+                    getSuggestions={getSuggestions}
+                    shouldShowSuggestions="focus"
+                    label="Search"
+                    name="search"
+                />
+            </ThemeContextProvider>
+        )
+    );
+
+    await userEvent.type(await screen.findByLabelText('Search'), 'invent');
+
+    expect(screen.queryByRole('menuitem', {name: 'Apple'})).not.toBeInTheDocument();
+
+    await userEvent.click(await screen.findByRole('button', {name: 'Borrar búsqueda'}));
+
+    expect(screen.getByRole('menuitem', {name: 'Apple'})).toBeInTheDocument();
 });
-for (const enabled of [true, false]) {
-    test(`Should not show suggestions empty case ${enabled ? 'if enabled' : 'by default'}`, async ({
-        mount,
-        page,
-    }) => {
-        const component = await mount('search-field/Suggestions', {
-            withSuggestionsEmptyCase: enabled ? true : undefined,
-        });
-        await component.getByRole('combobox', {name: 'Search', exact: true}).pressSequentially('invent');
-        await expect(page.getByText('Sin sugerencias', {exact: true})).toHaveCount(enabled ? 1 : 0);
-    });
-}
+
+test('Should not show suggestions empty case if enabled', async () => {
+    await act(async () =>
+        render(
+            <ThemeContextProvider theme={makeTheme()}>
+                <SearchField
+                    getSuggestions={getSuggestions}
+                    shouldShowSuggestions="focus"
+                    withSuggestionsEmptyCase
+                    label="Search"
+                    name="search"
+                />
+            </ThemeContextProvider>
+        )
+    );
+
+    await userEvent.type(await screen.findByLabelText('Search'), 'invent');
+
+    expect(screen.getByText('Sin sugerencias')).toBeInTheDocument();
+});
+
+test('Should not show suggestions empty case by default', async () => {
+    await act(async () =>
+        render(
+            <ThemeContextProvider theme={makeTheme()}>
+                <SearchField
+                    getSuggestions={getSuggestions}
+                    shouldShowSuggestions="focus"
+                    label="Search"
+                    name="search"
+                />
+            </ThemeContextProvider>
+        )
+    );
+
+    await userEvent.type(await screen.findByLabelText('Search'), 'invent');
+
+    expect(screen.queryByText('Sin sugerencias')).not.toBeInTheDocument();
+});

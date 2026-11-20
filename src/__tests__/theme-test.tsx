@@ -1,16 +1,30 @@
-import {test, expect} from '../test-utils/component';
+import * as React from 'react';
+import {getMisticaLinkComponent} from '../theme';
+import {render, screen} from '@testing-library/react';
 
-for (const forwardRef of [true, false]) {
-    test(`getMisicaLinkComponent detects ${forwardRef ? 'forwardRefs' : 'function components'} as components`, async ({
-        mount,
-    }) => {
-        const component = await mount('theme/ComponentIdentity', {forwardRef});
-        await expect(component.getByTestId('same-component')).toHaveValue('true');
-    });
-}
-test('getMisicaLinkComponent uses given component with type', async ({mount}) => {
-    const component = await mount('theme/CustomLink');
-    const link = component.getByRole('link', {name: 'any text'});
-    await expect(link).toHaveAttribute('href', '#');
-    await expect(link).toHaveJSProperty('outerHTML', '<a href="#">any text</a>');
+import type {ThemeConfig} from '../theme';
+
+test('getMisicaLinkComponent detects forwardRefs as components', () => {
+    const fr = React.forwardRef(() => <></>);
+    expect(getMisticaLinkComponent(fr as ThemeConfig['Link'])).toBe(fr);
+});
+
+test('getMisicaLinkComponent detects function components as components', () => {
+    const fn = () => <></>;
+    expect(getMisticaLinkComponent(fn as ThemeConfig['Link'])).toBe(fn);
+});
+
+test('getMisicaLinkComponent uses given component with type', async () => {
+    const Component = ({children, href}: any) => <a href={href}>{children}</a>;
+    const Link = getMisticaLinkComponent({Component, type: 'Next13'});
+
+    render(<Link to="#">any text</Link>);
+
+    expect(await screen.findByText('any text')).toMatchInlineSnapshot(`
+        <a
+          href="#"
+        >
+          any text
+        </a>
+    `);
 });

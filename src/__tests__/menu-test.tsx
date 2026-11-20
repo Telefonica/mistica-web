@@ -1,62 +1,154 @@
-import {test, expect} from '../test-utils/component';
+import * as React from 'react';
+import userEvent from '@testing-library/user-event';
+import {render, screen, waitFor} from '@testing-library/react';
+import {ThemeContextProvider, Touchable, Text3, Menu, MenuSection, MenuItem} from '..';
+import {makeTheme} from './test-utils';
+import {redirect as redirectSpy} from '../utils/browser';
+import {MemoryRouter, useLocation, Link as ReactRouterLink} from 'react-router-dom';
 
-import type {Options} from './menu.story';
+import type {ThemeConfig} from '../theme';
 
-test('Menu closes after pressing an option', async ({mount, page}) => {
-    let presses = 0;
-    await mount<typeof Options>('menu/Options', {
-        onPress: () => {
-            presses++;
-        },
-    });
-    await expect(page.getByText('menu is close')).toHaveCount(1);
-    await page.getByText('menu is close').click();
-    await expect(page.getByText('menu is open')).toHaveCount(1);
-    for (const name of ['Option 1', 'Option 2', 'Option 3'])
-        await expect(page.getByRole('menuitem', {name})).toBeVisible();
-    await page.getByRole('menuitem', {name: 'Option 1'}).click();
-    await expect.poll(() => presses).toBe(1);
-    await expect(page.getByText('menu is close')).toHaveCount(1);
-    for (const name of ['Option 1', 'Option 2', 'Option 3'])
-        await expect(page.getByText(name)).toHaveCount(0);
+const Link: ThemeConfig['Link'] = ({innerRef, ...props}) => <ReactRouterLink {...props} ref={innerRef} />;
+
+jest.mock('../utils/browser', () => ({
+    ...jest.requireActual('../utils/browser'),
+    redirect: jest.fn(),
+}));
+
+beforeEach(() => {
+    (redirectSpy as any).mockReset();
 });
-test('Menu closes after clicking an href option', async ({mount, page}) => {
-    const navigations: Array<string> = [];
-    let closedBeforeNavigation = false;
-    await page.exposeFunction('recordMenuBeforeUnload', (closed: boolean) => {
-        closedBeforeNavigation = closed;
+
+const options = ['Option 1', 'Option 2', 'Option 3'];
+
+test('Menu closes after pressing an option', async () => {
+    const onPressSpy = jest.fn();
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Menu
+                renderTarget={({ref, onPress, isMenuOpen}) => (
+                    <Touchable ref={ref} onPress={onPress}>
+                        <Text3 regular>{isMenuOpen ? 'menu is open' : 'menu is close'}</Text3>
+                    </Touchable>
+                )}
+                renderMenu={({ref, className}) => (
+                    <div ref={ref} className={className}>
+                        <MenuSection>
+                            {options.map((option) => (
+                                <MenuItem key={option} label={option} onPress={onPressSpy} />
+                            ))}
+                        </MenuSection>
+                    </div>
+                )}
+            />
+        </ThemeContextProvider>
+    );
+
+    expect(screen.getByText('menu is close')).toBeInTheDocument();
+
+    await userEvent.click(screen.getByText('menu is close'));
+
+    expect(screen.getByText('menu is open')).toBeInTheDocument();
+    expect(screen.getByText('Option 1')).toBeInTheDocument();
+    expect(screen.getByText('Option 2')).toBeInTheDocument();
+    expect(screen.getByText('Option 3')).toBeInTheDocument();
+
+    await userEvent.click(screen.getByText('Option 1'));
+
+    expect(onPressSpy).toHaveBeenCalledTimes(1);
+
+    /** We have to wait until the CSS transition finishes when closing the menu */
+    await waitFor(() => {
+        expect(screen.getByText('menu is close')).toBeInTheDocument();
+        expect(screen.queryByText('Option 1')).not.toBeInTheDocument();
+        expect(screen.queryByText('Option 2')).not.toBeInTheDocument();
+        expect(screen.queryByText('Option 3')).not.toBeInTheDocument();
     });
-    await page.route('https://example.com/', (route) => {
-        navigations.push(route.request().url());
-        return route.fulfill({body: 'Destination'});
-    });
-    await mount('menu/Options', {kind: 'href'});
-    await page.getByText('menu is close').click();
-    await expect(page.getByText('menu is open')).toHaveCount(1);
-    await page.evaluate(() => {
-        window.addEventListener('beforeunload', () => {
-            (window as unknown as {recordMenuBeforeUnload: (closed: boolean) => void}).recordMenuBeforeUnload(
-                document.body.textContent?.includes('menu is close') ?? false
-            );
-        });
-    });
-    const item = page.getByRole('menuitem', {name: 'External link'});
-    await expect(item).toHaveJSProperty('tagName', 'A');
-    await expect(item).toHaveAttribute('href', 'https://example.com');
-    await item.click();
-    await expect(page).toHaveURL('https://example.com/');
-    expect(navigations).toEqual(['https://example.com/']);
-    expect(closedBeforeNavigation).toBe(true);
 });
-test('Menu closes after clicking a "to" option', async ({mount, page}) => {
-    await mount('menu/Options', {kind: 'to'});
-    await page.getByText('menu is close').click();
-    await expect(page.getByText('menu is open')).toHaveCount(1);
-    const item = page.getByRole('menuitem', {name: 'Internal link'});
-    await expect(item).toHaveJSProperty('tagName', 'A');
-    await expect(item).toHaveAttribute('href', '/interna');
-    await expect(page.getByText('Current path: /', {exact: true})).toHaveCount(1);
-    await item.click();
-    await expect(page.getByText('Current path: /interna', {exact: true})).toHaveCount(1);
-    await expect(page.getByText('menu is close')).toHaveCount(1);
+
+test('Menu closes after clicking an href option', async () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Menu
+                renderTarget={({ref, onPress, isMenuOpen}) => (
+                    <Touchable ref={ref} onPress={onPress}>
+                        <Text3 regular>{isMenuOpen ? 'menu is open' : 'menu is close'}</Text3>
+                    </Touchable>
+                )}
+                renderMenu={({ref, className}) => (
+                    <div ref={ref} className={className}>
+                        <MenuSection>
+                            <MenuItem label="External link" href="https://example.com" />
+                        </MenuSection>
+                    </div>
+                )}
+            />
+        </ThemeContextProvider>
+    );
+
+    await userEvent.click(screen.getByText('menu is close'));
+
+    expect(screen.getByText('menu is open')).toBeInTheDocument();
+
+    const menuItem = screen.getByRole('menuitem', {name: 'External link'});
+    expect(menuItem.tagName).toBe('A');
+    expect(menuItem).toHaveAttribute('href', 'https://example.com');
+
+    await userEvent.click(menuItem);
+
+    await waitFor(() => {
+        expect(redirectSpy).toHaveBeenCalledWith('https://example.com', false, false);
+    });
+
+    /** We have to wait until the CSS transition finishes when closing the menu */
+    await waitFor(() => {
+        expect(screen.getByText('menu is close')).toBeInTheDocument();
+    });
+});
+
+test('Menu closes after clicking a "to" option', async () => {
+    const to = '/interna';
+
+    const CurrentPath = () => <div>Current path: {useLocation().pathname}</div>;
+
+    render(
+        <ThemeContextProvider theme={makeTheme({Link})}>
+            <MemoryRouter>
+                <Menu
+                    renderTarget={({ref, onPress, isMenuOpen}) => (
+                        <Touchable ref={ref} onPress={onPress}>
+                            <Text3 regular>{isMenuOpen ? 'menu is open' : 'menu is close'}</Text3>
+                        </Touchable>
+                    )}
+                    renderMenu={({ref, className}) => (
+                        <div ref={ref} className={className}>
+                            <MenuSection>
+                                <MenuItem label="Internal link" to={to} />
+                            </MenuSection>
+                        </div>
+                    )}
+                />
+                <CurrentPath />
+            </MemoryRouter>
+        </ThemeContextProvider>
+    );
+
+    await userEvent.click(screen.getByText('menu is close'));
+
+    expect(screen.getByText('menu is open')).toBeInTheDocument();
+
+    const menuItem = screen.getByRole('menuitem', {name: 'Internal link'});
+    expect(menuItem.tagName).toBe('A');
+    expect(menuItem).toHaveAttribute('href', to);
+
+    expect(screen.getByText('Current path: /')).toBeInTheDocument();
+
+    await userEvent.click(menuItem);
+
+    expect(screen.getByText(`Current path: ${to}`)).toBeInTheDocument();
+
+    /** We have to wait until the CSS transition finishes when closing the menu */
+    await waitFor(() => {
+        expect(screen.getByText('menu is close')).toBeInTheDocument();
+    });
 });

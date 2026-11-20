@@ -1,150 +1,366 @@
-import {test, expect} from '../test-utils/component';
-import {installWebviewBridge} from '../test-utils/webview';
+import * as React from 'react';
+import {render, waitFor, screen, act} from '@testing-library/react';
+import {ThemeContextProvider, useDialog, Switch, Checkbox, RadioButton, RadioGroup} from '..';
+import {makeTheme} from './test-utils';
+import * as webviewBridge from '@tef-novum/webview-bridge';
+import userEvent from '@testing-library/user-event';
 
-import type {Example} from './dialog.story';
+const onAcceptSpy = jest.fn();
+const onCancelSpy = jest.fn();
 
-test('does not render anything initially', async ({mount}) => {
-    const component = await mount('dialog/Empty');
-    await expect(component.locator(':scope > :not(style)')).toHaveCount(0);
-});
-test('throws when we try to stack dialogs', async ({mount, page}) => {
-    const component = await mount('dialog/Example');
-    await component.getByRole('button', {name: 'Alert', exact: true}).click();
-    await expect(page.getByText('Message', {exact: true})).toHaveCount(1);
-    await page.evaluate(() => window.dispatchEvent(new Event('test-open-dialog')));
-    await expect(component.getByTestId('dialog-error')).toHaveValue(
-        'Tried to show a dialog on top of another dialog'
+const alertProps = {
+    title: 'Title',
+    message: 'Message',
+    acceptText: 'Yay!',
+    onAccept: onAcceptSpy,
+};
+
+const confirmProps = {
+    title: 'Title',
+    message: 'Message',
+    acceptText: 'Yay!',
+    cancelText: 'Nope!',
+    onAccept: onAcceptSpy,
+    onCancel: onCancelSpy,
+    closeButtonLabel: 'custom close label',
+};
+
+let savedAlert: (params: any) => void | null = () => {
+    throw Error('unset');
+};
+
+const TestComponent = () => {
+    const {alert, confirm, dialog} = useDialog();
+    React.useEffect(() => {
+        savedAlert = alert;
+        return () => {
+            savedAlert = () => {
+                throw Error('unset');
+            };
+        };
+    }, [alert]);
+    return (
+        <>
+            <button onClick={() => alert(alertProps)}>Alert</button>
+            <button onClick={() => confirm(confirmProps)}>Confirm</button>
+            <button onClick={() => confirm({...confirmProps, onCancel: undefined})}>
+                Confirm without onCancel
+            </button>
+            <button onClick={() => dialog(confirmProps)}>Dialog</button>
+        </>
     );
+};
+
+test('does not render anything initially', () => {
+    const {asFragment} = render(<ThemeContextProvider theme={makeTheme()} />);
+    expect(asFragment()).toMatchInlineSnapshot(`<DocumentFragment />`);
 });
-test("throws when we don't instantiate theme", async ({mount, page}) => {
-    const component = await mount('dialog/Example', {missingTheme: true});
-    await page.evaluate(() => window.dispatchEvent(new Event('test-open-dialog')));
-    await expect(component.getByTestId('dialog-error')).toHaveValue(
-        /Tried to show a dialog but the DialogRoot component was not mounted/
+
+test('throws when we try to stack dialogs', async () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <TestComponent />
+        </ThemeContextProvider>
     );
+
+    const alertButton = await screen.findByRole('button', {name: 'Alert'});
+    await userEvent.click(alertButton);
+
+    expect(await screen.findByText(alertProps.message)).toBeInTheDocument();
+
+    expect(() => {
+        act(() => savedAlert(alertProps));
+    }).toThrow('Tried to show a dialog on top of another dialog');
 });
-test('renders alert dialog correctly when alert function called', async ({mount, page}) => {
-    await mount('dialog/Example');
-    await page.getByRole('button', {name: 'Alert', exact: true}).click();
-    await expect(page.getByText('Message', {exact: true})).toHaveCount(1);
-    await expect(page.getByRole('button', {name: 'Yay!'})).toHaveCount(1);
+
+test("throws when we don't instantiate theme", async () => {
+    render(<TestComponent />);
+
+    expect(() => {
+        act(() => savedAlert(alertProps));
+    }).toThrow('Tried to show a dialog but the DialogRoot component was not mounted');
 });
-test('works with nested theme context providers', async ({mount, page}) => {
-    await mount('dialog/Example', {nested: true});
-    await page.getByRole('button', {name: 'Alert', exact: true}).click();
-    await expect(page.getByText('Message', {exact: true})).toHaveCount(1);
+
+test('renders alert dialog correctly when alert function called', async () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <TestComponent />
+        </ThemeContextProvider>
+    );
+
+    const alertButton = await screen.findByRole('button', {name: 'Alert'});
+    await userEvent.click(alertButton);
+
+    expect(await screen.findByText(alertProps.message)).toBeInTheDocument();
+    expect(await screen.findByRole('button', {name: 'Yay!'})).toBeInTheDocument();
 });
-test('closes alert dialog when clicking on button', async ({mount, page}) => {
-    let calls = 0;
-    await mount<typeof Example>('dialog/Example', {
-        onAccept: () => {
-            calls++;
+
+test('works with nested theme context providers', async () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <ThemeContextProvider theme={makeTheme()}>
+                <TestComponent />
+            </ThemeContextProvider>
+        </ThemeContextProvider>
+    );
+
+    const alertButton = await screen.findByRole('button', {name: 'Alert'});
+    await userEvent.click(alertButton);
+
+    expect(await screen.findByText(alertProps.message)).toBeInTheDocument();
+});
+
+test('closes alert dialog when clicking on button', async () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <TestComponent />
+        </ThemeContextProvider>
+    );
+
+    const alertButton = await screen.findByRole('button', {name: 'Alert'});
+    await userEvent.click(alertButton);
+
+    const acceptButton = await screen.findByRole('button', {name: 'Yay!'});
+    expect(acceptButton).toBeInTheDocument();
+
+    await userEvent.click(acceptButton);
+    await waitFor(() => expect(onAcceptSpy).toHaveBeenCalledTimes(1));
+});
+
+test('renders confirm dialog correctly when confirm function called', async () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <TestComponent />
+        </ThemeContextProvider>
+    );
+
+    const confirmButton = await screen.findByRole('button', {name: 'Confirm'});
+    await userEvent.click(confirmButton);
+
+    expect(await screen.findByRole('dialog')).toBeInTheDocument();
+    expect(screen.getByText(confirmProps.message)).toBeInTheDocument();
+    expect(screen.getByRole('button', {name: 'Nope!'})).toBeInTheDocument();
+    expect(screen.getByRole('button', {name: 'Yay!'})).toBeInTheDocument();
+});
+
+test('Closes a dialog on click outside', async () => {
+    // We disable animations so dialogs get closed properly
+    jest.spyOn(window.navigator, 'userAgent', 'get').mockReturnValue('acceptance-test');
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <TestComponent />
+        </ThemeContextProvider>
+    );
+
+    const dialogButton = await screen.findByRole('button', {name: 'Dialog'});
+    await userEvent.click(dialogButton);
+
+    expect(await screen.findByRole('dialog')).toBeInTheDocument();
+    expect(await screen.findByRole('button', {name: 'Nope!'})).toBeInTheDocument();
+
+    await userEvent.click(screen.getByTestId('dialog-overlay'));
+
+    await waitFor(
+        () => {
+            expect(screen.queryByRole('dialog', {hidden: true})).not.toBeInTheDocument();
         },
-    });
-    await page.getByRole('button', {name: 'Alert', exact: true}).click();
-    await page.getByRole('button', {name: 'Yay!'}).click();
-    await expect.poll(() => calls).toBe(1);
+        {timeout: 5000}
+    );
+
+    expect(onCancelSpy).toHaveBeenCalled();
 });
-test('renders confirm dialog correctly when confirm function called', async ({mount, page}) => {
-    await mount('dialog/Example');
-    await page.getByRole('button', {name: 'Confirm', exact: true}).click();
-    await expect(page.getByRole('dialog')).toHaveCount(1);
-    await expect(page.getByText('Message', {exact: true})).toHaveCount(1);
-    for (const name of ['Nope!', 'Yay!']) await expect(page.getByRole('button', {name})).toHaveCount(1);
+
+test('closes confirm dialog when clicking on any button', async () => {
+    // We disable animations so dialogs get closed properly
+    jest.spyOn(window.navigator, 'userAgent', 'get').mockReturnValue('acceptance-test');
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <TestComponent />
+        </ThemeContextProvider>
+    );
+
+    const confirmButton = await screen.findByRole('button', {name: 'Confirm'});
+    await userEvent.click(confirmButton);
+
+    expect(await screen.findByRole('dialog')).toBeInTheDocument();
+    const cancelButton = await screen.findByRole('button', {name: 'Nope!'});
+    expect(cancelButton).toBeInTheDocument();
+
+    await userEvent.click(cancelButton);
+
+    await waitFor(() => {
+        expect(screen.queryByRole('dialog', {hidden: true})).not.toBeInTheDocument();
+    });
+
+    expect(onCancelSpy).toHaveBeenCalled();
+
+    const confirmWithoutOnCancelButton = await screen.findByRole('button', {
+        name: 'Confirm without onCancel',
+    });
+    await userEvent.click(confirmWithoutOnCancelButton);
+
+    // the cancel button should be visible even if the onCancel callback is not defined
+    const cancelButton2 = await screen.findByRole('button', {name: 'Nope!'});
+    expect(cancelButton2).toBeInTheDocument();
+
+    const acceptButton = await screen.findByRole('button', {name: 'Yay!'});
+    await userEvent.click(acceptButton);
+
+    await waitFor(() => {
+        expect(onAcceptSpy).toHaveBeenCalled();
+    });
 });
-test('Closes a dialog on click outside', async ({mount, page}) => {
-    let calls = 0;
-    await mount<typeof Example>('dialog/Example', {
-        onCancel: () => {
-            calls++;
-        },
+
+test('closing a previous accepted dialog does not trigger onAccept callback', async () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <TestComponent />
+        </ThemeContextProvider>
+    );
+
+    const confirmButton = await screen.findByRole('button', {name: 'Confirm'});
+    await userEvent.click(confirmButton);
+
+    await screen.findByRole('dialog');
+    const acceptButton = await screen.findByRole('button', {name: 'Yay!'});
+
+    await userEvent.click(acceptButton);
+
+    await waitFor(() => {
+        expect(screen.queryByRole('dialog', {hidden: true})).not.toBeInTheDocument();
     });
-    await page.getByRole('button', {name: 'Dialog', exact: true}).click();
-    await expect(page.getByRole('dialog')).toBeVisible();
-    await expect(page.getByRole('button', {name: 'Nope!'})).toBeVisible();
-    await page.getByTestId('dialog-overlay').click({position: {x: 0, y: 0}});
-    await expect(page.getByRole('dialog', {includeHidden: true})).toHaveCount(0);
-    expect(calls).toBe(1);
+
+    expect(onAcceptSpy).toHaveBeenCalled();
+
+    onAcceptSpy.mockClear();
+
+    await userEvent.click(confirmButton);
+
+    const cancelButton = await screen.findByRole('button', {name: 'Nope!'});
+    await userEvent.click(cancelButton);
+
+    await waitFor(() => {
+        expect(screen.queryByRole('dialog', {hidden: true})).not.toBeInTheDocument();
+    });
+
+    expect(onAcceptSpy).not.toHaveBeenCalled();
 });
-test('closes confirm dialog when clicking on any button', async ({mount, page}) => {
-    const calls: Array<string> = [];
-    await mount<typeof Example>('dialog/Example', {
-        onCancel: () => {
-            calls.push('cancel');
-        },
-        onAccept: () => {
-            calls.push('accept');
-        },
+
+test('when webview bridge is available nativeAlert is shown', async () => {
+    jest.spyOn(webviewBridge, 'isWebViewBridgeAvailable').mockReturnValue(true);
+    const nativeAlertSpy = jest.spyOn(webviewBridge, 'nativeAlert').mockResolvedValue();
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <TestComponent />
+        </ThemeContextProvider>
+    );
+
+    const alertButton = await screen.findByRole('button', {name: 'Alert'});
+    await userEvent.click(alertButton);
+
+    await waitFor(() => {
+        expect(nativeAlertSpy).toHaveBeenCalledWith({
+            title: 'Title',
+            message: 'Message',
+            buttonText: 'Yay!',
+        });
     });
-    await page.getByRole('button', {name: 'Confirm', exact: true}).click();
-    await expect(page.getByRole('dialog')).toBeVisible();
-    await page.getByRole('button', {name: 'Nope!'}).click();
-    await expect(page.getByRole('dialog', {includeHidden: true})).toHaveCount(0);
-    expect(calls).toEqual(['cancel']);
-    await page.getByRole('button', {name: 'Confirm without onCancel', exact: true}).click();
-    await expect(page.getByRole('button', {name: 'Nope!'})).toBeVisible();
-    await page.getByRole('button', {name: 'Yay!'}).click();
-    await expect.poll(() => calls).toEqual(['cancel', 'accept']);
 });
-test('closing a previous accepted dialog does not trigger onAccept callback', async ({mount, page}) => {
-    const calls: Array<string> = [];
-    await mount<typeof Example>('dialog/Example', {
-        onAccept: () => {
-            calls.push('accept');
-        },
-        onCancel: () => {
-            calls.push('cancel');
-        },
+
+test('when webview bridge is available nativeConfirm is shown', async () => {
+    jest.spyOn(webviewBridge, 'isWebViewBridgeAvailable').mockReturnValue(true);
+    const nativeAlertSpy = jest.spyOn(webviewBridge, 'nativeConfirm').mockResolvedValue(true);
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <TestComponent />
+        </ThemeContextProvider>
+    );
+
+    const confirmButton = await screen.findByRole('button', {name: 'Confirm'});
+    await userEvent.click(confirmButton);
+
+    await waitFor(() => {
+        expect(nativeAlertSpy).toHaveBeenCalledWith({
+            title: 'Title',
+            message: 'Message',
+            acceptText: 'Yay!',
+            cancelText: 'Nope!',
+        });
     });
-    await page.getByRole('button', {name: 'Confirm', exact: true}).click();
-    await page.getByRole('button', {name: 'Yay!'}).click();
-    await expect(page.getByRole('dialog', {includeHidden: true})).toHaveCount(0);
-    expect(calls).toEqual(['accept']);
-    await page.getByRole('button', {name: 'Confirm', exact: true}).click();
-    await page.getByRole('button', {name: 'Nope!'}).click();
-    await expect(page.getByRole('dialog', {includeHidden: true})).toHaveCount(0);
-    expect(calls).toEqual(['accept', 'cancel']);
 });
-for (const kind of ['Alert', 'Confirm'])
-    test(`when webview bridge is available native${kind} is shown`, async ({mount, page}) => {
-        const messages = await installWebviewBridge(page, {result: true});
-        await mount('dialog/Example');
-        await page.getByRole('button', {name: kind, exact: true}).click();
-        await expect
-            .poll(() =>
-                messages
-                    .filter((message) => message.type === kind.toUpperCase())
-                    .map((message) => message.payload)
-            )
-            .toEqual([
-                {
-                    title: 'Title',
-                    message: 'Message',
-                    ...(kind === 'Alert' ? {buttonText: 'Yay!'} : {acceptText: 'Yay!', cancelText: 'Nope!'}),
-                },
-            ]);
-    });
-for (const [kind, name] of [
-    ['switch', 'notifications'],
-    ['checkbox', 'terms'],
-    ['radio', 'option'],
-] as const)
-    test(`returns focus to the trigger ${kind === 'radio' ? 'radio button' : kind} when the dialog is closed via keyboard`, async ({
-        mount,
-        page,
-    }) => {
-        await mount('dialog/Trigger', {kind});
-        const trigger = page.getByRole(kind, {name, exact: true});
-        await trigger.focus();
-        await expect(trigger).toBeFocused();
-        await page.keyboard.press('Space');
-        await expect(page.getByRole('dialog')).toBeVisible();
-        await page.keyboard.press('Escape');
-        await expect(page.getByRole('dialog', {includeHidden: true})).toHaveCount(0);
-        await expect(trigger).toBeFocused();
-    });
-test('dialog close button is accessible', async ({mount, page}) => {
-    await mount('dialog/Example');
-    await page.getByRole('button', {name: 'Dialog', exact: true}).click();
-    await expect(page.getByRole('button', {name: 'custom close label'})).toBeVisible();
+
+const DialogTrigger = ({renderTrigger}: {renderTrigger: (openDialog: () => void) => React.ReactNode}) => {
+    const {dialog} = useDialog();
+    return <>{renderTrigger(() => dialog({message: 'Message'}))}</>;
+};
+
+test.each([
+    {
+        type: 'switch',
+        role: 'switch',
+        accessibleName: 'notifications',
+        renderTrigger: (openDialog: () => void) => (
+            <Switch name="notifications" aria-label="notifications" onChange={openDialog} />
+        ),
+    },
+    {
+        type: 'checkbox',
+        role: 'checkbox',
+        accessibleName: 'terms',
+        renderTrigger: (openDialog: () => void) => (
+            <Checkbox name="terms" aria-label="terms" onChange={openDialog} />
+        ),
+    },
+    {
+        type: 'radio button',
+        role: 'radio',
+        accessibleName: 'option',
+        renderTrigger: (openDialog: () => void) => (
+            <RadioGroup name="options" aria-label="options" onChange={openDialog}>
+                <RadioButton value="option" aria-label="option" />
+            </RadioGroup>
+        ),
+    },
+] as const)(
+    'returns focus to the trigger $type when the dialog is closed via keyboard',
+    async ({role, accessibleName, renderTrigger}) => {
+        render(
+            <ThemeContextProvider theme={makeTheme()}>
+                <DialogTrigger renderTrigger={renderTrigger} />
+            </ThemeContextProvider>
+        );
+
+        const triggerEl = await screen.findByRole(role, {name: accessibleName});
+        triggerEl.focus();
+        expect(triggerEl).toHaveFocus();
+
+        await userEvent.keyboard(' ');
+        expect(await screen.findByRole('dialog')).toBeInTheDocument();
+
+        await userEvent.keyboard('{Escape}');
+        await waitFor(() => {
+            expect(screen.queryByRole('dialog', {hidden: true})).not.toBeInTheDocument();
+        });
+
+        await waitFor(() => {
+            expect(triggerEl).toHaveFocus();
+        });
+    }
+);
+
+test('dialog close button is accessible', async () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <TestComponent />
+        </ThemeContextProvider>
+    );
+
+    const dialogButton = await screen.findByRole('button', {name: 'Dialog'});
+    await userEvent.click(dialogButton);
+
+    await screen.findByRole('button', {name: 'custom close label'});
 });
