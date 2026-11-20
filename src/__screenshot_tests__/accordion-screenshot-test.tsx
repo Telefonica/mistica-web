@@ -9,7 +9,7 @@ for (const testCase of [
 ] as const) {
     const {overInverse, singleOpen} = testCase;
     test(`Accordion. overInverse(${testCase.overInverse}) singleOpen(${testCase.singleOpen})`, async () => {
-        await openStoryPage({
+        const page = await openStoryPage({
             id: 'components-accordions--accordion-story',
             device: 'MOBILE_IOS',
             args: {
@@ -27,6 +27,7 @@ for (const testCase of [
         await (await screen.findByTestId('accordion-item-2')).click();
         await (await screen.findByTestId('accordion-item-4')).click();
         await (await screen.findByTestId('accordion-item-6')).click();
+        await page.mouse.move(0, 0);
 
         await expectScreenshot(accordion);
     });
@@ -44,7 +45,7 @@ for (const testCase of [
 ] as const) {
     const {inverse, overInverse, singleOpen} = testCase;
     test(`BoxedAccordion. inverse(${testCase.inverse}) overInverse(${testCase.overInverse}) singleOpen(${testCase.singleOpen})`, async () => {
-        await openStoryPage({
+        const page = await openStoryPage({
             id: 'components-accordions--boxed-accordion-story',
             device: 'MOBILE_IOS',
             args: {
@@ -63,6 +64,7 @@ for (const testCase of [
         await (await screen.findByTestId('accordion-item-2')).click();
         await (await screen.findByTestId('accordion-item-4')).click();
         await (await screen.findByTestId('accordion-item-6')).click();
+        await page.mouse.move(0, 0);
 
         await expectScreenshot(accordion);
     });
@@ -77,7 +79,7 @@ for (const testCase of [
 ] as const) {
     const {detail, right, overInverse} = testCase;
     test(`Accordion. detail(${testCase.detail}) right(${testCase.right}) overInverse(${testCase.overInverse})`, async () => {
-        await openStoryPage({
+        const page = await openStoryPage({
             id: 'components-accordions--accordion-story',
             device: 'MOBILE_IOS',
             args: {
@@ -94,6 +96,7 @@ for (const testCase of [
         await (await screen.findByTestId('accordion-item-2')).click();
         await (await screen.findByTestId('accordion-item-4')).click();
         await (await screen.findByTestId('accordion-item-6')).click();
+        await page.mouse.move(0, 0);
 
         await expectScreenshot(accordion);
     });
@@ -107,7 +110,7 @@ for (const testCase of [
 ] as const) {
     const {detail, right} = testCase;
     test(`BoxedAccordion. detail(${testCase.detail}) right(${testCase.right})`, async () => {
-        await openStoryPage({
+        const page = await openStoryPage({
             id: 'components-accordions--boxed-accordion-story',
             device: 'MOBILE_IOS',
             args: {
@@ -123,6 +126,7 @@ for (const testCase of [
         await (await screen.findByTestId('accordion-item-2')).click();
         await (await screen.findByTestId('accordion-item-4')).click();
         await (await screen.findByTestId('accordion-item-6')).click();
+        await page.mouse.move(0, 0);
 
         await expectScreenshot(accordion);
     });
@@ -136,7 +140,7 @@ for (const testCase of [
 ] as const) {
     const {overInverse, singleOpen} = testCase;
     test(`Accordion small. overInverse(${testCase.overInverse}) singleOpen(${testCase.singleOpen})`, async () => {
-        await openStoryPage({
+        const page = await openStoryPage({
             id: 'components-accordions--accordion-story',
             device: 'MOBILE_IOS',
             args: {
@@ -155,6 +159,7 @@ for (const testCase of [
         await (await screen.findByTestId('accordion-item-2')).click();
         await (await screen.findByTestId('accordion-item-4')).click();
         await (await screen.findByTestId('accordion-item-6')).click();
+        await page.mouse.move(0, 0);
 
         await expectScreenshot(accordion);
     });
@@ -172,7 +177,7 @@ for (const testCase of [
 ] as const) {
     const {inverse, overInverse, singleOpen} = testCase;
     test(`BoxedAccordion small. inverse(${testCase.inverse}) overInverse(${testCase.overInverse}) singleOpen(${testCase.singleOpen})`, async () => {
-        await openStoryPage({
+        const page = await openStoryPage({
             id: 'components-accordions--boxed-accordion-story',
             device: 'MOBILE_IOS',
             args: {
@@ -192,6 +197,7 @@ for (const testCase of [
         await (await screen.findByTestId('accordion-item-2')).click();
         await (await screen.findByTestId('accordion-item-4')).click();
         await (await screen.findByTestId('accordion-item-6')).click();
+        await page.mouse.move(0, 0);
 
         await expectScreenshot(accordion);
     });
