@@ -1,43 +1,46 @@
+import {test, expectScreenshot} from '../test-utils/playwright';
 import {openStoryPage, screen, setRootFontSize} from '../test-utils';
 
 const DEVICES = ['MOBILE_IOS', 'MOBILE_ANDROID'] as const;
 
-test.each(DEVICES)('Switch (%s)', async (device) => {
-    await openStoryPage({
-        id: 'components-switch--controlled',
-        device,
+for (const testCase of DEVICES) {
+    const device = testCase;
+    test(`Switch (${testCase})`, async () => {
+        await openStoryPage({
+            id: 'components-switch--controlled',
+            device,
+        });
+
+        const wrapper = await screen.findByTestId('switch-wrapper');
+        const element = await screen.findByRole('switch');
+
+        await expectScreenshot(wrapper);
+
+        await element.click();
+
+        await expectScreenshot(wrapper);
     });
+}
 
-    const wrapper = await screen.findByTestId('switch-wrapper');
-    const element = await screen.findByRole('switch');
+for (const testCase of DEVICES) {
+    const device = testCase;
+    test(`Switch - inverse (${testCase})`, async () => {
+        await openStoryPage({
+            id: 'components-switch--controlled',
+            device,
+            args: {variantOutside: 'brand'},
+        });
 
-    const image = await wrapper.screenshot();
-    expect(image).toMatchImageSnapshot();
+        const wrapper = await screen.findByTestId('switch-wrapper');
+        const element = await screen.findByRole('switch');
 
-    await element.click();
+        await expectScreenshot(wrapper);
 
-    const imageChecked = await wrapper.screenshot();
-    expect(imageChecked).toMatchImageSnapshot();
-});
+        await element.click();
 
-test.each(DEVICES)('Switch - inverse (%s)', async (device) => {
-    await openStoryPage({
-        id: 'components-switch--controlled',
-        device,
-        args: {variantOutside: 'brand'},
+        await expectScreenshot(wrapper);
     });
-
-    const wrapper = await screen.findByTestId('switch-wrapper');
-    const element = await screen.findByRole('switch');
-
-    const image = await wrapper.screenshot();
-    expect(image).toMatchImageSnapshot();
-
-    await element.click();
-
-    const imageChecked = await wrapper.screenshot();
-    expect(imageChecked).toMatchImageSnapshot();
-});
+}
 
 test('Switch - uncontrolled', async () => {
     await openStoryPage({
@@ -48,13 +51,11 @@ test('Switch - uncontrolled', async () => {
     const wrapper = await screen.findByTestId('switch-wrapper');
     const element = await screen.findByRole('switch');
 
-    const image = await wrapper.screenshot();
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(wrapper);
 
     await element.click();
 
-    const imageChecked = await wrapper.screenshot();
-    expect(imageChecked).toMatchImageSnapshot();
+    await expectScreenshot(wrapper);
 });
 
 test('Switch - custom render', async () => {
@@ -66,13 +67,11 @@ test('Switch - custom render', async () => {
     const wrapper = await screen.findByTestId('switch-wrapper');
     const element = await screen.findByRole('switch');
 
-    const image = await wrapper.screenshot();
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(wrapper);
 
     await element.click();
 
-    const imageChecked = await wrapper.screenshot();
-    expect(imageChecked).toMatchImageSnapshot();
+    await expectScreenshot(wrapper);
 });
 
 test('Switch - disabled', async () => {
@@ -83,8 +82,7 @@ test('Switch - disabled', async () => {
     });
 
     const wrapper = await screen.findByTestId('switch-wrapper');
-    const image = await wrapper.screenshot();
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(wrapper);
 });
 
 test('Switch - control element aligned correctly with long content', async () => {
@@ -96,6 +94,5 @@ test('Switch - control element aligned correctly with long content', async () =>
     await setRootFontSize(72);
 
     const wrapper = await screen.findByTestId('switch-wrapper');
-    const image = await wrapper.screenshot();
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(wrapper);
 });

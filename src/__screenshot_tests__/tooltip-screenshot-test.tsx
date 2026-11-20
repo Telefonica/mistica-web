@@ -1,3 +1,4 @@
+import {test, expectScreenshot} from '../test-utils/playwright';
 import {VIVO_SKIN} from '../skins/constants';
 import {openStoryPage, screen} from '../test-utils';
 
@@ -18,21 +19,20 @@ const getCases = () => {
     return cases;
 };
 
-test.each(getCases())(
-    'Tooltip - position = %s, targetHorizontalPosition = %s, targetVerticalPosition = %s',
-    async (position, targetHorizontalPosition, targetVerticalPosition) => {
+for (const testCase of getCases()) {
+    const [position, targetHorizontalPosition, targetVerticalPosition] = testCase;
+    test(`Tooltip - position = ${testCase[0]}, targetHorizontalPosition = ${testCase[1]}, targetVerticalPosition = ${testCase[2]}`, async () => {
         const page = await openStoryPage({
             id: 'components-tooltip--default',
             device: 'DESKTOP',
             args: {position, targetHorizontalPosition, targetVerticalPosition, slot: true},
         });
 
-        await page.click(await screen.findByTestId('target'));
+        await (await screen.findByTestId('target')).click();
 
-        const image = await page.screenshot();
-        expect(image).toMatchImageSnapshot();
-    }
-);
+        await expectScreenshot(page);
+    });
+}
 
 test('Tooltip - appears properly on mobile', async () => {
     const page = await openStoryPage({
@@ -40,10 +40,9 @@ test('Tooltip - appears properly on mobile', async () => {
         device: 'MOBILE_IOS',
     });
 
-    await page.click(await screen.findByTestId('target'));
+    await (await screen.findByTestId('target')).click();
 
-    const image = await page.screenshot();
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(page);
 });
 
 test('Tooltip - inverse', async () => {
@@ -53,10 +52,9 @@ test('Tooltip - inverse', async () => {
         args: {variantOutside: 'brand'},
     });
 
-    await page.click(await screen.findByTestId('target'));
+    await (await screen.findByTestId('target')).click();
 
-    const image = await page.screenshot();
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(page);
 });
 
 test('Tooltip - max width is 496px', async () => {
@@ -69,10 +67,9 @@ test('Tooltip - max width is 496px', async () => {
         },
     });
 
-    await page.click(await screen.findByTestId('target'));
+    await (await screen.findByTestId('target')).click();
 
-    const image = await page.screenshot();
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(page);
 });
 
 test('Tooltip - content is centered if width is small', async () => {
@@ -82,10 +79,9 @@ test('Tooltip - content is centered if width is small', async () => {
         args: {title: '', description: 'A'},
     });
 
-    await page.click(await screen.findByTestId('target'));
+    await (await screen.findByTestId('target')).click();
 
-    const image = await page.screenshot();
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(page);
 });
 
 test('Tooltip - appears properly when its container is fixed and has overflow hidden', async () => {
@@ -94,10 +90,9 @@ test('Tooltip - appears properly when its container is fixed and has overflow hi
         device: 'DESKTOP',
     });
 
-    await page.click(await screen.findByTestId('target'));
+    await (await screen.findByTestId('target')).click();
 
-    const image = await page.screenshot();
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(page);
 });
 
 test('Tooltip - active tooltip is closed if another one is opened', async () => {
@@ -106,20 +101,17 @@ test('Tooltip - active tooltip is closed if another one is opened', async () => 
         device: 'DESKTOP',
     });
 
-    await page.click(await screen.findByTestId('target-0'));
+    await (await screen.findByTestId('target-0')).click();
 
-    const firstTooltip = await page.screenshot();
-    expect(firstTooltip).toMatchImageSnapshot();
+    await expectScreenshot(page);
 
-    await page.click(await screen.findByTestId('target-1'));
+    await (await screen.findByTestId('target-1')).click();
 
-    const secondTooltip = await page.screenshot();
-    expect(secondTooltip).toMatchImageSnapshot();
+    await expectScreenshot(page);
 
-    await page.click(await screen.findByTestId('target-2'));
+    await (await screen.findByTestId('target-2')).click();
 
-    const thirdTooltip = await page.screenshot();
-    expect(thirdTooltip).toMatchImageSnapshot();
+    await expectScreenshot(page);
 });
 
 test('Tooltip - with targetStyle', async () => {
@@ -128,18 +120,15 @@ test('Tooltip - with targetStyle', async () => {
         device: 'DESKTOP',
     });
 
-    const noOpenTooltip = await page.screenshot();
-    expect(noOpenTooltip).toMatchImageSnapshot();
+    await expectScreenshot(page);
 
-    await page.click(await screen.findByTestId('target-0'));
+    await (await screen.findByTestId('target-0')).click();
 
-    const firstTooltip = await page.screenshot();
-    expect(firstTooltip).toMatchImageSnapshot();
+    await expectScreenshot(page);
 
-    await page.click(await screen.findByTestId('target-1'));
+    await (await screen.findByTestId('target-1')).click();
 
-    const secondTooltip = await page.screenshot();
-    expect(secondTooltip).toMatchImageSnapshot();
+    await expectScreenshot(page);
 });
 
 /**
@@ -153,34 +142,37 @@ test('Tooltip - arrow appears properly in Vivo skin when target is close to view
         skin: VIVO_SKIN,
     });
 
-    await page.click(await screen.findByTestId('target'));
+    await (await screen.findByTestId('target')).click();
 
-    const image = await page.screenshot();
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(page);
 });
 
-test.each(
-    ['top', 'bottom', 'left', 'right'].flatMap((position) =>
-        ['start', 'end'].map((alignment) => ({position, alignment}))
-    )
-)('Tooltip - position=$position alignment=$alignment', async (args) => {
-    const page = await openStoryPage({
-        id: 'components-tooltip--default',
-        device: 'DESKTOP',
-        args,
+for (const testCase of ['top', 'bottom', 'left', 'right'].flatMap((position) =>
+    ['start', 'end'].map((alignment) => ({position, alignment}))
+)) {
+    const args = testCase;
+    test(`Tooltip - position=${testCase.position} alignment=${testCase.alignment}`, async () => {
+        const page = await openStoryPage({
+            id: 'components-tooltip--default',
+            device: 'DESKTOP',
+            args,
+        });
+
+        await (await screen.findByRole('button', {name: 'Tooltip target'})).click();
+        await expectScreenshot(page);
     });
+}
 
-    await (await screen.findByRole('button', {name: 'Tooltip target'})).click();
-    expect(await page.screenshot()).toMatchImageSnapshot();
-});
-
-test.each(['top', 'left'])('Tooltip - small content with Vivo corners in %s', async (position) => {
-    const page = await openStoryPage({
-        id: 'components-tooltip--default',
-        device: 'DESKTOP',
-        skin: VIVO_SKIN,
-        args: {position, alignment: 'start', title: '', description: 'A'},
+for (const testCase of ['top', 'left']) {
+    const position = testCase;
+    test(`Tooltip - small content with Vivo corners in ${testCase}`, async () => {
+        const page = await openStoryPage({
+            id: 'components-tooltip--default',
+            device: 'DESKTOP',
+            skin: VIVO_SKIN,
+            args: {position, alignment: 'start', title: '', description: 'A'},
+        });
+        await (await screen.findByRole('button', {name: 'Tooltip target'})).click();
+        await expectScreenshot(page);
     });
-    await (await screen.findByRole('button', {name: 'Tooltip target'})).click();
-    expect(await page.screenshot()).toMatchImageSnapshot();
-});
+}

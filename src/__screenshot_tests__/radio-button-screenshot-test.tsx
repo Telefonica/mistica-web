@@ -1,29 +1,34 @@
+import {test, expectScreenshot} from '../test-utils/playwright';
 import {openStoryPage, screen, setRootFontSize} from '../test-utils';
 
 const DEVICES = ['MOBILE_IOS', 'MOBILE_ANDROID'] as const;
 
-test.each(DEVICES)('RadioButton (%s)', async (device) => {
-    await openStoryPage({
-        id: 'components-radio-button--controlled',
-        device,
+for (const testCase of DEVICES) {
+    const device = testCase;
+    test(`RadioButton (${testCase})`, async () => {
+        await openStoryPage({
+            id: 'components-radio-button--controlled',
+            device,
+        });
+
+        const wrapper = await screen.findByTestId('radio-group-wrapper');
+        await expectScreenshot(wrapper);
     });
+}
 
-    const wrapper = await screen.findByTestId('radio-group-wrapper');
-    const image = await wrapper.screenshot();
-    expect(image).toMatchImageSnapshot();
-});
+for (const testCase of DEVICES) {
+    const device = testCase;
+    test(`RadioButton - inverse (${testCase})`, async () => {
+        await openStoryPage({
+            id: 'components-radio-button--controlled',
+            device,
+            args: {variantOutside: 'brand'},
+        });
 
-test.each(DEVICES)('RadioButton - inverse (%s)', async (device) => {
-    await openStoryPage({
-        id: 'components-radio-button--controlled',
-        device,
-        args: {variantOutside: 'brand'},
+        const wrapper = await screen.findByTestId('radio-group-wrapper');
+        await expectScreenshot(wrapper);
     });
-
-    const wrapper = await screen.findByTestId('radio-group-wrapper');
-    const image = await wrapper.screenshot();
-    expect(image).toMatchImageSnapshot();
-});
+}
 
 test('RadioButton - uncontrolled', async () => {
     await openStoryPage({
@@ -32,8 +37,7 @@ test('RadioButton - uncontrolled', async () => {
     });
 
     const wrapper = await screen.findByTestId('radio-group-wrapper');
-    const image = await wrapper.screenshot();
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(wrapper);
 });
 
 test('RadioButton - custom render', async () => {
@@ -43,8 +47,7 @@ test('RadioButton - custom render', async () => {
     });
 
     const wrapper = await screen.findByTestId('radio-group-wrapper');
-    const image = await wrapper.screenshot();
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(wrapper);
 });
 
 test('RadioButton - disabled', async () => {
@@ -55,8 +58,7 @@ test('RadioButton - disabled', async () => {
     });
 
     const wrapper = await screen.findByTestId('radio-group-wrapper');
-    const image = await wrapper.screenshot();
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(wrapper);
 });
 
 test('RadioButton - control element aligned correctly with long content', async () => {
@@ -68,6 +70,5 @@ test('RadioButton - control element aligned correctly with long content', async 
     await setRootFontSize(72);
 
     const wrapper = await screen.findByTestId('radio-group-wrapper');
-    const image = await wrapper.screenshot();
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(wrapper);
 });

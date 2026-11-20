@@ -1,3 +1,4 @@
+import {test, expectScreenshot} from '../test-utils/playwright';
 import {openStoryPage, screen} from '../test-utils';
 
 import type {Device} from '../test-utils';
@@ -34,16 +35,18 @@ const getCases = () => {
     return cases;
 };
 
-test.each(getCases())('%s (%s) - %s', async (component, caseName, device, storyName) => {
-    const args = caseArgs[caseName as (typeof CASE_NAMES)[number]];
+for (const testCase of getCases()) {
+    const [component, caseName, device, storyName] = testCase;
+    test(`${testCase[0]} (${testCase[1]}) - ${testCase[2]}`, async () => {
+        const args = caseArgs[caseName as (typeof CASE_NAMES)[number]];
 
-    await openStoryPage({
-        id: `components-titles--${storyName}-story`,
-        device: device as Device,
-        args: {title: args.title, right: args.right, ...(args.linkText ? {linkText: args.linkText} : {})},
+        await openStoryPage({
+            id: `components-titles--${storyName}-story`,
+            device: device as Device,
+            args: {title: args.title, right: args.right, ...(args.linkText ? {linkText: args.linkText} : {})},
+        });
+
+        const element = await screen.findByTestId(component);
+        await expectScreenshot(element);
     });
-
-    const element = await screen.findByTestId(component);
-    const image = await element.screenshot();
-    expect(image).toMatchImageSnapshot();
-});
+}

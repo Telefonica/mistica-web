@@ -1,3 +1,4 @@
+import {test, expect} from '../test-utils/playwright';
 import {openStoryPage, screen} from '../test-utils';
 
 test('Form with Fixed Footer Layout', async () => {
@@ -21,9 +22,5 @@ test('Form focuses first field with error after submit validation', async () => 
 
     await (await screen.findByText('Send')).click();
 
-    const focusedElementHandle = await page.$(':focus');
-    const namePropertyHandle = await focusedElementHandle?.getProperty('name');
-    const name = await namePropertyHandle?.jsonValue();
-
-    expect(name).toBe('phone');
+    await expect(await screen.findByLabelText('phone')).toBeFocused();
 });

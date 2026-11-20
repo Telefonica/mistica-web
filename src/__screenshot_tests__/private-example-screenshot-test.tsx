@@ -1,3 +1,4 @@
+import {test, expectScreenshot} from '../test-utils/playwright';
 import {openStoryPage} from '../test-utils';
 
 test('Private example', async () => {
@@ -5,5 +6,5 @@ test('Private example', async () => {
         id: 'private-example--default',
     });
 
-    expect(await page.screenshot()).toMatchImageSnapshot();
+    await expectScreenshot(page);
 });

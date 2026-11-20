@@ -1,3 +1,4 @@
+import {test, expectScreenshot} from '../test-utils/playwright';
 import {openStoryPage, screen} from '../test-utils';
 
 test('Inline cases', async () => {
@@ -7,5 +8,5 @@ test('Inline cases', async () => {
 
     const story = await screen.findByTestId('story');
 
-    expect(await story.screenshot()).toMatchImageSnapshot();
+    await expectScreenshot(story);
 });

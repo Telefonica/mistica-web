@@ -1,3 +1,4 @@
+import {test, expectScreenshot} from '../test-utils/playwright';
 import {openStoryPage, screen} from '../test-utils';
 
 test('Touchable', async () => {
@@ -5,5 +6,5 @@ test('Touchable', async () => {
 
     const story = await screen.findByTestId('touchable');
 
-    expect(await story.screenshot()).toMatchImageSnapshot();
+    await expectScreenshot(story);
 });

@@ -19,7 +19,7 @@ inputs:
     glob:
         description: 'Glob to match diff image files'
         required: false
-        default: 'src/**/__diff_output__/*-diff.png'
+        default: 'reports/playwright/**/*-diff.png'
 
 outputs:
     uploads:

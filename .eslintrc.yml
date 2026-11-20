@@ -5,6 +5,12 @@ extends:
 plugins:
     - mistica-local-rules
 overrides:
+    - files:
+          - 'playwright*.config.ts'
+      settings:
+          import/resolver:
+              node:
+                  extensions: ['.js', '.ts', '.tsx']
     # import/no-restricted-paths is silent without a resolver that knows ts. Scoped: repo wide it breaks other rules.
     - files:
           - 'src/sidenav-bar*.tsx'

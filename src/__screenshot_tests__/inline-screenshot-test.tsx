@@ -1,51 +1,49 @@
+import {test, expectScreenshot} from '../test-utils/playwright';
 import {openStoryPage, screen} from '../test-utils';
 
-test.each`
-    space        | align
-    ${'around'}  | ${'center'}
-    ${'evenly'}  | ${'center'}
-    ${'between'} | ${'center'}
-    ${'between'} | ${'flex-start'}
-    ${'between'} | ${'flex-end'}
-    ${'between'} | ${'baseline'}
-    ${'between'} | ${'stretch'}
-    ${'0px'}     | ${'center'}
-    ${'8px'}     | ${'flex-start'}
-    ${'16px'}    | ${'flex-end'}
-    ${'24px'}    | ${'baseline'}
-    ${'32px'}    | ${'stretch'}
-`('Inline $space $align', async ({space, align}) => {
-    await openStoryPage({
-        id: 'layout-inline--default',
-        args: {space, align},
-    });
+for (const testCase of [
+    {space: 'around', align: 'center'},
+    {space: 'evenly', align: 'center'},
+    {space: 'between', align: 'center'},
+    {space: 'between', align: 'flex-start'},
+    {space: 'between', align: 'flex-end'},
+    {space: 'between', align: 'baseline'},
+    {space: 'between', align: 'stretch'},
+    {space: '0px', align: 'center'},
+    {space: '8px', align: 'flex-start'},
+    {space: '16px', align: 'flex-end'},
+    {space: '24px', align: 'baseline'},
+    {space: '32px', align: 'stretch'},
+] as const) {
+    const {space, align} = testCase;
+    test(`Inline ${testCase.space} ${testCase.align}`, async () => {
+        await openStoryPage({
+            id: 'layout-inline--default',
+            args: {space, align},
+        });
 
-    const story = await screen.findByTestId('story');
-    const image = await story.screenshot();
-    expect(image).toMatchImageSnapshot();
-});
+        const story = await screen.findByTestId('story');
+        await expectScreenshot(story);
+    });
+}
 
 test('Inline wrap', async () => {
     const page = await openStoryPage({id: 'layout-inline--wrap'});
 
-    const image = await page.screenshot();
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(page);
 });
 
 test('Inline wrap vertical space', async () => {
     const page = await openStoryPage({id: 'layout-inline--wrap', args: {verticalSpace: 16}});
 
-    const image = await page.screenshot();
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(page);
 });
 
 // This test is unstable (https://jira.tid.es/browse/WEB-1648)
-// eslint-disable-next-line jest/no-disabled-tests
 test.skip('Inline negative space', async () => {
     const page = await openStoryPage({id: 'layout-inline--negative-space'});
 
-    const image = await page.screenshot();
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(page);
 });
 
 test('Inline with expand', async () => {
@@ -55,7 +53,5 @@ test('Inline with expand', async () => {
     });
 
     const story = await screen.findByTestId('story');
-    const image = await story.screenshot();
-
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(story);
 });
