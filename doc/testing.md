@@ -23,19 +23,25 @@ different layouts in mobile and desktop, and there are cases in which we use CSS
 result. If you are trying to test something that depends on these styles, you can either import `mistica.css`
 classes in the HTML content you render in the test or write acceptance/screenshot tests instead.
 
-## Acceptance tests
+## Acceptance and screenshot tests
 
-To change some behaviors to facilitate acceptance tests (tests that run in a browser), a helper function is
-used.
+Install Chromium with `yarn playwright install chromium`. Run `yarn test-acceptance` to start Storybook and
+run the tests. Use `--headed` to see the browser or `--ui` to open Playwright's test explorer.
 
-`isRunningAcceptanceTest` returns true if the user agent includes the `'acceptance-test'` string.
+`openStoryPage` adds `acceptance-test` to the user agent so `isRunningAcceptanceTest` returns true.
 
-To make this work in your test environment, you should add that string to the browser's user agent. For
-example in `Puppeteer`:
+Screenshot differences are saved under `reports/playwright/`. To update the reference images, use the
+`update_screenshots` workflow or run the following commands in the Playwright container used by CI.
 
-```js
-await page.setUserAgent(`${currentUserAgent} acceptance-test`);
+```sh
+yarn storybook-static
+CI=true yarn test-acceptance --update-snapshots
 ```
+
+## Server rendering
+
+`yarn test-ssr` builds the library and checks the server-rendered pages before and after hydration. Run
+`NO_BUILD=true yarn test-ssr` to reuse the output of `yarn build`.
 
 ## Questions?
 

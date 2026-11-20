@@ -1,3 +1,4 @@
+import {test, expectScreenshot} from '../test-utils/playwright';
 import {openStoryPage, screen} from '../test-utils';
 
 test('TextLink - light mode', async () => {
@@ -5,9 +6,7 @@ test('TextLink - light mode', async () => {
 
     const textLink = await screen.findByTestId('text-link');
 
-    const image = await textLink.screenshot();
-
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(textLink);
 });
 
 test('TextLink - inverse', async () => {
@@ -18,9 +17,7 @@ test('TextLink - inverse', async () => {
 
     const textLink = await screen.findByTestId('text-link');
 
-    const image = await textLink.screenshot();
-
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(textLink);
 });
 
 test('TextLink - dark mode', async () => {
@@ -31,9 +28,7 @@ test('TextLink - dark mode', async () => {
 
     const textLink = await screen.findByTestId('text-link');
 
-    const image = await textLink.screenshot();
-
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(textLink);
 });
 
 test('TextLink - disabled', async () => {
@@ -41,9 +36,7 @@ test('TextLink - disabled', async () => {
 
     const textLink = await screen.findByTestId('text-link');
 
-    const image = await textLink.screenshot();
-
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(textLink);
 });
 
 test('TextLink - wraps if necessary', async () => {
@@ -55,9 +48,7 @@ test('TextLink - wraps if necessary', async () => {
 
     const textLink = await screen.findByTestId('text-link');
 
-    const image = await textLink.screenshot();
-
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(textLink);
 });
 
 test('TextLink - inherits text style', async () => {
@@ -65,9 +56,7 @@ test('TextLink - inherits text style', async () => {
 
     const textLink = await screen.findByTestId('text-link');
 
-    const image = await textLink.screenshot();
-
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(textLink);
 });
 
 test('TextLink - underline on hover', async () => {
@@ -78,9 +67,7 @@ test('TextLink - underline on hover', async () => {
 
     const textLink = await screen.findByTestId('text-link');
 
-    const image = await textLink.screenshot();
-
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(textLink);
 });
 
 test('TextLink - underline on hover - inverse', async () => {
@@ -91,9 +78,7 @@ test('TextLink - underline on hover - inverse', async () => {
 
     const textLink = await screen.findByTestId('text-link');
 
-    const image = await textLink.screenshot();
-
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(textLink);
 });
 
 test('TextLink - underline on hover - dark mode', async () => {
@@ -105,9 +90,7 @@ test('TextLink - underline on hover - dark mode', async () => {
 
     const textLink = await screen.findByTestId('text-link');
 
-    const image = await textLink.screenshot();
-
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(textLink);
 });
 
 test('TextLink - underline on hover - inverse - dark mode', async () => {
@@ -119,7 +102,5 @@ test('TextLink - underline on hover - inverse - dark mode', async () => {
 
     const textLink = await screen.findByTestId('text-link');
 
-    const image = await textLink.screenshot();
-
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(textLink);
 });

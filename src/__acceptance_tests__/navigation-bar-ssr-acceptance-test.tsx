@@ -1,3 +1,4 @@
+import {test} from '../test-utils/playwright';
 import {openSSRPage} from '../test-utils';
 
 test('ssr MainNavigationBar', async () => {
@@ -5,5 +6,7 @@ test('ssr MainNavigationBar', async () => {
 });
 
 test('ssr MainNavigationBar large', async () => {
+    test.setTimeout(300000);
+
     await openSSRPage({name: 'main-navigation-bar-large', device: 'MOBILE_IOS'});
-}, 300000);
+});

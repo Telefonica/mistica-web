@@ -1,16 +1,19 @@
+import {test, expectScreenshot} from '../test-utils/playwright';
 import {openStoryPage, screen} from '../test-utils';
 
-test.each(['top-right', 'bottom-left'])('Snackbar position=%s on desktop', async (position) => {
-    const page = await openStoryPage({
-        id: 'components-snackbar--default',
-        device: 'DESKTOP',
-        args: {position, persistent: true},
-    });
+for (const position of ['top-right', 'bottom-left'] as const) {
+    test(`Snackbar position=${position} on desktop`, async () => {
+        const page = await openStoryPage({
+            id: 'components-snackbar--default',
+            device: 'DESKTOP',
+            args: {position, persistent: true},
+        });
 
-    await (await screen.findByRole('button', {name: 'Open Snackbar'})).click();
-    await screen.findByRole('alert');
-    expect(await page.screenshot()).toMatchImageSnapshot();
-});
+        await (await screen.findByRole('button', {name: 'Open Snackbar'})).click();
+        await screen.findByRole('alert');
+        await expectScreenshot(page);
+    });
+}
 
 test('informative', async () => {
     await openStoryPage({
@@ -20,8 +23,7 @@ test('informative', async () => {
 
     await (await screen.findByRole('button', {name: 'Open Snackbar'})).click();
     const snackbar = await screen.findByRole('alert');
-    const image = await snackbar.screenshot();
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(snackbar);
 });
 
 test('critical', async () => {
@@ -33,8 +35,7 @@ test('critical', async () => {
 
     await (await screen.findByRole('button', {name: 'Open Snackbar'})).click();
     const snackbar = await screen.findByRole('alert');
-    const image = await snackbar.screenshot();
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(snackbar);
 });
 
 test('long message', async () => {
@@ -48,8 +49,7 @@ test('long message', async () => {
 
     await (await screen.findByRole('button', {name: 'Open Snackbar'})).click();
     const snackbar = await screen.findByRole('alert');
-    const image = await snackbar.screenshot();
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(snackbar);
 });
 
 test('long action', async () => {
@@ -63,8 +63,7 @@ test('long action', async () => {
 
     await (await screen.findByRole('button', {name: 'Open Snackbar'})).click();
     const snackbar = await screen.findByRole('alert');
-    const image = await snackbar.screenshot();
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(snackbar);
 });
 
 test('long action and message', async () => {
@@ -79,8 +78,7 @@ test('long action and message', async () => {
 
     await (await screen.findByRole('button', {name: 'Open Snackbar'})).click();
     const snackbar = await screen.findByRole('alert');
-    const image = await snackbar.screenshot();
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(snackbar);
 });
 
 test('with dismiss button', async () => {
@@ -94,8 +92,7 @@ test('with dismiss button', async () => {
 
     await (await screen.findByRole('button', {name: 'Open Snackbar'})).click();
     const snackbar = await screen.findByRole('alert');
-    const image = await snackbar.screenshot();
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(snackbar);
 });
 
 test('with dismiss button and long message', async () => {
@@ -110,8 +107,7 @@ test('with dismiss button and long message', async () => {
 
     await (await screen.findByRole('button', {name: 'Open Snackbar'})).click();
     const snackbar = await screen.findByRole('alert');
-    const image = await snackbar.screenshot();
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(snackbar);
 });
 
 test('with dismiss button and long action', async () => {
@@ -126,8 +122,7 @@ test('with dismiss button and long action', async () => {
 
     await (await screen.findByRole('button', {name: 'Open Snackbar'})).click();
     const snackbar = await screen.findByRole('alert');
-    const image = await snackbar.screenshot();
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(snackbar);
 });
 
 test('with dismiss button and long action and message', async () => {
@@ -143,6 +138,5 @@ test('with dismiss button and long action and message', async () => {
 
     await (await screen.findByRole('button', {name: 'Open Snackbar'})).click();
     const snackbar = await screen.findByRole('alert');
-    const image = await snackbar.screenshot();
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(snackbar);
 });

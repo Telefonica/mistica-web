@@ -1,3 +1,4 @@
+import {test, expectScreenshot} from '../test-utils/playwright';
 import {openStoryPage, screen} from '../test-utils';
 
 import type {KnownSkinName} from '../skins/types';
@@ -31,9 +32,9 @@ const getBrandLogoCases = () => {
     return cases;
 };
 
-test.each(getBrandLogoCases())(
-    'Logo. brand={%s} type={%s} isInverse={%s} isDarkMode={%s}',
-    async (brand, type, isInverse, isDarkMode) => {
+for (const testCase of getBrandLogoCases()) {
+    const [brand, type, isInverse, isDarkMode] = testCase;
+    test(`Logo. brand={${testCase[0]}} type={${testCase[1]}} isInverse={${testCase[2]}} isDarkMode={${testCase[3]}}`, async () => {
         await openStoryPage({
             id: 'components-logo--default',
             device: 'DESKTOP',
@@ -43,33 +44,36 @@ test.each(getBrandLogoCases())(
 
         const story = await screen.findByTestId('logo');
 
-        const image = await story.screenshot();
-        expect(image).toMatchImageSnapshot();
-    }
-);
-
-test.each(SKINS)('Logo. Default brand with skin={%s}', async (skin: KnownSkinName) => {
-    await openStoryPage({
-        id: 'components-logo--default',
-        device: 'DESKTOP',
-        skin,
+        await expectScreenshot(story);
     });
+}
 
-    const story = await screen.findByTestId('logo');
+for (const testCase of SKINS) {
+    const skin = testCase as KnownSkinName;
+    test(`Logo. Default brand with skin={${testCase}}`, async () => {
+        await openStoryPage({
+            id: 'components-logo--default',
+            device: 'DESKTOP',
+            skin,
+        });
 
-    const image = await story.screenshot();
-    expect(image).toMatchImageSnapshot();
-});
+        const story = await screen.findByTestId('logo');
 
-test.each(SKINS)('Logo with color override skin=%s', async (skin: KnownSkinName) => {
-    await openStoryPage({
-        id: 'components-logo--default',
-        skin,
-        args: {color: '#000000', size: 64, type: 'imagotype'},
+        await expectScreenshot(story);
     });
+}
 
-    const story = await screen.findByTestId('logo');
+for (const testCase of SKINS) {
+    const skin = testCase as KnownSkinName;
+    test(`Logo with color override skin=${testCase}`, async () => {
+        await openStoryPage({
+            id: 'components-logo--default',
+            skin,
+            args: {color: '#000000', size: 64, type: 'imagotype'},
+        });
 
-    const image = await story.screenshot();
-    expect(image).toMatchImageSnapshot();
-});
+        const story = await screen.findByTestId('logo');
+
+        await expectScreenshot(story);
+    });
+}

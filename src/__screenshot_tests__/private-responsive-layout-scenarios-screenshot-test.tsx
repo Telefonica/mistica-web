@@ -1,3 +1,4 @@
+import {test, expectScreenshot} from '../test-utils/playwright';
 import {openStoryPage, screen} from '../test-utils';
 
 const DEVICES = ['MOBILE_IOS', 'DESKTOP', 'LARGE_DESKTOP'] as const;
@@ -17,17 +18,22 @@ const CASES = [
     'Internal layout expands (only in desktop)',
 ];
 
-test.each(DEVICES)('ResponsiveLayout scenarios (%s)', async (device) => {
-    await openStoryPage({
-        id: 'private-responsivelayout-scenarios--default',
-        device,
-    });
-
-    for (const title of CASES) {
-        const element = await screen.findByTestId(title);
-        expect(await element.screenshot()).toMatchImageSnapshot({
-            // https://jira.tid.es/browse/WEB-680
-            failureThreshold: title.includes('Carousel') ? 0.00004 : 0,
+for (const testCase of DEVICES) {
+    const device = testCase;
+    test(`ResponsiveLayout scenarios (${testCase})`, async () => {
+        await openStoryPage({
+            id: 'private-responsivelayout-scenarios--default',
+            device,
         });
-    }
-});
+
+        for (const title of CASES) {
+            const element = await screen.findByTestId(title);
+            await expectScreenshot(element, {
+                ...{
+                    // https://jira.tid.es/browse/WEB-680
+                    maxDiffPixelRatio: title.includes('Carousel') ? 0.00004 : 0,
+                },
+            });
+        }
+    });
+}
