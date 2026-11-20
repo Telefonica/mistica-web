@@ -1,11 +1,22 @@
-import {test, expect} from '../test-utils/component';
+import * as React from 'react';
+import {render, screen} from '@testing-library/react';
+import ScreenReaderOnly from '../screen-reader-only';
 
-for (const [story, title, tag] of [
-    ['SingleChild', 'Renders no wrapper if it has one single child', 'SPAN'],
-    ['MultipleChildren', 'Renders a wrapper if it has several children', 'DIV'],
-]) {
-    test(title, async ({mount}) => {
-        const component = await mount(`screen-reader-only/${story}`);
-        await expect(component.getByTestId('test')).toHaveJSProperty('nodeName', tag);
-    });
-}
+test('Renders no wrapper if it has one single child', () => {
+    render(
+        <ScreenReaderOnly dataAttributes={{testid: 'test'}}>
+            <span>Some text</span>
+        </ScreenReaderOnly>
+    );
+    expect(screen.getByTestId('test').nodeName).toBe('SPAN');
+});
+
+test('Renders a wrapper if it has several children', () => {
+    render(
+        <ScreenReaderOnly dataAttributes={{testid: 'test'}}>
+            <span>Some text</span>
+            <p>Other text</p>
+        </ScreenReaderOnly>
+    );
+    expect(screen.getByTestId('test').nodeName).toBe('DIV');
+});

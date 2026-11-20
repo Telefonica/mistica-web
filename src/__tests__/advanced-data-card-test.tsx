@@ -1,31 +1,124 @@
-import {test, expect} from '../test-utils/component';
-
-import type {AccessibleName} from './advanced-data-card.story';
+import * as React from 'react';
+import {AdvancedDataCard} from '../community';
+import {makeTheme} from './test-utils';
+import {render, screen} from '@testing-library/react';
+import ThemeContextProvider from '../theme-context-provider';
+import Tag from '../tag';
+import Stack from '../stack';
+import {Text2} from '../text';
 
 const titleFirst =
-    'Title Headline Pretitle Subtitle Description Extra line 1 Extra line 2 Extra line 3 Extra line 4';
+    'Title Headline Pretitle Subtitle Description Extra line 1Extra line 2Extra line 3Extra line 4';
 const pretitleFirst =
-    'Pretitle Headline Title Subtitle Description Extra line 1 Extra line 2 Extra line 3 Extra line 4';
-for (const action of ['href', 'to', 'onPress'] as const) {
-    for (const {pretitleAs, titleAs, expectedLabel} of [
-        {pretitleAs: undefined, titleAs: undefined, expectedLabel: titleFirst},
-        {pretitleAs: 'h1', titleAs: 'h2', expectedLabel: pretitleFirst},
-        {pretitleAs: 'h2', titleAs: 'h1', expectedLabel: titleFirst},
-    ] as const) {
-        test(`AdvancedDataCard "${action}" label with pretitleAs={${pretitleAs}} and titleAs={${titleAs}}`, async ({
-            mount,
-        }) => {
-            const component = await mount<typeof AccessibleName>('advanced-data-card/AccessibleName', {
-                action,
-                pretitleAs,
-                titleAs,
-            });
-            await expect(
-                component.getByRole(action === 'onPress' ? 'button' : 'link', {
-                    name: expectedLabel,
-                    exact: true,
-                })
-            ).toHaveCount(1);
-        });
+    'Pretitle Headline Title Subtitle Description Extra line 1Extra line 2Extra line 3Extra line 4';
+
+test.each`
+    pretitleAs   | titleAs      | expectedLabel
+    ${undefined} | ${undefined} | ${titleFirst}
+    ${'h1'}      | ${'h2'}      | ${pretitleFirst}
+    ${'h2'}      | ${'h1'}      | ${titleFirst}
+`(
+    'AdvancedDataCard "href" label with pretitleAs={$pretitleAs} and titleAs={$titleAs}',
+    async ({pretitleAs, titleAs, expectedLabel}) => {
+        render(
+            <ThemeContextProvider theme={makeTheme()}>
+                <AdvancedDataCard
+                    href="https://example.org"
+                    headline={<Tag type="promo">Headline</Tag>}
+                    pretitle="Pretitle"
+                    pretitleAs={pretitleAs}
+                    titleAs={titleAs}
+                    subtitle="Subtitle"
+                    title="Title"
+                    description="Description"
+                    slot={[
+                        <Stack space={4}>
+                            <Text2 regular>Extra line 1</Text2>
+                            <Text2 regular>Extra line 2</Text2>
+                        </Stack>,
+                        <Stack space={4}>
+                            <Text2 regular>Extra line 3</Text2>
+                            <Text2 regular>Extra line 4</Text2>
+                        </Stack>,
+                    ]}
+                />
+            </ThemeContextProvider>
+        );
+
+        await screen.findByRole('link', {name: expectedLabel});
     }
-}
+);
+
+test.each`
+    pretitleAs   | titleAs      | expectedLabel
+    ${undefined} | ${undefined} | ${titleFirst}
+    ${'h1'}      | ${'h2'}      | ${pretitleFirst}
+    ${'h2'}      | ${'h1'}      | ${titleFirst}
+`(
+    'AdvancedDataCard "to" label with pretitleAs={$pretitleAs} and titleAs={$titleAs}',
+    async ({pretitleAs, titleAs, expectedLabel}) => {
+        render(
+            <ThemeContextProvider theme={makeTheme()}>
+                <AdvancedDataCard
+                    to="/foo/bar"
+                    headline={<Tag type="promo">Headline</Tag>}
+                    pretitle="Pretitle"
+                    pretitleAs={pretitleAs}
+                    titleAs={titleAs}
+                    subtitle="Subtitle"
+                    title="Title"
+                    description="Description"
+                    slot={[
+                        <Stack space={4}>
+                            <Text2 regular>Extra line 1</Text2>
+                            <Text2 regular>Extra line 2</Text2>
+                        </Stack>,
+                        <Stack space={4}>
+                            <Text2 regular>Extra line 3</Text2>
+                            <Text2 regular>Extra line 4</Text2>
+                        </Stack>,
+                    ]}
+                />
+            </ThemeContextProvider>
+        );
+
+        await screen.findByRole('link', {name: expectedLabel});
+    }
+);
+
+test.each`
+    pretitleAs   | titleAs      | expectedLabel
+    ${undefined} | ${undefined} | ${titleFirst}
+    ${'h1'}      | ${'h2'}      | ${pretitleFirst}
+    ${'h2'}      | ${'h1'}      | ${titleFirst}
+`(
+    'AdvancedDataCard "onPress" label with pretitleAs={$pretitleAs} and titleAs={$titleAs}',
+    async ({pretitleAs, titleAs, expectedLabel}) => {
+        render(
+            <ThemeContextProvider theme={makeTheme()}>
+                <AdvancedDataCard
+                    onPress={() => {}}
+                    headline={<Tag type="promo">Headline</Tag>}
+                    pretitle="Pretitle"
+                    pretitleAs={pretitleAs}
+                    titleAs={titleAs}
+                    subtitle="Subtitle"
+                    title="Title"
+                    description="Description"
+                    slot={[
+                        <Stack space={4}>
+                            <Text2 regular>Extra line 1</Text2>
+                            <Text2 regular>Extra line 2</Text2>
+                        </Stack>,
+                        <Stack space={4}>
+                            <Text2 regular>Extra line 3</Text2>
+                            <Text2 regular>Extra line 4</Text2>
+                        </Stack>,
+                    ]}
+                />
+            </ThemeContextProvider>
+        );
+
+        await screen.findByRole('button', {name: expectedLabel});
+    }
+);

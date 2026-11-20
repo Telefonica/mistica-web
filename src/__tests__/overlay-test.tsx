@@ -1,8 +1,27 @@
-import {test, expect} from '../test-utils/component';
+import * as React from 'react';
+import {render, screen} from '@testing-library/react';
+import ThemeContextProvider from '../theme-context-provider';
+import {makeTheme} from './test-utils';
+import userEvent from '@testing-library/user-event';
+import {Overlay} from '..';
 
-test('Overlay click should not be propagated', async ({mount}) => {
-    const component = await mount('overlay/ClickPropagation');
-    await component.getByTestId('overlay').click();
-    await expect(component.getByTestId('overlay-calls')).toHaveValue('1');
-    await expect(component.getByTestId('parent-calls')).toHaveValue('0');
+test('Overlay click should not be propagated', async () => {
+    const handleParentClick = jest.fn();
+    const handleOverlayPress = jest.fn();
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
+            <div onClick={handleParentClick}>
+                <Overlay onPress={handleOverlayPress} dataAttributes={{testid: 'overlay'}} />
+            </div>
+        </ThemeContextProvider>
+    );
+
+    const overlay = screen.getByTestId('overlay');
+
+    expect(overlay).toBeInTheDocument();
+    await userEvent.click(overlay);
+    expect(handleOverlayPress).toHaveBeenCalled();
+    expect(handleParentClick).not.toHaveBeenCalled();
 });

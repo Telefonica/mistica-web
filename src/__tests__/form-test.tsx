@@ -1,233 +1,392 @@
-import {test, expect} from '../test-utils/component';
+import * as React from 'react';
+import {act, render, screen, waitFor} from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import {
+    ButtonPrimary,
+    Form,
+    TextField,
+    EmailField,
+    PasswordField,
+    Switch,
+    PhoneNumberField,
+    DateField,
+    DateTimeField,
+    TimeField,
+    Select,
+    MonthField,
+} from '..';
+import ThemeContextProvider from '../theme-context-provider';
+import {makeTheme} from './test-utils';
 
-test('happy case', async ({mount}) => {
-    const handleSubmitSpyCalls: Array<Array<unknown>> = [];
-    const handleSubmitSpy = (...args: Array<unknown>) => {
-        handleSubmitSpyCalls.push(args);
-    };
+test('happy case', async () => {
+    const handleSubmitSpy: any = jest.fn();
 
-    const component = await mount('form/Scenario1', {handleSubmitSpy});
-    await component.getByLabel('Username').pressSequentially('pepito');
-    await component.getByRole('button', {name: 'Submit'}).focus();
-    await component.getByRole('button', {name: 'Submit'}).click();
-    await expect
-        .poll(() => handleSubmitSpyCalls)
-        .toContainEqual([{username: 'pepito'}, {username: 'pepito'}]);
-});
-test('not submitting if required field is empty', async ({mount}) => {
-    const handleSubmitSpyCalls: Array<Array<unknown>> = [];
-    const handleSubmitSpy = (...args: Array<unknown>) => {
-        handleSubmitSpyCalls.push(args);
-    };
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Form onSubmit={handleSubmitSpy}>
+                <TextField label="Username" name="username" />
+                <ButtonPrimary submit>Submit</ButtonPrimary>
+            </Form>
+        </ThemeContextProvider>
+    );
 
-    const component = await mount('form/Scenario2', {handleSubmitSpy});
-    await expect(component.getByText('Este campo es obligatorio')).toHaveCount(0);
-    await component.getByRole('button', {name: 'Submit'}).focus();
-    await component.getByRole('button', {name: 'Submit'}).click();
-    await expect(component.getByText('Este campo es obligatorio')).toHaveCount(1);
-    await expect(handleSubmitSpyCalls).toEqual([]);
-});
-test('custom validator', async ({mount}) => {
-    const handleSubmitSpyCalls: Array<Array<unknown>> = [];
-    const handleSubmitSpy = (...args: Array<unknown>) => {
-        handleSubmitSpyCalls.push(args);
-    };
+    await userEvent.type(screen.getByLabelText('Username'), 'pepito');
+    await userEvent.click(screen.getByText('Submit'));
 
-    const component = await mount('form/Scenario3', {handleSubmitSpy});
-    await component.getByLabel('Password').pressSequentially('1234');
-    await component.getByRole('button', {name: 'Submit'}).focus();
-    await component.getByRole('button', {name: 'Submit'}).click();
-    await expect(await component.getByText('wrong password')).toHaveCount(1);
-    await expect(handleSubmitSpyCalls).toEqual([]);
-    await component.getByLabel('Password').fill('');
-    await component.getByLabel('Password').pressSequentially('letmein');
-    await component.getByRole('button', {name: 'Submit'}).focus();
-    await component.getByRole('button', {name: 'Submit'}).click();
-    await expect
-        .poll(() => handleSubmitSpyCalls)
-        .toContainEqual([{password: 'letmein'}, {password: 'letmein'}]);
+    await waitFor(() =>
+        expect(handleSubmitSpy).toHaveBeenCalledWith({username: 'pepito'}, {username: 'pepito'})
+    );
 });
-test('validation errors are shown onBlur by default', async ({mount}) => {
-    const component = await mount('form/Scenario4');
-    const nameField = component.getByLabel('Name', {exact: true});
-    await nameField.focus();
-    await nameField.blur();
-    await expect(await component.getByText('Este campo es obligatorio')).toHaveCount(1);
-});
-test('validation errors are only shown onSubmit if validatieOnBlurInsideForm is false', async ({mount}) => {
-    const component = await mount('form/Scenario5');
-    const nameField = component.getByLabel('Name', {exact: true});
-    await nameField.focus();
-    await nameField.blur();
-    await expect(component.getByText('Este campo es obligatorio')).toHaveCount(0);
-    await component.getByRole('button', {name: 'Submit'}).focus();
-    await component.getByRole('button', {name: 'Submit'}).click();
-    await expect(await component.getByText('Este campo es obligatorio')).toHaveCount(1);
-});
-test('when there are multiple errors on submit, the fields with error are anounced by screen reader', async ({
-    mount,
-}) => {
-    const handleSubmitSpyCalls: Array<Array<unknown>> = [];
-    const handleSubmitSpy = (...args: Array<unknown>) => {
-        handleSubmitSpyCalls.push(args);
-    };
 
-    const component = await mount('form/Scenario6', {handleSubmitSpy});
-    await component.getByLabel('Password').pressSequentially('letmein');
-    await component.getByRole('button', {name: 'Submit'}).focus();
-    await component.getByRole('button', {name: 'Submit'}).click();
-    await expect(component.getByText('Este campo es obligatorio')).toHaveCount(1);
-    await expect(component.getByText('wrong password')).toHaveCount(1);
-    const liveRegion = component.getByRole('alert');
-    await expect(liveRegion).toHaveCount(1);
-    await expect(liveRegion).toContainText('Revisa los siguientes errores: Username, Password');
+test('not submitting if required field is empty', async () => {
+    const handleSubmitSpy = jest.fn();
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Form onSubmit={handleSubmitSpy}>
+                <TextField label="Username" name="username" />
+                <ButtonPrimary submit>Submit</ButtonPrimary>
+            </Form>
+        </ThemeContextProvider>
+    );
+
+    expect(screen.queryByText('Este campo es obligatorio')).toBeNull();
+
+    await userEvent.click(screen.getByText('Submit'));
+
+    expect(screen.getByText('Este campo es obligatorio')).toBeInTheDocument();
+    expect(handleSubmitSpy).not.toHaveBeenCalled();
 });
-test('fields are disabled during submit', async ({mount}) => {
+
+test('custom validator', async () => {
+    const handleSubmitSpy = jest.fn();
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Form onSubmit={handleSubmitSpy}>
+                <TextField
+                    label="Password"
+                    name="password"
+                    validate={(value) => (value === 'letmein' ? '' : 'wrong password')}
+                />
+                <ButtonPrimary submit>Submit</ButtonPrimary>
+            </Form>
+        </ThemeContextProvider>
+    );
+
+    // validation fail
+    await userEvent.type(screen.getByLabelText('Password'), '1234');
+    await userEvent.click(screen.getByText('Submit'));
+
+    expect(await screen.findByText('wrong password')).toBeInTheDocument();
+    expect(handleSubmitSpy).not.toHaveBeenCalled();
+
+    // validation success
+    await userEvent.clear(screen.getByLabelText('Password'));
+    await userEvent.type(screen.getByLabelText('Password'), 'letmein');
+    await userEvent.click(screen.getByText('Submit'));
+
+    await waitFor(() =>
+        expect(handleSubmitSpy).toHaveBeenCalledWith({password: 'letmein'}, {password: 'letmein'})
+    );
+});
+
+test('validation errors are shown onBlur by default', async () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Form onSubmit={() => {}}>
+                <TextField label="Name" name="name" />
+                <ButtonPrimary submit>Submit</ButtonPrimary>
+            </Form>
+        </ThemeContextProvider>
+    );
+
+    const nameField = screen.getByLabelText('Name');
+    act(() => nameField.focus());
+    act(() => nameField.blur());
+
+    expect(await screen.findByText('Este campo es obligatorio')).toBeInTheDocument();
+});
+
+test('validation errors are only shown onSubmit if validatieOnBlurInsideForm is false', async () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Form onSubmit={() => {}}>
+                <TextField label="Name" name="name" validateOnBlurInsideForm={false} />
+                <ButtonPrimary submit>Submit</ButtonPrimary>
+            </Form>
+        </ThemeContextProvider>
+    );
+
+    const nameField = screen.getByLabelText('Name');
+    act(() => nameField.focus());
+    act(() => nameField.blur());
+
+    expect(screen.queryByText('Este campo es obligatorio')).not.toBeInTheDocument();
+
+    await userEvent.click(screen.getByText('Submit'));
+
+    expect(await screen.findByText('Este campo es obligatorio')).toBeInTheDocument();
+});
+
+test('when there are multiple errors on submit, the fields with error are anounced by screen reader', async () => {
+    const handleSubmitSpy = jest.fn();
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Form onSubmit={handleSubmitSpy}>
+                <TextField label="Username" name="username" />
+                <TextField label="Password" name="password" validate={() => 'wrong password'} />
+                <ButtonPrimary submit>Submit</ButtonPrimary>
+            </Form>
+        </ThemeContextProvider>
+    );
+
+    await userEvent.type(screen.getByLabelText('Password'), 'letmein');
+    await userEvent.click(screen.getByText('Submit'));
+
+    expect(screen.getByText('Este campo es obligatorio')).toBeInTheDocument();
+    expect(screen.getByText('wrong password')).toBeInTheDocument();
+    const liveRegion = screen.getByRole('alert');
+    expect(liveRegion).toBeInTheDocument();
+    expect(liveRegion).toHaveTextContent('Revisa los siguientes errores: Username, Password');
+});
+
+test('fields are disabled during submit', async () => {
     let resolveSubmitPromise: (value?: unknown) => void = () => {};
     const submitPromise = new Promise((r) => {
         resolveSubmitPromise = r;
     });
 
-    const handleSubmitSpyCalls: Array<Array<unknown>> = [];
-    const handleSubmitSpy = (...args: Array<unknown>) => {
-        handleSubmitSpyCalls.push(args);
-        return submitPromise;
-    };
+    const handleSubmitSpy = jest.fn().mockImplementation(() => submitPromise);
 
-    const component = await mount('form/Scenario7', {handleSubmitSpy});
-    await component.getByLabel('Username').pressSequentially('pepito');
-    await component.getByRole('button', {name: 'Submit'}).focus();
-    await component.getByRole('button', {name: 'Submit'}).click();
-    await expect(component.getByLabel('Username')).toBeDisabled();
-    await expect(component.getByRole('button')).toBeDisabled();
-    await expect(component.getByText('Submit').locator('xpath=ancestor::*[@aria-hidden="true"]')).toHaveCSS(
-        'opacity',
-        '0'
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Form onSubmit={handleSubmitSpy}>
+                <TextField label="Username" name="username" />
+                <ButtonPrimary submit>Submit</ButtonPrimary>
+            </Form>
+        </ThemeContextProvider>
     );
+
+    await userEvent.type(screen.getByLabelText('Username'), 'pepito');
+    await userEvent.click(screen.getByText('Submit'));
+
+    expect(screen.getByLabelText('Username')).toBeDisabled();
+    expect(screen.getByRole('button')).toBeDisabled();
+    expect(screen.getByText('Submit')).not.toBeVisible();
+
     resolveSubmitPromise();
-    await expect(component.getByLabel('Username')).not.toBeDisabled();
-    await expect(component.getByRole('button', {name: 'Submit'})).toBeEnabled();
+
+    await waitFor(() => {
+        expect(screen.getByLabelText('Username')).not.toBeDisabled();
+        expect(screen.getByText('Submit')).not.toBeDisabled();
+    });
 });
-test('form with defaultValue in field', async ({mount}) => {
-    const handleSubmitCalls: Array<Array<unknown>> = [];
-    const handleSubmit = (...args: Array<unknown>) => {
-        handleSubmitCalls.push(args);
+
+test('form with defaultValue in field', async () => {
+    const handleSubmit = jest.fn();
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Form onSubmit={handleSubmit}>
+                <EmailField label="email" name="email" defaultValue="foo@bar.com" />
+                <ButtonPrimary submit>Send</ButtonPrimary>
+            </Form>
+        </ThemeContextProvider>
+    );
+
+    await userEvent.click(screen.getByText('Send'));
+
+    await waitFor(() => {
+        expect(handleSubmit).toHaveBeenCalledWith({email: 'foo@bar.com'}, {email: 'foo@bar.com'});
+    });
+});
+
+test('form with controlled field', async () => {
+    const handleSubmit = jest.fn();
+
+    const MyForm = ({onSubmit}: any) => {
+        const [value, setValue] = React.useState('foo');
+        return (
+            <ThemeContextProvider theme={makeTheme()}>
+                <Form onSubmit={onSubmit}>
+                    <EmailField label="email1" name="email1" value={value} onChangeValue={setValue} />
+                    <EmailField label="email2" name="email2" value={value} />
+                    <ButtonPrimary submit>Send</ButtonPrimary>
+                </Form>
+            </ThemeContextProvider>
+        );
     };
 
-    const component = await mount('form/Scenario8', {handleSubmit});
-    await component.getByRole('button', {name: 'Send'}).focus();
-    await component.getByRole('button', {name: 'Send'}).click();
-    await expect
-        .poll(() => handleSubmitCalls)
-        .toContainEqual([{email: 'foo@bar.com'}, {email: 'foo@bar.com'}]);
-});
-test('form with controlled field', async ({mount}) => {
-    const handleSubmitCalls: Array<Array<unknown>> = [];
-    const handleSubmit = (...args: Array<unknown>) => {
-        handleSubmitCalls.push(args);
-    };
+    render(<MyForm onSubmit={handleSubmit} />);
 
-    const component = await mount('form/Scenario9', {handleSubmit});
-    await component.getByLabel('email1').pressSequentially('@bar.com');
-    await component.getByRole('button', {name: 'Send'}).focus();
-    await component.getByRole('button', {name: 'Send'}).click();
-    await expect
-        .poll(() => handleSubmitCalls)
-        .toContainEqual([
+    await userEvent.type(screen.getByLabelText('email1'), '@bar.com');
+    await userEvent.click(screen.getByText('Send'));
+
+    await waitFor(() => {
+        expect(handleSubmit).toHaveBeenCalledWith(
             {email1: 'foo@bar.com', email2: 'foo@bar.com'},
-            {email1: 'foo@bar.com', email2: 'foo@bar.com'},
-        ]);
+            {email1: 'foo@bar.com', email2: 'foo@bar.com'}
+        );
+    });
 });
-test('defaultValue in Field takes precedence over Form initialValues', async ({mount}) => {
-    const handleSubmitCalls: Array<Array<unknown>> = [];
-    const handleSubmit = (...args: Array<unknown>) => {
-        handleSubmitCalls.push(args);
-    };
 
-    const component = await mount('form/Scenario10', {handleSubmit});
-    await component.getByRole('button', {name: 'Send'}).focus();
-    await component.getByRole('button', {name: 'Send'}).click();
-    await expect
-        .poll(() => handleSubmitCalls)
-        .toContainEqual([
+test('defaultValue in Field takes precedence over Form initialValues', async () => {
+    const handleSubmit = jest.fn();
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Form onSubmit={handleSubmit} initialValues={{email: 'foo@bar.com', password: 'password'}}>
+                <EmailField optional label="email" name="email" />
+                <PasswordField optional label="password" name="password" defaultValue="12345678" />
+                <ButtonPrimary submit>Send</ButtonPrimary>
+            </Form>
+        </ThemeContextProvider>
+    );
+
+    await userEvent.click(screen.getByText('Send'));
+
+    await waitFor(() => {
+        expect(handleSubmit).toHaveBeenCalledWith(
             {email: 'foo@bar.com', password: '12345678'},
-            {email: 'foo@bar.com', password: '12345678'},
-        ]);
+            {email: 'foo@bar.com', password: '12345678'}
+        );
+    });
 });
-test("if a Field is disabled we skip its validation and don't submit its value", async ({mount}) => {
-    const handleSubmitCalls: Array<Array<unknown>> = [];
-    const handleSubmit = (...args: Array<unknown>) => {
-        handleSubmitCalls.push(args);
-    };
-    const validateCalls: Array<Array<unknown>> = [];
-    const onValidate = (...args: Array<unknown>) => {
-        validateCalls.push(args);
+
+test("if a Field is disabled we skip its validation and don't submit its value", async () => {
+    const handleSubmit = jest.fn();
+    const validate = jest.fn().mockReturnValue('errorazo');
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Form onSubmit={handleSubmit} initialValues={{email: 'foo@bar.com'}}>
+                <EmailField disabled label="email" name="email" validate={validate} />
+                <PasswordField label="password" name="password" />
+                <ButtonPrimary submit>Send</ButtonPrimary>
+            </Form>
+        </ThemeContextProvider>
+    );
+
+    await userEvent.type(screen.getByLabelText('password'), '123456');
+    await userEvent.click(screen.getByText('Send'));
+
+    await waitFor(() => {
+        expect(handleSubmit).toHaveBeenCalledWith({password: '123456'}, {password: '123456'});
+    });
+    expect(validate).not.toHaveBeenCalled();
+});
+
+test('can listen to form validation errors', async () => {
+    const onValidationErrorsSpy = jest.fn();
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Form onValidationErrors={onValidationErrorsSpy} onSubmit={() => {}}>
+                <TextField name="name" label="Name" />
+                <TextField name="surname" label="Surname" />
+                <EmailField name="email" label="Email" />
+                <ButtonPrimary submit>Submit</ButtonPrimary>
+            </Form>
+        </ThemeContextProvider>
+    );
+
+    await userEvent.type(screen.getByLabelText('Name'), 'Pepe');
+    await userEvent.type(screen.getByLabelText('Email'), 'invalidemail');
+    await userEvent.click(screen.getByText('Submit'));
+
+    expect(onValidationErrorsSpy).toHaveBeenCalledWith({
+        email: 'Email incorrecto',
+        surname: 'Este campo es obligatorio',
+    });
+});
+
+test('Disabling a field removes the error state and disabled fields are not submitted', async () => {
+    const submitSpy = jest.fn();
+
+    const MyComponent = () => {
+        const [isEmailSelected, setIsEmailSelected] = React.useState(true);
+        return (
+            <ThemeContextProvider theme={makeTheme()}>
+                <Form onSubmit={submitSpy}>
+                    <PhoneNumberField disabled={isEmailSelected} name="phone" label="Phone" />
+                    <EmailField disabled={!isEmailSelected} name="email" label="Email" />
+                    <Switch
+                        name="switch"
+                        checked={isEmailSelected}
+                        onChange={() => setIsEmailSelected(!isEmailSelected)}
+                    />
+                    <ButtonPrimary submit>Submit</ButtonPrimary>
+                </Form>
+            </ThemeContextProvider>
+        );
     };
 
-    const component = await mount('form/Scenario11', {handleSubmit, onValidate});
-    await component.getByLabel('password').pressSequentially('123456');
-    await component.getByRole('button', {name: 'Send'}).focus();
-    await component.getByRole('button', {name: 'Send'}).click();
-    await expect.poll(() => handleSubmitCalls).toContainEqual([{password: '123456'}, {password: '123456'}]);
-    await expect(validateCalls).toEqual([]);
+    render(<MyComponent />);
+
+    const submitButton = await screen.findByRole('button', {name: 'Submit'});
+    const emailField = await screen.findByLabelText('Email');
+    const phoneField = await screen.findByLabelText('Phone');
+
+    await userEvent.type(emailField, 'bad-email');
+    await userEvent.click(submitButton);
+
+    await screen.findByText('Email incorrecto');
+    expect(submitSpy).not.toHaveBeenCalled();
+
+    await userEvent.click(screen.getByRole('switch'));
+    expect(emailField).toBeDisabled();
+    expect(screen.queryByText('Email incorrecto')).not.toBeInTheDocument();
+
+    await userEvent.type(phoneField, '654834455');
+    await userEvent.click(submitButton);
+
+    expect(submitSpy).toHaveBeenCalledWith(
+        {phone: '654834455', switch: false},
+        {phone: '654 83 44 55', switch: false}
+    );
 });
-test('can listen to form validation errors', async ({mount}) => {
-    const onValidationErrorsSpyCalls: Array<Array<unknown>> = [];
-    const onValidationErrorsSpy = (...args: Array<unknown>) => {
-        onValidationErrorsSpyCalls.push(args);
+
+test.each`
+    platform     | type                | expectedFocus
+    ${'ios'}     | ${'date'}           | ${false}
+    ${'ios'}     | ${'datetime-local'} | ${false}
+    ${'ios'}     | ${'time'}           | ${false}
+    ${'ios'}     | ${'month'}          | ${false}
+    ${'ios'}     | ${'select'}         | ${false}
+    ${'ios'}     | ${'text'}           | ${true}
+    ${'android'} | ${'date'}           | ${true}
+    ${'android'} | ${'datetime-local'} | ${true}
+    ${'android'} | ${'time'}           | ${true}
+    ${'android'} | ${'month'}          | ${true}
+    ${'android'} | ${'select'}         | ${true}
+    ${'android'} | ${'text'}           | ${true}
+`('autofocus on error - $platform $type $expectedFocus', async ({platform, type, expectedFocus}) => {
+    const FormComponent = () => {
+        return (
+            <ThemeContextProvider theme={makeTheme({platformOverrides: {platform}})}>
+                <Form onSubmit={() => {}}>
+                    {type === 'date' && <DateField label="Field" name="field" />}
+                    {type === 'datetime-local' && <DateTimeField label="Field" name="field" />}
+                    {type === 'time' && <TimeField label="Field" name="field" />}
+                    {type === 'month' && <MonthField label="Field" name="field" />}
+                    {type === 'select' && (
+                        <Select name="field" label="Field" options={[{value: '1', text: '1'}]} />
+                    )}
+                    {type === 'text' && <TextField label="Field" name="field" />}
+                    <ButtonPrimary submit>Submit</ButtonPrimary>
+                </Form>
+            </ThemeContextProvider>
+        );
     };
 
-    const component = await mount('form/Scenario12', {onValidationErrorsSpy});
-    await component.getByLabel('Name', {exact: true}).pressSequentially('Pepe');
-    await component.getByLabel('Email').pressSequentially('invalidemail');
-    await component.getByRole('button', {name: 'Submit'}).focus();
-    await component.getByRole('button', {name: 'Submit'}).click();
-    await expect
-        .poll(() => onValidationErrorsSpyCalls)
-        .toContainEqual([
-            {
-                email: 'Email incorrecto',
-                surname: 'Este campo es obligatorio',
-            },
-        ]);
-});
-test('Disabling a field removes the error state and disabled fields are not submitted', async ({mount}) => {
-    const submitSpyCalls: Array<Array<unknown>> = [];
-    const submitSpy = (...args: Array<unknown>) => {
-        submitSpyCalls.push(args);
-    };
+    render(<FormComponent />);
 
-    const component = await mount('form/Scenario13', {submitSpy});
-    const submitButton = await component.getByRole('button', {name: 'Submit'});
-    const emailField = await component.getByLabel('Email');
-    const phoneField = await component.getByLabel('Phone');
-    await emailField.pressSequentially('bad-email');
-    await submitButton.focus();
-    await submitButton.click();
-    await expect(component.getByText('Email incorrecto', {exact: true})).toHaveCount(1);
-    await expect(submitSpyCalls).toEqual([]);
-    await component.getByRole('switch').click();
-    await expect(emailField).toBeDisabled();
-    await expect(component.getByText('Email incorrecto')).toHaveCount(0);
-    await phoneField.pressSequentially('654834455');
-    await submitButton.focus();
-    await submitButton.click();
-    await expect
-        .poll(() => submitSpyCalls)
-        .toContainEqual([
-            {phone: '654834455', switch: false},
-            {phone: '654 83 44 55', switch: false},
-        ]);
+    const submitButton = await screen.findByRole('button', {name: 'Submit'});
+    await userEvent.click(submitButton);
+
+    const input = await screen.findByLabelText('Field');
+    // eslint-disable-next-line testing-library/no-node-access
+    expect(document.activeElement === input).toBe(expectedFocus);
 });
-for (const platform of ['ios', 'android']) {
-    for (const type of ['date', 'datetime-local', 'time', 'month', 'select', 'text']) {
-        const expectedFocus = platform === 'android' || type === 'text';
-        test(`autofocus on error - ${platform} ${type} ${expectedFocus}`, async ({mount}) => {
-            const component = await mount('form/Autofocus', {platform, type});
-            await component.getByRole('button', {name: 'Submit'}).click();
-            const input = component.getByLabel('Field');
-            if (expectedFocus) await expect(input).toBeFocused();
-            else await expect(input).not.toBeFocused();
-        });
-    }
-}

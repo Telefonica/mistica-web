@@ -1,116 +1,49 @@
-import {test, expect} from '../test-utils/component';
+import * as React from 'react';
+import {PhoneNumberField} from '..';
+import {render, screen} from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import ThemeContextProvider from '../theme-context-provider';
+import {makeTheme} from './test-utils';
 
-import type {Phone} from './phone-number-field.story';
+test.each`
+    contextRegionCode | e164     | prefix       | typed                   | expectedValue       | expectedValueRaw
+    ${'ES'}           | ${false} | ${undefined} | ${'+123123123'}         | ${'123123123'}      | ${'+1 231-231-23'}
+    ${'ES'}           | ${false} | ${undefined} | ${'+54 9 223 123-4567'} | ${'5492231234567'}  | ${'+54 9 223 123-4567'}
+    ${'ES'}           | ${false} | ${undefined} | ${'654834455'}          | ${'654834455'}      | ${'654 83 44 55'}
+    ${'ES'}           | ${false} | ${'+49'}     | ${'69654321'}           | ${'69654321'}       | ${'69 654321'}
+    ${'ES'}           | ${false} | ${undefined} | ${'+4969654321'}        | ${'4969654321'}     | ${'+49 69 654321'}
+    ${'DE'}           | ${false} | ${undefined} | ${'069654321'}          | ${'069654321'}      | ${'069 654321'}
+    ${'ES'}           | ${true}  | ${undefined} | ${'+123123123'}         | ${'+123123123'}     | ${'+1 231-231-23'}
+    ${'ES'}           | ${true}  | ${undefined} | ${'+54 9 223 123-4567'} | ${'+5492231234567'} | ${'+54 9 223 123-4567'}
+    ${'ES'}           | ${true}  | ${undefined} | ${'654834455'}          | ${'+34654834455'}   | ${'654 83 44 55'}
+    ${'ES'}           | ${true}  | ${'+49'}     | ${'69654321'}           | ${'+4969654321'}    | ${'69 654321'}
+    ${'ES'}           | ${true}  | ${undefined} | ${'+4969654321'}        | ${'+4969654321'}    | ${'+49 69 654321'}
+    ${'DE'}           | ${true}  | ${undefined} | ${'069654321'}          | ${'+4969654321'}    | ${'069 654321'}
+`(
+    `PhoneNumberField($contextRegionCode, $e164, $prefix, $typed, $expectedValue, $expectedValueRaw)`,
+    async ({contextRegionCode, e164, prefix, typed, expectedValue, expectedValueRaw}) => {
+        const onChangeValueSpy = jest.fn();
+        const theme = makeTheme();
 
-for (const {contextRegionCode, e164, prefix, typed, expectedValue, expectedValueRaw} of [
-    {
-        contextRegionCode: 'ES',
-        e164: false,
-        prefix: undefined,
-        typed: '+123123123',
-        expectedValue: '123123123',
-        expectedValueRaw: '+1 231-231-23',
-    },
-    {
-        contextRegionCode: 'ES',
-        e164: false,
-        prefix: undefined,
-        typed: '+54 9 223 123-4567',
-        expectedValue: '5492231234567',
-        expectedValueRaw: '+54 9 223 123-4567',
-    },
-    {
-        contextRegionCode: 'ES',
-        e164: false,
-        prefix: undefined,
-        typed: '654834455',
-        expectedValue: '654834455',
-        expectedValueRaw: '654 83 44 55',
-    },
-    {
-        contextRegionCode: 'ES',
-        e164: false,
-        prefix: '+49',
-        typed: '69654321',
-        expectedValue: '69654321',
-        expectedValueRaw: '69 654321',
-    },
-    {
-        contextRegionCode: 'ES',
-        e164: false,
-        prefix: undefined,
-        typed: '+4969654321',
-        expectedValue: '4969654321',
-        expectedValueRaw: '+49 69 654321',
-    },
-    {
-        contextRegionCode: 'DE',
-        e164: false,
-        prefix: undefined,
-        typed: '069654321',
-        expectedValue: '069654321',
-        expectedValueRaw: '069 654321',
-    },
-    {
-        contextRegionCode: 'ES',
-        e164: true,
-        prefix: undefined,
-        typed: '+123123123',
-        expectedValue: '+123123123',
-        expectedValueRaw: '+1 231-231-23',
-    },
-    {
-        contextRegionCode: 'ES',
-        e164: true,
-        prefix: undefined,
-        typed: '+54 9 223 123-4567',
-        expectedValue: '+5492231234567',
-        expectedValueRaw: '+54 9 223 123-4567',
-    },
-    {
-        contextRegionCode: 'ES',
-        e164: true,
-        prefix: undefined,
-        typed: '654834455',
-        expectedValue: '+34654834455',
-        expectedValueRaw: '654 83 44 55',
-    },
-    {
-        contextRegionCode: 'ES',
-        e164: true,
-        prefix: '+49',
-        typed: '69654321',
-        expectedValue: '+4969654321',
-        expectedValueRaw: '69 654321',
-    },
-    {
-        contextRegionCode: 'ES',
-        e164: true,
-        prefix: undefined,
-        typed: '+4969654321',
-        expectedValue: '+4969654321',
-        expectedValueRaw: '+49 69 654321',
-    },
-    {
-        contextRegionCode: 'DE',
-        e164: true,
-        prefix: undefined,
-        typed: '069654321',
-        expectedValue: '+4969654321',
-        expectedValueRaw: '069 654321',
-    },
-] as const) {
-    test(`PhoneNumberField(${contextRegionCode}, ${e164}, ${prefix}, ${typed}, ${expectedValue}, ${expectedValueRaw})`, async ({
-        mount,
-    }) => {
-        const component = await mount<typeof Phone>('phone-number-field/Phone', {
-            contextRegionCode,
-            e164,
-            prefix,
-        });
-        await component.getByLabel('Enter Phone').pressSequentially(typed);
-        await expect(component.getByTestId('change')).toHaveValue(
-            JSON.stringify([expectedValue, expectedValueRaw])
+        render(
+            <ThemeContextProvider
+                theme={{
+                    ...theme,
+                    i18n: {...theme.i18n, phoneNumberFormattingRegionCode: contextRegionCode},
+                }}
+            >
+                <PhoneNumberField
+                    e164={e164}
+                    prefix={prefix}
+                    label="Enter Phone"
+                    name="phone"
+                    onChangeValue={onChangeValueSpy}
+                />
+            </ThemeContextProvider>
         );
-    });
-}
+
+        await userEvent.type(screen.getByLabelText('Enter Phone'), typed);
+
+        expect(onChangeValueSpy).toHaveBeenLastCalledWith(expectedValue, expectedValueRaw);
+    }
+);

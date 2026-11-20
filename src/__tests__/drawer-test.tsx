@@ -1,39 +1,134 @@
-import {test, expect} from '../test-utils/component';
+import * as React from 'react';
+import {makeTheme} from './test-utils';
+import {render, screen, waitFor} from '@testing-library/react';
+import ThemeContextProvider from '../theme-context-provider';
+import Drawer from '../drawer';
+import userEvent from '@testing-library/user-event';
 
-for (const method of ['esc', 'overlay', 'x']) {
-    test(`Drawer dismiss: ${method}`, async ({mount, page}) => {
-        const component = await mount('drawer/Actions');
-        await component.getByRole('button', {name: 'open'}).click();
-        await expect(page.getByRole('dialog')).toHaveCount(1);
-        if (method === 'esc') await page.keyboard.press('Escape');
-        else if (method === 'overlay')
-            await page.getByTestId('drawerOverlay').click({position: {x: 1, y: 1}});
-        else await page.getByRole('button', {name: 'CustomDismissLabel'}).click();
-        await expect(page.getByRole('dialog')).toHaveCount(0);
-        await expect(component.getByTestId('calls')).toHaveValue('["dismiss"]');
+const DrawerTest = ({
+    onDismiss,
+    onButtonPrimaryPress,
+    onButtonSecondaryPress,
+    onButtonLinkPress,
+}: {
+    onDismiss?: () => void;
+    onButtonPrimaryPress?: () => void;
+    onButtonSecondaryPress?: () => void;
+    onButtonLinkPress?: () => void;
+}) => {
+    const [isOpen, setIsOpen] = React.useState(false);
+    return (
+        <ThemeContextProvider theme={makeTheme()}>
+            <button onClick={() => setIsOpen(true)}>open</button>
+            {isOpen && (
+                <Drawer
+                    dismissLabel="CustomDismissLabel"
+                    onDismiss={onDismiss}
+                    onClose={() => setIsOpen(false)}
+                    button={{text: 'Primary', onPress: onButtonPrimaryPress}}
+                    secondaryButton={{text: 'Secondary', onPress: onButtonSecondaryPress}}
+                    buttonLink={{text: 'Link', onPress: onButtonLinkPress}}
+                />
+            )}
+        </ThemeContextProvider>
+    );
+};
+
+test.each(['esc', 'overlay', 'x'])('Drawer dismiss: %s', async (dismissMethod: string) => {
+    const onDismissSpy = jest.fn();
+    render(<DrawerTest onDismiss={onDismissSpy} />);
+
+    const openButton = screen.getByRole('button', {name: 'open'});
+    await userEvent.click(openButton);
+
+    const drawer = await screen.findByRole('dialog');
+
+    switch (dismissMethod) {
+        case 'esc':
+            await userEvent.keyboard('{Escape}');
+            break;
+        case 'overlay':
+            await userEvent.click(screen.getByTestId('drawerOverlay'));
+            break;
+        case 'x':
+            await userEvent.click(screen.getByRole('button', {name: 'CustomDismissLabel'}));
+            break;
+        default:
+            throw new Error('unexpected dismiss method');
+    }
+
+    await waitFor(() => {
+        expect(onDismissSpy).toHaveBeenCalledTimes(1);
+        expect(drawer).not.toBeInTheDocument();
     });
-}
-test('Drawer restores focus to the trigger when closed', async ({mount, page}) => {
-    const component = await mount('drawer/Actions');
-    const trigger = component.getByRole('button', {name: 'open'});
-    await trigger.focus();
-    await page.keyboard.press('Enter');
-    await expect(page.getByRole('dialog')).toHaveCount(1);
-    await page.keyboard.press('Escape');
-    await expect(page.getByRole('dialog')).toHaveCount(0);
-    await expect(trigger).toBeFocused();
 });
-for (const [method, label] of [
-    ['primary', 'Primary'],
-    ['secondary', 'Secondary'],
-    ['link', 'Link'],
-]) {
-    test(`Drawer close: ${method}`, async ({mount, page}) => {
-        const component = await mount('drawer/Actions');
-        await component.getByRole('button', {name: 'open'}).click();
-        await expect(page.getByRole('dialog')).toHaveCount(1);
-        await page.getByRole('button', {name: label, exact: true}).click();
-        await expect(page.getByRole('dialog')).toHaveCount(0);
-        await expect(component.getByTestId('calls')).toHaveValue(JSON.stringify([method]));
+
+test('Drawer restores focus to the trigger when closed', async () => {
+    render(<DrawerTest onDismiss={() => {}} />);
+
+    const openButton = screen.getByRole('button', {name: 'open'});
+    openButton.focus();
+    await userEvent.keyboard('{Enter}');
+
+    const drawer = await screen.findByRole('dialog');
+
+    await userEvent.keyboard('{Escape}');
+    await waitFor(() => {
+        expect(drawer).not.toBeInTheDocument();
     });
-}
+
+    await waitFor(() => {
+        expect(openButton).toHaveFocus();
+    });
+});
+
+test.each(['primary', 'secondary', 'link'])('Drawer close: %s', async (closeMethod: string) => {
+    const onButtonPrimaryPress = jest.fn();
+    const onButtonSecondaryPress = jest.fn();
+    const onButtonLinkPress = jest.fn();
+
+    render(
+        <DrawerTest
+            onButtonPrimaryPress={onButtonPrimaryPress}
+            onButtonSecondaryPress={onButtonSecondaryPress}
+            onButtonLinkPress={onButtonLinkPress}
+        />
+    );
+
+    const openButton = screen.getByRole('button', {name: 'open'});
+    await userEvent.click(openButton);
+
+    const drawer = await screen.findByRole('dialog');
+
+    switch (closeMethod) {
+        case 'primary':
+            await userEvent.click(screen.getByRole('button', {name: 'Primary'}));
+            break;
+        case 'secondary':
+            await userEvent.click(screen.getByRole('button', {name: 'Secondary'}));
+            break;
+        case 'link':
+            await userEvent.click(screen.getByRole('button', {name: 'Link'}));
+            break;
+        default:
+            throw new Error('unexpected dismiss method');
+    }
+
+    await waitFor(() => {
+        expect(drawer).not.toBeInTheDocument();
+    });
+
+    switch (closeMethod) {
+        case 'primary':
+            expect(onButtonPrimaryPress).toHaveBeenCalledTimes(1);
+            break;
+        case 'secondary':
+            expect(onButtonSecondaryPress).toHaveBeenCalledTimes(1);
+            break;
+        case 'link':
+            expect(onButtonLinkPress).toHaveBeenCalledTimes(1);
+            break;
+        default:
+            throw new Error('unexpected dismiss method');
+    }
+});

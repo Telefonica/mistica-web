@@ -1,38 +1,102 @@
-import {test, expect} from '../test-utils/component';
+import * as React from 'react';
+import {render, fireEvent, screen, waitFor} from '@testing-library/react';
+import Tooltip from '../tooltip';
+import {ButtonPrimary, ThemeContextProvider} from '..';
+import {makeTheme} from './test-utils';
+import userEvent from '@testing-library/user-event';
 
-test('target was painted', async ({mount}) => {
-    const component = await mount('tooltip/Content', {position: 'bottom'});
-    await expect(component.getByText('Press me!')).toHaveCount(1);
+type Props = Omit<React.ComponentProps<typeof Tooltip>, 'children' | 'target'>;
+
+const TestTooltip = (props: Props) => (
+    <ThemeContextProvider theme={makeTheme()}>
+        <Tooltip
+            {...props}
+            target={<span className="target">Press me!</span>}
+            slot={<div className="content">Content</div>}
+            delay={false}
+        />
+    </ThemeContextProvider>
+);
+
+test('target was painted', () => {
+    render(<TestTooltip position="bottom" />);
+
+    expect(screen.getByText('Press me!')).toBeInTheDocument();
 });
-test('does not render content initially', async ({mount, page}) => {
-    await mount('tooltip/Content', {position: 'bottom'});
-    await expect(page.getByText('Content', {exact: true})).toHaveCount(0);
+
+test('does not render content initially', () => {
+    render(<TestTooltip position="bottom" />);
+
+    expect(screen.queryByText('Content')).toBe(null);
 });
-test('render content after press down target', async ({mount, page}) => {
-    const component = await mount('tooltip/Content', {position: 'bottom'});
-    await component.getByText('Press me!').click();
-    await expect(page.getByText('Content', {exact: true})).toHaveCount(1);
+
+test('render content after press down target', async () => {
+    render(<TestTooltip position="bottom" />);
+
+    await userEvent.click(screen.getByText('Press me!'));
+
+    expect(screen.getByText('Content')).toBeInTheDocument();
 });
-test('set title and description', async ({mount, page}) => {
-    const component = await mount('tooltip/Content', {title: 'Title', description: 'Description'});
-    await component.getByText('Press me!').click();
-    await expect(page.getByText('Title', {exact: true})).toHaveCount(1);
-    await expect(page.getByText('Description', {exact: true})).toHaveCount(1);
+
+test('set title and description', async () => {
+    render(<TestTooltip title="Title" description="Description" />);
+
+    await userEvent.click(screen.getByText('Press me!'));
+
+    expect(screen.getByText('Title')).toBeInTheDocument();
+    expect(screen.getByText('Description')).toBeInTheDocument();
 });
-test('click anchor does not close tooltip', async ({mount, page}) => {
-    const component = await mount('tooltip/Anchor');
-    await component.getByText('Press me!').hover();
-    const link = page.getByRole('link', {name: 'Link'});
-    await expect(link).toBeVisible();
-    await link.click();
-    await expect(component.getByTestId('calls')).toHaveValue('1');
-    await expect(page.locator('.content')).toContainText('Content');
+
+test('click anchor does not close tooltip', async () => {
+    const linkSpy = jest.fn();
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Tooltip target={<span className="target">Press me!</span>} delay={false}>
+                <div className="content">
+                    Content
+                    <a tabIndex={-1} role="link" onClick={() => linkSpy()}>
+                        Link
+                    </a>
+                </div>
+            </Tooltip>
+        </ThemeContextProvider>
+    );
+
+    await userEvent.click(screen.getByText('Press me!'));
+
+    fireEvent.click(screen.getByText('Link'));
+
+    expect(linkSpy).toHaveBeenCalled();
+    expect(screen.getByText('Content')).toBeInTheDocument();
 });
-test('tooltip with controlled value', async ({mount, page}) => {
-    const component = await mount('tooltip/Controlled');
-    await expect(page.getByText('Content', {exact: true})).toHaveCount(0);
-    await component.getByRole('button', {name: 'Button', exact: true}).click();
-    await expect(page.getByText('Content', {exact: true})).toHaveCount(1);
-    await component.getByRole('button', {name: 'Button', exact: true}).click();
-    await expect(page.getByText('Content', {exact: true})).toHaveCount(0);
+
+test('tooltip with controlled value', async () => {
+    const TooltipWrapper = () => {
+        const [open, setOpen] = React.useState(false);
+        return (
+            <ThemeContextProvider theme={makeTheme()}>
+                <Tooltip
+                    open={open}
+                    target={<span className="target">Press me!</span>}
+                    slot={<div className="content">Content</div>}
+                    delay={false}
+                />
+                <ButtonPrimary onPress={() => setOpen(!open)}>Button</ButtonPrimary>
+            </ThemeContextProvider>
+        );
+    };
+
+    render(<TooltipWrapper />);
+
+    expect(screen.queryByText('Content')).not.toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole('button'));
+    expect(screen.getByText('Content')).toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole('button'));
+
+    await waitFor(() => {
+        expect(screen.queryByText('Content')).not.toBeInTheDocument();
+    });
 });

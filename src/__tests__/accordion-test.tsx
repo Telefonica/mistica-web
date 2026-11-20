@@ -1,46 +1,185 @@
-import {test, expect} from '../test-utils/component';
+import * as React from 'react';
+import userEvent from '@testing-library/user-event';
+import {render, screen, waitFor} from '@testing-library/react';
+import {ThemeContextProvider, Text3, AccordionItem, Accordion, Text2} from '..';
+import {makeTheme} from './test-utils';
 
-import type {Locator} from '@playwright/test';
+const items = [
+    {
+        title: 'Title 1',
+        content: <Text3 regular>Content 1</Text3>,
+    },
+    {
+        title: 'Title 2',
+        content: <Text3 regular>Content 2</Text3>,
+    },
+    {
+        title: 'Title 3',
+        content: <Text3 regular>Content 3</Text3>,
+    },
+];
 
-const expectPanels = async (component: Locator, open: Array<number>) => {
-    for (const index of [1, 2, 3]) {
-        await expect(component.getByText(`Content ${index}`, {exact: true})).toHaveCount(
-            open.includes(index) ? 1 : 0
+test('Accordion', async () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Accordion>
+                {items.map((item) => (
+                    <AccordionItem key={item.title} {...item} />
+                ))}
+            </Accordion>
+        </ThemeContextProvider>
+    );
+
+    expect(screen.queryByText('Content 1')).not.toBeInTheDocument();
+    expect(screen.queryByText('Content 2')).not.toBeInTheDocument();
+    expect(screen.queryByText('Content 3')).not.toBeInTheDocument();
+
+    await userEvent.click(screen.getByText('Title 1'));
+    await userEvent.click(screen.getByText('Title 3'));
+
+    expect(screen.getByText('Content 1')).toBeInTheDocument();
+    expect(screen.queryByText('Content 2')).not.toBeInTheDocument();
+    expect(screen.getByText('Content 3')).toBeInTheDocument();
+});
+
+test('Accordion with index', async () => {
+    const AccordionWrapper = () => {
+        const [index, setIndex] = React.useState<Array<number>>([0, 2]);
+
+        return (
+            <Accordion
+                index={index}
+                onChange={(item, value) => {
+                    if (value) {
+                        setIndex([...index, item]);
+                    } else {
+                        index.splice(index.indexOf(item), 1);
+                        setIndex([...index]);
+                    }
+                }}
+            >
+                {items.map((item) => (
+                    <AccordionItem key={item.title} {...item} />
+                ))}
+            </Accordion>
         );
-    }
-};
-test('Accordion', async ({mount}) => {
-    const component = await mount('accordion/Panels');
-    await expectPanels(component, []);
-    await component.getByText('Title 1').click();
-    await component.getByText('Title 3').click();
-    await expectPanels(component, [1, 3]);
+    };
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <AccordionWrapper />
+        </ThemeContextProvider>
+    );
+
+    expect(screen.getByText('Content 1')).toBeInTheDocument();
+    expect(screen.queryByText('Content 2')).not.toBeInTheDocument();
+    expect(screen.getByText('Content 3')).toBeInTheDocument();
+
+    await userEvent.click(screen.getByText('Title 1'));
+    await userEvent.click(screen.getByText('Title 2'));
+    await userEvent.click(screen.getByText('Title 3'));
+
+    /** We need to wait for CSS transition to finish in order for panels to be removed */
+    await waitFor(() => {
+        expect(screen.queryByText('Content 1')).not.toBeInTheDocument();
+        expect(screen.queryByText('Content 3')).not.toBeInTheDocument();
+    });
+    expect(screen.getByText('Content 2')).toBeInTheDocument();
 });
-test('Accordion with index', async ({mount}) => {
-    const component = await mount('accordion/Panels', {mode: 'controlled'});
-    await expectPanels(component, [1, 3]);
-    for (const index of [1, 2, 3]) await component.getByText(`Title ${index}`).click();
-    await expectPanels(component, [2]);
+
+test('Accordion with default index', async () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Accordion defaultIndex={[0, 2]}>
+                {items.map((item) => (
+                    <AccordionItem key={item.title} {...item} />
+                ))}
+            </Accordion>
+        </ThemeContextProvider>
+    );
+
+    expect(screen.getByText('Content 1')).toBeInTheDocument();
+    expect(screen.queryByText('Content 2')).not.toBeInTheDocument();
+    expect(screen.getByText('Content 3')).toBeInTheDocument();
+
+    await userEvent.click(screen.getByText('Title 1'));
+    await userEvent.click(screen.getByText('Title 2'));
+
+    /** We need to wait for CSS transition to finish in order for panels to be removed */
+    await waitFor(() => {
+        expect(screen.queryByText('Content 1')).not.toBeInTheDocument();
+    });
+    expect(screen.getByText('Content 2')).toBeInTheDocument();
+    expect(screen.getByText('Content 3')).toBeInTheDocument();
 });
-test('Accordion with default index', async ({mount}) => {
-    const component = await mount('accordion/Panels', {mode: 'default'});
-    await expectPanels(component, [1, 3]);
-    await component.getByText('Title 1').click();
-    await component.getByText('Title 2').click();
-    await expectPanels(component, [2, 3]);
+
+test('Accordion with singleOpen', async () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Accordion singleOpen>
+                {items.map((item) => (
+                    <AccordionItem key={item.title} {...item} />
+                ))}
+            </Accordion>
+        </ThemeContextProvider>
+    );
+
+    expect(screen.queryByText('Content 1')).not.toBeInTheDocument();
+    expect(screen.queryByText('Content 2')).not.toBeInTheDocument();
+    expect(screen.queryByText('Content 3')).not.toBeInTheDocument();
+
+    await userEvent.click(screen.getByText('Title 1'));
+    await userEvent.click(screen.getByText('Title 2'));
+    await userEvent.click(screen.getByText('Title 3'));
+
+    /** We need to wait for CSS transition to finish in order for panels to be removed */
+    await waitFor(() => {
+        expect(screen.queryByText('Content 1')).not.toBeInTheDocument();
+        expect(screen.queryByText('Content 2')).not.toBeInTheDocument();
+    });
+    expect(screen.getByText('Content 3')).toBeInTheDocument();
 });
-test('Accordion with singleOpen', async ({mount}) => {
-    const component = await mount('accordion/Panels', {mode: 'single'});
-    await expectPanels(component, []);
-    for (const index of [1, 2, 3]) await component.getByText(`Title ${index}`).click();
-    await expectPanels(component, [3]);
+
+test('Accordion button exposes header text in the expected order', () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Accordion>
+                <AccordionItem
+                    title="Title"
+                    subtitle="Subtitle"
+                    detail="Detail"
+                    right={<span>Right content</span>}
+                    asset={<img src="/decorative.svg" alt="Decorative asset" />}
+                    content={<Text3 regular>Panel content</Text3>}
+                />
+            </Accordion>
+        </ThemeContextProvider>
+    );
+
+    expect(screen.getByRole('button', {name: 'Title Subtitle Detail Right content'})).toBeInTheDocument();
 });
-test('Accordion button exposes header text in the expected order', async ({mount}) => {
-    const component = await mount('accordion/HeaderOrder');
-    await expect(component.getByRole('button', {name: 'Title Subtitle Detail Right content'})).toHaveCount(1);
-});
-test('Accordion with custom labels is accessible', async ({mount}) => {
-    const component = await mount('accordion/CustomLabels');
-    await expect(component.getByLabel('Custom label 1')).toHaveCount(1);
-    await expect(component.getByLabel('Custom label 2')).toHaveCount(1);
+
+test('Accordion with custom labels is accessible', async () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Accordion>
+                <AccordionItem
+                    title="Title 1"
+                    content={<Text3 regular>Content 1</Text3>}
+                    aria-label="Custom label 1"
+                />
+                <AccordionItem
+                    title="Title 2"
+                    content={<Text3 regular>Content 2</Text3>}
+                    aria-labelledby="item2-id"
+                />
+            </Accordion>
+            <Text2 regular id="item2-id">
+                Custom label 2
+            </Text2>
+        </ThemeContextProvider>
+    );
+
+    expect(screen.getByLabelText('Custom label 1')).toBeInTheDocument();
+    expect(screen.getByLabelText('Custom label 2')).toBeInTheDocument();
 });

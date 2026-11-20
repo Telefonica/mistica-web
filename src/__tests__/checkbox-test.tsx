@@ -1,49 +1,148 @@
-import {test, expect} from '../test-utils/component';
+import * as React from 'react';
+import {render, waitFor, screen} from '@testing-library/react';
+import {ButtonPrimary, Form, Checkbox, ThemeContextProvider, TextLink} from '..';
+import userEvent from '@testing-library/user-event';
+import {makeTheme} from './test-utils';
 
-test('renders accesible checkbox', async ({mount}) => {
-    const component = await mount('checkbox/Toggle');
-    await expect(component.getByRole('checkbox')).toHaveCount(1);
-    await expect(component.getByRole('checkbox')).toHaveAttribute('aria-checked', 'false');
+test('renders accesible checkbox', () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Checkbox name="checkbox" defaultChecked={false} />
+        </ThemeContextProvider>
+    );
+
+    const checkBoxElement = screen.getByRole('checkbox');
+
+    expect(checkBoxElement).toBeInTheDocument();
+    expect(checkBoxElement.getAttribute('aria-checked')).toBe('false');
 });
-test('controlled mode', async ({mount}) => {
-    const component = await mount('checkbox/Toggle', {controlled: true});
-    const toggle = component.getByRole('checkbox');
-    await expect(toggle).toHaveAttribute('aria-checked', 'false');
-    await toggle.click();
-    await expect(toggle).toHaveAttribute('aria-checked', 'true');
-});
-for (const handler of [false, true]) {
-    test(`uncontrolled mode${handler ? ' with onChange handler' : ''}`, async ({mount}) => {
-        const component = await mount('checkbox/Toggle', {defaultChecked: true, handler});
-        const toggle = component.getByRole('checkbox');
-        await expect(toggle).toHaveAttribute('aria-checked', 'true');
-        await toggle.click();
-        await expect(toggle).toHaveAttribute('aria-checked', 'false');
-        if (handler) await expect(component.getByTestId('calls')).toHaveValue('[false]');
-    });
-}
-for (const controlled of [false, true]) {
-    test(`form ${controlled ? 'uncontrolled' : 'controlled'} mode`, async ({mount}) => {
-        const component = await mount('checkbox/FormToggle', {controlled});
-        const toggle = component.getByRole('checkbox');
-        await expect(toggle).toHaveAttribute('aria-checked', String(!controlled));
-        await toggle.click();
-        await expect(toggle).toHaveAttribute('aria-checked', String(controlled));
-        await component.getByRole('button', {name: 'done!'}).click();
-        await expect(component.getByTestId('submission')).toHaveValue(
-            JSON.stringify([{checkbox: controlled}, {checkbox: controlled}])
+
+test('controlled mode', async () => {
+    const Component = () => {
+        const [checked, setChecked] = React.useState(false);
+        return (
+            <ThemeContextProvider theme={makeTheme()}>
+                <Checkbox name="checkbox" onChange={setChecked} checked={checked} />
+            </ThemeContextProvider>
         );
-    });
-}
-test('Checkbox onClick event is not propagated', async ({mount}) => {
-    const component = await mount('checkbox/Propagation');
-    await component.getByRole('checkbox').click();
-    await expect(component.getByTestId('parent-calls')).toHaveValue('0');
+    };
+
+    render(<Component />);
+
+    const checkBoxElement = screen.getByRole('checkbox');
+
+    expect(checkBoxElement.getAttribute('aria-checked')).toBe('false');
+    await userEvent.click(checkBoxElement);
+    expect(checkBoxElement.getAttribute('aria-checked')).toBe('true');
 });
-test("with link. Clicking the link doesn't check the checkbox", async ({mount}) => {
-    const component = await mount('checkbox/WithLink');
-    const checkbox = component.getByRole('checkbox');
-    await expect(checkbox).toHaveAttribute('aria-checked', 'false');
-    await component.getByRole('link').click();
-    await expect(checkbox).toHaveAttribute('aria-checked', 'false');
+
+test('uncontrolled mode', async () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Checkbox name="checkbox" defaultChecked />
+        </ThemeContextProvider>
+    );
+
+    const checkBoxElement = screen.getByRole('checkbox');
+
+    expect(checkBoxElement.getAttribute('aria-checked')).toBe('true');
+    await userEvent.click(checkBoxElement);
+    expect(checkBoxElement.getAttribute('aria-checked')).toBe('false');
+});
+
+test('uncontrolled mode with onChange handler', async () => {
+    const onChangeSpy = jest.fn();
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Checkbox name="checkbox" onChange={onChangeSpy} defaultChecked />
+        </ThemeContextProvider>
+    );
+
+    const checkBoxElement = screen.getByRole('checkbox');
+
+    expect(checkBoxElement.getAttribute('aria-checked')).toBe('true');
+    await userEvent.click(checkBoxElement);
+    expect(checkBoxElement.getAttribute('aria-checked')).toBe('false');
+
+    await waitFor(() => expect(onChangeSpy).toHaveBeenCalledWith(false));
+});
+
+test('form controlled mode', async () => {
+    const handleSubmitSpy = jest.fn();
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Form onSubmit={handleSubmitSpy} initialValues={{checkbox: true}}>
+                <Checkbox name="checkbox" />
+                <ButtonPrimary submit>done!</ButtonPrimary>
+            </Form>
+        </ThemeContextProvider>
+    );
+
+    const checkBoxElement = screen.getByRole('checkbox');
+
+    expect(checkBoxElement.getAttribute('aria-checked')).toBe('true');
+    await userEvent.click(checkBoxElement);
+    expect(checkBoxElement.getAttribute('aria-checked')).toBe('false');
+    await userEvent.click(screen.getByRole('button'));
+    await waitFor(() => expect(handleSubmitSpy).toHaveBeenCalledWith({checkbox: false}, {checkbox: false}));
+});
+
+test('form uncontrolled mode', async () => {
+    const handleSubmitSpy = jest.fn();
+
+    const ControlledSwitch = () => {
+        const [checked, setChecked] = React.useState(false);
+        return <Checkbox checked={checked} onChange={setChecked} name="checkbox" />;
+    };
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Form onSubmit={handleSubmitSpy} initialValues={{switch: true}}>
+                <ControlledSwitch />
+                <ButtonPrimary submit>done!</ButtonPrimary>
+            </Form>
+        </ThemeContextProvider>
+    );
+
+    const checkBoxElement = screen.getByRole('checkbox');
+
+    expect(checkBoxElement.getAttribute('aria-checked')).toBe('false');
+    await userEvent.click(checkBoxElement);
+    expect(checkBoxElement.getAttribute('aria-checked')).toBe('true');
+    await userEvent.click(screen.getByRole('button'));
+    await waitFor(() => expect(handleSubmitSpy).toHaveBeenCalledWith({checkbox: true}, {checkbox: true}));
+});
+
+test("with link. Clicking the link doesn't check the checkbox", async () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Checkbox name="checkbox">
+                Accept <TextLink href="#terms-and-conditions">terms and conditions</TextLink>
+            </Checkbox>
+        </ThemeContextProvider>
+    );
+
+    const checkBoxElement = screen.getByRole('checkbox');
+    const linkElement = screen.getByRole('link');
+
+    expect(checkBoxElement.getAttribute('aria-checked')).toBe('false');
+    await userEvent.click(linkElement);
+    expect(checkBoxElement.getAttribute('aria-checked')).toBe('false');
+});
+
+test('Checkbox onClick event is not propagated', async () => {
+    const onPressHandler = jest.fn();
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <button onClick={onPressHandler}>
+                <Checkbox name="checkbox" />
+            </button>
+        </ThemeContextProvider>
+    );
+
+    await userEvent.click(screen.getByRole('checkbox'));
+
+    expect(onPressHandler).not.toHaveBeenCalled();
 });

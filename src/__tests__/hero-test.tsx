@@ -1,23 +1,44 @@
-import {test, expect} from '../test-utils/component';
+import * as React from 'react';
+import Hero from '../hero';
+import Tag from '../tag';
+import {makeTheme} from './test-utils';
+import {render, screen} from '@testing-library/react';
+import ThemeContextProvider from '../theme-context-provider';
 
-import type {ReadingOrder} from './hero.story';
+const pretitleFirst = 'PretitleHeadlineTitleDescription';
+const titleFirst = 'TitleHeadlinePretitleDescription';
 
-for (const {pretitleAs, titleAs, expectedOrder} of [
-    {pretitleAs: undefined, titleAs: undefined, expectedOrder: 'TitleHeadlinePretitleDescription'},
-    {pretitleAs: undefined, titleAs: 'span', expectedOrder: 'TitleHeadlinePretitleDescription'},
-    {pretitleAs: undefined, titleAs: 'h1', expectedOrder: 'TitleHeadlinePretitleDescription'},
-    {pretitleAs: 'span', titleAs: undefined, expectedOrder: 'TitleHeadlinePretitleDescription'},
-    {pretitleAs: 'h3', titleAs: undefined, expectedOrder: 'TitleHeadlinePretitleDescription'},
-    {pretitleAs: 'h3', titleAs: 'h1', expectedOrder: 'TitleHeadlinePretitleDescription'},
-    {pretitleAs: 'span', titleAs: 'h1', expectedOrder: 'TitleHeadlinePretitleDescription'},
-    {pretitleAs: 'h1', titleAs: undefined, expectedOrder: 'TitleHeadlinePretitleDescription'},
-    {pretitleAs: 'h1', titleAs: 'h3', expectedOrder: 'PretitleHeadlineTitleDescription'},
-    {pretitleAs: 'h1', titleAs: 'span', expectedOrder: 'PretitleHeadlineTitleDescription'},
-] as const) {
-    test(`Hero has correct reading order with pretitleAs={${pretitleAs}} and titleAs={${titleAs}}`, async ({
-        mount,
-    }) => {
-        const component = await mount<typeof ReadingOrder>('hero/ReadingOrder', {pretitleAs, titleAs});
-        await expect(component.getByTestId('hero')).toHaveText(expectedOrder);
-    });
-}
+test.each`
+    pretitleAs   | titleAs      | expectedOrder
+    ${undefined} | ${undefined} | ${titleFirst}
+    ${undefined} | ${'span'}    | ${titleFirst}
+    ${undefined} | ${'h1'}      | ${titleFirst}
+    ${'span'}    | ${undefined} | ${titleFirst}
+    ${'h3'}      | ${undefined} | ${titleFirst}
+    ${'h3'}      | ${'h1'}      | ${titleFirst}
+    ${'span'}    | ${'h1'}      | ${titleFirst}
+    ${'h1'}      | ${undefined} | ${titleFirst}
+    ${'h1'}      | ${'h3'}      | ${pretitleFirst}
+    ${'h1'}      | ${'span'}    | ${pretitleFirst}
+`(
+    'Hero has correct reading order with pretitleAs={$pretitleAs} and titleAs={$titleAs}',
+    async ({pretitleAs, titleAs, expectedOrder}) => {
+        render(
+            <ThemeContextProvider theme={makeTheme()}>
+                <Hero
+                    media={<></>}
+                    headline={<Tag>Headline</Tag>}
+                    pretitle="Pretitle"
+                    title="Title"
+                    description="Description"
+                    titleAs={titleAs}
+                    pretitleAs={pretitleAs}
+                    dataAttributes={{testid: 'hero'}}
+                />
+            </ThemeContextProvider>
+        );
+
+        const hero = await screen.findByTestId('hero');
+        expect(hero.textContent).toEqual(expectedOrder);
+    }
+);

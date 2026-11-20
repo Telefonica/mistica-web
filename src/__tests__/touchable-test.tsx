@@ -1,201 +1,515 @@
-import {test, expect} from '../test-utils/component';
+import * as React from 'react';
+import {MemoryRouter, Route, Routes, Link as ReactRouterLink, useLocation} from 'react-router-dom';
+import Touchable from '../touchable';
+import {waitFor, fireEvent, render, screen} from '@testing-library/react';
+import ThemeContextProvider from '../theme-context-provider';
+import {makeTheme} from './test-utils';
+import {type ThemeConfig} from '../theme';
+import {SPACE} from '../utils/keys';
+import {redirect as redirectSpy} from '../utils/browser';
 
-import type {Basic, Navigation} from './touchable.story';
-import type {TrackingEvent} from '../utils/types';
+const trackingEvent = {
+    category: 'test',
+    action: 'test',
+    label: 'test',
+};
 
-const trackingEvent = {category: 'test', action: 'test', label: 'test'};
-test(`onNavigate is called before navigation when using "href" prop`, async ({mount, page}) => {
-    const events: Array<string> = [];
-    const tracked: Array<TrackingEvent> = [];
-    let completeNavigation!: () => void;
-    const pendingNavigation = new Promise<void>((resolve) => {
-        completeNavigation = resolve;
-    });
-    await page.route('https://example.org/', (route) => route.fulfill({body: 'Destination'}));
-    const component = await mount<typeof Navigation>('touchable/Navigation', {
-        onNavigate: async () => {
-            events.push('navigate');
-            await pendingNavigation;
-        },
-        onTrack: async (event) => {
-            tracked.push(event);
-        },
-    });
-    await component.getByRole('link', {name: 'Test', exact: true}).click();
-    await expect.poll(() => events).toEqual(['navigate']);
-    expect(page.url()).toContain('/playwright/gallery/index.html');
-    completeNavigation();
-    await expect(page).toHaveURL('https://example.org/');
-    expect(tracked).toEqual([trackingEvent]);
-});
-test(`onNavigate is called during navigation when using "to" prop`, async ({mount}) => {
-    const events: Array<string> = [];
-    const tracked: Array<TrackingEvent> = [];
-    const component = await mount<typeof Navigation>('touchable/Navigation', {
-        router: true,
-        onNavigate: () => {
-            events.push('navigate');
-        },
-        onTrack: async (event) => {
-            tracked.push(event);
-        },
-    });
-    await expect(component.getByText('Current path: /', {exact: true})).toHaveCount(1);
-    await component.getByRole('link', {name: 'Test', exact: true}).click();
-    await expect(component.getByText('Current path: /example/path', {exact: true})).toHaveCount(1);
-    expect(events).toEqual(['navigate']);
-    await expect.poll(() => tracked).toEqual([trackingEvent]);
-});
-test(`Touchable has the appropiate role`, async ({mount}) => {
-    const component = await mount('touchable/Roles', {});
-    for (const [role, name] of [
-        ['link', 'to'],
-        ['link', 'href'],
-        ['button', 'onPress'],
-        ['menuitem', 'to'],
-        ['tab', 'href'],
-        ['link', 'onPress'],
-    ] as const) {
-        await expect(component.getByRole(role, {name, exact: true})).toHaveCount(1);
-    }
+jest.mock('../utils/browser', () => ({
+    ...jest.requireActual('../utils/browser'),
+    redirect: jest.fn(),
+}));
+
+beforeEach(() => {
+    (redirectSpy as any).mockReset();
 });
 
-for (const {title, props, href} of [
-    {
-        title: '<Link> element is rendered when "to" prop is passed',
-        props: {kind: 'to', target: '/to', router: true},
-        href: '/to',
-    },
-    {
-        title: '<a> element is rendered when "to" prop is used and no Link component injected via ThemeContextProvider',
-        props: {kind: 'to', target: '/to'},
-        href: '/to',
-    },
-    {
-        title: '<a> element is rendered when "fullPageOnWebView" and "to" props are passed, inside App',
-        props: {kind: 'to', target: 'href', fullPageOnWebView: true, insideApp: true},
-        href: 'href',
-    },
-    {
-        title: '<Link> element is rendered when "fullPageOnWebView" and "to" props are passed, outside App',
-        props: {kind: 'to', target: 'href', fullPageOnWebView: true, router: true},
-        href: '/href',
-    },
-    {title: '<a> element is rendered when "href" prop is passed', props: {kind: 'href'}, href: 'href'},
-    {
-        title: '"href" gets decorated',
-        props: {kind: 'href', target: '/foo/bar/?param=123#hash', decorate: true},
-        href: '/foo/bar/?param=123&utm_source=test#hash',
-    },
-    {
-        title: '"to" paths are not decorated',
-        props: {kind: 'to', target: '/foo/bar/?param=123#hash', decorate: true},
-        href: '/foo/bar/?param=123#hash',
-    },
-    {
-        title: '"to" paths with "fullPageOnWebView" are not decorated',
-        props: {kind: 'to', target: '/foo/bar/?param=123#hash', decorate: true, fullPageOnWebView: true},
-        href: '/foo/bar/?param=123#hash',
-    },
-] as const)
-    test(title, async ({mount}) => {
-        const component = await mount('touchable/Basic', props);
-        await expect(component.getByRole('link', {name: 'Test', exact: true})).toHaveAttribute('href', href);
-    });
-for (const eventCount of [1, 2]) {
-    test(`<Link> element is rendered when "to" prop is passed with ${eventCount === 1 ? 'tracking' : 'multiple tracking events'}`, async ({
-        mount,
-    }) => {
-        const events: Array<TrackingEvent> = [];
-        const component = await mount<typeof Basic>('touchable/Basic', {
-            kind: 'to',
-            target: '/to',
-            router: true,
-            eventCount,
-            onTrack: async (event) => {
-                events.push(event);
-            },
-        });
-        await component.getByRole('link', {name: 'Test', exact: true}).click();
-        await expect.poll(() => events).toEqual(Array(eventCount).fill(trackingEvent));
-        await expect(component.getByText('Current path: /to', {exact: true})).toHaveCount(1);
-    });
-    test(`<a> element is rendered when "href" prop is passed and ${eventCount === 1 ? 'trackingEvent' : 'multiple trackingEvent'}`, async ({
-        mount,
-        page,
-        context,
-    }) => {
-        const events: Array<TrackingEvent> = [];
-        await context.route('**/href', (route) => route.fulfill({body: 'Destination'}));
-        const component = await mount<typeof Basic>('touchable/Basic', {
-            kind: 'href',
-            newTab: true,
-            eventCount,
-            onTrack: async (event) => {
-                events.push(event);
-            },
-        });
-        const popupPromise = page.waitForEvent('popup');
-        await component.getByRole('link', {name: /^Test/}).click();
-        const popup = await popupPromise;
-        await expect(popup).toHaveURL(/\/href$/);
-        await expect.poll(() => events).toEqual(Array(eventCount).fill(trackingEvent));
-        expect(context.pages()).toHaveLength(2);
-    });
-    test(`<button> element is rendered when "onPress" prop is passed and ${eventCount === 1 ? 'trackingEvent' : 'multiple trackingEvent'}`, async ({
-        mount,
-    }) => {
-        const events: Array<TrackingEvent> = [];
-        let presses = 0;
-        const component = await mount<typeof Basic>('touchable/Basic', {
-            kind: 'onPress',
-            eventCount,
-            onTrack: async (event) => {
-                events.push(event);
-            },
-            onPress: () => {
-                presses++;
-            },
-        });
-        await component.getByRole('button', {name: 'Test', exact: true}).click();
-        await expect.poll(() => events).toEqual(Array(eventCount).fill(trackingEvent));
-        expect(presses).toBe(1);
-    });
-}
-test('<button> element is rendered when "onPress" prop is passed', async ({mount}) => {
-    const component = await mount('touchable/Basic', {kind: 'onPress'});
-    await expect(component.getByRole('button', {name: 'Test'})).toHaveCount(1);
+const Link: ThemeConfig['Link'] = ({innerRef, ...props}) => <ReactRouterLink {...props} ref={innerRef} />;
+
+test('<Link> element is rendered when "to" prop is passed', async () => {
+    const to = '/to';
+
+    render(
+        <ThemeContextProvider theme={makeTheme({Link})}>
+            <MemoryRouter>
+                <Touchable to={to}>Test</Touchable>
+            </MemoryRouter>
+        </ThemeContextProvider>
+    );
+
+    const anchor = screen.getByRole('link', {name: 'Test'});
+
+    expect(anchor).toHaveAttribute('href', to);
 });
-test('<a> element is rendered when "href" and "loadOnTop" props are passed', async ({mount, page}) => {
-    const events: Array<TrackingEvent> = [];
-    await page.route('**/href', (route) => route.fulfill({body: 'Destination'}));
-    const component = await mount<typeof Basic>('touchable/Basic', {
-        kind: 'href',
-        loadOnTop: true,
-        eventCount: 1,
-        onTrack: async (event) => {
-            events.push(event);
-        },
+
+test('<a> element is rendered when "to" prop is used and no Link component injected via ThemeContextProvider', async () => {
+    const to = '/to';
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Touchable to={to}>Test</Touchable>
+        </ThemeContextProvider>
+    );
+
+    const anchor = screen.getByRole('link', {name: 'Test'});
+
+    expect(anchor).toHaveAttribute('href', to);
+});
+
+test('<Link> element is rendered when "to" prop is passed with tracking', async () => {
+    const logEventSpy = jest.fn();
+
+    const to = '/to';
+
+    render(
+        <ThemeContextProvider theme={makeTheme({analytics: {logEvent: logEventSpy}, Link})}>
+            <MemoryRouter initialEntries={['/']} initialIndex={0}>
+                <Routes>
+                    <Route
+                        path="/"
+                        element={
+                            <Touchable to={to} trackingEvent={trackingEvent}>
+                                Test
+                            </Touchable>
+                        }
+                    />
+                    <Route path={to} element={<div>Target route</div>} />
+                </Routes>
+            </MemoryRouter>
+        </ThemeContextProvider>
+    );
+
+    const anchor = screen.getByRole('link', {name: 'Test'});
+
+    fireEvent.click(anchor);
+
+    await waitFor(() => {
+        expect(logEventSpy).toHaveBeenCalledTimes(1);
     });
-    await component.getByRole('link', {name: 'Test', exact: true}).click();
-    await expect(page).toHaveURL(/\/href$/);
-    expect(events).toEqual([trackingEvent]);
+    expect(logEventSpy).toHaveBeenCalledWith(trackingEvent);
+    expect(screen.getByText('Target route')).toBeInTheDocument();
 });
-test('<a> component has click-like behaviour on "space" key press', async ({mount, page, context}) => {
-    await context.route('**/href', (route) => route.fulfill({body: 'Destination'}));
-    const component = await mount('touchable/Basic', {kind: 'href', newTab: true, eventCount: 1});
-    const popupPromise = page.waitForEvent('popup');
-    await component.getByRole('link', {name: /^Test/}).press('Space');
-    const popup = await popupPromise;
-    await expect(popup).toHaveURL(/\/href$/);
-    expect(context.pages()).toHaveLength(2);
+
+test('<Link> element is rendered when "to" prop is passed with multiple tracking events', async () => {
+    const logEventSpy = jest.fn();
+
+    const to = '/to';
+
+    render(
+        <ThemeContextProvider theme={makeTheme({analytics: {logEvent: logEventSpy}, Link})}>
+            <MemoryRouter>
+                <Routes>
+                    <Route
+                        path="/"
+                        element={
+                            <Touchable to={to} trackingEvent={[trackingEvent, trackingEvent]}>
+                                Test
+                            </Touchable>
+                        }
+                    />
+                    <Route path={to} element={<div>Target route</div>} />
+                </Routes>
+            </MemoryRouter>
+        </ThemeContextProvider>
+    );
+
+    const anchor = screen.getByRole('link', {name: 'Test'});
+
+    fireEvent.click(anchor);
+
+    await waitFor(() => {
+        expect(logEventSpy).toHaveBeenCalledTimes(2);
+    });
+    expect(logEventSpy.mock.calls).toEqual([[trackingEvent], [trackingEvent]]);
+    expect(screen.getByText('Target route')).toBeInTheDocument();
 });
-test('<Link> component has click-like behaviour on "space" key press', async ({mount}) => {
-    const component = await mount('touchable/Basic', {kind: 'to', target: '/to', router: true});
-    await component.getByRole('link', {name: 'Test', exact: true}).press('Space');
-    await expect(component.getByText('Current path: /to', {exact: true})).toHaveCount(1);
+
+test('<a> element is rendered when "fullPageOnWebView" and "to" props are passed, inside App', () => {
+    const href = 'href';
+
+    render(
+        <ThemeContextProvider theme={makeTheme({platformOverrides: {insideNovumNativeApp: true}})}>
+            <Touchable to={href} fullPageOnWebView>
+                Test
+            </Touchable>
+        </ThemeContextProvider>
+    );
+
+    const anchor = screen.getByRole('link', {name: 'Test'});
+    expect(anchor).toHaveAttribute('href', href);
 });
-test('target="_blank" is set with newTab', async ({mount}) => {
-    const component = await mount('touchable/Basic', {newTab: true});
-    await expect(component.getByRole('link', {name: /^Test/})).toHaveAttribute('target', '_blank');
+
+test('<Link> element is rendered when "fullPageOnWebView" and "to" props are passed, outside App', () => {
+    const href = 'href';
+
+    render(
+        <ThemeContextProvider theme={makeTheme({platformOverrides: {insideNovumNativeApp: false}, Link})}>
+            <MemoryRouter initialEntries={['/']} initialIndex={0}>
+                <Routes>
+                    <Route
+                        path="/"
+                        element={
+                            <Touchable to={href} fullPageOnWebView>
+                                Test
+                            </Touchable>
+                        }
+                    />
+                </Routes>
+            </MemoryRouter>
+        </ThemeContextProvider>
+    );
+
+    const anchor = screen.getByRole('link', {name: 'Test'});
+
+    expect(anchor).toHaveAttribute('href', `/${href}`);
+});
+
+test('<a> element is rendered when "href" prop is passed', () => {
+    const href = 'href';
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Touchable href={href}>Test</Touchable>
+        </ThemeContextProvider>
+    );
+    const anchor = screen.getByRole('link', {name: 'Test'});
+
+    expect(anchor).toHaveAttribute('href', href);
+});
+
+test('<a> element is rendered when "href" prop is passed and trackingEvent', async () => {
+    const href = 'href';
+    const logEventSpy = jest.fn(() => Promise.resolve());
+
+    render(
+        <ThemeContextProvider theme={makeTheme({analytics: {logEvent: logEventSpy}})}>
+            <Touchable
+                dataAttributes={{testid: 'touchable-events'}}
+                href={href}
+                newTab
+                trackingEvent={trackingEvent}
+            >
+                Test
+            </Touchable>
+        </ThemeContextProvider>
+    );
+
+    const anchor = screen.getByTestId('touchable-events');
+    expect(anchor).toBeInTheDocument();
+    fireEvent.click(anchor);
+
+    await waitFor(() => {
+        expect(logEventSpy).toHaveBeenCalledTimes(1);
+    });
+    expect(logEventSpy).toHaveBeenCalledWith(trackingEvent);
+    expect(redirectSpy).toHaveBeenCalledWith(href, true, false);
+});
+
+test('<a> element is rendered when "href" and "loadOnTop" props are passed', async () => {
+    const href = 'href';
+    const logEventSpy = jest.fn(() => Promise.resolve());
+
+    render(
+        <ThemeContextProvider theme={makeTheme({analytics: {logEvent: logEventSpy}})}>
+            <Touchable
+                dataAttributes={{testid: 'touchable-events'}}
+                href={href}
+                loadOnTop
+                trackingEvent={trackingEvent}
+            >
+                Test
+            </Touchable>
+        </ThemeContextProvider>
+    );
+
+    const anchor = screen.getByTestId('touchable-events');
+    expect(anchor).toBeInTheDocument();
+    fireEvent.click(anchor);
+
+    await waitFor(() => {
+        expect(logEventSpy).toHaveBeenCalledTimes(1);
+    });
+    expect(logEventSpy).toHaveBeenCalledWith(trackingEvent);
+    expect(redirectSpy).toHaveBeenCalledTimes(1);
+    expect(redirectSpy).toHaveBeenCalledWith('href', false, true);
+});
+
+test('<a> element is rendered when "href" prop is passed and multiple trackingEvent', async () => {
+    const href = 'href';
+    const logEventSpy = jest.fn(() => Promise.resolve());
+
+    render(
+        <ThemeContextProvider theme={makeTheme({analytics: {logEvent: logEventSpy}})}>
+            <Touchable
+                dataAttributes={{testid: 'touchable-events'}}
+                href={href}
+                newTab
+                trackingEvent={[trackingEvent, trackingEvent]}
+            >
+                Test
+            </Touchable>
+        </ThemeContextProvider>
+    );
+
+    const anchor = screen.getByTestId('touchable-events');
+    expect(anchor).toBeInTheDocument();
+    fireEvent.click(anchor);
+
+    await waitFor(() => {
+        expect(logEventSpy).toHaveBeenCalledTimes(2);
+    });
+    expect(logEventSpy.mock.calls).toEqual([[trackingEvent], [trackingEvent]]);
+    expect(redirectSpy).toHaveBeenCalledTimes(1);
+    expect(redirectSpy).toHaveBeenCalledWith('href', true, false);
+});
+
+test('<button> element is rendered when "onPress" prop is passed', () => {
+    const onPress = () => {};
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Touchable onPress={onPress}>Test</Touchable>
+        </ThemeContextProvider>
+    );
+
+    expect(screen.getByRole('button', {name: 'Test'})).toBeInTheDocument();
+});
+
+test('<button> element is rendered when "onPress" prop is passed and trackingEvent', async () => {
+    const onPressSpy = jest.fn().mockReturnValue(undefined);
+    const logEventSpy = jest.fn(() => Promise.resolve());
+    render(
+        <ThemeContextProvider theme={makeTheme({analytics: {logEvent: logEventSpy}})}>
+            <Touchable onPress={onPressSpy} trackingEvent={trackingEvent}>
+                Test
+            </Touchable>
+        </ThemeContextProvider>
+    );
+
+    fireEvent.click(screen.getByRole('button', {name: 'Test'}));
+
+    await waitFor(() => {
+        expect(logEventSpy).toHaveBeenCalledTimes(1);
+    });
+    expect(logEventSpy).toHaveBeenCalledWith(trackingEvent);
+    expect(onPressSpy).toHaveBeenCalledTimes(1);
+});
+
+test('<button> element is rendered when "onPress" prop is passed and multiple trackingEvent', async () => {
+    const onPressSpy = jest.fn().mockReturnValue(undefined);
+    const logEventSpy = jest.fn(() => Promise.resolve());
+    render(
+        <ThemeContextProvider theme={makeTheme({analytics: {logEvent: logEventSpy}})}>
+            <Touchable onPress={onPressSpy} trackingEvent={[trackingEvent, trackingEvent]}>
+                Test
+            </Touchable>
+        </ThemeContextProvider>
+    );
+
+    fireEvent.click(screen.getByRole('button', {name: 'Test'}));
+
+    await waitFor(() => {
+        expect(logEventSpy).toHaveBeenCalledTimes(2);
+    });
+    expect(logEventSpy.mock.calls).toEqual([[trackingEvent], [trackingEvent]]);
+    expect(onPressSpy).toHaveBeenCalledTimes(1);
+});
+
+test('<a> component has click-like behaviour on "space" key press', async () => {
+    const href = 'href';
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Touchable href={href} newTab trackingEvent={trackingEvent}>
+                Test
+            </Touchable>
+        </ThemeContextProvider>
+    );
+
+    fireEvent.keyDown(screen.getByRole('link', {name: /Test/}), {key: SPACE});
+
+    await waitFor(() => {
+        expect(redirectSpy).toHaveBeenCalledTimes(1);
+        expect(redirectSpy).toHaveBeenCalledWith('href', true, false);
+    });
+});
+
+test('<Link> component has click-like behaviour on "space" key press', async () => {
+    const to = '/to';
+
+    render(
+        <ThemeContextProvider theme={makeTheme({Link})}>
+            <MemoryRouter>
+                <Routes>
+                    <Route path="/" element={<Touchable to={to}>Test</Touchable>} />
+                    <Route path={to} element={<div>test click</div>} />
+                </Routes>
+            </MemoryRouter>
+        </ThemeContextProvider>
+    );
+
+    const anchor = screen.getByRole('link', {name: 'Test'});
+
+    fireEvent.keyDown(anchor, {key: SPACE});
+
+    await waitFor(() => {
+        expect(screen.getByText('test click')).toBeInTheDocument();
+    });
+});
+
+const useHrefDecorator = () => {
+    return (href: string) => {
+        const url = new URL(href, 'https://x');
+        const search = new URLSearchParams(url.search);
+        search.set('utm_source', 'test');
+        return `${url.pathname}?${search.toString()}${url.hash}`;
+    };
+};
+
+test('"href" gets decorated', () => {
+    const href = '/foo/bar/?param=123#hash';
+    render(
+        <ThemeContextProvider theme={makeTheme({useHrefDecorator})}>
+            <Touchable href={href}>Test</Touchable>
+        </ThemeContextProvider>
+    );
+    const anchor = screen.getByRole('link', {name: 'Test'});
+
+    expect(anchor).toHaveAttribute('href', '/foo/bar/?param=123&utm_source=test#hash');
+});
+
+test('"to" paths are not decorated', () => {
+    const to = '/foo/bar/?param=123#hash';
+    render(
+        <ThemeContextProvider theme={makeTheme({useHrefDecorator})}>
+            <Touchable to={to}>Test</Touchable>
+        </ThemeContextProvider>
+    );
+    const anchor = screen.getByRole('link', {name: 'Test'});
+
+    expect(anchor).toHaveAttribute('href', '/foo/bar/?param=123#hash');
+});
+
+test('"to" paths with "fullPageOnWebView" are not decorated', () => {
+    const to = '/foo/bar/?param=123#hash';
+    render(
+        <ThemeContextProvider theme={makeTheme({useHrefDecorator})}>
+            <Touchable to={to} fullPageOnWebView>
+                Test
+            </Touchable>
+        </ThemeContextProvider>
+    );
+    const anchor = screen.getByRole('link', {name: 'Test'});
+
+    expect(anchor).toHaveAttribute('href', '/foo/bar/?param=123#hash');
+});
+
+test('onNavigate is called before navigation when using "href" prop', async () => {
+    const onNavigateSpy = jest.fn().mockResolvedValue(undefined);
+    const logEventSpy = jest.fn();
+    const href = 'https://example.org';
+
+    render(
+        <ThemeContextProvider theme={makeTheme({analytics: {logEvent: logEventSpy}})}>
+            <Touchable href={href} trackingEvent={trackingEvent} onNavigate={onNavigateSpy}>
+                Test
+            </Touchable>
+        </ThemeContextProvider>
+    );
+
+    const link = screen.getByRole('link', {name: 'Test'});
+    fireEvent.click(link);
+
+    expect(onNavigateSpy).toHaveBeenCalledTimes(1);
+    expect(redirectSpy).not.toHaveBeenCalled();
+
+    await waitFor(() => {
+        expect(redirectSpy).toHaveBeenCalledWith(href, false, false);
+    });
+
+    await waitFor(() => {
+        expect(logEventSpy).toHaveBeenCalledWith(trackingEvent);
+    });
+});
+
+test('onNavigate is called during navigation when using "to" prop', async () => {
+    const onNavigateSpy = jest.fn().mockResolvedValue(undefined);
+    const logEventSpy = jest.fn();
+    const to = '/example/path';
+
+    const CurrentPath = () => {
+        return <div>Current path: {useLocation().pathname}</div>;
+    };
+
+    render(
+        <ThemeContextProvider theme={makeTheme({Link, analytics: {logEvent: logEventSpy}})}>
+            <MemoryRouter>
+                <Touchable to={to} trackingEvent={trackingEvent} onNavigate={onNavigateSpy}>
+                    Test
+                </Touchable>
+                <CurrentPath />
+            </MemoryRouter>
+        </ThemeContextProvider>
+    );
+
+    expect(screen.getByText('Current path: /')).toBeInTheDocument();
+
+    const link = screen.getByRole('link', {name: 'Test'});
+    fireEvent.click(link);
+
+    expect(screen.getByText(`Current path: ${to}`)).toBeInTheDocument();
+
+    expect(onNavigateSpy).toHaveBeenCalledTimes(1);
+
+    await waitFor(() => {
+        expect(logEventSpy).toHaveBeenCalledWith(trackingEvent);
+    });
+});
+
+test('Touchable has the appropiate role', async () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Touchable to="/to">to</Touchable>
+            <Touchable href="/href">href</Touchable>
+            <Touchable onPress={() => {}}>onPress</Touchable>
+
+            <Touchable to="/to" role="menuitem">
+                to
+            </Touchable>
+            <Touchable href="/href" role="tab">
+                href
+            </Touchable>
+            <Touchable onPress={() => {}} role="link">
+                onPress
+            </Touchable>
+        </ThemeContextProvider>
+    );
+
+    expect(screen.getByRole('link', {name: 'to'})).toBeInTheDocument();
+    expect(screen.getByRole('link', {name: 'href'})).toBeInTheDocument();
+    expect(screen.getByRole('button', {name: 'onPress'})).toBeInTheDocument();
+    expect(screen.getByRole('menuitem', {name: 'to'})).toBeInTheDocument();
+    expect(screen.getByRole('tab', {name: 'href'})).toBeInTheDocument();
+    expect(screen.getByRole('link', {name: 'onPress'})).toBeInTheDocument();
+});
+
+test('target="_blank" is set with newTab', async () => {
+    const url = 'https://example.org';
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Touchable to={url} newTab>
+                to link
+            </Touchable>
+            <Touchable href={url} newTab>
+                href link
+            </Touchable>
+        </ThemeContextProvider>
+    );
+
+    const toLink = screen.getByRole('link', {name: /to link/});
+    const hrefLink = screen.getByRole('link', {name: /href link/});
+
+    expect(toLink).toHaveAttribute('href', url);
+    expect(hrefLink).toHaveAttribute('href', url);
+
+    expect(toLink).toHaveAttribute('target', '_blank');
+    expect(hrefLink).toHaveAttribute('target', '_blank');
 });
