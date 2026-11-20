@@ -37,6 +37,12 @@ example in `Puppeteer`:
 await page.setUserAgent(`${currentUserAgent} acceptance-test`);
 ```
 
+## Reviewing screenshot changes
+
+Run `git fetch origin` and `yarn review-screenshots` to open a local before/after viewer. Select a base branch
+and a branch with changes. The viewer shows pixel differences and saves your review progress without changing
+tests or reference images. See the [screenshot review guide](../scripts/review-screenshots/README.md).
+
 ## Questions?
 
 Don't hesistate to ask at

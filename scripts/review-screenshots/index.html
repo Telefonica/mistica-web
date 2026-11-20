@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="es">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Revisión de capturas de Mística</title>
+        <link rel="stylesheet" href="/styles.css" />
+        <script src="/app.js" defer></script>
+    </head>
+    <body>
+        <header>
+            <div class="eyebrow">Mística · Herramientas de desarrollo</div>
+            <h1>Revisión de capturas</h1>
+            <p class="intro">Compara ramas, descubre qué ha cambiado y guarda tu revisión.</p>
+            <form id="comparison-form">
+                <label
+                    >Rama base<input id="base" name="base" list="branches" required autocomplete="off"
+                /></label>
+                <span class="branch-arrow" aria-hidden="true">→</span>
+                <label
+                    >Rama con cambios<input id="head" name="head" list="branches" required autocomplete="off"
+                /></label>
+                <datalist id="branches"></datalist>
+                <button id="compare" class="primary" type="submit">Comparar capturas</button>
+                <button id="refresh" type="button">Actualizar lista</button>
+            </form>
+            <details class="comparison-options">
+                <summary>Opciones de comparación</summary>
+                <div class="options-content">
+                    <label
+                        >Comparación<select id="mode">
+                            <option value="branch">Como una PR: desde el punto común</option>
+                            <option value="tips">Comparar las dos versiones directamente</option>
+                        </select></label
+                    >
+                    <p>
+                        La lista usa las ramas de tu clon. Ejecuta <code>git fetch</code> para traer las
+                        últimas referencias.
+                    </p>
+                </div>
+            </details>
+            <p id="message" role="status" aria-live="polite"></p>
+        </header>
+        <main>
+            <section id="welcome" class="welcome">
+                <div class="compare-symbol" aria-hidden="true"><span></span><b>↔</b><span></span></div>
+                <h2>Dos ramas. Los cambios, a la vista.</h2>
+                <p>
+                    Elige una base y una rama con cambios. Verás cada captura de antes y después, con sus
+                    diferencias resaltadas.
+                </p>
+                <p class="subtle">También reconoce las carpetas de capturas de Puppeteer y Playwright.</p>
+            </section>
+            <section id="review" hidden>
+                <div class="summary-grid" aria-label="Resumen de la comparación">
+                    <div><strong id="png-total">0</strong><span>cambios de archivos PNG en Git</span></div>
+                    <div><strong id="comparison-total">0</strong><span>comparaciones de capturas</span></div>
+                    <div><strong id="visual-total">—</strong><span>con diferencias de píxeles</span></div>
+                    <div><strong id="pending-total">0</strong><span>pendientes de revisar</span></div>
+                </div>
+                <div class="analysis-status">
+                    <progress id="analysis" max="1" value="0" aria-label="Capturas analizadas"></progress
+                    ><span id="analysis-text"></span>
+                </div>
+                <details class="count-help">
+                    <summary>¿Por qué los números pueden ser distintos?</summary>
+                    <p>
+                        Git cuenta cambios de archivos; una captura renombrada puede agruparse en una sola
+                        comparación. Los pendientes son las comparaciones que aún no has marcado como
+                        revisadas. Los filtros solo cambian la lista que estás viendo. La paginación muestra
+                        páginas de hasta 25 capturas, no el número total de imágenes. Los PNG con los mismos
+                        píxeles también se incluyen: no se ocultan cambios.
+                    </p>
+                    <p id="git-summary"></p>
+                    <p id="revision-summary"></p>
+                </details>
+                <div class="filters">
+                    <label class="search"
+                        >Buscar captura<input
+                            id="search"
+                            type="search"
+                            placeholder="Nombre del test, componente o ruta…"
+                    /></label>
+                    <label
+                        >Suite<select id="suite">
+                            <option value="">Todas</option>
+                        </select></label
+                    >
+                    <label
+                        >Tipo de cambio<select id="kind">
+                            <option value="">Todos</option>
+                            <option value="modified">Modificada</option>
+                            <option value="prepared">Nueva referencia de Playwright</option>
+                            <option value="added">Añadida</option>
+                            <option value="deleted">Eliminada</option>
+                            <option value="renamed">Cambio de ruta o nombre</option>
+                            <option value="identical">Mismos píxeles</option>
+                            <option value="error">Error al comparar</option>
+                        </select></label
+                    >
+                    <label
+                        >Orden<select id="sort">
+                            <option value="name">Nombre</option>
+                            <option value="impact">Mayor diferencia visual</option>
+                        </select></label
+                    >
+                    <label class="check"><input id="pending" type="checkbox" /> Solo pendientes</label>
+                    <button id="clear-filters" type="button">Limpiar filtros</button>
+                </div>
+                <div class="review-layout">
+                    <aside class="results" aria-label="Lista de capturas">
+                        <div class="results-heading">
+                            <strong id="result-count"></strong><span id="review-count"></span>
+                        </div>
+                        <ol id="entries"></ol>
+                        <nav class="pagination" aria-label="Páginas de capturas">
+                            <button id="previous-page" type="button" aria-label="Página anterior">←</button
+                            ><span id="page-number"></span
+                            ><button id="next-page" type="button" aria-label="Página siguiente">→</button>
+                        </nav>
+                    </aside>
+                    <section class="detail" aria-label="Detalle de la captura">
+                        <p id="empty-list" class="empty" hidden>
+                            No hay capturas con estos filtros. Prueba a limpiar los filtros.
+                        </p>
+                        <div id="capture">
+                            <nav class="capture-controls" aria-label="Revisar captura">
+                                <button id="previous" type="button">← Anterior</button
+                                ><button id="next" type="button">Siguiente →</button
+                                ><button id="mark" class="primary" type="button">Marcar como revisada</button
+                                ><label class="check"
+                                    ><input id="actual-size" type="checkbox" /> Tamaño real</label
+                                >
+                            </nav>
+                            <h2 id="capture-title"></h2>
+                            <p id="capture-description" class="subtle"></p>
+                            <fieldset class="view-options">
+                                <legend>Vista de comparación</legend>
+                                <label
+                                    ><input type="radio" name="image-view" value="grid" checked /> Antes /
+                                    Después / Diff</label
+                                >
+                                <label><input type="radio" name="image-view" value="onion" /> Onion</label>
+                                <label><input type="radio" name="image-view" value="slide" /> Slide</label>
+                            </fieldset>
+                            <p id="overlay-unavailable" class="subtle" hidden>
+                                Onion y Slide necesitan una imagen de antes y otra de después.
+                            </p>
+                            <div class="image-grid" id="image-grid">
+                                <figure>
+                                    <figcaption>Antes <span id="before-size"></span></figcaption>
+                                    <div class="image-viewport">
+                                        <img id="before-image" alt="Captura anterior" />
+                                        <p id="before-missing" hidden>No existía en la base</p>
+                                    </div>
+                                </figure>
+                                <figure>
+                                    <figcaption>Después <span id="after-size"></span></figcaption>
+                                    <div class="image-viewport">
+                                        <img id="after-image" alt="Captura actualizada" />
+                                        <p id="after-missing" hidden>Eliminada en esta rama</p>
+                                    </div>
+                                </figure>
+                                <figure>
+                                    <figcaption>Diferencias <span id="diff-size"></span></figcaption>
+                                    <div class="image-viewport">
+                                        <img id="diff-image" alt="Píxeles distintos resaltados en rojo" />
+                                        <p id="diff-missing" hidden></p>
+                                    </div>
+                                </figure>
+                            </div>
+                            <div id="overlay-view" hidden>
+                                <div class="overlay-controls">
+                                    <label id="overlay-slider-label" for="overlay-slider"
+                                        >Opacidad de Después</label
+                                    >
+                                    <input id="overlay-slider" type="range" min="0" max="100" value="50" />
+                                    <output id="overlay-value" for="overlay-slider">50 %</output>
+                                </div>
+                                <p id="overlay-help" class="subtle"></p>
+                                <div class="overlay-viewport image-viewport">
+                                    <div id="overlay-stage" class="overlay-stage">
+                                        <img id="overlay-before" alt="Captura anterior superpuesta" />
+                                        <div id="overlay-after-layer" class="overlay-after-layer">
+                                            <img id="overlay-after" alt="Captura actualizada superpuesta" />
+                                        </div>
+                                        <div class="slide-divider" aria-hidden="true"><span>↔</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <details class="paths">
+                                <summary>Rutas de las capturas</summary>
+                                <p>Antes: <code id="before-path"></code></p>
+                                <p>Después: <code id="after-path"></code></p>
+                            </details>
+                            <p class="shortcut">← / → para navegar · R para marcar como revisada</p>
+                        </div>
+                    </section>
+                </div>
+            </section>
+        </main>
+    </body>
+</html>
