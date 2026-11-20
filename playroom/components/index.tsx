@@ -34,6 +34,7 @@ import IconAppleOff from '../icons/icon-apple-off';
 import IconCode from '../icons/icon-code';
 import * as styles from '../preview-tools.css';
 import {CSSTransition} from 'react-transition-group';
+import {DENSITIES} from '../../src/density/definitions';
 
 import type {ThemeConfig, ColorScheme, KnownSkinName, IconProps, Density} from '../../src';
 
@@ -356,6 +357,10 @@ type PreviewToolsProps = {
 
 const FLOATING_CONTROLS_ENTER_DURATION = 300;
 
+// Playroom code has no type check: a bare `forceDensity` gives `true`, and ThemeContextProvider crashes
+// with a density that it does not know
+const isDensity = (value: unknown): value is Density => (DENSITIES as ReadonlyArray<unknown>).includes(value);
+
 const PreviewToolsComponent = ({
     children,
     floating,
@@ -380,7 +385,8 @@ const PreviewToolsComponent = ({
     const [selectedColorScheme, setColorScheme] = React.useState<ColorScheme>('light');
     const [selectedDensity, setDensity] = React.useState<Density>(useDensity());
     const colorScheme = forceColorScheme === 'auto' ? selectedColorScheme : forceColorScheme;
-    const density = forceDensity === 'auto' ? selectedDensity : forceDensity;
+    const isDensityForced = isDensity(forceDensity);
+    const density = isDensityForced ? forceDensity : selectedDensity;
     const overrideTheme = useOverrideTheme();
     const overrideDensity = useOverrideDensity();
 
@@ -463,7 +469,7 @@ const PreviewToolsComponent = ({
                 onDensityChange={setDensity}
                 forceTabs={forceTabs}
                 showColorSchemeToggle={!hideColorScheme && forceColorScheme === 'auto'}
-                showDensityToggle={!hideDensity && forceDensity === 'auto'}
+                showDensityToggle={!hideDensity && !isDensityForced}
             />
         </ThemeContextProvider>
     );
