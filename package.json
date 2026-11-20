@@ -58,7 +58,9 @@
         "audit-accessibility": "node .github/actions/audit-accessibility/main.js",
         "circular-dependencies": "yarn dpdm src/index.tsx packages/mistica-icons/src/generated/index.tsx --exclude \"node_modules\" --tree=false --warning=false --exit-code circular:1",
         "prepare": "husky install && node scripts/link-self.js",
-        "edit-playroom-patch": "playroom/patch-playroom.sh"
+        "edit-playroom-patch": "playroom/patch-playroom.sh",
+        "review-screenshots": "node scripts/review-screenshots/server.js",
+        "test-screenshot-review": "node --test scripts/review-screenshots/compare.test.js"
     },
     "browserslist": [
         "Chrome >= 100",
