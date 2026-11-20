@@ -4,6 +4,7 @@ import {openStoryPage, screen, setRootFontSize} from '../test-utils';
 import type {Device} from '../test-utils';
 
 const devices: Array<Device> = ['MOBILE_IOS', 'DESKTOP'];
+const pointerOutsideViewport = {x: -1, y: -1};
 const controls = [
     'chevron',
     'checkbox',
@@ -41,7 +42,7 @@ const getCases = () => {
 for (const testCase of getCases()) {
     const [device, control, slot, badge] = testCase;
     test(`Row list - ${testCase[0]} ${testCase[1]} slot ${testCase[2]} badge ${testCase[3]}`, async () => {
-        await openStoryPage({
+        const page = await openStoryPage({
             id: 'components-lists--row-list-story',
             device: device as Device,
             args: {
@@ -55,6 +56,7 @@ for (const testCase of getCases()) {
         });
 
         const list = await screen.findByTestId('list');
+        await page.mouse.move(pointerOutsideViewport.x, pointerOutsideViewport.y);
         await expectScreenshot(list);
     });
 }
