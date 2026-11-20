@@ -1,5 +1,7 @@
 # Screenshot review
 
+![Screenshot review with before, after and diff views](preview.png)
+
 Run a local viewer for the PNG references in two Git revisions:
 
 ```sh
