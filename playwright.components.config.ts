@@ -15,7 +15,9 @@ export default defineConfig({
         trace: 'retain-on-failure',
     },
     webServer: {
-        command: 'yarn vite --config playwright/gallery/vite.config.ts',
+        command: process.env.CI
+            ? 'yarn vite build --config playwright/gallery/vite.config.ts && yarn vite preview --config playwright/gallery/vite.config.ts'
+            : 'yarn vite --config playwright/gallery/vite.config.ts',
         url: 'http://127.0.0.1:5173/playwright/gallery/index.html',
         reuseExistingServer: !process.env.CI,
         timeout: 120000,
