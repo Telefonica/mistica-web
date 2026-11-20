@@ -1,10 +1,11 @@
 import {test, expect} from '../test-utils/playwright';
-import {openStoryPage, screen, waitFor} from '../test-utils';
+import {openStoryPage, screen, waitFor, within} from '../test-utils';
 import {sidenavCollapse, sidenavExpand} from '../text-tokens';
 
 import type {PageApi} from '../test-utils';
 
 const STORY_ID = 'components-sidenavbar-bar--default';
+const CONTROLLED_SELECTION_STORY_ID = 'components-sidenavbar-bar--controlled-selection';
 
 // Storybook renders in `es`, so the collapse action reads the Spanish text of these tokens.
 const COLLAPSE_LABEL = sidenavCollapse.es;
@@ -122,6 +123,42 @@ test('SidenavBar double panel stays open when the user collapses the sidenav', a
 
     await screen.findByRole('button', {name: EXPAND_LABEL});
     await screen.findByRole('list', {name: 'Teams'});
+});
+
+test('SidenavBar opens a closed double panel for a child selected outside the bar', async () => {
+    await openStoryPage({
+        id: CONTROLLED_SELECTION_STORY_ID,
+        device: 'DESKTOP',
+        args: {doublePanel: true},
+    });
+
+    const parent = await screen.findByRole('button', {name: 'Hiking Trails'});
+    await expect(parent).toHaveAttribute('aria-expanded', 'false');
+    await (await screen.findByRole('button', {name: 'Monte Cassian'})).click();
+
+    await expect(parent).toHaveAttribute('aria-expanded', 'true');
+    const panel = await screen.findByRole('list', {name: 'Hiking Trails'});
+    const selected = await within(panel).findByRole('button', {name: 'Monte Cassian', current: 'page'});
+    await expect(selected).toBeVisible();
+});
+
+test('SidenavBar switches double panels for a child selected outside the bar', async () => {
+    await openStoryPage({
+        id: CONTROLLED_SELECTION_STORY_ID,
+        device: 'DESKTOP',
+        args: {doublePanel: true},
+    });
+
+    await (await screen.findByRole('button', {name: 'Hiking Trails'})).click();
+    const oldPanel = await screen.findByRole('list', {name: 'Hiking Trails'});
+
+    await (await screen.findByRole('button', {name: 'Arco Castle'})).click();
+
+    await expect(oldPanel).toHaveCount(0);
+    await screen.findByRole('button', {name: 'Castles & History', expanded: true});
+    const newPanel = await screen.findByRole('list', {name: 'Castles & History'});
+    const selected = await within(newPanel).findByRole('button', {name: 'Arco Castle', current: 'page'});
+    await expect(selected).toBeVisible();
 });
 
 test('SidenavBar double panel moves the focus to the first item of the column, and steps in and out with the arrow keys', async () => {

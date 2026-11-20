@@ -399,10 +399,6 @@ const SidenavBar = ({
         setPanelOpenForItemId(null);
     }
 
-    // Only a press outside of the whole bar, or Escape, dismisses the second column: a press inside the
-    // bar that lands on no item keeps it open, and a press on an item closes it through
-    // `selectItemAndClosePanel`. A press that also carries a new selection does not race the close: the
-    // adjustment above reopens the column for that selection in the same batch of updates.
     React.useEffect(() => {
         if (!doublePanel || !panelOpenForItemId) {
             return;
@@ -411,12 +407,11 @@ const SidenavBar = ({
         const handlePressOutside = (event: MouseEvent) => {
             const container = containerRef.current;
             if (!container) return;
-            // The browser builds this path when it dispatches the press, so the path still holds the node
-            // that the user pressed and all of its ancestors, even when React replaced them before this
-            // listener ran. Reading `event.target` instead counts a press on a control that swaps its own
-            // node as a press outside of the bar: the collapse action swaps its icon, and a parent item
-            // swaps its whole row, so both of them closed the column that they should have left alone.
-            if (event.composedPath().includes(container)) return;
+            const panelHoldsSelection =
+                entries &&
+                selectedItemId &&
+                findParentOfItem(entries, selectedItemId)?.id === panelOpenForItemId;
+            if (event.composedPath().includes(container) || panelHoldsSelection) return;
             setPanelOpenForItemId(null);
         };
 
@@ -426,13 +421,13 @@ const SidenavBar = ({
             }
         };
 
-        document.addEventListener('click', handlePressOutside);
+        document.addEventListener('click', handlePressOutside, true);
         document.addEventListener('keydown', handleEscape);
         return () => {
-            document.removeEventListener('click', handlePressOutside);
+            document.removeEventListener('click', handlePressOutside, true);
             document.removeEventListener('keydown', handleEscape);
         };
-    }, [doublePanel, panelOpenForItemId]);
+    }, [doublePanel, panelOpenForItemId, entries, selectedItemId]);
 
     const backgroundStyle = background ? {backgroundColor: background} : undefined;
 
