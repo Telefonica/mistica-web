@@ -21,8 +21,10 @@ test('set title and description', async ({mount, page}) => {
 });
 test('click anchor does not close tooltip', async ({mount, page}) => {
     const component = await mount('tooltip/Anchor');
-    await component.getByText('Press me!').click();
-    await page.getByRole('link', {name: 'Link'}).click();
+    await component.getByText('Press me!').hover();
+    const link = page.getByRole('link', {name: 'Link'});
+    await expect(link).toBeVisible();
+    await link.click();
     await expect(component.getByTestId('calls')).toHaveValue('1');
     await expect(page.locator('.content')).toContainText('Content');
 });
