@@ -519,25 +519,24 @@ export const Scenario60 = ({step = 0}: {step?: number}): JSX.Element => {
     };
     return [<ControlledSidenav />][step];
 };
-export const Scenario61 = ({step = 0}: {step?: number}): JSX.Element => {
-    const ControlledSidenav = (): JSX.Element => {
-        const [selectedItemId, setSelectedItemId] = React.useState<string | null>('active');
-        return (
-            <ThemeContextProvider theme={makeTheme()}>
-                <SidenavBar
-                    {...({
-                        'aria-label': 'Main navigation',
-                        entries: doublePanelEntries,
-                        doublePanel: true,
-                        selectedItemId,
-                        onSelectedItemIdChange: setSelectedItemId,
-                    } as any)}
-                />
-                <button onClick={() => setSelectedItemId('shared')}>Select from the app</button>
-            </ThemeContextProvider>
-        );
-    };
-    return [<ControlledSidenav />][step];
+export const ExternalSelection = ({
+    initialSelection = 'active',
+}: {
+    initialSelection?: string;
+}): JSX.Element => {
+    const [selectedItemId, setSelectedItemId] = React.useState<string | null>(initialSelection);
+    return (
+        <>
+            <SidenavBar
+                aria-label="Main navigation"
+                entries={doublePanelEntries}
+                doublePanel
+                selectedItemId={selectedItemId}
+                onSelectedItemIdChange={setSelectedItemId}
+            />
+            <button onClick={() => setSelectedItemId('shared')}>Select from the app</button>
+        </>
+    );
 };
 export const Scenario62 = ({step = 0}: {step?: number}): JSX.Element => {
     return [renderDoublePanelSidenav({collapsed: true, onCollapse: () => {}})][step];
