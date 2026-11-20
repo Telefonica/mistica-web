@@ -766,6 +766,7 @@ test('SearchField - increased font size', async () => {
 
     await expectScreenshot(fieldWrapper);
 
+    await field.press('End');
     await field.pressSequentially('a long text to cause overflow');
     await field.evaluate((el) => (el as HTMLInputElement).blur());
 
