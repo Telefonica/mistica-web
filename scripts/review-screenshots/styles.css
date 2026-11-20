@@ -63,7 +63,7 @@ select,
 button {
     font: inherit;
 }
-input:not([type='checkbox']),
+input:not([type='checkbox']):not([type='radio']):not([type='range']),
 select {
     min-width: 0;
     width: 100%;
@@ -390,6 +390,105 @@ figcaption span {
     color: var(--muted);
     background: #f7f8fa;
     text-align: center;
+}
+.view-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 0;
+    margin: 0 0 16px;
+    border: 0;
+}
+.view-options legend {
+    margin-bottom: 8px;
+    font-size: 12px;
+    color: var(--muted);
+}
+.view-options label {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    padding: 9px 12px;
+    cursor: pointer;
+}
+.view-options label:has(:checked) {
+    background: #eaf1ff;
+    border-color: var(--blue);
+    color: #0758c8;
+}
+.view-options label:has(:disabled) {
+    opacity: 0.5;
+    cursor: default;
+}
+.view-options input {
+    margin: 0;
+    accent-color: var(--blue);
+}
+.overlay-controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+.overlay-controls input {
+    flex: 1;
+    min-width: 100px;
+    accent-color: var(--blue);
+    cursor: ew-resize;
+}
+.overlay-controls output {
+    min-width: 42px;
+    font-variant-numeric: tabular-nums;
+    font-size: 12px;
+}
+.overlay-stage {
+    position: relative;
+    max-width: 100%;
+    aspect-ratio: 1;
+}
+.overlay-stage.actual-size {
+    max-width: none;
+}
+.overlay-stage img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    user-select: none;
+}
+.overlay-after-layer {
+    position: absolute;
+    inset: 0;
+    background: repeating-conic-gradient(#f3f5f8 0% 25%, white 0% 50%) 50% / 16px 16px;
+}
+.slide-divider {
+    display: none;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: var(--divider-position, 50%);
+    width: 2px;
+    background: var(--blue);
+    pointer-events: none;
+}
+.slide-divider span {
+    position: absolute;
+    top: 20px;
+    left: 1px;
+    transform: translateX(-50%);
+    padding: 5px 7px;
+    border-radius: 20px;
+    background: var(--blue);
+    color: white;
+}
+.overlay-stage.slide {
+    cursor: ew-resize;
+    touch-action: pan-y;
+}
+.overlay-stage.slide .slide-divider {
+    display: block;
 }
 .paths {
     margin-top: 17px;

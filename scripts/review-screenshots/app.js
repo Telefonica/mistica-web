@@ -90,6 +90,71 @@
             if (image.getAttribute('src') !== url) image.src = url;
         } else image.removeAttribute('src');
     }
+    const viewInputs = [...document.querySelectorAll('input[name="image-view"]')];
+    const overlayPositions = {onion: 50, slide: 50};
+    const imageView = () => viewInputs.find((input) => input.checked).value;
+    function sizeOverlay(sizes) {
+        const width = Math.max(...sizes.map((size) => size[0]));
+        const height = Math.max(...sizes.map((size) => size[1]));
+        const stage = byId('overlay-stage');
+        stage.style.width = `${width}px`;
+        stage.style.aspectRatio = `${width} / ${height}`;
+        for (const [side, size] of [
+            ['before', sizes[0]],
+            ['after', sizes[1]],
+        ]) {
+            byId(`overlay-${side}`).style.width = `${(size[0] / width) * 100}%`;
+        }
+    }
+    function sizeLoadedOverlay() {
+        const images = [byId('overlay-before'), byId('overlay-after')];
+        if (images.every((image) => image.complete && image.naturalWidth > 0))
+            sizeOverlay(images.map((image) => [image.naturalWidth, image.naturalHeight]));
+    }
+    function updateOverlayPosition() {
+        const mode = imageView();
+        if (mode === 'grid') return;
+        const value = Number(byId('overlay-slider').value);
+        overlayPositions[mode] = value;
+        byId('overlay-value').textContent = `${value} %`;
+        byId('overlay-after-layer').style.opacity = mode === 'onion' ? value / 100 : 1;
+        byId('overlay-after-layer').style.clipPath = mode === 'slide' ? `inset(0 0 0 ${value}%)` : 'none';
+        byId('overlay-stage').style.setProperty('--divider-position', `${value}%`);
+    }
+    function renderImageView(item) {
+        const available = Boolean(item.before && item.after && !item.error);
+        for (const input of viewInputs) input.disabled = input.value !== 'grid' && !available;
+        if (!available) viewInputs[0].checked = true;
+        const mode = imageView();
+        byId('overlay-unavailable').hidden = available;
+        byId('image-grid').hidden = mode !== 'grid';
+        byId('overlay-view').hidden = mode === 'grid';
+        if (mode === 'grid') return;
+        const stage = byId('overlay-stage');
+        stage.classList.toggle('slide', mode === 'slide');
+        stage.classList.toggle('actual-size', byId('actual-size').checked);
+        const sizes = [item.metrics?.beforeSize, item.metrics?.afterSize].filter(Boolean);
+        if (sizes.length === 2) sizeOverlay(sizes);
+        else {
+            stage.style.width = '';
+            stage.style.aspectRatio = '';
+            for (const side of ['before', 'after']) byId(`overlay-${side}`).style.width = '';
+        }
+        for (const side of ['before', 'after']) {
+            const image = byId(`overlay-${side}`);
+            const url = `/api/comparisons/${comparison.id}/${item.id}/${side}`;
+            if (image.getAttribute('src') !== url) image.src = url;
+        }
+        sizeLoadedOverlay();
+        byId('overlay-slider-label').textContent =
+            mode === 'onion' ? 'Opacidad de Después' : 'Posición del separador';
+        byId('overlay-help').textContent =
+            mode === 'onion'
+                ? '0 % muestra Antes; 100 % muestra Después. Ajusta la transparencia para ver los cambios superpuestos.'
+                : 'Antes a la izquierda y Después a la derecha. Arrastra sobre la imagen o usa el control para mover el separador.';
+        byId('overlay-slider').value = overlayPositions[mode];
+        updateOverlayPosition();
+    }
     function renderCapture() {
         const index = filtered.findIndex((item) => item.id === activeId);
         const item = filtered[index];
@@ -122,6 +187,7 @@
             : '';
         byId('diff-missing').textContent = item.error || '';
         setImage('diff', !item.error, item);
+        renderImageView(item);
     }
     function renderList() {
         byId('result-count').textContent =
@@ -306,9 +372,35 @@
             byId('mark').disabled = false;
         }
     });
-    byId('actual-size').addEventListener('input', () =>
-        byId('image-grid').classList.toggle('actual-size', byId('actual-size').checked)
+    byId('actual-size').addEventListener('input', () => {
+        byId('image-grid').classList.toggle('actual-size', byId('actual-size').checked);
+        byId('overlay-stage').classList.toggle('actual-size', byId('actual-size').checked);
+    });
+    viewInputs.forEach((input) =>
+        input.addEventListener('change', () => {
+            const item = items.find((candidate) => candidate.id === activeId);
+            if (item) renderImageView(item);
+        })
     );
+    byId('overlay-slider').addEventListener('input', updateOverlayPosition);
+    for (const side of ['before', 'after'])
+        byId(`overlay-${side}`).addEventListener('load', sizeLoadedOverlay);
+    const moveDivider = (event) => {
+        const bounds = byId('overlay-stage').getBoundingClientRect();
+        const position = Math.round(((event.clientX - bounds.left) / bounds.width) * 100);
+        byId('overlay-slider').value = Math.max(0, Math.min(100, position));
+        updateOverlayPosition();
+    };
+    byId('overlay-stage').addEventListener('pointerdown', (event) => {
+        if (imageView() !== 'slide' || event.button !== 0) return;
+        event.preventDefault();
+        byId('overlay-stage').setPointerCapture(event.pointerId);
+        moveDivider(event);
+    });
+    byId('overlay-stage').addEventListener('pointermove', (event) => {
+        if (imageView() === 'slide' && byId('overlay-stage').hasPointerCapture(event.pointerId))
+            moveDivider(event);
+    });
     document.addEventListener('keydown', (event) => {
         if (
             event.target.matches('input,select,textarea,button') ||

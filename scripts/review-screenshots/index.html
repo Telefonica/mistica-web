@@ -134,6 +134,18 @@
                             </nav>
                             <h2 id="capture-title"></h2>
                             <p id="capture-description" class="subtle"></p>
+                            <fieldset class="view-options">
+                                <legend>Vista de comparación</legend>
+                                <label
+                                    ><input type="radio" name="image-view" value="grid" checked /> Antes /
+                                    Después / Diff</label
+                                >
+                                <label><input type="radio" name="image-view" value="onion" /> Onion</label>
+                                <label><input type="radio" name="image-view" value="slide" /> Slide</label>
+                            </fieldset>
+                            <p id="overlay-unavailable" class="subtle" hidden>
+                                Onion y Slide necesitan una imagen de antes y otra de después.
+                            </p>
                             <div class="image-grid" id="image-grid">
                                 <figure>
                                     <figcaption>Antes <span id="before-size"></span></figcaption>
@@ -156,6 +168,25 @@
                                         <p id="diff-missing" hidden></p>
                                     </div>
                                 </figure>
+                            </div>
+                            <div id="overlay-view" hidden>
+                                <div class="overlay-controls">
+                                    <label id="overlay-slider-label" for="overlay-slider"
+                                        >Opacidad de Después</label
+                                    >
+                                    <input id="overlay-slider" type="range" min="0" max="100" value="50" />
+                                    <output id="overlay-value" for="overlay-slider">50 %</output>
+                                </div>
+                                <p id="overlay-help" class="subtle"></p>
+                                <div class="overlay-viewport image-viewport">
+                                    <div id="overlay-stage" class="overlay-stage">
+                                        <img id="overlay-before" alt="Captura anterior superpuesta" />
+                                        <div id="overlay-after-layer" class="overlay-after-layer">
+                                            <img id="overlay-after" alt="Captura actualizada superpuesta" />
+                                        </div>
+                                        <div class="slide-divider" aria-hidden="true"><span>↔</span></div>
+                                    </div>
+                                </div>
                             </div>
                             <details class="paths">
                                 <summary>Rutas de las capturas</summary>

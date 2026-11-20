@@ -26,6 +26,10 @@ branch.
 ## Review
 
 - Inspect the original, updated and diff images side by side. Red pixels include antialiasing changes.
+- Switch to **Onion** to overlay the updated image with adjustable opacity, or **Slide** to reveal it with a
+  movable divider. Drag on the image or adjust the slider with the mouse or keyboard. Both views align images
+  at their original top-left corner and preserve their proportions, including when dimensions differ. They
+  require both an original and an updated image; additions and deletions use the side-by-side view.
 - Search by component, test name or path. Filter by suite, change type or pending reviews.
 - Use **Tamaño real** to inspect pixels without resizing.
 - Mark reviewed images; use the arrow keys to navigate and **R** to toggle a review.
