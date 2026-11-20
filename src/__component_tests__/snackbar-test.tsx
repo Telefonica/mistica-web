@@ -132,7 +132,9 @@ test('useSnackbar: openSnackbar closes already opened one', async ({mount, page}
     const open = page.getByRole('button', {name: 'Open snackbar 1'});
     await open.click();
     await open.click();
+    await expect.poll(() => calls).toEqual([{action: 'CONSECUTIVE'}]);
     await open.click();
+    await expect.poll(() => calls).toEqual([{action: 'CONSECUTIVE'}, {action: 'CONSECUTIVE'}]);
     await page.getByRole('button', {name: 'Action', exact: true}).click();
     await expect
         .poll(() => calls)

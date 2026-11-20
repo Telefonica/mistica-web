@@ -3,6 +3,7 @@ import {createRoot} from 'react-dom/client';
 import {flushSync} from 'react-dom';
 import ThemeContextProvider from '../../src/theme-context-provider';
 import {makeTheme} from '../../src/test-utils/theme';
+import * as testStyles from './styles';
 
 import '../../.storybook/css/main.css';
 import '../../.storybook/css/movistar-font.css';
@@ -20,6 +21,7 @@ type GalleryWindow = Window & {
 };
 
 const gallery = window as unknown as GalleryWindow;
+Object.assign(window, {misticaTestStyles: testStyles});
 
 gallery.mount = async ({story, props}) => {
     const [file, name] = story.split('/');
