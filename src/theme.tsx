@@ -138,6 +138,7 @@ export type ThemeConfig = Readonly<{
     analytics?: Readonly<{
         logEvent: (trackingEvent: TrackingEvent) => Promise<void>;
         eventFormat?: EventFormat;
+        trackEventByDefault?: boolean;
     }>;
     dimensions?: Readonly<{headerMobileHeight: number | 'mistica'}>;
     Link?:
@@ -166,6 +167,7 @@ export type Theme = {
     analytics: {
         logEvent: (trackingEvent: TrackingEvent) => Promise<void>;
         eventFormat: EventFormat;
+        trackEventByDefault: boolean;
     };
     // TODO: rename this props to navigationBarHeight (or something similar) in next major
     dimensions: {headerMobileHeight: number; headerDesktopHeight: number};

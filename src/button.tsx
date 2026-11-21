@@ -348,7 +348,8 @@ const BaseButton = React.forwardRef<
     const {loadingText} = props;
     const isSubmitButton = !!props.submit;
     const isFormSending = formStatus === 'sending';
-    const {isDarkMode, platformOverrides} = useTheme();
+    const {analytics, isDarkMode, platformOverrides} = useTheme();
+    const shouldTrackEvent = props.trackEvent ?? analytics.trackEventByDefault;
     const [isOnPressPromiseResolving, setIsOnPressPromiseResolving] = React.useState(false);
 
     const showSpinner = props.showSpinner || (isFormSending && isSubmitButton) || isOnPressPromiseResolving;
@@ -470,7 +471,7 @@ const BaseButton = React.forwardRef<
             ? classnames(styles.smallTouchableArea, stateClassNames)
             : classnames(buttonVariantClassName, props.className, stateClassNames),
         style: props.small ? {cursor: props.fake ? 'pointer' : undefined} : buttonStyle,
-        trackingEvent: props.trackingEvent ?? (props.trackEvent ? createDefaultTrackingEvent() : undefined),
+        trackingEvent: props.trackingEvent ?? (shouldTrackEvent ? createDefaultTrackingEvent() : undefined),
         dataAttributes: props.dataAttributes,
         'aria-label': props['aria-label'],
         'aria-labelledby': props['aria-labelledby'],

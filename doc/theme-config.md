@@ -19,6 +19,8 @@ type ThemeConfig = {
   texts?: Partial<Dictionary>;
   analytics?: {
     logEvent: (event: TrackingEvent) => Promise<void>;
+    eventFormat?: 'universal-analytics' | 'google-analytics-4';
+    trackEventByDefault?: boolean;
   };
   Link?: LinkComponent;
   useHrefDecorator: () => (href: string) => string;

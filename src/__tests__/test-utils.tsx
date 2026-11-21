@@ -1,9 +1,8 @@
 import {getMovistarSkin} from '..';
 
-import type {EventFormat, ThemeConfig} from '../theme';
+import type {ThemeConfig} from '../theme';
 import type {Locale} from '../utils/locale';
 import type {RegionCode} from '../utils/region-code';
-import type {TrackingEvent} from '../utils/types';
 import type {Skin} from '..';
 import type {Dictionary} from '../text-tokens';
 
@@ -22,7 +21,7 @@ type ThemeOverrides = {
         insideNovumNativeApp?: boolean;
     };
     texts?: Partial<Dictionary>;
-    analytics?: {logEvent: (trackingEvent: TrackingEvent) => Promise<void>; eventFormat?: EventFormat};
+    analytics?: ThemeConfig['analytics'];
     dimensions?: {headerMobileHeight: number};
     useHrefDecorator?: () => (href: string) => string;
     Link?: ThemeConfig['Link'];
