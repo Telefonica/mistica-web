@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {render, screen, fireEvent} from '@testing-library/react';
+import {render, screen, fireEvent, act} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Autocomplete from '../autocomplete';
 import ThemeContextProvider from '../theme-context-provider';
@@ -67,7 +67,7 @@ test('shows options on focus and on input', async () => {
 });
 
 test('closes suggestions without changing the value when disabled while open', async () => {
-    const changes: string[] = [];
+    const changes: Array<string> = [];
     const picker = (disabled: boolean) => (
         <ThemeContextProvider theme={makeTheme()}>
             <Autocomplete
@@ -93,7 +93,7 @@ test('closes suggestions without changing the value when disabled while open', a
 
     rerender(picker(false));
     expect(getListbox()).not.toBeVisible();
-    getInput().blur();
+    act(() => getInput().blur());
     await userEvent.click(getInput());
     await userEvent.click(screen.getByRole('option', {name: 'Bravo'}));
     expect(changes).toEqual(['Bravo']);
