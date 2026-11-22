@@ -126,10 +126,19 @@ test('ignores selection when an open desktop select becomes disabled', async () 
             </ThemeContextProvider>
         );
         expect(screen.getByLabelText('Fruit')).toBeDisabled();
-        await userEvent.click(screen.getByRole('option', {name: 'Orange'}));
+        expect(screen.queryByRole('option', {name: 'Orange'})).not.toBeInTheDocument();
 
         expect(onChangeValue).not.toHaveBeenCalled();
         expect(screen.getByRole('button')).toHaveTextContent('Apple');
+        rerender(
+            <ThemeContextProvider theme={theme}>
+                <Select {...props} />
+            </ThemeContextProvider>
+        );
+        expect(screen.queryByRole('option', {name: 'Orange'})).not.toBeInTheDocument();
+        await userEvent.click(screen.getByRole('button'));
+        await userEvent.click(screen.getByRole('option', {name: 'Orange'}));
+        expect(onChangeValue).toHaveBeenCalledWith('orange');
     } finally {
         if (previous === undefined) {
             delete process.env.SSR_TEST;

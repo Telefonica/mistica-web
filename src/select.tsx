@@ -106,6 +106,14 @@ const Select = ({
         isIos(platformOverrides);
 
     const disabled = disabledProp || formStatus === 'sending';
+    React.useEffect(() => {
+        if (disabled) {
+            setAnimateShowOptions(false);
+            setOptionsShown(false);
+            setTentativeValueState(undefined);
+        }
+    }, [disabled]);
+
     const error = errorProp || !!formErrors[name];
     const helperText = formErrors[name] || helperTextProp;
     const value = valueProp ?? rawValues[name];
