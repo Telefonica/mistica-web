@@ -193,14 +193,6 @@ globalStyle(`${textContent} svg`, {
     display: 'block',
 });
 
-export const iconContainer = style({});
-
-// The icon cannot be taller than the text line, so an icon does not make the button taller than a button without icon
-globalStyle(`${iconContainer} svg`, {
-    maxWidth: vars.textPresets.text3.lineHeight,
-    maxHeight: vars.textPresets.text3.lineHeight,
-});
-
 const interactiveStyles = ({active, hover = active}: {active: StyleRule; hover?: StyleRule}): StyleRule => ({
     selectors: {
         '&:not([disabled]):active': active,
