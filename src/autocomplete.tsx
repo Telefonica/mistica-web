@@ -11,6 +11,7 @@ import classnames from 'classnames';
 import {vars} from './skins/skin-contract.css';
 import * as tokens from './text-tokens';
 import {useTheme} from './hooks';
+import {useForm} from './form-context';
 
 import type {CommonFormFieldProps} from './text-field-base';
 
@@ -28,7 +29,9 @@ export interface AutocompleteProps extends CommonFormFieldProps {
 }
 
 const Autocomplete = React.forwardRef<any, AutocompleteProps>(
-    ({disabled, getSuggestions, onChangeValue, suggestionEmptyCase, ...rest}, refProp) => {
+    ({disabled: disabledProp, getSuggestions, onChangeValue, suggestionEmptyCase, ...rest}, refProp) => {
+        const {formStatus} = useForm();
+        const disabled = disabledProp || formStatus === 'sending';
         const [optionsOpen, setShowOptions] = React.useState(false);
         const showOptions = optionsOpen && !disabled;
         const menuId = React.useId();

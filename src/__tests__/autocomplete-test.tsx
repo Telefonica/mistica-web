@@ -4,6 +4,7 @@ import userEvent from '@testing-library/user-event';
 import Autocomplete from '../autocomplete';
 import ThemeContextProvider from '../theme-context-provider';
 import {makeTheme} from './test-utils';
+import Form from '../form';
 
 type GetSuggestions = (value: string) => ReadonlyArray<string>;
 
@@ -95,6 +96,57 @@ test('closes suggestions without changing the value when disabled while open', a
     expect(getListbox()).not.toBeVisible();
     act(() => getInput().blur());
     await userEvent.click(getInput());
+    await userEvent.click(screen.getByRole('option', {name: 'Bravo'}));
+    expect(changes).toEqual(['Bravo']);
+});
+
+test('closes suggestions without changing the value while the form is sending', async () => {
+    const changes: Array<string> = [];
+    let finishSubmit = () => {};
+    const submitPromise = new Promise<void>((resolve) => {
+        finishSubmit = resolve;
+    });
+
+    renderWithTheme(
+        <Form onSubmit={() => submitPromise}>
+            <Autocomplete
+                getSuggestions={defaultGetSuggestions}
+                label="City"
+                name="city"
+                onChangeValue={(value) => changes.push(value)}
+                value="Alpha"
+            />
+        </Form>
+    );
+
+    const input = getInput();
+    await userEvent.click(input);
+    await userEvent.keyboard('{ArrowDown}{ArrowDown}');
+    const option = screen.getByRole('option', {name: 'Bravo'});
+    expect(option).toHaveAttribute('aria-selected', 'true');
+
+    fireEvent.submit(screen.getByTestId('Form'));
+
+    expect(input).toBeDisabled();
+    expect(input).toHaveAttribute('aria-expanded', 'false');
+    expect(input).not.toHaveAttribute('aria-activedescendant');
+    expect(getListbox()).not.toBeVisible();
+
+    fireEvent.click(option);
+    fireEvent.keyDown(input, {key: 'ArrowDown'});
+    fireEvent.keyDown(input, {key: 'Enter'});
+    expect(changes).toEqual([]);
+    expect(input).toHaveValue('Alpha');
+
+    await act(async () => {
+        finishSubmit();
+        await submitPromise;
+    });
+
+    expect(input).toBeEnabled();
+    expect(getListbox()).not.toBeVisible();
+    act(() => input.blur());
+    await userEvent.click(input);
     await userEvent.click(screen.getByRole('option', {name: 'Bravo'}));
     expect(changes).toEqual(['Bravo']);
 });
