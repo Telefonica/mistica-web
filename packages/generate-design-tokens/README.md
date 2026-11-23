@@ -51,8 +51,9 @@ yarn generate --skip-validation
 yarn generate /path/to/mistica-design/tokens --skip-validation
 ```
 
-The script uses `jsonschema` with its default options, the same library as the skin validator workflow of
-mistica-design, so a token file passes here only if it passes there.
+The script uses `jsonschema`, the same library as the skin validator workflow of mistica-design, so a token
+file passes here only if it passes there. The only option that it sets is `base`, the file URL of the schema:
+the schema has no `$id`, and without a base Node 24 rejects the URLs of its `$ref` values.
 
 ## Type check
 

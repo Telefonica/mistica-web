@@ -1,5 +1,6 @@
 import * as fs from 'node:fs';
 import * as path from 'node:path';
+import {pathToFileURL} from 'node:url';
 import {Validator} from 'jsonschema';
 
 /**
@@ -7,7 +8,8 @@ import {Validator} from 'jsonschema';
  * that doesn't follow the schema stops the generation before any file is written.
  *
  * It uses the same library and options as the skin validator workflow of mistica-design, so a token file
- * passes here only if it passes there.
+ * passes here only if it passes there. The only extra option is `base`: the schema has no `$id`, so without
+ * it jsonschema resolves every `$ref` against "/undefined", a URL that Node 24 rejects.
  *
  * @param tokensFolder - the tokens folder of mistica-design, which contains schema/skin-schema.json
  * @param tokenFiles - paths of the token files to validate
@@ -25,9 +27,10 @@ export const validateTokenFiles = (tokensFolder: string, tokenFiles: Array<strin
 
     const schema = JSON.parse(fs.readFileSync(schemaPath, 'utf8'));
     const validator = new Validator();
+    const options = {base: pathToFileURL(schemaPath).href};
 
     const errors = tokenFiles.flatMap((tokenFile) => {
-        const result = validator.validate(JSON.parse(fs.readFileSync(tokenFile, 'utf8')), schema);
+        const result = validator.validate(JSON.parse(fs.readFileSync(tokenFile, 'utf8')), schema, options);
         const fileName = path.relative(tokensFolder, tokenFile);
         return result.errors.map((error) => `  ${fileName}: ${error.stack}`);
     });
