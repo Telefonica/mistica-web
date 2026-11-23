@@ -47,6 +47,7 @@ export const Portal = ({children, className}: Props): JSX.Element | null => {
     // The container lives in the body, out of the DOM subtree of a DensityProvider, so it does not inherit the
     // density css vars. The attribute makes the density rules of ThemeContextProvider match the container too.
     // A layout effect sets it before the first paint of the children.
+    // todo https://github.com/Telefonica/mistica-web/issues/1821 set the theme scope of a provider with `as`
     useIsomorphicLayoutEffect(() => {
         if (!container || !density) {
             return;

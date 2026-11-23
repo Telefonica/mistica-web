@@ -12,9 +12,16 @@ const DENSITIES = [
     {id: 'compact', title: 'Compact'},
 ];
 
+const DEFAULT_DENSITY = 'cozy';
+
+const getDensityId = (value?: string): string =>
+    DENSITIES.find(({id}) => id === value)?.id ?? DEFAULT_DENSITY;
+
 const DensitySelectorAddon = ({api}: {api: API}) => {
     const channel = addons.getChannel();
-    const [currentDensity, setCurrentDensity] = React.useState(() => api.getQueryParam('density') || 'cozy');
+    const [currentDensity, setCurrentDensity] = React.useState(() =>
+        getDensityId(api.getQueryParam('density'))
+    );
 
     React.useEffect(() => {
         const notifyDensity = () => {

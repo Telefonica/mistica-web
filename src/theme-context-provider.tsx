@@ -253,8 +253,8 @@ const buildDensityStyles = (selector: string, skinByDensity: Record<Density, Ski
 
     return densityVars
         .map(({density, desktop, mobile}) => {
-            // Only the DensityProvider wrappers and the portal containers have the attribute, and they are
-            // descendants of the theme element
+            // Only the DensityProvider wrappers and the portal containers have the attribute
+            // todo https://github.com/Telefonica/mistica-web/issues/1821 match portal containers of a scoped theme
             const densitySelector = `${selector} [${DENSITY_ATTRIBUTE}="${density}"]`;
             // The desktop rule matches the same element on mobile too, so a mobile value equal to the desktop one
             // needs no declaration
