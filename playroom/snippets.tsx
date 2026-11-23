@@ -4801,6 +4801,23 @@ export default [
     ...timelineSnippets,
     ...listItemSnippets,
     {
+        group: 'Utilities',
+        name: 'DensityProvider',
+        code: `
+        <DensityProvider density="compact">
+            <Inline space={16} alignItems="center">
+                <ButtonPrimary onPress={() => {}}>Compact button</ButtonPrimary>
+                <IconButton
+                    aria-label="Lightning"
+                    Icon={IconLightningRegular}
+                    type="brand"
+                    backgroundType="soft"
+                    onPress={() => {}}
+                />
+            </Inline>
+        </DensityProvider>`,
+    },
+    {
         group: 'Forms',
         name: 'FileUpload (with drop zone)',
         code: `
