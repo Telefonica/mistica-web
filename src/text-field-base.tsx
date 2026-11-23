@@ -229,7 +229,7 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
         },
         ref
     ) => {
-        const {preventCopyInFormFields, texts, t} = useTheme();
+        const {preventCopyInFormFields, texts, t, isDarkMode} = useTheme();
         preventCopy = preventCopy ?? preventCopyInFormFields;
         const reactId = React.useId();
         const id = idProp || reactId;
@@ -409,6 +409,7 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
                                 ...(required && {'aria-required': true}),
                                 ...(error && {'aria-invalid': true}),
                                 style: {
+                                    ...(isDateInput && {colorScheme: isDarkMode ? 'dark' : 'light'}),
                                     paddingRight: reservesRightSpace
                                         ? 0
                                         : endIconOverlay

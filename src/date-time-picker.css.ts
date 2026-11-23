@@ -1,10 +1,11 @@
 import {style, globalStyle} from '@vanilla-extract/css';
+import {vars} from './skins/skin-contract.css';
 
 /* !
  * https://github.com/arqex/react-datetime
  */
 
-export const reactDatePicker = style({});
+export const reactDatePicker = style({color: vars.colors.textPrimary});
 
 globalStyle(`${reactDatePicker} td, ${reactDatePicker} th`, {verticalAlign: 'middle'});
 
@@ -16,9 +17,9 @@ globalStyle(`${reactDatePicker} .rdtPicker`, {
     minWidth: 250,
     padding: 4,
     marginTop: 1,
-    background: '#fff',
+    background: vars.colors.backgroundContainer,
     boxShadow: '0 1px 3px rgba(0,0,0,.1)',
-    border: '1px solid #f9f9f9',
+    border: `1px solid ${vars.colors.borderLow}`,
 });
 globalStyle(`${reactDatePicker} .rdtOpen .rdtPicker`, {
     display: 'block',
@@ -32,19 +33,19 @@ globalStyle(`${reactDatePicker} .rdtPicker td`, {cursor: 'pointer'});
 globalStyle(
     `${reactDatePicker} .rdtPicker td.rdtDay:hover, ${reactDatePicker} .rdtPicker td.rdtHour:hover, ${reactDatePicker} .rdtPicker td.rdtMinute:hover, ${reactDatePicker} .rdtPicker td.rdtSecond:hover, ${reactDatePicker} .rdtPicker .rdtTimeToggle:hover`,
     {
-        background: '#eeeeee',
+        background: vars.colors.backgroundContainerHover,
         cursor: 'pointer',
     }
 );
 globalStyle(`${reactDatePicker} .rdtPicker td.rdtOld, ${reactDatePicker} .rdtPicker td.rdtNew`, {
-    color: '#999999',
+    color: vars.colors.textSecondary,
 });
 globalStyle(`${reactDatePicker} .rdtPicker td.rdtToday`, {position: 'relative'});
 globalStyle(`${reactDatePicker} .rdtPicker td.rdtToday:before`, {
     content: '""',
     display: 'inline-block',
     borderLeft: '7px solid transparent',
-    borderBottom: '7px solid #428bca',
+    borderBottom: `7px solid ${vars.colors.controlActivated}`,
     borderTopColor: 'rgba(0, 0, 0, 0.2)',
     position: 'absolute',
     bottom: 4,
@@ -52,27 +53,32 @@ globalStyle(`${reactDatePicker} .rdtPicker td.rdtToday:before`, {
 });
 
 globalStyle(`${reactDatePicker} .rdtPicker td.rdtActive, ${reactDatePicker} .rdtPicker td.rdtActive:hover`, {
-    backgroundColor: '#428bca',
-    color: '#fff',
-    textShadow: '0 -1px 0 rgba(0, 0, 0, 0.25)',
+    backgroundColor: vars.colors.brand,
+    color: vars.colors.textPrimaryInverse,
 });
-globalStyle(`${reactDatePicker} .rdtPicker td.rdtActive.rdtToday:before`, {borderBottomColor: '#fff'});
+globalStyle(`${reactDatePicker} .rdtPicker td.rdtActive.rdtToday:before`, {
+    borderBottomColor: vars.colors.textPrimaryInverse,
+});
 globalStyle(
     `${reactDatePicker} .rdtPicker td.rdtDisabled, ${reactDatePicker} .rdtPicker td.rdtDisabled:hover`,
-    {background: 'none', color: '#999999', cursor: 'default'}
+    {background: 'none', color: vars.colors.textSecondary, cursor: 'default'}
 );
-globalStyle(`${reactDatePicker} .rdtPicker td span.rdtOld`, {color: '#999999'});
+globalStyle(`${reactDatePicker} .rdtPicker td span.rdtOld`, {color: vars.colors.textSecondary});
 globalStyle(
     `${reactDatePicker} .rdtPicker td span.rdtDisabled, ${reactDatePicker} .rdtPicker td span.rdtDisabled`,
     {
         background: 'none',
-        color: '#999999',
+        color: vars.colors.textSecondary,
         cursor: 'default',
     }
 );
-globalStyle(`${reactDatePicker} .rdtPicker th`, {borderBottom: '1px solid #f9f9f9', fontWeight: 'bold'});
+globalStyle(`${reactDatePicker} .rdtPicker th`, {
+    borderBottom: `1px solid ${vars.colors.borderLow}`,
+    fontWeight: 'bold',
+});
 globalStyle(`${reactDatePicker} .rdtPicker .dow`, {
     width: '14.2857%',
+    color: vars.colors.textSecondary,
     borderBottom: 'none',
     cursor: 'default',
 });
@@ -89,15 +95,19 @@ globalStyle(
     `${reactDatePicker} .rdtPicker th.rdtDisabled, ${reactDatePicker} .rdtPicker th.rdtDisabled:hover`,
     {
         background: 'none',
-        color: '#999999',
+        color: vars.colors.textSecondary,
         cursor: 'default',
     }
 );
 globalStyle(`${reactDatePicker} .rdtPicker thead tr:first-of-type th`, {cursor: 'pointer'});
-globalStyle(`${reactDatePicker} .rdtPicker thead tr:first-of-type th:hover`, {background: '#eeeeee'});
-globalStyle(`${reactDatePicker} .rdtPicker tfoot`, {borderTop: '1px solid #f9f9f9'});
+globalStyle(`${reactDatePicker} .rdtPicker thead tr:first-of-type th:hover`, {
+    background: vars.colors.backgroundContainerHover,
+});
+globalStyle(`${reactDatePicker} .rdtPicker tfoot`, {borderTop: `1px solid ${vars.colors.borderLow}`});
 globalStyle(`${reactDatePicker} .rdtPicker button`, {border: 'none', background: 'none', cursor: 'pointer'});
-globalStyle(`${reactDatePicker} .rdtPicker button:hover`, {backgroundColor: '#eee'});
+globalStyle(`${reactDatePicker} .rdtPicker button:hover`, {
+    backgroundColor: vars.colors.backgroundContainerHover,
+});
 globalStyle(`${reactDatePicker} .rdtPicker thead button`, {width: '100%', height: '100%'});
 globalStyle(`${reactDatePicker} td.rdtMonth, ${reactDatePicker} td.rdtYear`, {
     height: 50,
@@ -105,7 +115,7 @@ globalStyle(`${reactDatePicker} td.rdtMonth, ${reactDatePicker} td.rdtYear`, {
     cursor: 'pointer',
 });
 globalStyle(`${reactDatePicker} td.rdtMonth:hover, ${reactDatePicker} td.rdtYear:hover`, {
-    background: '#eee',
+    background: vars.colors.backgroundContainerHover,
 });
 globalStyle(`${reactDatePicker} .rdtCounters`, {display: 'inline-block'});
 globalStyle(`${reactDatePicker} .rdtCounters > div`, {float: 'left'});
@@ -118,7 +128,9 @@ globalStyle(`${reactDatePicker} .rdtCounter .rdtBtn`, {
     display: 'block',
     userSelect: 'none',
 });
-globalStyle(`${reactDatePicker} .rdtCounter .rdtBtn:hover`, {background: '#eee'});
+globalStyle(`${reactDatePicker} .rdtCounter .rdtBtn:hover`, {
+    background: vars.colors.backgroundContainerHover,
+});
 globalStyle(`${reactDatePicker} .rdtCounter .rdtCount`, {height: '20%', fontSize: '1.2em'});
 globalStyle(`${reactDatePicker} .rdtMilli`, {verticalAlign: 'middle', paddingLeft: 8, width: 48});
 globalStyle(`${reactDatePicker} .rdtMilli input`, {width: '100%', fontSize: '1.2em', marginTop: 37});
