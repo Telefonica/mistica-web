@@ -63,6 +63,39 @@ light mode, you can add the `data-mistica-color-scheme` attribute:
 
 `data-mistica-color-scheme` can be `light`, `dark` or `auto` (default).
 
+## Density
+
+The `data-mistica-density` attribute selects the density of the tokens. It can be `cozy` (default) or
+`compact`. The compact density uses smaller `font-size`, `line-height` and `border-radius` tokens, when the
+skin defines a different value for it.
+
+```html
+<body data-mistica-skin="movistar" data-mistica-density="compact"></body>
+```
+
+The attribute only works on an element with the `data-mistica-skin` attribute or inside one. Every element
+with `data-mistica-skin` starts again with the default density, even inside a compact subtree. To get a
+deterministic result, set both attributes on the same element:
+
+```html
+<!-- ✅ compact -->
+<body data-mistica-skin="movistar" data-mistica-density="compact">
+  <!-- ✅ cozy: a nested density attribute changes the density of its subtree -->
+  <div data-mistica-density="cozy"></div>
+  <!-- ✅ compact: the nested skin sets its own density -->
+  <div data-mistica-skin="movistar" data-mistica-density="compact"></div>
+  <!-- ❌ cozy, not compact: the nested skin starts again with the default density -->
+  <div data-mistica-skin="movistar"></div>
+</body>
+
+<!-- ❌ cozy, not compact: the density attribute is outside the skin -->
+<html data-mistica-density="compact">
+  <body data-mistica-skin="movistar"></body>
+</html>
+```
+
+:warning: Mística CSS has no spacing tokens, so the paddings of your components don't change with the density.
+
 ## CSS custom properties
 
 You can use the css custom properties in your css files. For example:
