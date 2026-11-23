@@ -6,7 +6,7 @@
  */
 
 import * as React from 'react';
-import {useThemeVariant, skinVars as vars, useIconGradient} from '@telefonica/mistica/icon-runtime';
+import {useTheme, useThemeVariant, skinVars as vars, useIconGradient} from '@telefonica/mistica/icon-runtime';
 
 import type {IconProps} from '@telefonica/mistica/icon-runtime';
 
@@ -21,7 +21,24 @@ const IconUserScanFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element
 
     const {fillValue: fillColor, gradientDef} = useIconGradient(color ?? defaultColor);
 
+    const {skinName} = useTheme();
+
     const getSvgContent = () => {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M2.748 14.24a.75.75 0 0 1 .746.673l.004.076v3.263a2.25 2.25 0 0 0 2.25 2.25H9.01a.75.75 0 1 1 0 1.5H5.748a3.75 3.75 0 0 1-3.75-3.75v-3.263l.004-.076a.75.75 0 0 1 .746-.674m18.504.001a.75.75 0 0 1 .75.75v3.262a3.75 3.75 0 0 1-3.75 3.75h-3.263l-.076-.004a.75.75 0 0 1 0-1.492l.076-.004h3.263a2.25 2.25 0 0 0 2.25-2.25V14.99a.75.75 0 0 1 .75-.75"
+                    />
+                    <path
+                        fill={fillColor}
+                        d="M14.162 13.595a3.75 3.75 0 0 1 3.75 3.75v.789a.75.75 0 0 1-.75.75H6.834a.75.75 0 0 1-.75-.75v-.79a3.75 3.75 0 0 1 3.75-3.75zm-1.677-8.472a3.25 3.25 0 0 1 3.25 3.25v.974a3.25 3.25 0 0 1-3.25 3.25h-.973a3.25 3.25 0 0 1-3.25-3.25v-.974a3.25 3.25 0 0 1 3.25-3.25zm-3.398-3.12a.75.75 0 0 1 0 1.492L9.01 3.5H5.748a2.25 2.25 0 0 0-2.25 2.25v3.262a.75.75 0 0 1-1.5 0V5.749a3.75 3.75 0 0 1 3.75-3.75h3.263zm9.165-.005a3.75 3.75 0 0 1 3.75 3.751v3.263l-.004.075a.75.75 0 0 1-1.492 0l-.004-.076V5.748a2.25 2.25 0 0 0-2.25-2.25H14.99a.75.75 0 0 1 0-1.5z"
+                    />
+                </svg>
+            );
+        }
+
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

@@ -24,6 +24,17 @@ const IconAlarmLightLight = ({color, size = 24, ...rest}: IconProps): JSX.Elemen
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M12.504 2.5a.5.5 0 0 0-1 0v2.3a.5.5 0 0 0 1 0zM5.916 3.797a.5.5 0 0 0-.766.643l1.48 1.762a.5.5 0 0 0 .766-.643zM2.502 9.26a.5.5 0 0 0 0 1h2.3a.5.5 0 0 0 0-1zm3.611 2.435c0-2.92 2.5-5.265 5.387-5.265h1.006c2.886 0 5.389 2.336 5.389 5.258v5.792a2.263 2.263 0 0 1-.158 4.52H6.263a2.263 2.263 0 0 1-.15-4.52zm10.782-.007c0-2.335-2.02-4.258-4.39-4.258H11.5c-2.368 0-4.387 1.93-4.387 4.265v5.78h9.782zM6.263 18.475a1.263 1.263 0 0 0 0 2.526h11.474a1.263 1.263 0 0 0 0-2.526zm12.525-14.74a.5.5 0 0 0-.704.062l-1.479 1.762a.5.5 0 1 0 .766.643L18.85 4.44a.5.5 0 0 0-.062-.705m3.21 6.025a.5.5 0 0 0-.5-.5h-2.3a.5.5 0 0 0 0 1h2.3a.5.5 0 0 0 .5-.5"
+                    />
+                </svg>
+            );
+        }
+
         if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>

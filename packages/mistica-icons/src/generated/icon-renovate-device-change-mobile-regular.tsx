@@ -24,6 +24,18 @@ const IconRenovateDeviceChangeMobileRegular = ({color, size = 24, ...rest}: Icon
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M14.445 16.269a.75.75 0 1 1 1.06 1.06l-.945.945h5.19a.75.75 0 0 1 0 1.5h-5.187l.943.945a.751.751 0 0 1-1.06 1.061l-2.226-2.225a.8.8 0 0 1-.137-.194l-.026-.05q-.02-.048-.03-.1-.008-.018-.012-.038l-.003-.017a.75.75 0 0 1 .043-.414l.004-.01q.012-.025.027-.05a.8.8 0 0 1 .134-.188zM10.675 2a3.75 3.75 0 0 1 3.75 3.75v2.49a.75.75 0 0 1-1.5 0V5.75a2.25 2.25 0 0 0-2.25-2.25H5.75A2.25 2.25 0 0 0 3.5 5.75v12.496a2.25 2.25 0 0 0 2.25 2.25h4.495a.75.75 0 0 1 0 1.5H5.75A3.75 3.75 0 0 1 2 18.246V5.75A3.75 3.75 0 0 1 5.75 2zm7.819 8.216a.75.75 0 0 1 1.06 0l2.226 2.225a.76.76 0 0 1 .162.817q-.019.043-.044.083a.8.8 0 0 1-.118.161l-2.225 2.225a.75.75 0 1 1-1.06-1.06l.944-.945H14.25a.75.75 0 0 1 0-1.5h5.188l-.944-.945a.75.75 0 0 1 0-1.061"
+                    />
+                    <path fill={fillColor} d="M9.963 4.991a.75.75 0 0 1 0 1.5h-3.5a.75.75 0 0 1 0-1.5z" />
+                </svg>
+            );
+        }
+
         if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>

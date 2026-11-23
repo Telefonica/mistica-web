@@ -24,6 +24,21 @@ const IconWashingMachineLight = ({color, size = 24, ...rest}: IconProps): JSX.El
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M8.22 13.15a3.16 3.16 0 0 1 3.16-3.16h1.241a3.16 3.16 0 0 1 3.16 3.16v1.24a3.16 3.16 0 0 1-3.16 3.16h-1.24a3.16 3.16 0 0 1-3.16-3.16zm3.16-2.16a2.16 2.16 0 0 0-2.16 2.16v1.24a2.16 2.16 0 0 0 2.16 2.16h1.241a2.16 2.16 0 0 0 2.16-2.16v-1.24a2.16 2.16 0 0 0-2.16-2.16z"
+                    />
+                    <path
+                        fill={fillColor}
+                        d="M16.322 3.55c1.94 0 3.586 1.455 3.586 3.337l-.016 10.28c0 1.818-1.538 3.238-3.392 3.331v1.003a.5.5 0 0 1-1 0v-.998h-7v.998a.5.5 0 0 1-1 0v-1.002c-1.862-.086-3.408-1.509-3.408-3.333l.016-10.278c0-1.881 1.646-3.337 3.586-3.337zm-.016 15.953c1.468 0 2.586-1.085 2.586-2.337l.014-8.926h-13.8l-.014 8.926c0 1.252 1.117 2.337 2.586 2.337zM5.107 7.24h13.8v-.353c0-1.252-1.117-2.337-2.585-2.337l-8.628.001c-1.469 0-2.586 1.085-2.586 2.337z"
+                    />
+                </svg>
+            );
+        }
+
         if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>

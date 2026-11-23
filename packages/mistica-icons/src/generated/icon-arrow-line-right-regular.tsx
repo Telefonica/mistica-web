@@ -24,6 +24,17 @@ const IconArrowLineRightRegular = ({color, size = 24, ...rest}: IconProps): JSX.
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M3 12a.75.75 0 0 1 .75-.75h14.687L11.47 4.28a.75.75 0 0 1 1.06-1.06l8.213 8.214a.75.75 0 0 1 .019 1.114L12.53 20.78a.75.75 0 1 1-1.06-1.06l6.969-6.97H3.75A.75.75 0 0 1 3 12"
+                    />
+                </svg>
+            );
+        }
+
         if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>

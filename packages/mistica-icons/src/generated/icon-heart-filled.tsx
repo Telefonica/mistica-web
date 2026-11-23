@@ -24,6 +24,17 @@ const IconHeartFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element =>
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M11.999 4.523C13.4 2.89 15.639 2.09 17.803 2.67c3.024.81 4.825 4.02 3.996 7.121l-.006.02c-.442 1.485-1.703 3.571-3.08 5.517-1.392 1.968-2.977 3.895-4.147 5.077a3.75 3.75 0 0 1-2.594 1.11 3.74 3.74 0 0 1-2.538-1.11c-1.17-1.182-2.755-3.109-4.147-5.077-1.377-1.946-2.638-4.032-3.08-5.516l-.006-.02c-.83-3.102.972-6.312 3.996-7.122 2.165-.58 4.401.22 5.802 1.852"
+                    />
+                </svg>
+            );
+        }
+
         if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>

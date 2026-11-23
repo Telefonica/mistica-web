@@ -24,6 +24,17 @@ const IconBellRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element =>
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M12 3.501h-.33a5.18 5.18 0 0 0-5.182 5.182v4.906l-1.286 2.09c-.255.416-.21.753-.05.956.142.18.27.257.466.274l.089.003H12v1.5H9.524C9.792 19.63 10.822 20.5 12 20.5s2.207-.87 2.475-2.087H12v-1.5h6.294l.089-.003c.195-.017.324-.095.465-.274.16-.203.206-.54-.05-.955l-1.285-2.091V8.683A5.18 5.18 0 0 0 12.33 3.5zv-1.5h.33a6.68 6.68 0 0 1 6.682 6.682v4.481l1.064 1.73c.489.794.603 1.843-.05 2.67-.427.542-.996.848-1.732.848H16C15.71 20.417 14.058 22 12 22c-2.059 0-3.713-1.582-4.001-3.587H5.707c-.737 0-1.305-.306-1.733-.848-.653-.827-.538-1.876-.05-2.67l1.064-1.73V8.683A6.68 6.68 0 0 1 11.67 2H12z"
+                    />
+                </svg>
+            );
+        }
+
         if (skinName.match(/^blau/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>

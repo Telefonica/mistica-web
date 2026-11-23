@@ -6,7 +6,7 @@
  */
 
 import * as React from 'react';
-import {useThemeVariant, skinVars as vars, useIconGradient} from '@telefonica/mistica/icon-runtime';
+import {useTheme, useThemeVariant, skinVars as vars, useIconGradient} from '@telefonica/mistica/icon-runtime';
 
 import type {IconProps} from '@telefonica/mistica/icon-runtime';
 
@@ -21,7 +21,24 @@ const IconBatteryLowLight = ({color, size = 24, ...rest}: IconProps): JSX.Elemen
 
     const {fillValue: fillColor, gradientDef} = useIconGradient(color ?? defaultColor);
 
+    const {skinName} = useTheme();
+
     const getSvgContent = () => {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M15.59 15.003a.5.5 0 0 1 .5.5v2.246a1.75 1.75 0 0 1-1.75 1.75H9.676a1.75 1.75 0 0 1-1.75-1.75v-2.246a.5.5 0 0 1 .5-.5zm-6.664 2.746c0 .414.336.75.75.75h4.664a.75.75 0 0 0 .75-.75v-1.746H8.926z"
+                    />
+                    <path
+                        fill={fillColor}
+                        d="M12.88 1.999a2.25 2.25 0 0 1 2.25 2.251v.762h.02a3.45 3.45 0 0 1 3.45 3.45V18.55A3.45 3.45 0 0 1 15.15 22h-6.3a3.45 3.45 0 0 1-3.45-3.45V8.46a3.45 3.45 0 0 1 3.45-3.45h.004v-.76a2.25 2.25 0 0 1 2.25-2.251zM8.85 6.012a2.45 2.45 0 0 0-2.45 2.45V18.55A2.45 2.45 0 0 0 8.85 21h6.3a2.45 2.45 0 0 0 2.45-2.45V8.46a2.45 2.45 0 0 0-2.45-2.45zM11.104 3c-.69 0-1.25.56-1.25 1.25v.762h4.277V4.25c0-.69-.56-1.25-1.25-1.25z"
+                    />
+                </svg>
+            );
+        }
+
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
