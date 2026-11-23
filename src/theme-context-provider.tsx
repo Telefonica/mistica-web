@@ -192,7 +192,7 @@ const ThemeContextProvider = ({theme, children, as, withoutStyles = false}: Prop
                 logEvent: () => Promise.resolve(),
                 eventFormat: 'universal-analytics',
                 ...theme.analytics,
-                trackEventByDefault: theme.analytics?.trackEventByDefault ?? false,
+                trackEventsByDefault: theme.analytics?.trackEventsByDefault ?? false,
             },
             colorValues: colors,
             dimensions: {

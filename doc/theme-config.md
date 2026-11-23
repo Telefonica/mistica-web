@@ -20,7 +20,7 @@ type ThemeConfig = {
   analytics?: {
     logEvent: (event: TrackingEvent) => Promise<void>;
     eventFormat?: 'universal-analytics' | 'google-analytics-4';
-    trackEventByDefault?: boolean;
+    trackEventsByDefault?: boolean;
   };
   Link?: LinkComponent;
   useHrefDecorator: () => (href: string) => string;

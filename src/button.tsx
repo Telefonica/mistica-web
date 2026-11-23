@@ -349,7 +349,7 @@ const BaseButton = React.forwardRef<
     const isSubmitButton = !!props.submit;
     const isFormSending = formStatus === 'sending';
     const {analytics, isDarkMode, platformOverrides} = useTheme();
-    const shouldTrackEvent = props.trackEvent ?? analytics.trackEventByDefault;
+    const shouldTrackEvent = props.trackEvent ?? analytics.trackEventsByDefault;
     const [isOnPressPromiseResolving, setIsOnPressPromiseResolving] = React.useState(false);
 
     const showSpinner = props.showSpinner || (isFormSending && isSubmitButton) || isOnPressPromiseResolving;

@@ -83,10 +83,10 @@ you can just write:
 </ButtonPrimary>
 ```
 
-Set `theme.analytics.trackEventByDefault` to `true` in `ThemeContextProvider` to enable default events for all
-components that support `trackEvent`. The setting defaults to `false`, so each component normally opts in with
-`trackEvent`. Set `trackEvent={false}` on a component to suppress its default event. A custom `trackingEvent`
-always takes precedence.
+Set `theme.analytics.trackEventsByDefault` to `true` in `ThemeContextProvider` to enable default events for
+all components that support `trackEvent`. The setting defaults to `false`, so each component normally opts in
+with `trackEvent`. Set `trackEvent={false}` on a component to suppress its default event. A custom
+`trackingEvent` always takes precedence.
 
 ## Firebase / Google Analytics 4 events
 

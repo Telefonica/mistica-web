@@ -45,7 +45,7 @@ const TextLink = ({
     const {formStatus} = useForm();
     const {eventFormat} = useTrackingConfig();
     const {analytics} = useTheme();
-    const shouldTrackEvent = trackEvent ?? analytics.trackEventByDefault;
+    const shouldTrackEvent = trackEvent ?? analytics.trackEventsByDefault;
 
     const underlineStyle =
         underline === 'always' ? styles.linkStyles.underlineAlways : styles.linkStyles.underlineOnHover;

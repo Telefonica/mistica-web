@@ -47,7 +47,7 @@ test.each([
     render(
         <ThemeContextProvider
             theme={makeTheme({
-                analytics: {logEvent, eventFormat: 'google-analytics-4', trackEventByDefault: true},
+                analytics: {logEvent, eventFormat: 'google-analytics-4', trackEventsByDefault: true},
             })}
         >
             <Component to="#test">Default tracking</Component>
