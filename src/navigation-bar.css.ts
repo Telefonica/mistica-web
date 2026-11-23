@@ -236,7 +236,8 @@ export const desktopMenuBackgroundContainer = style([
     }),
     {
         transition: `height ${DESKTOP_MENU_ANIMATION_DURATION_MS}ms cubic-bezier(0.65, 0, 0.35, 1)`,
-        boxShadow: '0px 2px 4px rgba(0,0,0,0.2)',
+        // Only bottom border: the top edge is already drawn by the navigation bar border
+        boxShadow: `0 1px 0 0 ${vars.colors.popupBorder}, 0px 2px 4px rgba(0,0,0,0.2)`,
         '@media': {
             ['(prefers-reduced-motion)']: {
                 transition: 'none',
@@ -257,7 +258,7 @@ export const desktopSmallMenuContainer = style([
         zIndex: NAVBAR_ZINDEX,
         borderRadius: `0 0 ${vars.borderRadii.popup} ${vars.borderRadii.popup}`,
         width: DESKTOP_SMALL_MENU_WIDTH,
-        boxShadow: '0px 2px 4px rgba(0,0,0,0.2)',
+        boxShadow: `0 0 0 1px ${vars.colors.popupBorder}, 0px 2px 4px rgba(0,0,0,0.2)`,
     },
 ]);
 
