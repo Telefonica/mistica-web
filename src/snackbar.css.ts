@@ -1,10 +1,17 @@
-import {style, styleVariants} from '@vanilla-extract/css';
+import {createVar, style, styleVariants} from '@vanilla-extract/css';
 import {vars} from './skins/skin-contract.css';
 import {sprinkles} from './sprinkles.css';
 import * as mq from './media-queries.css';
 import {applyAlpha} from './utils/color';
 
 export const TRANSITION_TIME_IN_MS = 300;
+
+const DESKTOP_VIEWPORT_INSET = '40px';
+const MOBILE_VIEWPORT_INSET = '8px';
+const TRANSITION_DISTANCE = 100;
+const tabletWidthOrSmaller = `only screen and (max-width: ${mq.mediaQueriesConfig.desktopMinWidth - 1}px)`;
+const viewportInset = createVar();
+const slideOffset = createVar();
 
 export const snackbar = style([
     sprinkles({
@@ -41,21 +48,56 @@ export const wrapper = style([
         minWidth: 360,
         minHeight: 48,
         padding: `14px 16px`,
-        bottom: 40,
         opacity: 0,
-        transform: 'translateY(100px)',
+        transform: `translateY(${slideOffset})`,
         transition: `transform ${TRANSITION_TIME_IN_MS}ms ease-in-out, opacity ${TRANSITION_TIME_IN_MS}ms ease-in-out`,
+        vars: {
+            [viewportInset]: DESKTOP_VIEWPORT_INSET,
+            [slideOffset]: `${TRANSITION_DISTANCE}px`,
+        },
 
         '@media': {
+            [tabletWidthOrSmaller]: {
+                maxWidth: 'none',
+            },
             [mq.tabletOrSmaller]: {
-                left: 8,
-                right: 8,
-                bottom: 8,
+                left: viewportInset,
+                right: viewportInset,
+                bottom: viewportInset,
                 minWidth: 0,
+                vars: {[viewportInset]: MOBILE_VIEWPORT_INSET},
             },
         },
     },
 ]);
+
+const top = style({
+    '@media': {
+        [mq.desktopOrBigger]: {
+            top: viewportInset,
+            vars: {[slideOffset]: `${-TRANSITION_DISTANCE}px`},
+        },
+    },
+});
+
+const bottom = style({bottom: viewportInset});
+
+const left = style({
+    '@media': {[mq.desktopOrBigger]: {left: viewportInset}},
+});
+
+const right = style({
+    '@media': {[mq.desktopOrBigger]: {right: viewportInset}},
+});
+
+export const position = styleVariants({
+    'top-left': [top, left],
+    'top-center': [top],
+    'top-right': [top, right],
+    'bottom-left': [bottom, left],
+    'bottom-center': [bottom],
+    'bottom-right': [bottom, right],
+});
 
 export const wrapperCritical = sprinkles({background: vars.colors.feedbackErrorBackground});
 export const wrapperInfo = style([
