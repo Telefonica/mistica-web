@@ -178,6 +178,7 @@ const renderButtonContent = ({
             <div aria-hidden={showSpinner ? true : undefined} className={styles.textContent}>
                 {StartIcon && (
                     <div
+                        className={styles.iconContainer}
                         style={{
                             display: 'flex',
                             alignItems: 'center',
@@ -204,6 +205,7 @@ const renderButtonContent = ({
                 </div>
                 {EndIcon && !withChevron && (
                     <div
+                        className={styles.iconContainer}
                         style={{
                             display: 'flex',
                             alignItems: 'center',
