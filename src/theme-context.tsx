@@ -1,8 +1,8 @@
 'use client';
-import * as React from 'react';
+import {getSharedContext} from './utils/shared-context';
 
 import type {Theme} from './theme';
 
-const ThemeContext = React.createContext<Theme | null>(null);
+const ThemeContext = getSharedContext<Theme | null>('theme', null);
 
 export default ThemeContext;

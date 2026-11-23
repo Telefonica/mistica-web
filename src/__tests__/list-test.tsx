@@ -3,17 +3,10 @@ import {RowList, Row, BoxedRowList, BoxedRow} from '../list';
 import {RadioGroup} from '../radio-button';
 import {screen, render, waitFor, within} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import {
-    ButtonPrimary,
-    Form,
-    IconPlayFilled,
-    IconShopRegular,
-    IconTrashCanRegular,
-    Stack,
-    Tag,
-    Text2,
-    ThemeContextProvider,
-} from '..';
+import {ButtonPrimary, Form, Stack, Tag, Text2, ThemeContextProvider} from '..';
+import IconPlayFilled from '@telefonica/mistica-icons/icon-play-filled';
+import IconShopRegular from '@telefonica/mistica-icons/icon-shop-regular';
+import IconTrashCanRegular from '@telefonica/mistica-icons/icon-trash-can-regular';
 import {makeTheme} from './test-utils';
 
 test('RowList has a list role by default', () => {

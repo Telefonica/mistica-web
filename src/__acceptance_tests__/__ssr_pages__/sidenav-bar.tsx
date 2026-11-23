@@ -1,5 +1,8 @@
 import * as React from 'react';
-import {SidenavBar, Badge, IconHomeRegular, IconFolderRegular, IconSettingsRegular} from '../../..';
+import {SidenavBar, Badge} from '../../..';
+import IconHomeRegular from '@telefonica/mistica-icons/icon-home-regular';
+import IconFolderRegular from '@telefonica/mistica-icons/icon-folder-regular';
+import IconSettingsRegular from '@telefonica/mistica-icons/icon-settings-regular';
 
 import type {SidenavEntry} from '../../sidenav-bar-types';
 

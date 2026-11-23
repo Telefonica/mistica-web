@@ -1,20 +1,15 @@
 import * as React from 'react';
-import {
-    Box,
-    IconBatteryChargingFilled,
-    IconBatteryChargingRegular,
-    IconBatteryFullFilled,
-    IconBatteryFullRegular,
-    IconBatteryLowFilled,
-    IconBatteryLowRegular,
-    IconBatteryMediumFilled,
-    IconBatteryMediumRegular,
-    IconCheckedFilled,
-    IconCheckedRegular,
-    InfoRating,
-    Rating,
-    ResponsiveLayout,
-} from '..';
+import {Box, InfoRating, Rating, ResponsiveLayout} from '..';
+import IconBatteryChargingFilled from '@telefonica/mistica-icons/icon-battery-charging-filled';
+import IconBatteryChargingRegular from '@telefonica/mistica-icons/icon-battery-charging-regular';
+import IconBatteryFullFilled from '@telefonica/mistica-icons/icon-battery-full-filled';
+import IconBatteryFullRegular from '@telefonica/mistica-icons/icon-battery-full-regular';
+import IconBatteryLowFilled from '@telefonica/mistica-icons/icon-battery-low-filled';
+import IconBatteryLowRegular from '@telefonica/mistica-icons/icon-battery-low-regular';
+import IconBatteryMediumFilled from '@telefonica/mistica-icons/icon-battery-medium-filled';
+import IconBatteryMediumRegular from '@telefonica/mistica-icons/icon-battery-medium-regular';
+import IconCheckedFilled from '@telefonica/mistica-icons/icon-checked-filled';
+import IconCheckedRegular from '@telefonica/mistica-icons/icon-checked-regular';
 import {vars} from '../skins/skin-contract.css';
 
 import type {Variant} from '../theme-variant-context';

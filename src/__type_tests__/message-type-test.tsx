@@ -2,7 +2,7 @@ import * as React from 'react';
 import Message from '../message';
 import Avatar from '../avatar';
 import Image from '../image';
-import IconCheckRegular from '../generated/mistica-icons/icon-check-regular';
+import IconCheckRegular from '@telefonica/mistica-icons/icon-check-regular';
 
 <Message type="incoming" contentText="Hello" />;
 <Message type="incoming" asset={<Avatar size={40} initials="AP" />} />;

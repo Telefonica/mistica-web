@@ -10,7 +10,7 @@ import {
     isValidCreditCardNumber,
 } from './utils/credit-card';
 import {TextFieldBaseAutosuggest} from './text-field-base';
-import IconCreditCardVisaRegular from './generated/mistica-icons/icon-credit-card-visa-regular';
+import IconCreditCardVisaRegular from '@telefonica/mistica-icons/icon-credit-card-visa-regular';
 import IconVisa from './icons/icon-visa';
 import IconMastercard from './icons/icon-mastercard';
 import IconAmex from './icons/icon-amex';
@@ -89,14 +89,21 @@ const getAnimationTarget = (value?: string) => {
     return null;
 };
 
-const initialState = {
+type AdornmentState = {
+    showBackface: boolean;
+    animationTarget: JSX.Element | null;
+    isAnimating: boolean;
+};
+
+// The icon module and this module load in either order, so the first element waits for the render
+const createInitialState = (): AdornmentState => ({
     showBackface: false,
     animationTarget: <IconCreditCardVisaRegular size={iconSize.small} />,
     isAnimating: false,
-};
+});
 
 const reducer = (
-    state: typeof initialState,
+    state: AdornmentState,
     {
         type,
         value,
@@ -127,7 +134,11 @@ const reducer = (
 };
 
 const CreditcardAdornment = ({value}: {value?: string}) => {
-    const [{showBackface, animationTarget, isAnimating}, dispatch] = React.useReducer(reducer, initialState);
+    const [{showBackface, animationTarget, isAnimating}, dispatch] = React.useReducer(
+        reducer,
+        undefined,
+        createInitialState
+    );
     React.useEffect(() => {
         dispatch({type: 'INPUT', value});
     }, [value]);

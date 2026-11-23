@@ -7,15 +7,15 @@ import {
     Text3,
     Tooltip,
     Placeholder,
-    IconShopRegular,
     Title3,
     Grid,
     GridItem,
     DataCard,
     Circle,
-    IconAcademicRegular,
 } from '..';
 import {vars} from '../skins/skin-contract.css';
+import IconShopRegular from '@telefonica/mistica-icons/icon-shop-regular';
+import IconAcademicRegular from '@telefonica/mistica-icons/icon-academic-regular';
 
 export default {
     title: 'Private/Tooltip',

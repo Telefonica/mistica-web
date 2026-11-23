@@ -1,5 +1,6 @@
 import * as React from 'react';
-import {Circle, skinVars, IconShopRegular} from '..';
+import {Circle, skinVars} from '..';
+import IconShopRegular from '@telefonica/mistica-icons/icon-shop-regular';
 import avatarImg from './images/avatar.jpg';
 
 export default {

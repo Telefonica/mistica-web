@@ -14,16 +14,16 @@ import {
     Text3,
     ButtonPrimary,
     ToggleIconButton,
-    IconHeartRegular,
-    IconHeartFilled,
-    IconLockClosedRegular,
-    IconLockOpenRegular,
 } from '..';
 import {ThemeVariantWrapper, normalizeAspectRatio, commonArgTypes} from './card-common';
 import beachImg from './images/beach.jpg';
+import IconHeartFilled from '@telefonica/mistica-icons/icon-heart-filled';
+import IconHeartRegular from '@telefonica/mistica-icons/icon-heart-regular';
+import IconLockClosedRegular from '@telefonica/mistica-icons/icon-lock-closed-regular';
+import IconLockOpenRegular from '@telefonica/mistica-icons/icon-lock-open-regular';
 
-import type {CardAspectRatio, CardSelectionProps} from '../card-internal';
 import type {Variant} from '../theme-variant-context';
+import type {CardAspectRatio, CardSelectionProps} from '../card-internal';
 
 export default {title: 'Components/Cards/Selection'};
 

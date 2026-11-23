@@ -1,5 +1,6 @@
 import * as React from 'react';
-import {Title1, Title2, Title3, Title4, ButtonLink, IconInformationRegular, skinVars} from '..';
+import {Title1, Title2, Title3, Title4, ButtonLink, skinVars} from '..';
+import IconInformationRegular from '@telefonica/mistica-icons/icon-information-regular';
 
 import type {TitleProps} from '../title';
 import type {HeadingType} from '../utils/types';

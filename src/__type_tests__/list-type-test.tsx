@@ -1,6 +1,6 @@
 import * as React from 'react';
-import Icon2GRegular from '../generated/mistica-icons/icon-2-g-regular';
-import IconPlayFilled from '../generated/mistica-icons/icon-play-filled';
+import Icon2GRegular from '@telefonica/mistica-icons/icon-2-g-regular';
+import IconPlayFilled from '@telefonica/mistica-icons/icon-play-filled';
 import {RowList, BoxedRowList, BoxedRow, Row} from '../list';
 
 const v = true as boolean;

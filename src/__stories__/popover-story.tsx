@@ -1,14 +1,7 @@
 import * as React from 'react';
-import {
-    Popover,
-    skinVars,
-    IconMobileDeviceRegular,
-    IconShopRegular,
-    Circle,
-    Placeholder,
-    ResponsiveLayout,
-    Touchable,
-} from '..';
+import {Popover, skinVars, Circle, Placeholder, ResponsiveLayout, Touchable} from '..';
+import IconMobileDeviceRegular from '@telefonica/mistica-icons/icon-mobile-device-regular';
+import IconShopRegular from '@telefonica/mistica-icons/icon-shop-regular';
 import avatarImg from './images/avatar.jpg';
 
 import type {Variant} from '../theme-variant-context';

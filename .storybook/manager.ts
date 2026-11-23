@@ -1,4 +1,4 @@
-import './css/roboto.css';
+import '../assets/fonts/roboto-font.css';
 import {addons} from 'storybook/manager-api';
 import {createStorybookTheme} from './storybook-manager-theme';
 

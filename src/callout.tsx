@@ -6,7 +6,7 @@ import Box from './box';
 import {useTheme} from './hooks';
 import {ThemeVariant, normalizeVariant, useThemeVariant} from './theme-variant-context';
 import {Text1, Text2, Text3} from './text';
-import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
+import IconCloseRegular from '@telefonica/mistica-icons/icon-close-regular';
 import {IconButton} from './icon-button';
 import classNames from 'classnames';
 import ButtonGroup from './button-group';

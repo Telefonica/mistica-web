@@ -9,7 +9,6 @@ import {
     skinVars,
     Text2,
     Callout,
-    IconInformationRegular,
     Text10,
     ThemeVariant,
     Title1,
@@ -19,6 +18,7 @@ import {
     ButtonLink,
     useScreenSize,
 } from '..';
+import IconInformationRegular from '@telefonica/mistica-icons/icon-information-regular';
 
 export default {
     title: 'Components/Carousels/CenteredCarousel',

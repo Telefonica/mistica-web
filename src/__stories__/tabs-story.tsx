@@ -1,13 +1,8 @@
 import * as React from 'react';
-import {
-    Box,
-    IconAppointmentRegular,
-    IconBrainRegular,
-    IconBusRegular,
-    ResponsiveLayout,
-    Tabs,
-    Text3,
-} from '..';
+import {Box, ResponsiveLayout, Tabs, Text3} from '..';
+import IconAppointmentRegular from '@telefonica/mistica-icons/icon-appointment-regular';
+import IconBrainRegular from '@telefonica/mistica-icons/icon-brain-regular';
+import IconBusRegular from '@telefonica/mistica-icons/icon-bus-regular';
 
 import type {Variant} from '../theme-variant-context';
 

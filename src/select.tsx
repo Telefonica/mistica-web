@@ -5,7 +5,7 @@ import {useForm} from './form-context';
 import {useTheme} from './hooks';
 import {DOWN, ENTER, ESC, SPACE, TAB, UP} from './utils/keys';
 import {FieldContainer, HelperText, Label, useApplyCssVars} from './text-field-components';
-import IconChevronDownRegular from './generated/mistica-icons/icon-chevron-down-regular';
+import IconChevronDownRegular from '@telefonica/mistica-icons/icon-chevron-down-regular';
 import {TextFieldBaseAutosuggest} from './text-field-base';
 import Overlay from './overlay';
 import {isAndroid, isIos} from './utils/platform';

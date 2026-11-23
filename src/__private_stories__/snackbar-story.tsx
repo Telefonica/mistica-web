@@ -5,13 +5,13 @@ import {
     ButtonPrimary,
     GridLayout,
     IconButton,
-    IconTrashCanRegular,
     ResponsiveLayout,
     Stack,
     Text3,
     Title1,
     useSnackbar,
 } from '..';
+import IconTrashCanRegular from '@telefonica/mistica-icons/icon-trash-can-regular';
 
 export default {
     title: 'Private/Snackbar',

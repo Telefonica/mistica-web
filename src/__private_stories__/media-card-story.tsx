@@ -1,18 +1,8 @@
 import * as React from 'react';
-import {
-    Stack,
-    ButtonPrimary,
-    ButtonLink,
-    Text2,
-    Tag,
-    IconMobileDeviceRegular,
-    Circle,
-    skinVars,
-    Carousel,
-    IconStarFilled,
-    IconStarRegular,
-    MediaCard,
-} from '..';
+import {Stack, ButtonPrimary, ButtonLink, Text2, Tag, Circle, skinVars, Carousel, MediaCard} from '..';
+import IconMobileDeviceRegular from '@telefonica/mistica-icons/icon-mobile-device-regular';
+import IconStarFilled from '@telefonica/mistica-icons/icon-star-filled';
+import IconStarRegular from '@telefonica/mistica-icons/icon-star-regular';
 import ResponsiveLayout from '../responsive-layout';
 import {Placeholder} from '../placeholder';
 import tennisImg from '../__stories__/images/tennis.jpg';

@@ -1,12 +1,6 @@
 import * as React from 'react';
-import {
-    Avatar,
-    Badge,
-    IconShoppingCartRegular,
-    MainNavigationBar,
-    NavigationBarAction,
-    NavigationBarActionGroup,
-} from '../../..';
+import {Avatar, Badge, MainNavigationBar, NavigationBarAction, NavigationBarActionGroup} from '../../..';
+import IconShoppingCartRegular from '@telefonica/mistica-icons/icon-shopping-cart-regular';
 
 const NavigationBarTest = (): JSX.Element => (
     <MainNavigationBar

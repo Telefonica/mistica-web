@@ -1,9 +1,9 @@
 import {addons} from 'storybook/preview-api';
-import './css/roboto.css';
-import './css/vivo-font.css';
-import './css/telefonica-font.css';
-import './css/onair-font.css';
-import './css/movistar-font.css';
+import '../assets/fonts/roboto-font.css';
+import '../assets/fonts/vivo-font.css';
+import '../assets/fonts/telefonica-font.css';
+import '../assets/fonts/onair-font.css';
+import '../assets/fonts/movistar-font.css';
 import './css/main.css';
 import * as React from 'react';
 import {

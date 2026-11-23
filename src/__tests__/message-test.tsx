@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event';
 import Message from '../message';
 import ThemeContextProvider from '../theme-context-provider';
 import {makeTheme} from './test-utils';
-import IconCopyRegular from '../generated/mistica-icons/icon-copy-regular';
+import IconCopyRegular from '@telefonica/mistica-icons/icon-copy-regular';
 
 const renderMessage = (message: React.ReactNode) =>
     render(<ThemeContextProvider theme={makeTheme()}>{message}</ThemeContextProvider>);

@@ -1,5 +1,6 @@
 import * as React from 'react';
-import {Callout, ButtonPrimary, ButtonLink, IconBoxLight, ResponsiveLayout, Box, ButtonSecondary} from '..';
+import {Callout, ButtonPrimary, ButtonLink, ResponsiveLayout, Box, ButtonSecondary} from '..';
+import IconBoxLight from '@telefonica/mistica-icons/icon-box-light';
 
 import type {Variant} from '../theme-variant-context';
 

@@ -9,7 +9,6 @@ import {
     DateField,
     Hero,
     Image,
-    IconShopRegular,
     Meter,
     Placeholder,
     SearchField,
@@ -25,6 +24,7 @@ import {
     MediaCard,
     NakedCard,
 } from '..';
+import IconShopRegular from '@telefonica/mistica-icons/icon-shop-regular';
 import {makeTheme} from './test-utils';
 
 const checkTestIds = (

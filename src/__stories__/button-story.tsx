@@ -8,9 +8,9 @@ import {
     TextField,
     Stack,
     Text2,
-    IconPhotoCameraRegular,
     ResponsiveLayout,
 } from '..';
+import IconPhotoCameraRegular from '@telefonica/mistica-icons/icon-photo-camera-regular';
 import tennisImg from './images/tennis.jpg';
 
 import type {ButtonLinkType} from '..';

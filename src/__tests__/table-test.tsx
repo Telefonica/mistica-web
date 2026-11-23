@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {render, screen} from '@testing-library/react';
-import {ThemeContextProvider, Table, IconLightningRegular} from '..';
+import {ThemeContextProvider, Table} from '..';
+import IconLightningRegular from '@telefonica/mistica-icons/icon-lightning-regular';
 import {makeTheme} from './test-utils';
 import userEvent from '@testing-library/user-event';
 

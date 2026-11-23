@@ -5,7 +5,7 @@ import Stack from './stack';
 import {getTextSizesWithWeight, Text3, Text4, Text} from './text';
 import {vars} from './skins/skin-contract.css';
 import {IconButton} from './icon-button';
-import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
+import IconCloseRegular from '@telefonica/mistica-icons/icon-close-regular';
 import * as styles from './drawer.css';
 import classnames from 'classnames';
 import {Portal} from './portal';

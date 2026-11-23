@@ -9,13 +9,13 @@ import {
     VivoLogo,
     CoverCard,
     Tag,
-    IconCreditCardVisaRegular,
-    IconBarChartRegular,
     UnorderedList,
     ListItem,
     Title4,
-    IconWorkflowRegular,
 } from '../..';
+import IconCreditCardVisaRegular from '@telefonica/mistica-icons/icon-credit-card-visa-regular';
+import IconBarChartRegular from '@telefonica/mistica-icons/icon-bar-chart-regular';
+import IconWorkflowRegular from '@telefonica/mistica-icons/icon-workflow-regular';
 import {vars} from '../../skins/skin-contract.css';
 
 export default {

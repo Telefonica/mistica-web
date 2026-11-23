@@ -511,12 +511,18 @@ dialog({
 
 ### Snackbar
 
+Use `position` on `<Snackbar>` or in `openSnackbar` to place a desktop web snackbar at
+`bottom-center` (the default), `bottom-left`, `bottom-right`, `top-center`,
+`top-left`, or `top-right`. On desktop, the snackbar sits 40 px from each edge it is anchored to.
+On mobile and tablet, it always spans the available width at the bottom with 8 px side margins.
+
 ```tsx
 const {openSnackbar} = useSnackbar();
 
 openSnackbar({
   message: 'Item saved',
   type: 'INFORMATIVE',
+  position: 'top-right',
   buttonText: 'Undo',
   withDismiss: true,
 });
@@ -779,13 +785,19 @@ const [isOpen, setIsOpen] = React.useState(false);
 
 ## Icons
 
+The icons live in a separate package, [@telefonica/mistica-icons](../packages/mistica-icons/README.md). Each
+icon has its own module, and there is no barrel, so an application loads the icons that it uses and nothing
+more.
+
 Mistica ships ~2000 icons following the pattern `Icon{Name}{Variant}`:
 
 - Variants: `Regular`, `Filled`, `Light`
+- Module path: the name of the component in kebab case, for example `icon-search-regular`
 - All accept `size` (number) and `color` (string) props
 
 ```tsx
-import {IconSearchRegular, IconHeartFilled, IconInfoLight} from '@telefonica/mistica';
+import IconSearchRegular from '@telefonica/mistica-icons/icon-search-regular';
+import IconHeartFilled from '@telefonica/mistica-icons/icon-heart-filled';
 
 <IconSearchRegular size={24} color={skinVars.colors.neutralHigh} />
 <IconHeartFilled size={24} color={skinVars.colors.error} />

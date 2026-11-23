@@ -1,8 +1,8 @@
 import '../css/roboto.css';
-import '../.storybook/css/vivo-font.css';
-import '../.storybook/css/telefonica-font.css';
-import '../.storybook/css/onair-font.css';
-import '../.storybook/css/movistar-font.css';
+import '../assets/fonts/vivo-font.css';
+import '../assets/fonts/telefonica-font.css';
+import '../assets/fonts/onair-font.css';
+import '../assets/fonts/movistar-font.css';
 import '../css/reset.css';
 import * as React from 'react';
 import {

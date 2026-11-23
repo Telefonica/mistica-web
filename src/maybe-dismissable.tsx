@@ -1,6 +1,6 @@
 'use client';
 import * as React from 'react';
-import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
+import IconCloseRegular from '@telefonica/mistica-icons/icon-close-regular';
 import {useTheme} from './hooks';
 import {IconButton} from './icon-button';
 import * as styles from './maybe-dismissable.css';

@@ -9,16 +9,9 @@ import {
     skinVars,
     Placeholder,
     Tag,
-    IconThumbUpFilled,
-    IconMobileDeviceRegular,
     Image,
     Inline,
     Avatar,
-    IconTrashCanRegular,
-    IconPauseFilled,
-    IconPlayFilled,
-    IconHeartFilled,
-    IconHeartRegular,
     IconButton,
     ResponsiveLayout,
     NegativeBox,
@@ -26,7 +19,6 @@ import {
     OrderedList,
     UnorderedList,
     ListItem,
-    IconLightningFilled,
     Box,
     Text1,
     Text2,
@@ -40,6 +32,14 @@ import {
     Text10,
     Stack,
 } from '..';
+import IconThumbUpFilled from '@telefonica/mistica-icons/icon-thumb-up-filled';
+import IconMobileDeviceRegular from '@telefonica/mistica-icons/icon-mobile-device-regular';
+import IconTrashCanRegular from '@telefonica/mistica-icons/icon-trash-can-regular';
+import IconPauseFilled from '@telefonica/mistica-icons/icon-pause-filled';
+import IconPlayFilled from '@telefonica/mistica-icons/icon-play-filled';
+import IconHeartFilled from '@telefonica/mistica-icons/icon-heart-filled';
+import IconHeartRegular from '@telefonica/mistica-icons/icon-heart-regular';
+import IconLightningFilled from '@telefonica/mistica-icons/icon-lightning-filled';
 import usingVrImg from './images/using-vr.jpg';
 import laptopImg from './images/laptop.jpg';
 import avatarImg from './images/avatar.jpg';
