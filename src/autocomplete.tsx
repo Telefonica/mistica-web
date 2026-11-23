@@ -11,6 +11,7 @@ import classnames from 'classnames';
 import {vars} from './skins/skin-contract.css';
 import * as tokens from './text-tokens';
 import {useTheme} from './hooks';
+import {useForm} from './form-context';
 
 import type {CommonFormFieldProps} from './text-field-base';
 
@@ -28,8 +29,11 @@ export interface AutocompleteProps extends CommonFormFieldProps {
 }
 
 const Autocomplete = React.forwardRef<any, AutocompleteProps>(
-    ({getSuggestions, onChangeValue, suggestionEmptyCase, ...rest}, refProp) => {
-        const [showOptions, setShowOptions] = React.useState(false);
+    ({disabled: disabledProp, getSuggestions, onChangeValue, suggestionEmptyCase, ...rest}, refProp) => {
+        const {formStatus} = useForm();
+        const disabled = disabledProp || formStatus === 'sending';
+        const [optionsOpen, setShowOptions] = React.useState(false);
+        const showOptions = optionsOpen && !disabled;
         const menuId = React.useId();
         const statusId = React.useId();
         const containerRef = React.useRef<HTMLDivElement | null>(null);
@@ -67,7 +71,7 @@ const Autocomplete = React.forwardRef<any, AutocompleteProps>(
         }, [showOptions, rest.value]);
 
         const showOptionsList = () => {
-            if (rest.readOnly) {
+            if (disabled || rest.readOnly) {
                 return;
             }
             setShowOptions(true);
@@ -78,12 +82,22 @@ const Autocomplete = React.forwardRef<any, AutocompleteProps>(
             setFocusIndex(-1);
         };
 
+        React.useEffect(() => {
+            if (disabled) {
+                setShowOptions(false);
+                setFocusIndex(-1);
+            }
+        }, [disabled]);
+
         const updateTextFieldValue = React.useCallback(
             (val: string, rawVal: string) => {
+                if (disabled) {
+                    return;
+                }
                 onChangeValue(val, rawVal);
                 setFocusIndex(-1);
             },
-            [onChangeValue]
+            [disabled, onChangeValue]
         );
 
         const validateFieldValue = React.useCallback(() => {
@@ -120,6 +134,9 @@ const Autocomplete = React.forwardRef<any, AutocompleteProps>(
                 className={styles.autocompleteContainer}
                 ref={containerRef}
                 onKeyDown={(e) => {
+                    if (disabled) {
+                        return;
+                    }
                     switch (e.key) {
                         case DOWN:
                         case UP: {
@@ -172,6 +189,7 @@ const Autocomplete = React.forwardRef<any, AutocompleteProps>(
             >
                 <TextField
                     {...rest}
+                    disabled={disabled}
                     ref={combineRefs(inputRef, refProp)}
                     autoComplete="off"
                     role="combobox"
