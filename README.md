@@ -84,7 +84,8 @@ const misticaTheme = {
 const container = document.getElementById('app');
 const root = createRoot(container);
 root.render(
-  <ThemeContextProvider theme={misticaTheme}>
+  // density is optional: 'cozy' (default) or 'compact'
+  <ThemeContextProvider theme={misticaTheme} density="cozy">
     <App />
   </ThemeContextProvider>
 );
@@ -93,6 +94,11 @@ root.render(
 The `theme` prop in `ThemeContextProvider` is **mandatory**, and you can use it to configure some aspects of
 the library. There are multiple settings but the only two mandatory fields are `skin` and `i18n`. Read the
 [theme config doc](https://github.com/Telefonica/mistica-web/blob/master/doc/theme-config.md) for more info.
+
+The `density` prop is optional. Use `'compact'` to get smaller spacing, text and border radii in the whole
+app. Read the
+[density section](https://github.com/Telefonica/mistica-web/blob/master/doc/theme-config.md#density) of the
+theme config doc for more info.
 
 :warning: Usually, the `theme` object is constant and won't need to change dynamically in your application, in
 that case we recommend to extract it to an external `const` variable outside of the component, this way the

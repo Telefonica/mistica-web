@@ -1,3 +1,5 @@
+# [18.1.0](https://github.com/Telefonica/mistica-web/compare/v18.0.0...v18.1.0) (2026-11-20)
+
 # [18.0.0](https://github.com/Telefonica/mistica-web/compare/v17.12.0...v18.0.0) (2026-11-13)
 
 

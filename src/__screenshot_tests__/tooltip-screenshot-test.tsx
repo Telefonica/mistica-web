@@ -176,3 +176,17 @@ for (const testCase of ['top', 'left']) {
         await expectScreenshot(page);
     });
 }
+
+['default', 'brand'].forEach((variantOutside) => {
+    test(`Tooltip - dark mode. variantOutside = ${variantOutside}`, async () => {
+        const page = await openStoryPage({
+            id: 'components-tooltip--default',
+            device: 'MOBILE_IOS',
+            args: {variantOutside},
+            isDarkMode: true,
+        });
+
+        await (await screen.findByTestId('target')).click();
+        await expectScreenshot(page);
+    });
+});

@@ -1,12 +1,16 @@
 import type {
-    BorderRadiiConfig,
     ComponentPropertiesConfig,
-    SpacingConfig,
+    MaybeDensityConfig,
+    SkinBorderRadiiConfig,
+    SkinSpacingConfig,
     TextPresetsConfig,
     ThemeVariantsConfig,
 } from './types';
 
-export const defaultTextPresetsConfig: TextPresetsConfig = {
+// The defaults replace the config of a skin that does not define them, so they take the skin types, which accept
+// density values. ThemeContextProvider resolves the density after it merges them with the skin.
+
+export const defaultTextPresetsConfig: MaybeDensityConfig<TextPresetsConfig> = {
     text1: {size: {mobile: 12, desktop: 14}, lineHeight: {mobile: 16, desktop: 20}},
     text2: {size: {mobile: 14, desktop: 16}, lineHeight: {mobile: 20, desktop: 24}},
     text3: {size: {mobile: 16, desktop: 18}, lineHeight: {mobile: 24, desktop: 24}},
@@ -81,7 +85,7 @@ export const defaultTextPresetsConfig: TextPresetsConfig = {
     stepperStepLabel: {lineHeight: {desktop: 24, mobile: 20}, size: {desktop: 16, mobile: 14}},
 };
 
-export const defaultBorderRadiiConfig: BorderRadiiConfig = {
+export const defaultBorderRadiiConfig: SkinBorderRadiiConfig = {
     button: '4px',
     input: '8px',
     container: '8px',
@@ -112,9 +116,20 @@ export const defaultComponentPropertiesConfig: ComponentPropertiesConfig = {
     },
 };
 
-export const defaultSpacing: SpacingConfig = {
-    buttonDefaultPadding: {left: {mobile: 16, desktop: 16}, right: {mobile: 16, desktop: 16}},
-    buttonSmallPadding: {left: {mobile: 8, desktop: 12}, right: {mobile: 8, desktop: 12}},
+export const defaultSpacing: SkinSpacingConfig = {
+    buttonDefaultPadding: {
+        top: {mobile: 12, desktop: 12},
+        bottom: {mobile: 12, desktop: 12},
+        left: {mobile: 16, desktop: 16},
+        right: {mobile: 16, desktop: 16},
+    },
+    buttonSmallPadding: {
+        top: {mobile: 6, desktop: 6},
+        bottom: {mobile: 6, desktop: 6},
+        left: {mobile: 8, desktop: 12},
+        right: {mobile: 8, desktop: 12},
+    },
+    iconButtonDefaultPadding: {mobile: 12, desktop: 12},
     cardDefaultPadding: {
         top: {mobile: 16, desktop: 16},
         bottom: {mobile: 16, desktop: 16},

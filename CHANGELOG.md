@@ -1,3 +1,17 @@
+# [18.1.0](https://github.com/Telefonica/mistica-web/compare/v18.0.0...v18.1.0) (2026-11-20)
+
+
+### Features
+
+* **Snackbar:** support configurable viewport positions ([#1811](https://github.com/Telefonica/mistica-web/issues/1811)) ([41993bc](https://github.com/Telefonica/mistica-web/commit/41993bc3c104e663dc82a12b0f137c18fd0f2083)), closes [#1789](https://github.com/Telefonica/mistica-web/issues/1789)
+
+# [18.1.0](https://github.com/Telefonica/mistica-web/compare/v18.0.0...v18.1.0) (2026-11-20)
+
+
+### Features
+
+* **Snackbar:** support configurable viewport positions ([#1811](https://github.com/Telefonica/mistica-web/issues/1811)) ([41993bc](https://github.com/Telefonica/mistica-web/commit/41993bc3c104e663dc82a12b0f137c18fd0f2083)), closes [#1789](https://github.com/Telefonica/mistica-web/issues/1789)
+
 # [18.0.0](https://github.com/Telefonica/mistica-web/compare/v17.12.0...v18.0.0) (2026-11-13)
 
 

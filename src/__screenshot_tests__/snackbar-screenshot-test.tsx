@@ -140,3 +140,18 @@ test('with dismiss button and long action and message', async () => {
     const snackbar = await screen.findByRole('alert');
     await expectScreenshot(snackbar);
 });
+
+['INFORMATIVE', 'CRITICAL'].forEach((type) => {
+    test(`${type} in dark mode`, async () => {
+        await openStoryPage({
+            id: 'components-snackbar--default',
+            device: 'MOBILE_ANDROID',
+            args: {type},
+            isDarkMode: true,
+        });
+
+        await (await screen.findByRole('button', {name: 'Open Snackbar'})).click();
+        const snackbar = await screen.findByRole('alert');
+        await expectScreenshot(snackbar);
+    });
+});

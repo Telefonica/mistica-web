@@ -165,6 +165,8 @@ export type Colors = {
     textActivated: string;
     textBrand: string;
     inputBorder: string;
+    popupBorder: string;
+    tooltipBorder: string;
     inputBorderInverse: string;
     inputBorderNegative: string;
     inputBorderBrand: string;

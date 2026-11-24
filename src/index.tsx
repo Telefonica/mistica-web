@@ -201,8 +201,9 @@ export {TrackingConfig, useTrackingConfig} from './utils/analytics';
 export {useDocumentVisibility} from './utils/document-visibility';
 
 export {ThemeVariant, useThemeVariant} from './theme-variant-context';
+export {DensityProvider, useDensity} from './density/density-provider';
 
-export type {Skin, KnownSkinName, SkinName} from './skins/types';
+export type {Skin, KnownSkinName, SkinName, Density} from './skins/types';
 export {
     VIVO_SKIN,
     VIVO_EVOLUTION_SKIN,
