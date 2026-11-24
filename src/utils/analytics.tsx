@@ -29,11 +29,12 @@ export const TrackingConfig = ({children, eventFormat}: TrackingConfigProps): JS
 
 export const useTrackingConfig = (): {eventFormat: EventFormat} => React.useContext(TrackingContext);
 
+export type TrackingComponentType = 'icon' | 'row' | 'tab' | 'accordion' | 'card' | 'link' | 'button';
+
 type DefaultTrackingOptions = {
-    componentType: 'icon' | 'row' | 'tab' | 'accordion' | 'card' | 'link' | 'button';
+    componentType: TrackingComponentType;
     componentCopy: string;
     trackEvent?: boolean;
-    disabled?: boolean;
 };
 
 export const useDefaultTracking = (): ((options: DefaultTrackingOptions) => TrackingEvent | undefined) => {
@@ -44,9 +45,9 @@ export const useDefaultTracking = (): ((options: DefaultTrackingOptions) => Trac
         componentType,
         componentCopy,
         trackEvent,
-        disabled,
     }: DefaultTrackingOptions): TrackingEvent | undefined => {
-        if (disabled || !(trackEvent ?? analytics.trackEventsByDefault)) {
+        const shouldTrackEvent = trackEvent ?? analytics.trackEventsByDefault;
+        if (!shouldTrackEvent) {
             return undefined;
         }
 

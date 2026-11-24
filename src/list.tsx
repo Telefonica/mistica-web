@@ -29,7 +29,6 @@ import {combineRefs} from './utils/common';
 import {IconButton, ToggleIconButton} from './icon-button';
 import ScreenReaderOnly from './screen-reader-only';
 import {useTheme} from './hooks';
-import {useDefaultTracking} from './utils/analytics';
 
 import type {IconButtonProps, ToggleIconButtonProps} from './icon-button';
 import type {TouchableElement, TouchableProps} from './touchable';
@@ -453,7 +452,6 @@ const RowContent = React.forwardRef<
     TouchableElement,
     RowContentProps & {hasDivider: boolean; onSelectedChange?: (selected: boolean) => void}
 >((props, ref) => {
-    const getDefaultTrackingEvent = useDefaultTracking();
     const titleId = React.useId();
     const outsideVariant = useThemeVariant();
     const isOverBrand =
@@ -547,14 +545,10 @@ const RowContent = React.forwardRef<
 
         onNavigate: props.onNavigate,
         onPress: props.onPress,
-        trackingEvent:
-            props.trackingEvent ??
-            getDefaultTrackingEvent({
-                componentType: 'row',
-                componentCopy: title,
-                trackEvent: props.trackEvent,
-                disabled,
-            }),
+        trackingEvent: props.trackingEvent,
+        trackEvent: props.trackEvent,
+        trackingComponentType: 'row',
+        trackingComponentCopy: title,
 
         'aria-label': ariaLabel,
         'aria-labelledby': props['aria-labelledby'],

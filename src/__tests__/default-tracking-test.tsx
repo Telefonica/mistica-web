@@ -291,6 +291,94 @@ test('IconButton uses its referenced labels as the event copy', async () => {
     });
 });
 
+test('IconButton resolves referenced labels at press time', async () => {
+    const logEvent = jest.fn();
+    const iconButton = <IconButton Icon={IconStarRegular} aria-labelledby="subject" onPress={() => {}} />;
+    const renderContent = (label: string) => (
+        <ThemeContextProvider
+            theme={makeTheme({
+                analytics: {logEvent, eventFormat: 'google-analytics-4', trackEventsByDefault: true},
+            })}
+        >
+            <span id="subject">{label}</span>
+            {iconButton}
+        </ThemeContextProvider>
+    );
+    const {rerender} = render(renderContent('Details'));
+
+    rerender(renderContent('Preferences'));
+    await userEvent.click(screen.getByRole('button', {name: 'Preferences'}));
+
+    expect(logEvent).toHaveBeenCalledWith({
+        name: 'user_interaction',
+        component_type: 'icon',
+        component_copy: 'Preferences',
+    });
+});
+
+test('IconButton captures the event copy before asynchronous href navigation', async () => {
+    const logEvent = jest.fn();
+    const onNavigate = jest.fn().mockResolvedValue(undefined);
+    render(
+        <ThemeContextProvider
+            theme={makeTheme({
+                analytics: {logEvent, eventFormat: 'google-analytics-4', trackEventsByDefault: true},
+            })}
+        >
+            <span id="destination">Details</span>
+            <IconButton
+                Icon={IconStarRegular}
+                aria-labelledby="destination"
+                href="#details"
+                onNavigate={onNavigate}
+            />
+        </ThemeContextProvider>
+    );
+
+    await userEvent.click(screen.getByRole('link', {name: 'Details'}));
+
+    expect(onNavigate).toHaveBeenCalledTimes(1);
+    expect(logEvent).toHaveBeenCalledWith({
+        name: 'user_interaction',
+        component_type: 'icon',
+        component_copy: 'Details',
+    });
+});
+
+test.each([
+    {title: 'Title', pretitle: 'Pretitle', description: 'Description', expectedCopy: 'Title'},
+    {title: '', pretitle: 'Pretitle', description: 'Description', expectedCopy: 'Pretitle'},
+    {title: undefined, pretitle: undefined, description: 'Description', expectedCopy: 'not_apply'},
+])(
+    'card copy is $expectedCopy for title=$title and pretitle=$pretitle',
+    async ({title, pretitle, description, expectedCopy}) => {
+        const logEvent = jest.fn();
+        render(
+            <ThemeContextProvider
+                theme={makeTheme({
+                    analytics: {logEvent, eventFormat: 'google-analytics-4', trackEventsByDefault: true},
+                })}
+            >
+                <DataCard
+                    title={title}
+                    pretitle={pretitle}
+                    description={description}
+                    aria-label="Card details"
+                    to="#details"
+                />
+            </ThemeContextProvider>
+        );
+
+        await userEvent.click(screen.getByRole('link', {name: 'Card details'}));
+
+        expect(logEvent).toHaveBeenCalledWith({
+            name: 'user_interaction',
+            component_type: 'card',
+            component_copy: expectedCopy,
+        });
+    }
+);
+
 test('disabled controls and static content do not emit default events', async () => {
     const logEvent = jest.fn();
     render(

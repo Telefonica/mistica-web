@@ -1,11 +1,18 @@
 import * as React from 'react';
 import {Touchable, Stack, Text2, skinVars} from '..';
 
+import type {TouchableProps} from '../touchable';
+
 export default {
     title: 'Components/Primitives/Touchable',
     component: Touchable,
     argTypes: {
         trackEvent: {options: [undefined, true, false], control: {type: 'select'}},
+        trackingComponentType: {
+            options: [undefined, 'icon', 'row', 'tab', 'accordion', 'card', 'link', 'button'],
+            control: {type: 'select'},
+        },
+        trackingComponentCopy: {control: {type: 'text'}},
         type: {
             options: ['href', 'onPress'],
             control: {type: 'select'},
@@ -14,13 +21,18 @@ export default {
     },
 };
 
-type Args = {
-    trackEvent?: boolean;
+type Args = Pick<TouchableProps, 'trackEvent' | 'trackingComponentType' | 'trackingComponentCopy'> & {
     type: 'href' | 'onPress';
     newTab: boolean;
 };
 
-export const Default: StoryComponent<Args> = ({type, newTab, trackEvent}) => {
+export const Default: StoryComponent<Args> = ({
+    type,
+    newTab,
+    trackEvent,
+    trackingComponentType,
+    trackingComponentCopy,
+}) => {
     const styles = {
         border: `1px solid ${skinVars.colors.border}`,
         display: 'flex',
@@ -43,6 +55,8 @@ export const Default: StoryComponent<Args> = ({type, newTab, trackEvent}) => {
                 style={styles}
                 {...props}
                 trackEvent={trackEvent}
+                trackingComponentType={trackingComponentType}
+                trackingComponentCopy={trackingComponentCopy}
                 dataAttributes={{testid: 'touchable'}}
             >
                 Touchable
@@ -54,6 +68,8 @@ export const Default: StoryComponent<Args> = ({type, newTab, trackEvent}) => {
 Default.storyName = 'Touchable';
 Default.args = {
     trackEvent: undefined,
+    trackingComponentType: undefined,
+    trackingComponentCopy: undefined,
     type: 'href',
     newTab: false,
 };

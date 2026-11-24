@@ -32,7 +32,6 @@ import classnames from 'classnames';
 import ButtonGroup from './button-group';
 import {isBiggerHeading} from './utils/headings';
 import {applyAlpha} from './utils/color';
-import {useDefaultTracking} from './utils/analytics';
 
 import type {
     DataAttributes,
@@ -1482,7 +1481,6 @@ export const InternalCard = React.forwardRef<HTMLDivElement, CardInteractionProp
             radioValue,
             segregateTouchableContent = false,
             touchableAriaLabel: touchableAriaLabelProp,
-            trackEvent,
             ...touchableProps
         },
         ref
@@ -1499,6 +1497,14 @@ export const InternalCard = React.forwardRef<HTMLDivElement, CardInteractionProp
         const {text: slotText, ref: slotRef} = useInnerText();
         const {text: headlineText, ref: headlineRef} = useInnerText();
         const touchableContentRef = React.useRef<TouchableElement>(null);
+        const titleText = typeof title === 'string' ? title : title?.text;
+        const pretitleText = typeof pretitle === 'string' ? pretitle : pretitle?.text;
+        const cardTouchableProps = {
+            ...touchableProps,
+            trackingComponentType: 'card',
+            trackingComponentCopy: titleText || pretitleText || 'not_apply',
+        };
+
         const isTouchable =
             isSelectable || !!(touchableProps.href || touchableProps.to || touchableProps.onPress);
         const hasTouchableInContent = !!(
@@ -1509,19 +1515,6 @@ export const InternalCard = React.forwardRef<HTMLDivElement, CardInteractionProp
         );
         const hasButtons = !!(buttonPrimary || buttonSecondary || buttonLink);
         const {colorValues} = useTheme();
-        const getDefaultTrackingEvent = useDefaultTracking();
-        const titleText = typeof title === 'string' ? title : title?.text;
-        const pretitleText = typeof pretitle === 'string' ? pretitle : pretitle?.text;
-        const cardTouchableProps = {
-            ...touchableProps,
-            trackingEvent:
-                touchableProps.trackingEvent ??
-                getDefaultTrackingEvent({
-                    componentType: 'card',
-                    componentCopy: titleText || pretitleText || '',
-                    trackEvent,
-                }),
-        };
 
         // In this context "media" refers to the image or video that is placed inside the card, not the background
         const typeAllowsMedia = type === 'media' || type === 'naked';

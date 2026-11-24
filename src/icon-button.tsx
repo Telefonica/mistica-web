@@ -5,7 +5,6 @@ import * as styles from './icon-button.css';
 import classNames from 'classnames';
 import Spinner from './spinner';
 import {useThemeVariant} from './theme-variant-context';
-import {useDefaultTracking} from './utils/analytics';
 
 import type {TouchableElement, TouchableComponentProps} from './touchable';
 import type {ExclusifyUnion} from './utils/utility-types';
@@ -69,21 +68,7 @@ export const RawIconButton = React.forwardRef<
         ref
     ) => {
         const themeVariant = useThemeVariant();
-        const getDefaultTrackingEvent = useDefaultTracking();
-        const [labelledByText, setLabelledByText] = React.useState('');
         const [isOnPressPromiseResolving, setIsOnPressPromiseResolving] = React.useState(false);
-
-        React.useEffect(() => {
-            const text =
-                touchableProps['aria-labelledby']
-                    ?.split(/\s+/)
-                    .map((id) => document.getElementById(id)?.textContent)
-                    .filter(Boolean)
-                    .join(' ') ?? '';
-            if (text !== labelledByText) {
-                setLabelledByText(text);
-            }
-        }, [touchableProps, labelledByText]);
 
         const showSpinner = showSpinnerProp || isOnPressPromiseResolving;
 
@@ -107,14 +92,8 @@ export const RawIconButton = React.forwardRef<
             disabled: disabled || showSpinner,
             'aria-disabled': ariaDisabled,
             ref,
-            trackingEvent:
-                trackingEvent ??
-                getDefaultTrackingEvent({
-                    componentType: 'icon',
-                    componentCopy: touchableProps['aria-label'] ?? labelledByText,
-                    trackEvent,
-                    disabled: disabled || showSpinner || ariaDisabled,
-                }),
+            trackingEvent,
+            trackEvent,
             role,
             dataAttributes: {testid: 'IconButton', ...dataAttributes},
             className: classNames(
@@ -172,7 +151,7 @@ export const RawIconButton = React.forwardRef<
                     [styles.bleedY[buttonSize]]: bleedY,
                 })}
             >
-                <BaseTouchable {...commonProps} {...touchableProps} maybe>
+                <BaseTouchable {...commonProps} {...touchableProps} trackingComponentType="icon" maybe>
                     {content}
                 </BaseTouchable>
             </div>

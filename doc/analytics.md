@@ -88,21 +88,25 @@ all components that support `trackEvent`. The setting defaults to `false`, so ea
 with `trackEvent`. Set `trackEvent={false}` on a component to suppress its default event. A custom
 `trackingEvent` always takes precedence.
 
-The following components support `trackEvent` and `theme.analytics.trackEventsByDefault`:
+The following components support `trackEvent` and `theme.analytics.trackEventsByDefault`. Each event uses the
+corresponding GA4 `component_type` and event copy described below.
 
-`Touchable` also supports these settings. It generates `link` events when using `href` or `to`, and `button`
-events for `onPress`, using `aria-label` or its text children as the event copy.
-
-| Component                                                                       | Tracked interaction                | GA4 `component_type`                                  | Event copy                                                   |
-| ------------------------------------------------------------------------------- | ---------------------------------- | ----------------------------------------------------- | ------------------------------------------------------------ |
-| `ButtonPrimary`, `ButtonSecondary`, `ButtonDanger`                              | Button press                       | `primary_button`, `secondary_button`, `danger_button` | Button text                                                  |
-| `ButtonLink` and `TextLink`                                                     | Link press                         | `link` (or the corresponding `ButtonLink` variant)    | Link text                                                    |
-| `IconButton`, `ToggleIconButton`                                                | Icon press                         | `icon`                                                | Current `aria-label` or text referenced by `aria-labelledby` |
-| `Row`, `BoxedRow`                                                               | Press on the row's link or button  | `row`                                                 | Row title                                                    |
-| `Tabs`                                                                          | Tab press                          | `tab`                                                 | Tab text                                                     |
-| `AccordionItem`, `BoxedAccordionItem`                                           | Header press to expand or collapse | `accordion`                                           | Item title                                                   |
-| `DataCard`, `MediaCard`, `CoverCard`, `NakedCard`, community `AdvancedDataCard` | Press on the card's link or button | `card`                                                | Title, falling back to pretitle                              |
-| `Popover`                                                                       | Close button press                 | `icon`                                                | Close button label                                           |
+- `ButtonPrimary`, `ButtonSecondary` and `ButtonDanger` track button presses with the corresponding
+  `primary_button`, `secondary_button` or `danger_button` type and the button text.
+- `ButtonLink` and `TextLink` track link presses with the `link` type (or the corresponding `ButtonLink`
+  variant) and the link text.
+- `IconButton` and `ToggleIconButton` track icon presses with the `icon` type and the current `aria-label` or
+  text referenced by `aria-labelledby`.
+- `Row` and `BoxedRow` track presses on their link or button with the `row` type and the row title.
+- `Tabs` tracks tab presses with the `tab` type and the tab text.
+- `AccordionItem` and `BoxedAccordionItem` track header presses to expand or collapse with the `accordion`
+  type and the item title.
+- `DataCard`, `MediaCard`, `CoverCard`, `NakedCard` and community `AdvancedDataCard` track presses on their
+  link or button with the `card` type and the title, falling back to the pretitle and then `not_apply`.
+- `Popover` tracks close button presses with the `icon` type and the close button label.
+- `Touchable` generates `link` events when using `href` or `to`, and `button` events for `onPress`, using
+  `aria-label`, text referenced by `aria-labelledby` or its text children as the event copy. Use
+  `trackingComponentType` and `trackingComponentCopy` to override these values for a custom component.
 
 For these new events, Universal Analytics uses `category: 'user_interaction'`,
 `action: '<component_type>_tapped'` and `label` containing the event copy. GA4 uses
