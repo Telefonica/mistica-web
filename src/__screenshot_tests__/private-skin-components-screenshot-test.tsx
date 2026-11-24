@@ -66,3 +66,16 @@ test.each(SKINS)('Components in %s (inverse and dark mode)', async (skin) => {
         expect(await group.screenshot()).toMatchImageSnapshot();
     }
 });
+
+test.each(SKINS)('Components in %s (compact density)', async (skin) => {
+    await openStoryPage({
+        id: 'private-components-in-different-skins--default',
+        density: 'compact',
+        skin,
+    });
+
+    const groups = await screen.findAllByTestId('components-group');
+    for (const group of groups) {
+        expect(await group.screenshot()).toMatchImageSnapshot();
+    }
+});

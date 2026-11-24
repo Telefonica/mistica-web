@@ -6,6 +6,7 @@ import {BaseTouchable} from './touchable';
 import classnames from 'classnames';
 import {useThemeVariant} from './theme-variant-context';
 import {useForm} from './form-context';
+import {useTheme} from './hooks';
 import {getTextFromChildren} from './utils/common';
 import {eventActions, eventCategories, eventNames, useTrackingConfig} from './utils/analytics';
 import * as styles from './text-link.css';
@@ -43,6 +44,8 @@ const TextLink = ({
     const themeVariant = useThemeVariant();
     const {formStatus} = useForm();
     const {eventFormat} = useTrackingConfig();
+    const {analytics} = useTheme();
+    const shouldTrackEvent = trackEvent ?? analytics.trackEventsByDefault;
 
     const underlineStyle =
         underline === 'always' ? styles.linkStyles.underlineAlways : styles.linkStyles.underlineOnHover;
@@ -68,7 +71,9 @@ const TextLink = ({
             {...props}
             stopPropagation
             as={props.onPress ? 'a' : undefined}
-            trackingEvent={props.trackingEvent ?? (trackEvent ? createDefaultTrackingEvent() : undefined)}
+            trackingEvent={
+                props.trackingEvent ?? (shouldTrackEvent ? createDefaultTrackingEvent() : undefined)
+            }
             disabled={disabled || formStatus === 'sending'}
             className={classnames(
                 styles.variants[themeVariant === 'alternative' ? 'default' : themeVariant],

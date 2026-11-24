@@ -42,7 +42,7 @@ export const menuContainer = style([
         listStyleType: 'none',
         margin: 0,
         overflowY: 'auto',
-        boxShadow: '0px 2px 4px rgba(0,0,0,0.2)',
+        boxShadow: `0 0 0 1px ${skinVars.colors.popupBorder}, 0px 2px 4px rgba(0,0,0,0.2)`,
     },
 ]);
 

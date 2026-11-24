@@ -126,3 +126,30 @@ test('ThemeContextProvider with as="div" and withoutStyles does not add data-mis
     const themedDivs = container.querySelectorAll('[data-mistica-theme]');
     expect(themedDivs).toHaveLength(0);
 });
+
+test('ThemeContextProvider separates every css var declaration with a semicolon', () => {
+    // ThemeContextProvider skips its styles in unit tests, except in the SSR ones
+    const previousSsrTest = process.env.SSR_TEST;
+    process.env.SSR_TEST = 'true';
+    try {
+        const {container} = render(
+            <ThemeContextProvider
+                theme={{
+                    skin: getMovistarSkin(),
+                    i18n: {locale: 'es-ES', phoneNumberFormattingRegionCode: 'ES'},
+                }}
+            >
+                <p>content</p>
+            </ThemeContextProvider>
+        );
+        // A style element has no role
+        // eslint-disable-next-line testing-library/no-node-access
+        const styles = container.querySelector('style')?.textContent ?? '';
+
+        // Without a semicolon, the browser reads two declarations as one var with a broken value
+        expect(styles).toMatch(/--/);
+        expect(styles).not.toMatch(/[^;{\s]\s+--[\w-]+:/);
+    } finally {
+        process.env.SSR_TEST = previousSsrTest;
+    }
+});
