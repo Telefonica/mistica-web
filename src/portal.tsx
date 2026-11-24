@@ -2,7 +2,6 @@
 import * as React from 'react';
 import ReactDOM from 'react-dom';
 import ThemeContext, {THEME_SCOPE_ATTRIBUTE, ThemeScopeContext} from './theme-context';
-import {useIsomorphicLayoutEffect} from './hooks';
 import {DENSITY_ATTRIBUTE} from './density/definitions';
 
 /**
@@ -45,32 +44,21 @@ export const Portal = ({children, className}: Props): JSX.Element | null => {
         };
     }, [className, container]);
 
-    // The container lives in the body, out of the element of a ThemeContextProvider with `as`, so it does not
-    // inherit the scoped css vars. The attribute makes the scoped rules match the container too.
-    // A layout effect sets it before the first paint of the children.
-    useIsomorphicLayoutEffect(() => {
-        if (!container || !themeScope) {
-            return;
-        }
-        container.setAttribute(THEME_SCOPE_ATTRIBUTE, themeScope);
+    if (!container) {
+        return null;
+    }
 
-        return () => {
-            container.removeAttribute(THEME_SCOPE_ATTRIBUTE);
-        };
-    }, [container, themeScope]);
-
-    // The container lives in the body, out of the DOM subtree of a DensityProvider, so it does not inherit the
-    // density css vars. The attribute makes the density rules of ThemeContextProvider match the container too.
-    useIsomorphicLayoutEffect(() => {
-        if (!container || !density) {
-            return;
-        }
-        container.setAttribute(DENSITY_ATTRIBUTE, density);
-
-        return () => {
-            container.removeAttribute(DENSITY_ATTRIBUTE);
-        };
-    }, [container, density]);
-
-    return container && ReactDOM.createPortal(children, container);
+    // The container lives in the body, out of the element of a ThemeContextProvider with `as` and out of the DOM
+    // subtree of a DensityProvider, so it does not inherit their css vars. The attributes make their rules match
+    // the wrapper too. React writes them together with the children, before any layout effect of the children
+    // can measure them. display: contents keeps the wrapper out of the layout of the container.
+    return ReactDOM.createPortal(
+        <div
+            {...{[THEME_SCOPE_ATTRIBUTE]: themeScope ?? undefined, [DENSITY_ATTRIBUTE]: density}}
+            style={{display: 'contents'}}
+        >
+            {children}
+        </div>,
+        container
+    );
 };

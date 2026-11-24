@@ -140,6 +140,42 @@ test('a Portal takes the theme scope of the nearest ThemeContextProvider with as
     expect(globalPortal).not.toHaveAttribute('data-mistica-theme');
 });
 
+test('the children of a Portal see the theme scope and the density in their first layout effect', async () => {
+    const attributesInFirstLayoutEffect: Array<{themeScope?: string | null; density?: string | null}> = [];
+    const LayoutEffectReport = (): JSX.Element => {
+        const ref = React.useRef<HTMLParagraphElement>(null);
+        React.useLayoutEffect(() => {
+            // The attributes are on an ancestor with no role, and they have no Testing Library query
+            /* eslint-disable testing-library/no-node-access */
+            attributesInFirstLayoutEffect.push({
+                themeScope: ref.current?.closest('[data-mistica-theme]')?.getAttribute('data-mistica-theme'),
+                density: ref.current?.closest('[data-mistica-density]')?.getAttribute('data-mistica-density'),
+            });
+            /* eslint-enable testing-library/no-node-access */
+        }, []);
+        return <p ref={ref}>portal content</p>;
+    };
+
+    render(
+        <ThemeContextProvider theme={theme} density="compact" as="div">
+            <p>scoped content</p>
+            <Portal>
+                <LayoutEffectReport />
+            </Portal>
+        </ThemeContextProvider>
+    );
+
+    await screen.findByText('portal content');
+    // The theme element has no role, and data-mistica-theme has no Testing Library query
+    const themeScopeId = screen
+        .getByText('scoped content')
+        // eslint-disable-next-line testing-library/no-node-access
+        .closest('[data-mistica-theme]')
+        ?.getAttribute('data-mistica-theme');
+    expect(themeScopeId).toBeTruthy();
+    expect(attributesInFirstLayoutEffect).toEqual([{themeScope: themeScopeId, density: 'compact'}]);
+});
+
 test('a Portal takes no theme scope from a ThemeContextProvider with as and withoutStyles', async () => {
     render(
         <ThemeContextProvider theme={theme} as="div" withoutStyles>
@@ -153,6 +189,34 @@ test('a Portal takes no theme scope from a ThemeContextProvider with as and with
     // eslint-disable-next-line testing-library/no-node-access
     const portal = (await screen.findByText('portal: cozy 12')).parentElement;
     expect(portal).not.toHaveAttribute('data-mistica-theme');
+});
+
+test.each([
+    ['without as', {}],
+    ['with as and withoutStyles', {as: 'div', withoutStyles: true}],
+])('a Portal keeps the outer theme scope through a nested ThemeContextProvider %s', async (_, innerProps) => {
+    render(
+        <ThemeContextProvider theme={theme} as="div">
+            <p>scoped content</p>
+            <ThemeContextProvider theme={theme} {...innerProps}>
+                <Portal>
+                    <DensityReport name="portal" />
+                </Portal>
+            </ThemeContextProvider>
+        </ThemeContextProvider>
+    );
+
+    // The theme element and the portal container have no role, and data-mistica-theme has no Testing Library
+    // query
+    /* eslint-disable testing-library/no-node-access */
+    const outerThemeScopeId = screen
+        .getByText('scoped content')
+        .closest('[data-mistica-theme]')
+        ?.getAttribute('data-mistica-theme');
+    const portal = (await screen.findByText('portal: cozy 12')).parentElement;
+    /* eslint-enable testing-library/no-node-access */
+    expect(outerThemeScopeId).toBeTruthy();
+    expect(portal).toHaveAttribute('data-mistica-theme', outerThemeScopeId);
 });
 
 test('the density rules of a ThemeContextProvider with as match the portal containers of its scope', () => {

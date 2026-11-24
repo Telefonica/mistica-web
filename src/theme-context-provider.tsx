@@ -288,6 +288,7 @@ const ThemeContextProvider = ({
     withoutStyles = false,
 }: Props): JSX.Element => {
     const themeScopeId = React.useId();
+    const parentThemeScope = React.useContext(ThemeScopeContext);
     const isOsDarkModeEnabled = useIsOsDarkModeEnabled();
 
     const colorScheme = theme.colorScheme ?? 'auto';
@@ -395,10 +396,9 @@ const ThemeContextProvider = ({
         [styleSelector, skinByDensity]
     );
 
-    // A provider without `as`, or without styles, writes no scoped css vars, so an element out of its subtree needs
-    // no scope. A provider without `as` inside a scoped one writes its vars in :root, and the scope of the outer
-    // one would hide them.
-    const themeScope = isScoped && !withoutStyles ? themeScopeId : null;
+    // A provider without `as`, or without styles, writes no scoped css vars. Inside a scoped provider, its
+    // descendants still take the vars of the outer scope, so an element out of its subtree keeps that scope too.
+    const themeScope = isScoped && !withoutStyles ? themeScopeId : parentThemeScope;
 
     const renderStyles = (selector: string) => {
         if (withoutStyles || (process.env.NODE_ENV === 'test' && !process.env.SSR_TEST)) {
