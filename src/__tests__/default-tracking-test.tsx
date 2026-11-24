@@ -12,6 +12,11 @@ import {CoverCard} from '../card-cover';
 import {NakedCard} from '../card-naked';
 import AdvancedDataCard from '../community/advanced-data-card';
 import Popover from '../popover';
+import Chip from '../chip';
+import AiCard from '../community/ai-card';
+import {Logo, MovistarLogo} from '../logo';
+import Message from '../message';
+import Switch from '../switch-component';
 import Touchable from '../touchable';
 import ThemeContextProvider from '../theme-context-provider';
 import {TrackingConfig} from '../utils/analytics';
@@ -145,6 +150,82 @@ const trackingCases: Array<TrackingCase> = [
         componentType: 'card',
         role: 'link',
         renderComponent: (props) => <AdvancedDataCard {...props} title="Details" to="#details" />,
+    },
+    {
+        name: 'Chip button',
+        componentType: 'chip',
+        role: 'button',
+        renderComponent: (props) => (
+            <Chip {...props} onPress={() => {}}>
+                Details
+            </Chip>
+        ),
+    },
+    {
+        name: 'Chip link',
+        componentType: 'chip',
+        role: 'link',
+        renderComponent: (props) => (
+            <Chip {...props} to="#details">
+                Details
+            </Chip>
+        ),
+    },
+    {
+        name: 'Chip close button',
+        componentType: 'icon',
+        role: 'button',
+        renderComponent: (props) => (
+            <Chip {...props} onClose={() => {}} closeButtonLabel="Details">
+                Filter
+            </Chip>
+        ),
+    },
+    {
+        name: 'AiCard button',
+        componentType: 'card',
+        role: 'button',
+        renderComponent: (props) => <AiCard {...props} text="Details" onPress={() => {}} />,
+    },
+    {
+        name: 'AiCard link',
+        componentType: 'card',
+        role: 'link',
+        renderComponent: (props) => <AiCard {...props} text="Details" to="#details" />,
+    },
+    {
+        name: 'Logo link',
+        componentType: 'link',
+        role: 'link',
+        renderComponent: (props) => <Logo {...props} aria-label="Details" to="#details" />,
+    },
+    {
+        name: 'brand Logo button',
+        componentType: 'button',
+        role: 'button',
+        renderComponent: (props) => <MovistarLogo {...props} aria-label="Details" onPress={() => {}} />,
+    },
+    {
+        name: 'Message button',
+        componentType: 'button',
+        role: 'button',
+        renderComponent: (props) => (
+            <Message
+                {...props}
+                type="incoming"
+                contentText="Details"
+                aria-label="Details"
+                onPress={() => {}}
+            />
+        ),
+    },
+    {
+        name: 'Message link',
+        componentType: 'link',
+        role: 'link',
+        renderComponent: (props) => (
+            <Message {...props} type="incoming" contentText="Details" aria-label="Details" to="#details" />
+        ),
     },
 ];
 
@@ -531,4 +612,105 @@ test('ToggleIconButton tracks the label of the current action on each press', as
         [{name: 'user_interaction', component_type: 'icon', component_copy: 'Favorite'}],
         [{name: 'user_interaction', component_type: 'icon', component_copy: 'Unfavorite'}],
     ]);
+});
+
+test('AiCard uses the complete final text as its event copy', async () => {
+    const logEvent = jest.fn();
+    render(
+        <ThemeContextProvider
+            theme={makeTheme({
+                analytics: {logEvent, eventFormat: 'google-analytics-4', trackEventsByDefault: true},
+            })}
+        >
+            <AiCard
+                text="Explore "
+                words={['TV', 'mobile']}
+                aria-label="Open recommendations"
+                onPress={() => {}}
+            />
+        </ThemeContextProvider>
+    );
+
+    await userEvent.click(screen.getByRole('button', {name: 'Open recommendations'}));
+
+    expect(logEvent).toHaveBeenCalledTimes(1);
+    expect(logEvent).toHaveBeenCalledWith({
+        name: 'user_interaction',
+        component_type: 'card',
+        component_copy: 'Explore mobile',
+    });
+});
+
+test.each([
+    {name: 'inherited opt-out', trackEvent: false, actionTrackEvent: undefined, expectedEventCount: 0},
+    {name: 'action opt-in', trackEvent: false, actionTrackEvent: true, expectedEventCount: 1},
+    {name: 'action opt-out', trackEvent: true, actionTrackEvent: false, expectedEventCount: 0},
+])('Message actions respect the $name', async ({trackEvent, actionTrackEvent, expectedEventCount}) => {
+    const logEvent = jest.fn();
+    render(
+        <ThemeContextProvider theme={makeTheme({analytics: {logEvent, trackEventsByDefault: true}})}>
+            <Message
+                type="incoming"
+                contentText="Details"
+                trackEvent={trackEvent}
+                actions={[
+                    {
+                        Icon: IconStarRegular,
+                        'aria-label': 'Favorite',
+                        onPress: () => {},
+                        trackEvent: actionTrackEvent,
+                    },
+                ]}
+            />
+        </ThemeContextProvider>
+    );
+
+    await userEvent.click(screen.getByRole('button', {name: 'Favorite'}));
+
+    expect(logEvent).toHaveBeenCalledTimes(expectedEventCount);
+});
+
+test.each([
+    {trackEventsByDefault: true, trackEvent: false, expectedEventCount: 0},
+    {trackEventsByDefault: false, trackEvent: true, expectedEventCount: 1},
+])(
+    'Message asset tracks $expectedEventCount events with trackEventsByDefault=$trackEventsByDefault and trackEvent=$trackEvent',
+    async ({trackEventsByDefault, trackEvent, expectedEventCount}) => {
+        const logEvent = jest.fn();
+        render(
+            <ThemeContextProvider theme={makeTheme({analytics: {logEvent, trackEventsByDefault}})}>
+                <Message
+                    type="incoming"
+                    contentText="Details"
+                    trackEvent={trackEvent}
+                    asset={<IconStarRegular />}
+                    onAssetPress={() => {}}
+                    assetLabel="Open profile"
+                />
+            </ThemeContextProvider>
+        );
+
+        await userEvent.click(screen.getByRole('button', {name: 'Open profile'}));
+
+        expect(logEvent).toHaveBeenCalledTimes(expectedEventCount);
+    }
+);
+
+test('switch changes and non-clickable chips do not emit automatic press events', async () => {
+    const logEvent = jest.fn();
+    const onChange = jest.fn();
+    render(
+        <ThemeContextProvider theme={makeTheme({analytics: {logEvent, trackEventsByDefault: true}})}>
+            <Switch name="preference" onChange={onChange}>
+                Preference
+            </Switch>
+            <Chip active>Selected filter</Chip>
+        </ThemeContextProvider>
+    );
+
+    await userEvent.click(screen.getByRole('switch', {name: 'Preference'}));
+    await userEvent.click(screen.getByText('Selected filter'));
+
+    expect(onChange).toHaveBeenCalledWith(true);
+    expect(logEvent).not.toHaveBeenCalled();
 });

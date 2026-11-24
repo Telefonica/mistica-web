@@ -13,6 +13,7 @@ export default {
         fullScreen: true,
     },
     argTypes: {
+        trackEvent: {options: [undefined, true, false], control: {type: 'select'}},
         color: {
             options: COLOR_OPTIONS,
             control: {type: 'select'},
@@ -21,6 +22,7 @@ export default {
 };
 
 type Args = {
+    trackEvent?: boolean;
     type: 'isotype' | 'imagotype' | 'vertical';
     size: number;
     variantOutside: Variant;
@@ -61,10 +63,12 @@ export const Default: StoryComponent<Args> = ({
     forceBrandLogo,
     brand,
     color,
+    trackEvent,
 }) => {
     const {colorValues} = useTheme();
     const logoProps = {
         ...getLogoActionProps(action),
+        trackEvent,
         type,
         size,
         color: color === 'default' ? undefined : colorValues[color as never] || color || undefined,
@@ -92,6 +96,7 @@ export const Default: StoryComponent<Args> = ({
 Default.storyName = 'Logo';
 
 Default.args = {
+    trackEvent: undefined,
     type: 'isotype',
     action: 'none',
     size: 48,

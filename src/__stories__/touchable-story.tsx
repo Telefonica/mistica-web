@@ -9,7 +9,7 @@ export default {
     argTypes: {
         trackEvent: {options: [undefined, true, false], control: {type: 'select'}},
         trackingComponentType: {
-            options: [undefined, 'icon', 'row', 'tab', 'accordion', 'card', 'link', 'button'],
+            options: [undefined, 'icon', 'row', 'tab', 'accordion', 'card', 'chip', 'link', 'button'],
             control: {type: 'select'},
         },
         trackingComponentCopy: {control: {type: 'text'}},

@@ -193,6 +193,8 @@ const AiCard = ({
             }
             dataAttributes={{testid: 'AiCard', ...dataAttributes}}
             {...(touchableProps as any)}
+            trackingComponentType="card"
+            trackingComponentCopy={autoAriaLabel || 'not_apply'}
             aria-label={ariaLabel ?? autoAriaLabel}
         >
             {asset && (

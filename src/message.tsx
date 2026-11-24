@@ -97,7 +97,15 @@ const Message = ({
     const renderActions = () =>
         actions
             ?.slice(0, maximumActions)
-            .map((action, index) => <IconButton key={index} {...action} small type="neutral" />);
+            .map((action, index) => (
+                <IconButton
+                    key={index}
+                    {...action}
+                    trackEvent={action.trackEvent ?? touchableProps.trackEvent}
+                    small
+                    type="neutral"
+                />
+            ));
 
     const accessibleIds = [
         `${id}-direction`,
@@ -126,7 +134,12 @@ const Message = ({
                             : undefined
                     }
                 >
-                    <Touchable maybe onPress={onAssetPress} aria-label={assetLabel}>
+                    <Touchable
+                        maybe
+                        onPress={onAssetPress}
+                        aria-label={assetLabel}
+                        trackEvent={touchableProps.trackEvent}
+                    >
                         <span aria-hidden>
                             {React.isValidElement<{size: number}>(asset) && asset.type === Avatar
                                 ? React.cloneElement(asset, {size: avatarSize})

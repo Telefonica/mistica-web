@@ -103,6 +103,12 @@ corresponding GA4 `component_type` and event copy described below.
   type and the item title.
 - `DataCard`, `MediaCard`, `CoverCard`, `NakedCard` and community `AdvancedDataCard` track presses on their
   link or button with the `card` type and the title, falling back to the pretitle and then `not_apply`.
+- `Chip` tracks its link or button with the `chip` type and its text. Its close button uses the `icon` type
+  and the close button label.
+- Community `AiCard` tracks its link or button with the `card` type and its static text followed by the final
+  animated word, falling back to `not_apply` when both are empty.
+- Interactive `Logo` variants and `Message` bubbles inherit the generic `link` or `button` event from
+  `Touchable`, using their referenced labels or `aria-label` as the copy.
 - `Popover` tracks close button presses with the `icon` type and the close button label.
 - `Touchable` generates `link` events when using `href` or `to`, and `button` events for `onPress`, using
   `aria-label`, text referenced by `aria-labelledby` or its text children as the event copy. Use
@@ -118,7 +124,14 @@ actions and a row's `iconButton` accept their own `trackEvent` setting. Buttons 
 
 Custom `trackingEvent` values, including event arrays, take precedence even when `trackEvent={false}`. An
 empty array suppresses all events for that interaction. Row and card content events apply to their link or
-button interactions.
+button interactions. `Message` also applies its `trackEvent` setting to its interactive asset and actions;
+actions can override it with their own `trackEvent`. A closable `Chip` accepts a custom `trackingEvent` for
+its close button.
+
+These defaults cover press interactions. Form control changes, media playback and visibility are not tracked
+automatically. A decorative chevron or image inside a tracked component uses that component's event; it does
+not generate an additional event of its own. Chips used as labels inside checkbox or radio controls do not
+generate a chip press event.
 
 ## Firebase / Google Analytics 4 events
 

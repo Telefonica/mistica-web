@@ -37,6 +37,7 @@ const assetOptions: Record<string, React.ReactElement> = {
 };
 
 type Args = {
+    trackEvent?: boolean;
     text: string;
     words: string | Array<string>;
     deleteChars: number;
@@ -60,11 +61,13 @@ export const Default: StoryComponent<Args> = ({
     lineBreakAtChars,
     borderColor,
     asset,
+    trackEvent,
 }) => (
     <ResponsiveLayout>
         <Box paddingY={24}>
             <AiCard
                 text={text}
+                trackEvent={trackEvent}
                 words={parseWords(words)}
                 deleteChars={deleteChars > 0 ? deleteChars : undefined}
                 lineBreakAtChars={lineBreakAtChars > 0 ? lineBreakAtChars : undefined}
@@ -79,6 +82,7 @@ export const Default: StoryComponent<Args> = ({
 
 Default.storyName = 'AiCard';
 Default.args = {
+    trackEvent: undefined,
     text: 'Lorem ipsum dolor sit amet, ',
     words: ['consectetur', 'praesent', 'tempor', 'aliquam'],
     deleteChars: 0,
@@ -87,6 +91,7 @@ Default.args = {
     asset: 'AI Icon (gradient)',
 };
 Default.argTypes = {
+    trackEvent: {options: [undefined, true, false], control: {type: 'select'}},
     deleteChars: {control: {type: 'number', min: 0, step: 1}},
     lineBreakAtChars: {control: {type: 'number', min: 0, step: 1}},
     borderColor: {control: {type: 'text'}},

@@ -16,7 +16,7 @@ import {getPrefixedDataAttributes} from './utils/dom';
 
 import type {TouchableComponentProps} from './touchable';
 import type {ExclusifyUnion} from './utils/utility-types';
-import type {DataAttributes, IconProps} from './utils/types';
+import type {DataAttributes, IconProps, TrackingEvent} from './utils/types';
 
 interface SimpleChipProps {
     children: string;
@@ -25,11 +25,13 @@ interface SimpleChipProps {
     dataAttributes?: DataAttributes;
     badge?: boolean | number;
     small?: boolean;
+    trackEvent?: boolean;
 }
 
 interface ClosableChipProps extends SimpleChipProps {
     onClose: () => void;
     closeButtonLabel?: string;
+    trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
 }
 
 interface ToggleChipProps extends SimpleChipProps {
@@ -108,6 +110,9 @@ const Chip = (props: ChipProps): JSX.Element => {
             >
                 {body}
                 <Touchable
+                    trackEvent={props.trackEvent}
+                    trackingEvent={props.trackingEvent}
+                    trackingComponentType="icon"
                     style={{
                         display: 'flex',
                         justifyContent: 'center',
@@ -179,6 +184,8 @@ const Chip = (props: ChipProps): JSX.Element => {
         return (
             <BaseTouchable
                 {...props}
+                trackingComponentType="chip"
+                trackingComponentCopy={children}
                 className={classnames(styles.chipWrapper, styles.button)}
                 dataAttributes={chipDataAttributes}
             >

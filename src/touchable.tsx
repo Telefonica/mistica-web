@@ -81,6 +81,7 @@ export type AlwaysTouchableComponentProps = ExclusifyUnion<OnPressProps | HrefPr
     Pick<
         CommonProps,
         | 'trackingEvent'
+        | 'trackEvent'
         | 'dataAttributes'
         | 'role'
         | 'aria-label'
@@ -96,6 +97,7 @@ export type TouchableComponentProps<Props> = ExclusifyUnion<
     Pick<
         CommonProps,
         | 'trackingEvent'
+        | 'trackEvent'
         | 'dataAttributes'
         | 'role'
         | 'aria-label'

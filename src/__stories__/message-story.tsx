@@ -22,6 +22,7 @@ import avatarImg from './images/avatar.jpg';
 import type {Variant} from '../theme-variant-context';
 
 type Args = {
+    trackEvent?: boolean;
     type: 'incoming' | 'outgoing';
     contentText: string;
     senderName: string;
@@ -51,6 +52,7 @@ type Args = {
 };
 
 const defaultArgs: Args = {
+    trackEvent: undefined,
     type: 'incoming',
     contentText: 'Lorem ipsum dolor sit amet et dolores voluptas.',
     senderName: 'John Doe',
@@ -84,6 +86,7 @@ export default {
     args: defaultArgs,
     parameters: {fullScreen: true, controls: {expanded: false}},
     argTypes: {
+        trackEvent: {options: [undefined, true, false], control: {type: 'select'}},
         type: {
             options: ['incoming', 'outgoing'],
             control: 'select',
@@ -165,6 +168,7 @@ const MessageExample = (args: Args & {footerContent?: React.ReactNode}) => {
     return (
         <Message
             {...errorProps}
+            trackEvent={args.trackEvent}
             contentText={args.contentText}
             contentSlot={args.contentSlot ? <Placeholder height={80} /> : undefined}
             footerSlot={args.footerSlot ? args.footerContent ?? <Text1 regular>Delivered</Text1> : undefined}
@@ -208,7 +212,12 @@ export const Default: StoryComponent<Args> = (args) => (
 
 export const Conversation: StoryComponent<Args> = (args) => {
     const [failed, setFailed] = React.useState(true);
-    const common = {boxed: args.boxed, maxWidth: args.maxWidth, senderNameAs: args.senderNameAs};
+    const common = {
+        boxed: args.boxed,
+        maxWidth: args.maxWidth,
+        senderNameAs: args.senderNameAs,
+        trackEvent: args.trackEvent,
+    };
     return (
         <ResponsiveLayout
             variant={args.variantOutside}
