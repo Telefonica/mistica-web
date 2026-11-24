@@ -1,7 +1,7 @@
 'use client';
 import * as React from 'react';
 import ReactDOM from 'react-dom';
-import ThemeContext from './theme-context';
+import ThemeContext, {THEME_SCOPE_ATTRIBUTE, ThemeScopeContext} from './theme-context';
 import {useIsomorphicLayoutEffect} from './hooks';
 import {DENSITY_ATTRIBUTE} from './density/definitions';
 
@@ -23,6 +23,7 @@ export const Portal = ({children, className}: Props): JSX.Element | null => {
     const [container, setContainer] = React.useState<HTMLDivElement | null>(null);
     // The Portal may render outside a ThemeContextProvider, so it can not use useTheme
     const density = React.useContext(ThemeContext)?.density;
+    const themeScope = React.useContext(ThemeScopeContext);
 
     React.useEffect(() => {
         const newContainer = document.createElement('div');
@@ -44,10 +45,22 @@ export const Portal = ({children, className}: Props): JSX.Element | null => {
         };
     }, [className, container]);
 
+    // The container lives in the body, out of the element of a ThemeContextProvider with `as`, so it does not
+    // inherit the scoped css vars. The attribute makes the scoped rules match the container too.
+    // A layout effect sets it before the first paint of the children.
+    useIsomorphicLayoutEffect(() => {
+        if (!container || !themeScope) {
+            return;
+        }
+        container.setAttribute(THEME_SCOPE_ATTRIBUTE, themeScope);
+
+        return () => {
+            container.removeAttribute(THEME_SCOPE_ATTRIBUTE);
+        };
+    }, [container, themeScope]);
+
     // The container lives in the body, out of the DOM subtree of a DensityProvider, so it does not inherit the
     // density css vars. The attribute makes the density rules of ThemeContextProvider match the container too.
-    // A layout effect sets it before the first paint of the children.
-    // todo https://github.com/Telefonica/mistica-web/issues/1821 set the theme scope of a provider with `as`
     useIsomorphicLayoutEffect(() => {
         if (!container || !density) {
             return;
