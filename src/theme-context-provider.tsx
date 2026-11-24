@@ -364,6 +364,7 @@ const ThemeContextProvider = ({
                 logEvent: () => Promise.resolve(),
                 eventFormat: 'universal-analytics',
                 ...theme.analytics,
+                trackEventsByDefault: theme.analytics?.trackEventsByDefault ?? false,
             },
             colorValues: colors,
             dimensions: {
