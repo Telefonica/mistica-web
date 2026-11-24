@@ -11,6 +11,7 @@ import type {
     SpacingConfig,
     TextPresetsConfig,
     ThemeVariantsConfig,
+    Density,
 } from './skins/types';
 import type {TrackingEvent} from './utils/types';
 import type {Dictionary, TextToken} from './text-tokens';
@@ -151,7 +152,11 @@ export type ThemeConfig = Readonly<{
     preventCopyInFormFields?: boolean;
 }>;
 
-// This is the lib INTERNAL context
+/**
+ * This is the lib INTERNAL context
+ * The skin config (the design tokens of the skin, as mistica-web reads them) is resolved for the skin and the
+ * density of the theme
+ */
 export type Theme = {
     skinName: SkinName;
     i18n: {
@@ -172,6 +177,7 @@ export type Theme = {
     // TODO: rename this props to navigationBarHeight (or something similar) in next major
     dimensions: {headerMobileHeight: number; headerDesktopHeight: number};
     colorValues: Colors;
+    density: Density;
     borderRadii: BorderRadiiConfig;
     textPresets: TextPresetsConfig;
     spacing: SpacingConfig;

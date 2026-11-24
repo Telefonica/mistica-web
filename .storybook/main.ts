@@ -23,6 +23,7 @@ const config: StorybookConfig = {
         './font-size-addon/preset.ts',
         './theme-selector-addon/preset.ts',
         './platform-selector-addon/preset.ts',
+        './density-addon/preset.ts',
     ],
 
     framework: '@storybook/react-vite',
