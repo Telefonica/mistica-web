@@ -10,7 +10,6 @@ import {getAriaLabelledByText, getPrefixedDataAttributes} from './utils/dom';
 import {redirect} from './utils/browser';
 import * as tokens from './text-tokens';
 import {useDefaultTracking} from './utils/analytics';
-import {getTextFromChildren} from './utils/common';
 
 import type {TrackingComponentType} from './utils/analytics';
 import type {ExclusifyUnion} from './utils/utility-types';
@@ -140,7 +139,7 @@ const RawTouchable = React.forwardRef<TouchableElement, TouchableProps>((props, 
 
         const componentCopy =
             props.trackingComponentCopy ??
-            (getAriaLabelledByText(element) || props['aria-label'] || getTextFromChildren(props.children));
+            (getAriaLabelledByText(element) || props['aria-label'] || element.textContent || '');
         const defaultTrackingEvent = getDefaultTrackingEvent({
             componentType: props.trackingComponentType,
             componentCopy,

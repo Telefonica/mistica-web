@@ -326,6 +326,33 @@ describe.each(trackingCases)('$name default tracking', ({componentType, role, re
     );
 });
 
+test('Touchable uses rendered nested text as the default event copy', async () => {
+    const logEvent = jest.fn();
+    render(
+        <ThemeContextProvider
+            theme={makeTheme({
+                analytics: {logEvent, eventFormat: 'google-analytics-4', trackEventsByDefault: true},
+            })}
+        >
+            <Touchable onPress={() => {}}>
+                Show{' '}
+                <span>
+                    account <strong>details</strong>
+                </span>
+            </Touchable>
+        </ThemeContextProvider>
+    );
+
+    await userEvent.click(screen.getByRole('button', {name: 'Show account details'}));
+
+    expect(logEvent).toHaveBeenCalledTimes(1);
+    expect(logEvent).toHaveBeenCalledWith({
+        name: 'user_interaction',
+        component_type: 'button',
+        component_copy: 'Show account details',
+    });
+});
+
 test('new default events respect a nested TrackingConfig', async () => {
     const logEvent = jest.fn();
     render(
