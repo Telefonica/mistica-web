@@ -26,6 +26,7 @@ export default {
     title: 'Components/Accordions',
     parameters: {fullScreen: true},
     argTypes: {
+        trackEvent: {options: [undefined, true, false], control: {type: 'select'}},
         variant: {
             options: ['default', 'brand'],
             control: {type: 'select'},
@@ -38,6 +39,7 @@ export default {
 };
 
 type Args = {
+    trackEvent?: boolean;
     title: string;
     subtitle: string;
     detail: string;
@@ -50,6 +52,7 @@ type Args = {
 type BoxedArgs = Args & {variant: 'default' | 'brand'};
 
 const Template: StoryComponent<BoxedArgs & {type?: 'boxed'}> = ({
+    trackEvent,
     title,
     subtitle,
     detail,
@@ -67,6 +70,7 @@ const Template: StoryComponent<BoxedArgs & {type?: 'boxed'}> = ({
 
     const getAccordionItemContentProps = () => {
         return {
+            trackEvent,
             title,
             subtitle,
             content,
@@ -149,6 +153,7 @@ const Template: StoryComponent<BoxedArgs & {type?: 'boxed'}> = ({
 };
 
 const defaultArgs = {
+    trackEvent: undefined,
     title: 'Title',
     subtitle: 'Subtitle',
     detail: '',

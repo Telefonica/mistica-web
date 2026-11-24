@@ -15,6 +15,7 @@ export default {
 };
 
 type Args = {
+    trackEvent?: boolean;
     selected?: boolean;
     headlineType: TagType;
     headline: string;
@@ -34,6 +35,7 @@ type Args = {
 };
 
 export const Default: StoryComponent<Args> = ({
+    trackEvent,
     selected,
     headlineType,
     headline,
@@ -79,6 +81,7 @@ export const Default: StoryComponent<Args> = ({
 
     return (
         <AdvancedDataCard
+            trackEvent={trackEvent}
             selected={selected}
             dataAttributes={{testid: 'advanced-data-card'}}
             stackingGroup={
@@ -116,6 +119,7 @@ export const Default: StoryComponent<Args> = ({
 
 Default.storyName = 'Advanced Data Card';
 Default.args = {
+    trackEvent: undefined,
     selected: undefined,
     headlineType: 'promo',
     headline: 'headline',
@@ -134,6 +138,7 @@ Default.args = {
     noSlotDivider: false,
 };
 Default.argTypes = {
+    trackEvent: {options: [undefined, true, false], control: {type: 'select'}},
     selected: {type: 'boolean', options: [undefined, true, false], control: {type: 'select'}},
     headlineType: {
         options: ['promo', 'active', 'inactive', 'success', 'warning', 'error', 'info'],

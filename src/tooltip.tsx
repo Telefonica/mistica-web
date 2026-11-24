@@ -146,6 +146,7 @@ type BaseTooltipProps = {
     onClose?: () => void;
     closeButtonLabel?: string;
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
+    trackEvent?: boolean;
 };
 
 export const BaseTooltip = ({
@@ -163,6 +164,7 @@ export const BaseTooltip = ({
     closeButtonLabel,
     hasPointerInteractionOnly = false,
     trackingEvent,
+    trackEvent,
 }: BaseTooltipProps): JSX.Element => {
     const {texts, t, borderRadii} = useTheme();
     const arrowOffsetFromBorder = parseFloat(borderRadii.popup);
@@ -595,6 +597,7 @@ export const BaseTooltip = ({
                                                                 onClose();
                                                             }}
                                                             trackingEvent={trackingEvent}
+                                                            trackEvent={trackEvent}
                                                             aria-label={
                                                                 closeButtonLabel ||
                                                                 texts.closeButtonLabel ||

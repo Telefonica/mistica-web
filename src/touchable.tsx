@@ -9,6 +9,8 @@ import {ENTER, SPACE} from './utils/keys';
 import {getPrefixedDataAttributes} from './utils/dom';
 import {redirect} from './utils/browser';
 import * as tokens from './text-tokens';
+import {useDefaultTracking} from './utils/analytics';
+import {getTextFromChildren} from './utils/common';
 
 import type {ExclusifyUnion} from './utils/utility-types';
 import type {DataAttributes, TrackingEvent} from './utils/types';
@@ -23,6 +25,7 @@ interface CommonProps {
     disabled?: boolean;
     style?: React.CSSProperties;
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
+    trackEvent?: boolean;
     'aria-label'?: string;
     /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid" */
     dataAttributes?: DataAttributes;
@@ -336,7 +339,23 @@ const RawTouchable = React.forwardRef<TouchableElement, TouchableProps>((props, 
 });
 
 const Touchable = React.forwardRef<TouchableElement, TouchableProps>((props, ref) => {
-    return <RawTouchable {...props} className={classnames(classes.touchable, props.className)} ref={ref} />;
+    const getDefaultTrackingEvent = useDefaultTracking();
+    return (
+        <RawTouchable
+            {...props}
+            trackingEvent={
+                props.trackingEvent ??
+                getDefaultTrackingEvent({
+                    componentType: props.href || props.to ? 'link' : 'button',
+                    componentCopy: props['aria-label'] ?? getTextFromChildren(props.children),
+                    trackEvent: props.trackEvent,
+                    disabled: props.disabled || props['aria-disabled'],
+                })
+            }
+            className={classnames(classes.touchable, props.className)}
+            ref={ref}
+        />
+    );
 });
 
 // Used internally by Mística's components to avoid styles collisions

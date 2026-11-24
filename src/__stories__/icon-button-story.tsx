@@ -17,6 +17,7 @@ export default {
 const handleOnPress = () => console.log('pressed!');
 
 type IconButtonArgs = {
+    trackEvent?: boolean;
     type: IconButtonType;
     backgroundType: IconButtonBackgroundType;
     themeVariant: Variant;
@@ -29,6 +30,7 @@ type IconButtonArgs = {
 };
 
 export const IconButtonStory: StoryComponent<IconButtonArgs> = ({
+    trackEvent,
     type,
     backgroundType,
     themeVariant,
@@ -42,6 +44,7 @@ export const IconButtonStory: StoryComponent<IconButtonArgs> = ({
     <ResponsiveLayout variant={themeVariant} fullWidth>
         <Box padding={16}>
             <IconButton
+                trackEvent={trackEvent}
                 aria-label="icon button"
                 onPress={handleOnPress}
                 Icon={IconCloseRegular}
@@ -61,6 +64,7 @@ export const IconButtonStory: StoryComponent<IconButtonArgs> = ({
 
 IconButtonStory.storyName = 'IconButton';
 IconButtonStory.argTypes = {
+    trackEvent: {options: [undefined, true, false], control: {type: 'select'}},
     type: {
         options: ['neutral', 'brand', 'danger'],
         control: {type: 'select'},
@@ -75,6 +79,7 @@ IconButtonStory.argTypes = {
     },
 };
 IconButtonStory.args = {
+    trackEvent: undefined,
     type: 'neutral',
     backgroundType: 'transparent',
     themeVariant: 'default',
@@ -87,6 +92,7 @@ IconButtonStory.args = {
 };
 
 type ToggleIconButtonArgs = {
+    trackEvent?: boolean;
     checkedType: IconButtonType;
     checkedBackgroundType: IconButtonBackgroundType;
     uncheckedType: IconButtonType;
@@ -101,6 +107,7 @@ type ToggleIconButtonArgs = {
 };
 
 export const ToggleIconButtonStory: StoryComponent<ToggleIconButtonArgs> = ({
+    trackEvent,
     checkedType,
     checkedBackgroundType,
     uncheckedType,
@@ -116,6 +123,7 @@ export const ToggleIconButtonStory: StoryComponent<ToggleIconButtonArgs> = ({
     <ResponsiveLayout variant={themeVariant} fullWidth>
         <Box padding={16}>
             <ToggleIconButton
+                trackEvent={trackEvent}
                 onChange={(checked) => console.log(checked ? 'checked' : 'unchecked')}
                 showSpinner={spinner}
                 small={small}
@@ -143,6 +151,7 @@ export const ToggleIconButtonStory: StoryComponent<ToggleIconButtonArgs> = ({
 
 ToggleIconButtonStory.storyName = 'ToggleIconButton';
 ToggleIconButtonStory.argTypes = {
+    trackEvent: {options: [undefined, true, false], control: {type: 'select'}},
     uncheckedType: {
         options: ['neutral', 'brand', 'danger'],
         control: {type: 'select'},
@@ -165,6 +174,7 @@ ToggleIconButtonStory.argTypes = {
     },
 };
 ToggleIconButtonStory.args = {
+    trackEvent: undefined,
     uncheckedType: 'neutral',
     uncheckedBackgroundType: 'transparent',
     checkedType: 'neutral',

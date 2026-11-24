@@ -12,6 +12,7 @@ export default {
 };
 
 type PopoverArgs = {
+    trackEvent?: boolean;
     asset: 'icon' | 'image' | 'none';
     position: 'default' | 'top' | 'bottom' | 'left' | 'right';
     alignment: 'default' | 'start' | 'middle' | 'end';
@@ -24,6 +25,7 @@ type PopoverArgs = {
 };
 
 export const Default: StoryComponent<PopoverArgs> = ({
+    trackEvent,
     asset,
     position,
     alignment,
@@ -84,6 +86,7 @@ export const Default: StoryComponent<PopoverArgs> = ({
         <ResponsiveLayout fullWidth variant={variantOutside}>
             <div style={{width: '100vw', height: '100vh'}}>
                 <Popover
+                    trackEvent={trackEvent}
                     asset={icon}
                     position={position === 'default' ? undefined : position}
                     alignment={alignment === 'default' ? undefined : alignment}
@@ -117,6 +120,7 @@ export const Default: StoryComponent<PopoverArgs> = ({
 };
 
 Default.args = {
+    trackEvent: undefined,
     targetHorizontalPosition: 'center',
     targetVerticalPosition: 'center',
     position: 'default',
@@ -129,6 +133,7 @@ Default.args = {
 } as const;
 
 Default.argTypes = {
+    trackEvent: {options: [undefined, true, false], control: {type: 'select'}},
     targetHorizontalPosition: {
         options: ['left', 'center', 'right'],
         control: {type: 'select'},

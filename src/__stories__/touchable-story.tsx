@@ -5,6 +5,7 @@ export default {
     title: 'Components/Primitives/Touchable',
     component: Touchable,
     argTypes: {
+        trackEvent: {options: [undefined, true, false], control: {type: 'select'}},
         type: {
             options: ['href', 'onPress'],
             control: {type: 'select'},
@@ -14,11 +15,12 @@ export default {
 };
 
 type Args = {
+    trackEvent?: boolean;
     type: 'href' | 'onPress';
     newTab: boolean;
 };
 
-export const Default: StoryComponent<Args> = ({type, newTab}) => {
+export const Default: StoryComponent<Args> = ({type, newTab, trackEvent}) => {
     const styles = {
         border: `1px solid ${skinVars.colors.border}`,
         display: 'flex',
@@ -37,7 +39,12 @@ export const Default: StoryComponent<Args> = ({type, newTab}) => {
                 user, for example buttons, list rows, etc. This component handles touch events, can track
                 analytics events on press, and guarantees the required a11y for any touchable area.
             </Text2>
-            <Touchable style={styles} {...props} dataAttributes={{testid: 'touchable'}}>
+            <Touchable
+                style={styles}
+                {...props}
+                trackEvent={trackEvent}
+                dataAttributes={{testid: 'touchable'}}
+            >
                 Touchable
             </Touchable>
         </Stack>
@@ -46,6 +53,7 @@ export const Default: StoryComponent<Args> = ({type, newTab}) => {
 
 Default.storyName = 'Touchable';
 Default.args = {
+    trackEvent: undefined,
     type: 'href',
     newTab: false,
 };

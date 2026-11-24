@@ -21,6 +21,7 @@ import {isBiggerHeading} from '../utils/headings';
 import {TopActions, useControlState, CardWithControl} from '../card-internal';
 import {useRadioContext} from '../radio-button';
 import * as cardStyles from '../card-internal.css';
+import {useDefaultTracking} from '../utils/analytics';
 
 import type {CardSelectionProps, CardAction} from '../card-internal';
 import type {PressHandler} from '../touchable';
@@ -41,6 +42,7 @@ import type {
 
 type TouchableProps = {
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
+    trackEvent?: boolean;
     role?: string;
 } & ExclusifyUnion<
     | {
@@ -332,6 +334,7 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
             actions,
             'aria-label': ariaLabelProp,
             onClose,
+            trackEvent,
             ...touchableProps
         },
         ref
@@ -346,6 +349,7 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
                   ? radioContext.selectedValue === radioValue
                   : selected;
         const {isIos} = useTheme();
+        const getDefaultTrackingEvent = useDefaultTracking();
         const isTouchable =
             isSelectable || !!touchableProps.href || !!touchableProps.onPress || !!touchableProps.to;
         const footerProps = {button, footerImage, footerText, footerTextLinesMax, buttonLink};
@@ -464,6 +468,15 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
                         <Touchable
                             maybe
                             {...touchableProps}
+                            trackEvent={trackEvent}
+                            trackingEvent={
+                                touchableProps.trackingEvent ??
+                                getDefaultTrackingEvent({
+                                    componentType: 'card',
+                                    componentCopy: title || pretitle || '',
+                                    trackEvent,
+                                })
+                            }
                             aria-label={isTouchable ? ariaLabel : undefined}
                             className={styles.touchable}
                         >

@@ -88,6 +88,34 @@ all components that support `trackEvent`. The setting defaults to `false`, so ea
 with `trackEvent`. Set `trackEvent={false}` on a component to suppress its default event. A custom
 `trackingEvent` always takes precedence.
 
+The following components support `trackEvent` and `theme.analytics.trackEventsByDefault`:
+
+`Touchable` also supports these settings. It generates `link` events when using `href` or `to`, and `button`
+events for `onPress`, using `aria-label` or its text children as the event copy.
+
+| Component                                                                       | Tracked interaction                | GA4 `component_type`                                  | Event copy                                                   |
+| ------------------------------------------------------------------------------- | ---------------------------------- | ----------------------------------------------------- | ------------------------------------------------------------ |
+| `ButtonPrimary`, `ButtonSecondary`, `ButtonDanger`                              | Button press                       | `primary_button`, `secondary_button`, `danger_button` | Button text                                                  |
+| `ButtonLink` and `TextLink`                                                     | Link press                         | `link` (or the corresponding `ButtonLink` variant)    | Link text                                                    |
+| `IconButton`, `ToggleIconButton`                                                | Icon press                         | `icon`                                                | Current `aria-label` or text referenced by `aria-labelledby` |
+| `Row`, `BoxedRow`                                                               | Press on the row's link or button  | `row`                                                 | Row title                                                    |
+| `Tabs`                                                                          | Tab press                          | `tab`                                                 | Tab text                                                     |
+| `AccordionItem`, `BoxedAccordionItem`                                           | Header press to expand or collapse | `accordion`                                           | Item title                                                   |
+| `DataCard`, `MediaCard`, `CoverCard`, `NakedCard`, community `AdvancedDataCard` | Press on the card's link or button | `card`                                                | Title, falling back to pretitle                              |
+| `Popover`                                                                       | Close button press                 | `icon`                                                | Close button label                                           |
+
+For these new events, Universal Analytics uses `category: 'user_interaction'`,
+`action: '<component_type>_tapped'` and `label` containing the event copy. GA4 uses
+`name: 'user_interaction'`, `component_type` and `component_copy`.
+
+For `Tabs`, set `trackEvent` on each entry in the `tabs` array. For an accordion, set it on the item. Card top
+actions and a row's `iconButton` accept their own `trackEvent` setting. Buttons inside `Drawer`,
+`ActionsSheet` and cards inherit the behavior of their corresponding button component.
+
+Custom `trackingEvent` values, including event arrays, take precedence even when `trackEvent={false}`. An
+empty array suppresses all events for that interaction. Row and card content events apply to their link or
+button interactions.
+
 ## Firebase / Google Analytics 4 events
 
 Firebase and the new Google Analytics 4 events have a different shape. Instead of `category`, `action`,
