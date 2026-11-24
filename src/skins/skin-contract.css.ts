@@ -60,6 +60,8 @@ const colors: Colors = {
     skeletonWave: '',
     borderLow: '',
     border: '',
+    popupBorder: '',
+    tooltipBorder: '',
     borderHigh: '',
     borderSelected: '',
     coverBackgroundHover: '',
@@ -392,8 +394,9 @@ const textPresets: ToThemeTokens<TextPresetsConfig> = {
 };
 
 const spacing: ToThemeTokens<SpacingConfig> = {
-    buttonDefaultPadding: {left: '', right: ''},
-    buttonSmallPadding: {left: '', right: ''},
+    buttonDefaultPadding: {top: '', bottom: '', left: '', right: ''},
+    buttonSmallPadding: {top: '', bottom: '', left: '', right: ''},
+    iconButtonDefaultPadding: '',
     cardDefaultPadding: {left: '', right: '', top: '', bottom: ''},
     inputPadding: {top: '', bottom: '', left: '', right: ''},
     tagPadding: {top: '', bottom: ''},

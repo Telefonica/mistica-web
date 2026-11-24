@@ -39,6 +39,9 @@ jobs:
             - run: yarn circular-dependencies
             - run: yarn build
             - run: yarn ts-check
+            # The root tsconfig excludes packages, and the generator shares the density definitions of src.
+            # The generator has its own yarn.lock, so it is a separate Yarn project that the root install skips
+            - run: cd packages/generate-design-tokens && yarn install --immutable && yarn typecheck
             - run: yarn test --ci
             - run: NO_BUILD=true yarn test-ssr --ci
 

@@ -1,12 +1,16 @@
 'use client';
 import * as React from 'react';
+import {OptionalDensityProvider, useOptionalDensity} from './density/density-provider';
 
 import type {AlertProps, ConfirmProps, DialogProps, ExtendedDialogProps} from './dialog';
+import type {Density} from './density/definitions';
+
+type DialogEntry = {props: DialogProps; density?: Density};
 
 const DialogContext = React.createContext<{
     mounted: boolean;
-    dialog: DialogProps | null;
-    setDialog: React.Dispatch<React.SetStateAction<DialogProps | null>>;
+    dialog: DialogEntry | null;
+    setDialog: React.Dispatch<React.SetStateAction<DialogEntry | null>>;
 }>({mounted: false, dialog: null, setDialog: () => {}});
 
 const ModalDialog = React.lazy(() => import(/* webpackChunkName: "dialog" */ './dialog'));
@@ -23,6 +27,8 @@ export const useDialog = (): {
     dialog: (params: ExtendedDialogProps) => void;
 } => {
     const {dialog: currentDialog, setDialog, mounted} = React.useContext(DialogContext);
+    // DialogRoot renders the dialog out of the subtree of the caller, so it needs the density of the caller
+    const density = useOptionalDensity();
 
     const showDialog = React.useCallback(
         (params: DialogProps) => {
@@ -32,9 +38,9 @@ export const useDialog = (): {
             if (params && currentDialog) {
                 throw Error('Tried to show a dialog on top of another dialog');
             }
-            setDialog({triggerEl: document.activeElement as HTMLElement, ...params});
+            setDialog({props: {triggerEl: document.activeElement as HTMLElement, ...params}, density});
         },
-        [setDialog, currentDialog, mounted]
+        [setDialog, currentDialog, mounted, density]
     );
 
     return React.useMemo(
@@ -51,7 +57,7 @@ type DialogRootProps = {children?: React.ReactNode};
 
 export const DialogRoot = ({children}: DialogRootProps): JSX.Element => {
     const {mounted} = React.useContext(DialogContext);
-    const [dialog, setDialog] = React.useState<DialogProps | null>(null);
+    const [dialog, setDialog] = React.useState<DialogEntry | null>(null);
     const value = React.useMemo(() => ({mounted: true, dialog, setDialog}), [dialog, setDialog]);
 
     // do not create a new context whith nested theme context providers
@@ -63,18 +69,20 @@ export const DialogRoot = ({children}: DialogRootProps): JSX.Element => {
         <DialogContext.Provider value={value}>
             {children}
             {dialog && (
-                <React.Suspense fallback={null}>
-                    <ModalDialog
-                        {...dialog}
-                        onDestroy={() => {
-                            setDialog(null);
-                            // The focus doesn't work without this timeout
-                            setTimeout(() => {
-                                dialog.triggerEl?.focus?.();
-                            }, 0);
-                        }}
-                    />
-                </React.Suspense>
+                <OptionalDensityProvider density={dialog.density}>
+                    <React.Suspense fallback={null}>
+                        <ModalDialog
+                            {...dialog.props}
+                            onDestroy={() => {
+                                setDialog(null);
+                                // The focus doesn't work without this timeout
+                                setTimeout(() => {
+                                    dialog.props.triggerEl?.focus?.();
+                                }, 0);
+                            }}
+                        />
+                    </React.Suspense>
+                </OptionalDensityProvider>
             )}
         </DialogContext.Provider>
     );

@@ -1,9 +1,22 @@
 import * as fs from 'node:fs';
 import * as path from 'node:path';
+import {parseArgs} from 'node:util';
 import {generateSkinCssSrc, buildRadius, generateCommonCssSrc} from './css-generator.ts';
 import * as prettier from 'prettier';
+import {
+    assertDensityInSupportedCategories,
+    normalizeTextTokenValue,
+    normalizeToBreakpoints,
+} from './density.ts';
+import {validateTokenFiles} from './schema.ts';
 
-import type {ColorDescription, DesignTokens, GradientDescription} from './token-types.ts';
+import type {
+    ColorDescription,
+    DesignTokens,
+    GradientDescription,
+    SpacingValue,
+    TokenValue,
+} from './token-types.ts';
 
 /**
  * Generates skin files and CSS from design tokens in mistica-design.
@@ -12,15 +25,25 @@ import type {ColorDescription, DesignTokens, GradientDescription} from './token-
  * To use a custom tokens folder:
  *
  *   node index.ts /path/to/mistica-design/tokens
- *   # or via yarn: yarn workspace generate-design-tokens generate /path/to/mistica-design/tokens
+ *   # or from the repository root, where a relative path starts: yarn generate-design-tokens ../mistica-design/tokens
  *
  * Can also use DESIGN_TOKENS_FOLDER env var: DESIGN_TOKENS_FOLDER="/path/to/tokens" node index.ts
+ *
+ * Before it writes any file, the script validates the tokens against tokens/schema/skin-schema.json. To
+ * generate without that validation:
+ *
+ *   node index.ts --skip-validation
  *
  * @see https://github.com/Telefonica/mistica-design
  */
 
+const {values: options, positionals} = parseArgs({
+    options: {'skip-validation': {type: 'boolean', default: false}},
+    allowPositionals: true,
+});
+
 const DESIGN_TOKENS_FOLDER = path.resolve(
-    process.argv[2] ||
+    positionals[0] ||
         process.env.DESIGN_TOKENS_FOLDER ||
         path.join(import.meta.dirname, '../../.github/mistica-design/tokens/')
 );
@@ -124,10 +147,25 @@ const buildColor = (colorDescription: ColorDescription): string => {
     throw new Error(`Unknown color format: ${colorDescription.value}`);
 };
 
+const SPACING_SIDES = ['top', 'right', 'bottom', 'left'];
+
+const isSpacingBySide = (value: SpacingValue): value is Record<string, TokenValue<number>> =>
+    typeof value === 'object' && Object.keys(value).every((key) => SPACING_SIDES.includes(key));
+
+const normalizeSpacing = (value: SpacingValue): unknown => {
+    if (isSpacingBySide(value)) {
+        return Object.fromEntries(
+            Object.entries(value).map(([side, sideValue]) => [side, normalizeToBreakpoints(sideValue)])
+        );
+    }
+    return normalizeToBreakpoints(value);
+};
+
 const generateSkinSrc = (skinName: string, family: SkinFamily): string => {
     const designTokensFile = fs.readFileSync(path.join(family.tokensFolder, `${skinName}.json`), 'utf8');
     const needsApplyAlphaImport = designTokensFile.includes('rgba');
     const designTokens: DesignTokens = JSON.parse(designTokensFile);
+    assertDensityInSupportedCategories(designTokens);
     const skinConstantName = `${skinName.toUpperCase().replace(/-/g, '_')}_SKIN`;
 
     const textTokens: Record<string, Record<string, unknown>> = {};
@@ -136,7 +174,7 @@ const generateSkinSrc = (skinName: string, family: SkinFamily): string => {
             if (!textTokens[textPresetName]) {
                 textTokens[textPresetName] = {};
             }
-            textTokens[textPresetName][textAttribute] = value;
+            textTokens[textPresetName][textAttribute] = normalizeTextTokenValue(textAttribute, value);
         });
     });
 
@@ -177,7 +215,7 @@ ${functionSignature}
             ${Object.entries(designTokens.radius)
                 .map(
                     ([radiusName, radiusDescription]) =>
-                        `'${radiusName}': '${buildRadius(radiusDescription)}'`
+                        `'${radiusName}': ${JSON.stringify(buildRadius(radiusDescription))}`
                 )
                 .join(',')}
         },
@@ -198,7 +236,9 @@ ${functionSignature}
                 : ''
         }
         spacing: ${JSON.stringify(
-            Object.fromEntries(Object.entries(designTokens.spacing).map(([name, {value}]) => [name, value]))
+            Object.fromEntries(
+                Object.entries(designTokens.spacing).map(([name, {value}]) => [name, normalizeSpacing(value)])
+            )
         )},
     };
     return skin;
@@ -288,8 +328,7 @@ const listExistingSkins = (family: SkinFamily): Array<string> =>
         return exists;
     });
 
-const generateSkinFamily = async (family: SkinFamily): Promise<void> => {
-    const skinNames = listExistingSkins(family);
+const generateSkinFamily = async (family: SkinFamily, skinNames: Array<string>): Promise<void> => {
     if (skinNames.length === 0) {
         return;
     }
@@ -311,8 +350,25 @@ const generateSkinFamily = async (family: SkinFamily): Promise<void> => {
 };
 
 const main = async (): Promise<void> => {
-    await generateSkinFamily(OFFICIAL_SKINS_FAMILY);
-    await generateSkinFamily(COMMUNITY_SKINS_FAMILY);
+    const families = [OFFICIAL_SKINS_FAMILY, COMMUNITY_SKINS_FAMILY].map((family) => ({
+        family,
+        skinNames: listExistingSkins(family),
+    }));
+
+    if (options['skip-validation']) {
+        console.warn('Skipping the validation of the design tokens against the skin schema');
+    } else {
+        validateTokenFiles(
+            DESIGN_TOKENS_FOLDER,
+            families.flatMap(({family, skinNames}) =>
+                skinNames.map((skinName) => path.join(family.tokensFolder, `${skinName}.json`))
+            )
+        );
+    }
+
+    for (const {family, skinNames} of families) {
+        await generateSkinFamily(family, skinNames);
+    }
 };
 
 main().catch((error) => {
