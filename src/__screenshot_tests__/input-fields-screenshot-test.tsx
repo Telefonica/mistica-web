@@ -347,6 +347,22 @@ for (const testCase of ['top', 'bottom']) {
     });
 }
 
+['top', 'bottom'].forEach((verticalPosition) => {
+    test(`Autocomplete menu renders on ${verticalPosition} in dark mode`, async () => {
+        const page = await openStoryPage({
+            id: 'components-input-fields-autocomplete--controlled',
+            device: 'MOBILE_IOS',
+            args: {verticalPosition},
+            isDarkMode: true,
+        });
+
+        const field = await screen.findByRole('combobox', {name: 'Label'});
+        await field.focus();
+
+        await expectScreenshot(page, {fullPage: true});
+    });
+});
+
 test('Autocomplete scrolls to active option on keyboard navigation', async () => {
     const page = await openStoryPage({
         id: 'components-input-fields-autocomplete--controlled',

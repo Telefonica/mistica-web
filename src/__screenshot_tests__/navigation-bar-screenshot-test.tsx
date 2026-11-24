@@ -301,3 +301,18 @@ test('MainNavigationBar large with expanded right slot', async () => {
 
     await expectScreenshot(page);
 });
+
+[true, false].forEach((large) => {
+    test(`MainNavigationBar desktop menu open in dark mode. large menu = ${large}`, async () => {
+        const page = await openStoryPage({
+            id: 'components-navigation-bars-mainnavigationbar--default',
+            device: 'DESKTOP',
+            args: {wide: true, desktopLargeMenu: large, menu: 'default'},
+            isDarkMode: true,
+        });
+
+        await (await screen.findByRole('button', {name: 'Start'})).click();
+        // Tolerate 1 pixel of difference between local and CI rendering
+        await expectScreenshot(page, {maxDiffPixelRatio: 0.0002});
+    });
+});

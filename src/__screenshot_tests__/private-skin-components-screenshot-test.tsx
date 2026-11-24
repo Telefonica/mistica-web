@@ -82,3 +82,18 @@ for (const testCase of SKINS) {
         }
     });
 }
+
+SKINS.forEach((skin) => {
+    test(`Components in ${skin} (compact density)`, async () => {
+        await openStoryPage({
+            id: 'private-components-in-different-skins--default',
+            density: 'compact',
+            skin,
+        });
+
+        const groups = await screen.findAllByTestId('components-group');
+        for (const group of groups) {
+            await expectScreenshot(group);
+        }
+    });
+});
