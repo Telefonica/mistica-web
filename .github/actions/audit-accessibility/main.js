@@ -1,169 +1,102 @@
 // @ts-check
+// CI entry point: runs the Playwright audit (audit.spec.ts) and reports its results to the pull request.
+// For a local audit, use `yarn audit-accessibility`.
 const path = require('path');
-const os = require('os');
-const handler = require('serve-handler');
-const http = require('http');
-const {default: AxeBuilder} = require('@axe-core/playwright');
-const {createHtmlReport} = require('axe-html-reporter');
-const {chromium} = require('playwright');
 const fs = require('fs');
-const mkdirp = require('mkdirp');
+const {spawnSync} = require('child_process');
+const {createHtmlReport} = require('axe-html-reporter');
 const rimraf = require('rimraf');
 const {uploadFile} = require('../utils/azure-storage');
+const {PATH_AXE_REPORTS, getAuditCases, parseAxeReportPath} = require('./audit-rules');
 const core = require('@actions/core');
-/** @type any */
-const PromisePool = require('es6-promise-pool');
 
 const PATH_REPO_ROOT = path.join(__dirname, '../../..');
-const PATH_REPORTS = path.join(PATH_REPO_ROOT, 'reports/accessibility');
-const AUDIT_VIEWPORT = {width: 800, height: 600};
+const PATH_PLAYWRIGHT_CONFIG = path.join(__dirname, 'playwright.config.ts');
 
-const STORIES_BLACKLIST = new Set([
-    'welcome-welcome--mistica',
-    'icons-catalog--catalog', // takes a lot of time to parse and it is not very relevant for a11y
-]);
+/**
+ * @typedef {{story: string, skin: string, result: import('axe-core').AxeResults, jsonPath: string}} AuditResult
+ */
 
 process.on('unhandledRejection', (error) => {
     console.error(error);
     process.exit(1);
 });
 
-const getStories = () => {
-    console.log('Extracting stories information');
-    return Object.keys(require('../../../public/index.json').entries);
-};
-
 /**
- * @returns {Promise<{
- *     closeStorybook: () => void,
- *     getStoryUrl: (id: string, skin: string) => string}
- * >}
+ * Violations make the Playwright run fail, so its exit code is not a reason to stop here
+ * @returns {number} exit code
  */
-const startStorybook = () => {
-    return new Promise((resolve) => {
-        const port = 6006;
-
-        const storybookServer = http.createServer((request, response) => {
-            return handler(request, response, {
-                public: 'public',
-                cleanUrls: ['/'],
-            });
-        });
-
-        storybookServer.listen(port, () => {
-            console.log(`Serving static storybook at: http://localhost:${port}`);
-            resolve({
-                getStoryUrl: (id, skin) =>
-                    `http://localhost:${port}/iframe.html?viewMode=story&id=${id}&skin=${skin}`,
-                closeStorybook: () => {
-                    console.log('Stopping static storybook server');
-                    storybookServer.close();
-                },
-            });
-        });
+const runAudit = () => {
+    // The package does not export its cli, so it is found next to package.json
+    const playwrightCli = path.join(path.dirname(require.resolve('playwright/package.json')), 'cli.js');
+    const {status} = spawnSync(process.execPath, [playwrightCli, 'test', '-c', PATH_PLAYWRIGHT_CONFIG], {
+        stdio: 'inherit',
     });
+    return status ?? 1;
 };
 
 /**
- * @param {import('playwright').Browser} browser
- * @param {string} url
- * @param {Array<string>} disabledRules
- * @returns {Promise<import('axe-core').AxeResults>}
+ * @returns {Array<AuditResult>}
  */
-const audit = async (browser, url, disabledRules = []) => {
-    const context = await browser.newContext({viewport: AUDIT_VIEWPORT});
-    try {
-        const page = await context.newPage();
-        // Preserve the user-agent marker Mistica uses to detect the test environment.
-        await page.addInitScript(() => {
-            const userAgent = navigator.userAgent;
-            Object.defineProperty(navigator, 'userAgent', {get: () => `${userAgent} acceptance-test`});
+const readAuditResults = () => {
+    if (!fs.existsSync(PATH_AXE_REPORTS)) {
+        return [];
+    }
+    return fs
+        .readdirSync(PATH_AXE_REPORTS)
+        .filter((filename) => filename.endsWith('.json'))
+        .map((filename) => {
+            const jsonPath = path.join(PATH_AXE_REPORTS, filename);
+            const result = JSON.parse(fs.readFileSync(jsonPath, 'utf8'));
+            return {...parseAxeReportPath(jsonPath), result, jsonPath};
         });
-        await page.goto(url, {waitUntil: 'networkidle'});
-        // Wait until the story has actually mounted, otherwise axe may scan the Storybook
-        // loading shell instead of the rendered story, producing flaky page-level results.
-        await page
-            .waitForFunction(
-                () => {
-                    const root = document.querySelector('#storybook-root');
-                    return Boolean(root && root.children.length > 0);
-                },
-                undefined,
-                {timeout: 5000}
-            )
-            .catch(() => {
-                // Some stories may legitimately render no content; continue with the audit.
-            });
-        const result = await new AxeBuilder({page})
-            .disableRules([
-                // ignored because some stories don't include an H1 header
-                'page-has-heading-one',
-                ...disabledRules,
-            ])
-            .analyze();
-        return result;
-    } finally {
-        await context.close();
-    }
 };
 
 /**
- * @param {Array<[story: string, skin: string, results: import('axe-core').AxeResults]>} results
- * @returns {Promise<Map<string, {json: String, html: string}>>}
+ * @param {AuditResult} auditResult
+ * @returns {string} path of the HTML report
  */
-const writeReportsToDisk = async (results) => {
-    rimraf.sync(PATH_REPORTS);
-    mkdirp.sync(PATH_REPORTS);
-    const files = new Map();
-    for (const [story, skin, result] of results) {
-        const jsonFilename = path.join(PATH_REPORTS, `${story}--${skin}.json`);
-        const htmlFilename = path.join(PATH_REPORTS, `${story}--${skin}.html`);
-
-        fs.writeFileSync(jsonFilename, JSON.stringify(result, null, 2));
-        createHtmlReport({
-            results: result,
-            options: {
-                outputDir: path.relative(process.cwd(), PATH_REPORTS),
-                reportFileName: `${story}--${skin}.html`,
-            },
-        });
-
-        files.set(`${story}--${skin}`, {json: jsonFilename, html: htmlFilename});
-    }
-    return files;
+const writeHtmlReport = ({story, skin, result}) => {
+    const reportFileName = `${story}--${skin}.html`;
+    createHtmlReport({
+        results: result,
+        options: {
+            outputDir: path.relative(process.cwd(), PATH_AXE_REPORTS),
+            reportFileName,
+        },
+    });
+    return path.join(PATH_AXE_REPORTS, reportFileName);
 };
 
 /**
- * @param {Array<[story: string, skin: string, results: import('axe-core').AxeResults]>} results
+ * @param {Array<AuditResult>} results
  */
-const generateReportForConsole = async (results) => {
-    const files = await writeReportsToDisk(results);
+const countProblems = (results) => results.reduce((acc, {result}) => acc + result.violations.length, 0);
 
-    const lines = [];
-    for (const [story, skin, result] of results) {
-        if (result.violations.length) {
-            lines.push(
-                `${story} [${skin}] (${result.violations.length} violations)`,
-                `    - HTML: ${files.get(`${story}--${skin}`)?.html}`,
-                `    - JSON: ${files.get(`${story}--${skin}`)?.json}`
-            );
-        }
-    }
-
-    console.log(lines.join('\n'));
+/**
+ * A test that breaks before axe runs writes no result, so its page would be missing from the report
+ * @param {Array<AuditResult>} results
+ * @returns {Array<string>}
+ */
+const findMissingPages = (results) => {
+    const auditedPages = new Set(results.map(({story, skin}) => `${story} [${skin}]`));
+    return getAuditCases()
+        .map(({story, skin}) => `${story} [${skin}]`)
+        .filter((page) => !auditedPages.has(page));
 };
 
 /**
- * @param {Array<[story: string, skin: string, results: import('axe-core').AxeResults]>} results
+ * @param {Array<AuditResult>} results
+ * @param {Array<string>} missingPages
  */
-const generateReportForStepSummary = (results) => {
-    const problemsCount = results.reduce((acc, [, , result]) => acc + result.violations.length, 0);
+const generateReportForStepSummary = (results, missingPages) => {
+    const problemsCount = countProblems(results);
 
     const lines = ['## Accessibility report', ''];
 
     if (problemsCount > 0) {
         lines.push(`❌ **${problemsCount}** problems detected`, '');
-        for (const [story, skin, result] of results) {
+        for (const {story, skin, result} of results) {
             if (result.violations.length) {
                 lines.push(`### ${story} [${skin}] (${result.violations.length} violations)`);
                 for (const violation of result.violations) {
@@ -175,7 +108,15 @@ const generateReportForStepSummary = (results) => {
             }
         }
         core.setFailed('Accessibility problems detected');
-    } else {
+    }
+
+    if (missingPages.length > 0) {
+        lines.push(`⚠️ **${missingPages.length}** pages were not audited`, '');
+        lines.push(...missingPages.map((page) => `- ${page}`), '');
+        core.setFailed('Some pages were not audited');
+    }
+
+    if (problemsCount === 0 && missingPages.length === 0) {
         lines.push('✔️ No issues found');
     }
 
@@ -188,40 +129,54 @@ const generateReportForStepSummary = (results) => {
 };
 
 /**
- * @param {Array<[story: string, skin: string, results: import('axe-core').AxeResults]>} results
+ * @param {Array<AuditResult>} results
+ * @param {Array<string>} missingPages
  */
-const generateReportForGithub = async (results) => {
-    const files = await writeReportsToDisk(results);
+const generateReportForGithub = async (results, missingPages) => {
+    const lines = ['**Accessibility report**'];
 
-    let lines = ['**Accessibility report**'];
-
-    const problemsCount = results.reduce((acc, [, , result]) => acc + result.violations.length, 0);
+    const problemsCount = countProblems(results);
 
     if (problemsCount > 0) {
         core.setFailed('Accessibility problems detected');
         lines.push(`<details>`);
         lines.push(`<summary>❌ <b>${problemsCount}</b> problems detected</summary><br />`);
 
-        for (const [story, skin, result] of results) {
-            const [jsonUrl, htmlUrl] = await Promise.all([
-                uploadFile(files.get(`${story}--${skin}`)?.json ?? '', 'application/json'),
-                uploadFile(files.get(`${story}--${skin}`)?.html ?? '', 'text/html'),
-            ]);
-
-            if (result.violations.length) {
-                lines.push(
-                    `<details>`,
-                    `  <summary><b>${story} [${skin}]</b> (${result.violations.length} violations)</summary>`,
-                    `  <ul>`,
-                    `    <li><a href="${htmlUrl}">HTML Report</a></li>`,
-                    `    <li><a href="${jsonUrl}">JSON Data</a></li>`,
-                    `  </ul>`,
-                    `</details>`
-                );
+        for (const auditResult of results) {
+            const {story, skin, result, jsonPath} = auditResult;
+            if (!result.violations.length) {
+                continue;
             }
+            const [jsonUrl, htmlUrl] = await Promise.all([
+                uploadFile(jsonPath, 'application/json'),
+                uploadFile(writeHtmlReport(auditResult), 'text/html'),
+            ]);
+            lines.push(
+                `<details>`,
+                `  <summary><b>${story} [${skin}]</b> (${result.violations.length} violations)</summary>`,
+                `  <ul>`,
+                `    <li><a href="${htmlUrl}">HTML Report</a></li>`,
+                `    <li><a href="${jsonUrl}">JSON Data</a></li>`,
+                `  </ul>`,
+                `</details>`
+            );
         }
         lines.push(`</details>`);
-    } else {
+    }
+
+    if (missingPages.length > 0) {
+        core.setFailed('Some pages were not audited');
+        lines.push(
+            `<details>`,
+            `<summary>⚠️ <b>${missingPages.length}</b> pages were not audited</summary>`,
+            `<ul>`,
+            ...missingPages.map((page) => `  <li>${page}</li>`),
+            `</ul>`,
+            `</details>`
+        );
+    }
+
+    if (problemsCount === 0 && missingPages.length === 0) {
         lines.push('✔️ No issues found');
     }
 
@@ -229,127 +184,26 @@ const generateReportForGithub = async (results) => {
     require('../utils/github').commentPullRequest(lines.join('\n'));
 };
 
-/**
- * @type {Record<string, Record<string, Array<string>>>}
- */
-const disabledRulesByStoryAndSkin = {
-    'components-carousels-slideshow--default': {
-        all: ['scrollable-region-focusable'],
-    },
-    'components-carousels-slideshow--with-carousel-context': {
-        all: ['scrollable-region-focusable'],
-    },
-    'components-carousels-centeredcarousel--default': {
-        all: ['scrollable-region-focusable'],
-    },
-    'components-carousels-centeredcarousel--with-controls': {
-        all: ['scrollable-region-focusable'],
-    },
-    'layout-horizontalscroll--default': {
-        all: ['scrollable-region-focusable'],
-    },
-
-    'patterns-loading--loading-screen-story': {
-        all: ['color-contrast'],
-    },
-    'patterns-loading--brand-loading-screen-story': {
-        all: ['color-contrast'],
-    },
-
-    'utilities-animations-fadein--default': {
-        all: ['color-contrast'],
-    },
-    'utilities-animations-fadeout--default': {
-        all: ['color-contrast'],
-    },
-
-    'patterns-feedback-feedbackscreen--feedback-screen-story': {
-        Blau: ['color-contrast'],
-    },
-    'community-examplecomponent--default': {
-        Blau: ['color-contrast'],
-    },
-    'private-components-in-different-skins--default': {
-        Blau: ['color-contrast'],
-    },
-};
-
-/**
- * @param {string} story
- * @param {string} skin
- * @returns {Array<string>}
- */
-const getDisabledRules = (story, skin) => {
-    const disabledRulesForStory = disabledRulesByStoryAndSkin[story] || {};
-    const disabledRulesForSkin = disabledRulesForStory[skin] || [];
-    const disabledRulesForAllSkins = disabledRulesForStory['all'] || [];
-    return [...disabledRulesForSkin, ...disabledRulesForAllSkins];
-};
-
 const main = async () => {
     process.chdir(PATH_REPO_ROOT);
+    rimraf.sync(PATH_AXE_REPORTS);
 
-    if (!process.env.CI) {
-        console.log('⚠️ This script assumes that a static storybook build exists!');
-        console.log('Execute `yarn storybook-static` to create or update existing build');
+    const exitCode = runAudit();
+    const results = readAuditResults();
+    const missingPages = findMissingPages(results);
+
+    // Every page has a result and none has violations, so the run broke after the audit
+    if (exitCode !== 0 && countProblems(results) === 0 && missingPages.length === 0) {
+        core.setFailed(`The accessibility audit failed with exit code ${exitCode}`);
+        return;
     }
 
-    const stories = getStories().filter((story) => !STORIES_BLACKLIST.has(story));
-    const skins = ['Movistar', 'O2', 'Vivo', 'Vivo-evolution', 'Blau'];
-
-    /**
-     * @type Array<[story: string, skin: string]>
-     */
-    const storySkinCombos = [];
-    for (const story of stories) {
-        for (const skin of skins) {
-            storySkinCombos.push([story, skin]);
-        }
+    const isForkPr = core.getInput('fork-pr') === 'true';
+    if (isForkPr) {
+        generateReportForStepSummary(results, missingPages);
+        return;
     }
-
-    const {closeStorybook, getStoryUrl} = await startStorybook();
-
-    const browser = await chromium.launch();
-
-    /** @type Array<[story: string, skin: string, results: import('axe-core').AxeResults]> */
-    const results = [];
-
-    const t = Date.now();
-
-    /** @returns {null | Promise<void>} */
-    const job = () => {
-        const storySkinTuple = storySkinCombos.shift();
-        if (!storySkinTuple) {
-            return null;
-        }
-        const [story, skin] = storySkinTuple;
-        return new Promise((resolve) => {
-            console.log(`${story} [${skin}]`);
-            audit(browser, getStoryUrl(story, skin), getDisabledRules(story, skin)).then((result) => {
-                results.push([story, skin, result]);
-                resolve();
-            });
-        });
-    };
-
-    const pool = new PromisePool(job, os.cpus().length);
-    await pool.start();
-
-    console.log('total time:', Date.now() - t, 'ms');
-
-    if (process.env.CI) {
-        const isForkPr = core.getInput('fork-pr') === 'true';
-        if (isForkPr) {
-            generateReportForStepSummary(results);
-        } else {
-            await generateReportForGithub(results);
-        }
-    } else {
-        await generateReportForConsole(results);
-    }
-
-    await browser.close();
-    closeStorybook();
+    await generateReportForGithub(results, missingPages);
 };
 
 main();

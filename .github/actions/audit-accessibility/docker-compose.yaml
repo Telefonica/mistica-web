@@ -1,0 +1,22 @@
+# Local browser for `yarn audit-accessibility-docker`: the same image, browser and platform as the CI job,
+# so a local audit reports the same results as the PR comment.
+# Keep the Playwright version equal to package.json and to .github/workflows/audit-a11y.yml.
+services:
+    audit-accessibility-playwright:
+        image: mcr.microsoft.com/playwright:v1.64.1-noble
+        # The CI runner is x86_64. An arm64 engine emulates this image.
+        platform: linux/amd64
+        command: npx -y playwright@1.64.1 run-server --port 3000 --host 0.0.0.0
+        ports:
+            - '3000:3000'
+        # npx downloads Playwright on each start, so `up --wait` must wait for the server port
+        healthcheck:
+            test:
+                - CMD
+                - node
+                - -e
+                - "require('net').connect(3000).on('connect', () => process.exit(0)).on('error', () => process.exit(1))"
+            interval: 2s
+            retries: 60
+        # Chromium needs a larger /dev/shm than the default. CI uses --ipc=host, which some engines reject.
+        shm_size: 1gb
