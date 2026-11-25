@@ -83,8 +83,10 @@ you can just write:
 </ButtonPrimary>
 ```
 
-Take into account that you need to set the `trackEvent` boolean prop, if you don't set it the button won't
-track any event.
+Set `theme.analytics.trackEventsByDefault` to `true` in `ThemeContextProvider` to enable default events for
+all components that support `trackEvent`. The setting defaults to `false`, so each component normally opts in
+with `trackEvent`. Set `trackEvent={false}` on a component to suppress its default event. A custom
+`trackingEvent` always takes precedence.
 
 ## Firebase / Google Analytics 4 events
 
@@ -112,8 +114,8 @@ You can use this event format with mistica components too, but you need to chang
 
 `eventFormat` can be `'google-analytics-4'` or `'universal-analytics'` (default).
 
-When you set the `eventFormat` to `'google-analytics-4'` and use the
-[`trackEvent` boolean prop](#default-tracking-events), the tracked event will have this form:
+When you set `eventFormat` to `'google-analytics-4'` and enable [default tracking](#default-tracking-events),
+the tracked event will have this form:
 
 ```ts
 {

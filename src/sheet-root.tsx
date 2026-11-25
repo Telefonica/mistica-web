@@ -1,5 +1,6 @@
 'use client';
 import * as React from 'react';
+import {OptionalDensityProvider} from './density/density-provider';
 
 import type {
     NativeSheetImplementation,
@@ -110,15 +111,17 @@ export const SheetRoot = (props: Props): JSX.Element => {
         <>
             {props.children}
             {sheetProps && (
-                <React.Suspense fallback={null}>
-                    <SheetWeb
-                        sheetProps={sheetProps}
-                        onResolve={(result) => {
-                            setSheetProps(null);
-                            resolveSheetPromise?.(result);
-                        }}
-                    />
-                </React.Suspense>
+                <OptionalDensityProvider density={sheetProps.density}>
+                    <React.Suspense fallback={null}>
+                        <SheetWeb
+                            sheetProps={sheetProps}
+                            onResolve={(result) => {
+                                setSheetProps(null);
+                                resolveSheetPromise?.(result);
+                            }}
+                        />
+                    </React.Suspense>
+                </OptionalDensityProvider>
             )}
         </>
     );

@@ -6,6 +6,7 @@ import {MOVISTAR_SKIN} from '../skins/constants';
 import {kebabCase} from 'lodash';
 
 import type {TestViewport} from '@telefonica/acceptance-testing';
+import type {Density} from '../density/definitions';
 
 export type {ElementHandle} from '@telefonica/acceptance-testing';
 
@@ -147,7 +148,13 @@ const DEVICES: DeviceCollection = {
     },
 };
 
-const buildStoryPath = (id: string, skin?: string, platform?: string, args?: StoryArgs) => {
+const buildStoryPath = (
+    id: string,
+    skin?: string,
+    platform?: string,
+    args?: StoryArgs,
+    density?: Density
+) => {
     const params = new URLSearchParams();
 
     params.set('id', id);
@@ -160,6 +167,10 @@ const buildStoryPath = (id: string, skin?: string, platform?: string, args?: Sto
 
     if (platform) {
         params.set('platform', platform);
+    }
+
+    if (density) {
+        params.set('density', density);
     }
 
     if (args) {
@@ -181,6 +192,7 @@ export const openStoryPage = ({
     skin = 'Movistar',
     args,
     isDarkMode,
+    density,
 }: {
     id: string;
     device?: Device;
@@ -188,9 +200,10 @@ export const openStoryPage = ({
     skin?: 'Movistar' | 'Vivo' | 'Vivo-evolution' | 'O2' | 'Telefonica' | 'Blau' | 'Esimflag' | 'Cyber';
     args?: StoryArgs;
     isDarkMode?: boolean;
+    density?: Density;
 }): Promise<PageApi> =>
     openPage({
-        path: buildStoryPath(id, skin, DEVICES[device].platform, args),
+        path: buildStoryPath(id, skin, DEVICES[device].platform, args, density),
         userAgent: DEVICES[device].userAgent,
         viewport: viewport ?? DEVICES[device].viewport,
         isDarkMode,

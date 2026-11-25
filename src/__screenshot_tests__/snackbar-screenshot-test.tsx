@@ -1,5 +1,17 @@
 import {openStoryPage, screen} from '../test-utils';
 
+test.each(['top-right', 'bottom-left'])('Snackbar position=%s on desktop', async (position) => {
+    const page = await openStoryPage({
+        id: 'components-snackbar--default',
+        device: 'DESKTOP',
+        args: {position, persistent: true},
+    });
+
+    await (await screen.findByRole('button', {name: 'Open Snackbar'})).click();
+    await screen.findByRole('alert');
+    expect(await page.screenshot()).toMatchImageSnapshot();
+});
+
 test('informative', async () => {
     await openStoryPage({
         id: 'components-snackbar--default',
@@ -127,6 +139,20 @@ test('with dismiss button and long action and message', async () => {
             buttonText: 'This action is long enough',
             dismiss: true,
         },
+    });
+
+    await (await screen.findByRole('button', {name: 'Open Snackbar'})).click();
+    const snackbar = await screen.findByRole('alert');
+    const image = await snackbar.screenshot();
+    expect(image).toMatchImageSnapshot();
+});
+
+test.each(['INFORMATIVE', 'CRITICAL'])('%s in dark mode', async (type) => {
+    await openStoryPage({
+        id: 'components-snackbar--default',
+        device: 'MOBILE_ANDROID',
+        args: {type},
+        isDarkMode: true,
     });
 
     await (await screen.findByRole('button', {name: 'Open Snackbar'})).click();

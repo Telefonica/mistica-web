@@ -10,6 +10,7 @@ const minWidth = createVar();
 export const buttonVars = {minWidth};
 
 const colorTransitionTiming = '0.1s ease-in-out';
+const contentTransitionTiming = '0.3s cubic-bezier(0.77, 0, 0.175, 1)';
 
 export const buttonMinWidth = {
     default: '104px',
@@ -45,12 +46,17 @@ export const buttonPaddingRight = {
     small: `calc(${vars.spacing.buttonSmallPadding.right} - ${borderSize})`,
 };
 
-export const buttonPaddingY = {
-    default: `calc(12px - ${borderSize})`,
-    small: `calc(6px - ${borderSize})`,
+export const buttonPaddingTop = {
+    default: `calc(${vars.spacing.buttonDefaultPadding.top} - ${borderSize})`,
+    small: `calc(${vars.spacing.buttonSmallPadding.top} - ${borderSize})`,
 };
 
-const smallButtonHeight = `calc(${pxToRem(20)} + ${buttonPaddingY.small} + ${buttonPaddingY.small} + ${borderSize} + ${borderSize})`;
+export const buttonPaddingBottom = {
+    default: `calc(${vars.spacing.buttonDefaultPadding.bottom} - ${borderSize})`,
+    small: `calc(${vars.spacing.buttonSmallPadding.bottom} - ${borderSize})`,
+};
+
+const smallButtonHeight = `calc(${pxToRem(20)} + ${buttonPaddingTop.small} + ${buttonPaddingBottom.small} + ${borderSize} + ${borderSize})`;
 
 const disabledStyle = {opacity: 0.5};
 
@@ -120,25 +126,41 @@ const button = style([
 export const small = style({});
 export const smallLink = style({});
 
-export const slideSwap = style({
-    width: '100%',
-    verticalAlign: 'top',
-});
+export const loadingFiller = style([
+    sprinkles({
+        display: 'block',
+        height: 0,
+        overflow: 'hidden',
+    }),
+    {
+        opacity: 0,
+    },
+]);
 
 export const loadingContent = style([
     sprinkles({
-        display: 'flex',
+        display: 'inline-flex',
+        position: 'absolute',
+        top: 0,
+        bottom: 0,
         justifyContent: 'center',
         alignItems: 'center',
     }),
     {
-        paddingLeft: buttonPaddingLeft.default,
-        paddingRight: buttonPaddingRight.default,
+        left: buttonPaddingLeft.default,
+        right: buttonPaddingRight.default,
+        opacity: 0,
+        transform: 'translateY(2rem)',
+        transition: `opacity ${contentTransitionTiming}, transform ${contentTransitionTiming}`,
 
         selectors: {
             [`${small} &`]: {
-                paddingLeft: buttonPaddingLeft.small,
-                paddingRight: buttonPaddingRight.small,
+                left: buttonPaddingLeft.small,
+                right: buttonPaddingRight.small,
+            },
+            [`${isLoading} &`]: {
+                transform: 'translateY(0)',
+                opacity: 1,
             },
         },
     },
@@ -151,11 +173,17 @@ export const textContent = style([
         justifyContent: 'center',
     }),
     {
-        padding: `${buttonPaddingY.default} ${buttonPaddingRight.default} ${buttonPaddingY.default} ${buttonPaddingLeft.default}`, // height 48
+        padding: `${buttonPaddingTop.default} ${buttonPaddingRight.default} ${buttonPaddingBottom.default} ${buttonPaddingLeft.default}`, // height 48 in cozy density
+        opacity: 1,
+        transition: `opacity ${contentTransitionTiming}, transform ${contentTransitionTiming}`,
 
         selectors: {
             [`${small} &`]: {
-                padding: `${buttonPaddingY.small} ${buttonPaddingRight.small} ${buttonPaddingY.small} ${buttonPaddingLeft.small}`, // height 32
+                padding: `${buttonPaddingTop.small} ${buttonPaddingRight.small} ${buttonPaddingBottom.small} ${buttonPaddingLeft.small}`, // height 32
+            },
+            [`${isLoading} &`]: {
+                transform: 'translateY(-2rem)',
+                opacity: 0,
             },
         },
     },
