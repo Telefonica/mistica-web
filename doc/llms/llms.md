@@ -161,7 +161,7 @@ component, prefer extending a skin over overriding component styles. Built-in pa
 `movistarPalette`, `o2Palette`, `vivoPalette`, etc. are available for skin authoring, and custom skins may
 also define their own palette colors from scratch.
 
-Built-in Link integrations: `Next12`, `Next13`, `Next14`, `ReactRouter5`, `ReactRouter6`.
+Built-in Link integrations: `Next12`, `Next13`, `Next14`, `Next16`, `ReactRouter5`, `ReactRouter6`.
 
 The `theme` object should be constant (outside the component) or memoized with `React.useMemo`.
 
