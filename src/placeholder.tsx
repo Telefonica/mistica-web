@@ -20,7 +20,7 @@ export const Placeholder = ({width = 'auto', height = 120}: PlaceholderProps): J
                 position: 'relative',
             }}
         >
-            <svg width="100%" height="100%">
+            <svg width="100%" height="100%" style={{display: 'block'}}>
                 <line
                     style={{strokeWidth: 2, stroke: applyAlpha(vars.rawColors.neutralHigh, 0.1)}}
                     x1={0}
