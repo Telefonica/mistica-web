@@ -241,6 +241,9 @@ const renderButtonContent = ({
         <SlideSwap
             className={styles.slideSwap}
             showSwappedContent={showSpinner}
+            announcements={{
+                swapped: loadingText,
+            }}
             swappedContent={loadingContent}
             onTransitionEnd={() => {
                 if (showSpinner !== shouldRenderSpinner) {

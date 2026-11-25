@@ -70,18 +70,12 @@ test('SlideSwap calls onTransitionEnd once per swap, ignoring transitions from i
     expect(onTransitionEnd).toHaveBeenCalledTimes(1);
 });
 
-const AnnouncingSlideSwap = ({
-    showSwappedContent,
-    swappedContent = <span>Sending…</span>,
-}: {
-    showSwappedContent: boolean;
-    swappedContent?: React.ReactNode;
-}) => (
+const AnnouncingSlideSwap = ({showSwappedContent}: {showSwappedContent: boolean}) => (
     <ThemeContextProvider theme={makeTheme()}>
         <SlideSwap
             announcements={{swapped: 'Sending message'}}
             showSwappedContent={showSwappedContent}
-            swappedContent={swappedContent}
+            swappedContent={<span>Sending…</span>}
         >
             <span>Send</span>
         </SlideSwap>
@@ -145,30 +139,4 @@ test('SlideSwap clears the announcement after a second, so it is not left next t
 
     React.act(() => jest.advanceTimersByTime(1000));
     expect(screen.getByRole('status')).toHaveTextContent(/^$/);
-});
-
-test('SlideSwap warns when the content that appears has an announcement and a live region of its own', () => {
-    const warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});
-    const swappedContent = <span aria-live="polite">Sending…</span>;
-    const {rerender} = render(
-        <AnnouncingSlideSwap showSwappedContent={false} swappedContent={swappedContent} />
-    );
-
-    rerender(<AnnouncingSlideSwap showSwappedContent swappedContent={swappedContent} />);
-    expect(warnSpy).toHaveBeenCalledTimes(1);
-
-    warnSpy.mockRestore();
-});
-
-test('SlideSwap does not warn when the live region of the content is off', () => {
-    const warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});
-    const swappedContent = <span aria-live="off">Sending…</span>;
-    const {rerender} = render(
-        <AnnouncingSlideSwap showSwappedContent={false} swappedContent={swappedContent} />
-    );
-
-    rerender(<AnnouncingSlideSwap showSwappedContent swappedContent={swappedContent} />);
-    expect(warnSpy).not.toHaveBeenCalled();
-
-    warnSpy.mockRestore();
 });

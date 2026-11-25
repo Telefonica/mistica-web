@@ -18,39 +18,64 @@ type Props = {
     children: React.ReactNode;
     /** content shown when `showSwappedContent` is true */
     swappedContent: React.ReactNode;
+    /** shows `swappedContent` when true and `children` when false. Every change runs the transition */
     showSwappedContent: boolean;
-    /** direction in which `children` leaves the container. Defaults to 'up' */
+    /**
+     * direction in which `children` leaves when `swappedContent` appears. `swappedContent` enters from the
+     * opposite side, and the swap back runs the same movement in reverse. Defaults to 'up'
+     */
     direction?: 'up' | 'down';
+    /** horizontal alignment of the narrower content inside the container. Defaults to 'center' */
     align?: 'left' | 'center' | 'right';
-    /** transition duration in milliseconds */
-    duration?: number;
+    /** transition duration in milliseconds. Defaults to 300. Use 0 to swap with no transition */
+    durationInMs?: number;
     /**
      * Called once the swap transition ends (in both directions). Useful to unmount expensive content
      * (like a Spinner) once it is hidden. Not called when `duration` is 0, as there is no transition.
      */
     onTransitionEnd?: () => void;
     /**
-     * Texts announced to screen readers when each content becomes visible, through a polite live region
-     * that is cleared after a second. Nothing is announced on mount, nor for a content without text.
+     * Texts announced to screen readers when each content becomes visible, through a `role="status"`
+     * live region (polite) that is cleared after a second. Nothing is announced on mount, nor for a
+     * content without text.
      * Don't set a text for a content that announces itself (e.g. a Spinner with `aria-live`), or screen
-     * readers will read both.
+     * readers will read both. A content with an assertive live region (e.g. `role="alert"`) interrupts
+     * the polite announcement instead.
      */
     announcements?: {primary?: string; swapped?: string};
+    /**
+     * The container is an inline grid, so its width fits the widest content. Set a width here to make
+     * it fill its parent instead (e.g. Button uses `width: 100%`)
+     */
     className?: string;
     dataAttributes?: DataAttributes;
 };
 
 /**
- * Swaps two contents with a vertical slide + fade transition, the same animation used by Button
- * when it shows its spinner.
+ * Swaps two contents with a vertical slide + fade transition. Button uses it to show its spinner.
  *
- * Both contents share the same grid cell, so the container is sized to fit the largest one and
- * doesn't resize while the transition runs.
+ * Both contents share the same grid cell, so the container takes the width of the widest content and
+ * the height of the tallest one, and doesn't resize while the transition runs.
  *
- * Only the content that appears is announced, and each content must have one source of announcement:
- * either a text in `announcements`, or a live region of its own. Both contents are always mounted, and
- * screen readers don't reliably announce a live region that only stops being aria-hidden, so a content
- * that announces itself must mount, or change, its live region when it appears.
+ * Both contents are always mounted. The hidden content is aria-hidden and can't receive focus. When the
+ * user prefers reduced motion, the contents only fade, with no slide.
+ *
+ * Only the content that appears is announced, and each content must have at most one source of
+ * announcement: either a text in `announcements`, or a live region of its own. Screen readers don't
+ * reliably announce a live region that only stops being aria-hidden, so a content that announces itself
+ * must mount, or change, its live region when it appears.
+ *
+ * @param props.children - content shown when `showSwappedContent` is false
+ * @param props.swappedContent - content shown when `showSwappedContent` is true
+ * @param props.showSwappedContent - shows `swappedContent` when true. Every change runs the transition
+ * @param props.direction - 'up' (default) or 'down', the direction in which `children` leaves
+ * @param props.align - 'left', 'center' (default) or 'right', the alignment of the narrower content
+ * @param props.durationInMs - transition duration in milliseconds, 300 by default. 0 swaps with no transition
+ * @param props.onTransitionEnd - called once each swap transition ends. Not called when `duration` is 0
+ * @param props.announcements - texts for the polite `role="status"` live region, one per content. A
+ * content with an assertive live region (e.g. `role="alert"`) overrides them
+ * @param props.className - class of the container. Set a width here to make it fill its parent
+ * @param props.dataAttributes - data attributes of the container. The default testid is 'SlideSwap'
  */
 const SlideSwap = ({
     children,
@@ -58,7 +83,7 @@ const SlideSwap = ({
     showSwappedContent,
     direction = 'up',
     align = 'center',
-    duration = DEFAULT_DURATION_IN_MS,
+    durationInMs = DEFAULT_DURATION_IN_MS,
     onTransitionEnd,
     announcements,
     className,
@@ -101,10 +126,12 @@ const SlideSwap = ({
         if (!announcement.text) {
             return;
         }
+
         const timeoutId = setTimeout(
             () => setAnnouncement(({id}) => ({text: '', id})),
             ANNOUNCEMENT_DURATION_IN_MS
         );
+
         return () => clearTimeout(timeoutId);
     }, [announcement]);
 
@@ -115,7 +142,7 @@ const SlideSwap = ({
                 [styles.isSwapped]: showSwappedContent,
             })}
             style={applyCssVars({
-                [styles.vars.duration]: `${duration}ms`,
+                [styles.vars.duration]: `${durationInMs}ms`,
                 [styles.vars.offset]: direction === 'up' ? OFFSET : `-${OFFSET}`,
             })}
         >

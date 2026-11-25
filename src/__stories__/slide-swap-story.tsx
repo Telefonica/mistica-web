@@ -81,7 +81,7 @@ export const Default: StoryComponent<Args> = ({
                         showSwappedContent={showSwappedContent}
                         direction={direction}
                         align={align}
-                        duration={duration}
+                        durationInMs={duration}
                         announcements={{primary: primaryAnnouncement, swapped: swappedAnnouncement}}
                         onTransitionEnd={() => setTransitionEndCount((count) => count + 1)}
                         swappedContent={
@@ -107,7 +107,7 @@ export const Default: StoryComponent<Args> = ({
                         showSwappedContent={showSwappedContent}
                         direction={direction}
                         align={align}
-                        duration={duration}
+                        durationInMs={duration}
                         swappedContent={
                             <Inline space={8} alignItems="center">
                                 <IconCheckRegular color={skinVars.colors.success} size={20} />
@@ -121,7 +121,7 @@ export const Default: StoryComponent<Args> = ({
                         showSwappedContent={showSwappedContent}
                         direction={direction}
                         align={align}
-                        duration={duration}
+                        durationInMs={duration}
                         swappedContent={<IconMoonRegular />}
                     >
                         <IconSunRegular />
