@@ -32,6 +32,7 @@ import classnames from 'classnames';
 import ButtonGroup from './button-group';
 import {isBiggerHeading} from './utils/headings';
 import {applyAlpha} from './utils/color';
+import {useDefaultTracking} from './utils/analytics';
 
 import type {
     DataAttributes,
@@ -1481,6 +1482,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, CardInteractionProp
             radioValue,
             segregateTouchableContent = false,
             touchableAriaLabel: touchableAriaLabelProp,
+            trackEvent,
             ...touchableProps
         },
         ref
@@ -1499,10 +1501,16 @@ export const InternalCard = React.forwardRef<HTMLDivElement, CardInteractionProp
         const touchableContentRef = React.useRef<TouchableElement>(null);
         const titleText = typeof title === 'string' ? title : title?.text;
         const pretitleText = typeof pretitle === 'string' ? pretitle : pretitle?.text;
+        const getDefaultTrackingEvent = useDefaultTracking();
         const cardTouchableProps = {
             ...touchableProps,
-            trackingComponentType: 'card',
-            trackingComponentCopy: titleText || pretitleText || 'not_apply',
+            trackingEvent:
+                touchableProps.trackingEvent ??
+                getDefaultTrackingEvent({
+                    componentType: 'card',
+                    componentCopy: titleText || pretitleText || 'not_apply',
+                    trackEvent,
+                }),
         };
 
         const isTouchable =

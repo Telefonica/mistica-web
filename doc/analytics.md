@@ -111,8 +111,8 @@ corresponding GA4 `component_type` and event copy described below.
   `Touchable`, using their referenced labels or `aria-label` as the copy.
 - `Popover` tracks close button presses with the `icon` type and the close button label.
 - `Touchable` generates `link` events when using `href` or `to`, and `button` events for `onPress`, using
-  `aria-label`, text referenced by `aria-labelledby` or its text children as the event copy. Use
-  `trackingComponentType` and `trackingComponentCopy` to override these values for a custom component.
+  `aria-label`, text referenced by `aria-labelledby` or its text children as the event copy. Pass a custom
+  `trackingEvent` to override the generated event.
 
 For these new events, Universal Analytics uses `category: 'user_interaction'`,
 `action: '<component_type>_tapped'` and `label` containing the event copy. GA4 uses

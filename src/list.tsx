@@ -29,6 +29,7 @@ import {combineRefs} from './utils/common';
 import {IconButton, ToggleIconButton} from './icon-button';
 import ScreenReaderOnly from './screen-reader-only';
 import {useTheme} from './hooks';
+import {useDefaultTracking} from './utils/analytics';
 
 import type {IconButtonProps, ToggleIconButtonProps} from './icon-button';
 import type {TouchableElement, TouchableProps} from './touchable';
@@ -527,6 +528,7 @@ const RowContent = React.forwardRef<
     const isInteractive = !!props.onPress || !!props.href || !!props.to;
     const ariaLabel = ariaLabelProp ?? (isInteractive ? computedAriaLabel : undefined);
 
+    const getDefaultTrackingEvent = useDefaultTracking();
     const radioContext = useRadioContext();
     const disabled = props.disabled || (props.radioValue !== undefined && radioContext.disabled);
     const hasHoverDefault = !disabled && !isOverBrand;
@@ -545,10 +547,13 @@ const RowContent = React.forwardRef<
 
         onNavigate: props.onNavigate,
         onPress: props.onPress,
-        trackingEvent: props.trackingEvent,
-        trackEvent: props.trackEvent,
-        trackingComponentType: 'row',
-        trackingComponentCopy: title,
+        trackingEvent:
+            props.trackingEvent ??
+            getDefaultTrackingEvent({
+                componentType: 'row',
+                componentCopy: title,
+                trackEvent: disabled ? false : props.trackEvent,
+            }),
 
         'aria-label': ariaLabel,
         'aria-labelledby': props['aria-labelledby'],

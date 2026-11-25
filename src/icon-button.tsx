@@ -5,6 +5,8 @@ import * as styles from './icon-button.css';
 import classNames from 'classnames';
 import Spinner from './spinner';
 import {useThemeVariant} from './theme-variant-context';
+import {useDefaultTracking} from './utils/analytics';
+import {getAriaLabelledByText} from './utils/dom';
 
 import type {TouchableElement, TouchableComponentProps} from './touchable';
 import type {ExclusifyUnion} from './utils/utility-types';
@@ -68,6 +70,7 @@ export const RawIconButton = React.forwardRef<
         ref
     ) => {
         const themeVariant = useThemeVariant();
+        const getDefaultTrackingEvent = useDefaultTracking();
         const [isOnPressPromiseResolving, setIsOnPressPromiseResolving] = React.useState(false);
 
         const showSpinner = showSpinnerProp || isOnPressPromiseResolving;
@@ -92,8 +95,14 @@ export const RawIconButton = React.forwardRef<
             disabled: disabled || showSpinner,
             'aria-disabled': ariaDisabled,
             ref,
-            trackingEvent,
-            trackEvent,
+            trackingEvent:
+                trackingEvent ??
+                ((element: HTMLElement) =>
+                    getDefaultTrackingEvent({
+                        componentType: 'icon',
+                        componentCopy: getAriaLabelledByText(element) || touchableProps['aria-label'] || '',
+                        trackEvent: disabled || showSpinner || ariaDisabled ? false : trackEvent,
+                    })),
             role,
             dataAttributes: {testid: 'IconButton', ...dataAttributes},
             className: classNames(
@@ -151,7 +160,7 @@ export const RawIconButton = React.forwardRef<
                     [styles.bleedY[buttonSize]]: bleedY,
                 })}
             >
-                <BaseTouchable {...commonProps} {...touchableProps} trackingComponentType="icon" maybe>
+                <BaseTouchable {...commonProps} {...touchableProps} maybe>
                     {content}
                 </BaseTouchable>
             </div>

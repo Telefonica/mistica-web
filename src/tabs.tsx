@@ -13,6 +13,7 @@ import {useThemeVariant} from './theme-variant-context';
 import {vars} from './skins/skin-contract.css';
 import {LEFT, RIGHT} from './utils/keys';
 import {applyCssVars} from './utils/css';
+import {useDefaultTracking} from './utils/analytics';
 
 import type {DataAttributes, IconProps, TrackingEvent} from './utils/types';
 
@@ -68,6 +69,7 @@ const Tabs = ({
     ...otherProps
 }: TabsProps): JSX.Element => {
     const {textPresets} = useTheme();
+    const getDefaultTrackingEvent = useDefaultTracking();
     const id = React.useId();
     const {ref} = useElementDimensions();
     const animatedLineRef = React.useRef<HTMLDivElement>(null);
@@ -200,10 +202,14 @@ const Tabs = ({
                                                     animateLine(selectedIndex, index);
                                                 }
                                             }}
-                                            trackingEvent={trackingEvent}
-                                            trackingComponentType="tab"
-                                            trackingComponentCopy={text}
-                                            trackEvent={trackEvent}
+                                            trackingEvent={
+                                                trackingEvent ??
+                                                getDefaultTrackingEvent({
+                                                    componentType: 'tab',
+                                                    componentCopy: text,
+                                                    trackEvent,
+                                                })
+                                            }
                                             role="tab"
                                             aria-controls={getPanelId(index)}
                                             aria-selected={isSelected ? 'true' : 'false'}

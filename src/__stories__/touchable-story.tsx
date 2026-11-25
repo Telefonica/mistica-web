@@ -8,11 +8,6 @@ export default {
     component: Touchable,
     argTypes: {
         trackEvent: {options: [undefined, true, false], control: {type: 'select'}},
-        trackingComponentType: {
-            options: [undefined, 'icon', 'row', 'tab', 'accordion', 'card', 'chip', 'link', 'button'],
-            control: {type: 'select'},
-        },
-        trackingComponentCopy: {control: {type: 'text'}},
         type: {
             options: ['href', 'onPress'],
             control: {type: 'select'},
@@ -21,18 +16,12 @@ export default {
     },
 };
 
-type Args = Pick<TouchableProps, 'trackEvent' | 'trackingComponentType' | 'trackingComponentCopy'> & {
+type Args = Pick<TouchableProps, 'trackEvent'> & {
     type: 'href' | 'onPress';
     newTab: boolean;
 };
 
-export const Default: StoryComponent<Args> = ({
-    type,
-    newTab,
-    trackEvent,
-    trackingComponentType,
-    trackingComponentCopy,
-}) => {
+export const Default: StoryComponent<Args> = ({type, newTab, trackEvent}) => {
     const styles = {
         border: `1px solid ${skinVars.colors.border}`,
         display: 'flex',
@@ -55,8 +44,6 @@ export const Default: StoryComponent<Args> = ({
                 style={styles}
                 {...props}
                 trackEvent={trackEvent}
-                trackingComponentType={trackingComponentType}
-                trackingComponentCopy={trackingComponentCopy}
                 dataAttributes={{testid: 'touchable'}}
             >
                 Touchable
@@ -68,8 +55,6 @@ export const Default: StoryComponent<Args> = ({
 Default.storyName = 'Touchable';
 Default.args = {
     trackEvent: undefined,
-    trackingComponentType: undefined,
-    trackingComponentCopy: undefined,
     type: 'href',
     newTab: false,
 };

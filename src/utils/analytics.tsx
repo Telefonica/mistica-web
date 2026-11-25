@@ -29,7 +29,7 @@ export const TrackingConfig = ({children, eventFormat}: TrackingConfigProps): JS
 
 export const useTrackingConfig = (): {eventFormat: EventFormat} => React.useContext(TrackingContext);
 
-export type TrackingComponentType =
+type TrackingComponentType =
     | 'icon'
     | 'row'
     | 'tab'

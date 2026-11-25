@@ -11,7 +11,6 @@ import {redirect} from './utils/browser';
 import * as tokens from './text-tokens';
 import {useDefaultTracking} from './utils/analytics';
 
-import type {TrackingComponentType} from './utils/analytics';
 import type {ExclusifyUnion} from './utils/utility-types';
 import type {DataAttributes, TrackingEvent} from './utils/types';
 import type {Location} from 'history';
@@ -25,9 +24,6 @@ interface CommonProps {
     disabled?: boolean;
     style?: React.CSSProperties;
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
-    trackEvent?: boolean;
-    trackingComponentType?: TrackingComponentType;
-    trackingComponentCopy?: string;
     'aria-label'?: string;
     /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid" */
     dataAttributes?: DataAttributes;
@@ -80,7 +76,6 @@ export type AlwaysTouchableComponentProps = ExclusifyUnion<OnPressProps | HrefPr
     Pick<
         CommonProps,
         | 'trackingEvent'
-        | 'trackEvent'
         | 'dataAttributes'
         | 'role'
         | 'aria-label'
@@ -88,7 +83,7 @@ export type AlwaysTouchableComponentProps = ExclusifyUnion<OnPressProps | HrefPr
         | 'aria-description'
         | 'aria-describedby'
         | 'aria-current'
-    >;
+    > & {trackEvent?: boolean};
 
 export type TouchableComponentProps<Props> = ExclusifyUnion<
     Props | (OnPressProps & Props) | (HrefProps & Props) | (ToProps & Props)
@@ -96,7 +91,6 @@ export type TouchableComponentProps<Props> = ExclusifyUnion<
     Pick<
         CommonProps,
         | 'trackingEvent'
-        | 'trackEvent'
         | 'dataAttributes'
         | 'role'
         | 'aria-label'
@@ -104,7 +98,7 @@ export type TouchableComponentProps<Props> = ExclusifyUnion<
         | 'aria-description'
         | 'aria-describedby'
         | 'aria-current'
-    >;
+    > & {trackEvent?: boolean};
 
 type Maybe<T, K extends keyof T> = Pick<Partial<T>, K> & Omit<T, K> & {maybe: true};
 
@@ -117,36 +111,25 @@ export type TouchableProps = ExclusifyUnion<
     | Maybe<ToProps, 'to'>
     | SubmitProps
 > &
-    CommonProps;
+    CommonProps & {trackEvent?: boolean};
+
+type TrackingEventValue = TrackingEvent | ReadonlyArray<TrackingEvent>;
+
+type RawTouchableProps = Omit<TouchableProps, 'trackEvent' | 'trackingEvent'> & {
+    trackingEvent?: TrackingEventValue | ((element: HTMLElement) => TrackingEventValue | undefined);
+};
 
 export type TouchableElement = HTMLDivElement | HTMLAnchorElement | HTMLButtonElement;
 
-const RawTouchable = React.forwardRef<TouchableElement, TouchableProps>((props, ref) => {
+const RawTouchable = React.forwardRef<TouchableElement, RawTouchableProps>((props, ref) => {
     const {texts, analytics, platformOverrides, Link, useHrefDecorator, t} = useTheme();
-    const getDefaultTrackingEvent = useDefaultTracking();
     const hrefDecorator = useHrefDecorator();
     const isClicked = React.useRef(false);
     const getTrackingEvents = (element: HTMLElement): ReadonlyArray<TrackingEvent> => {
-        if (props.trackingEvent) {
-            return Array.isArray(props.trackingEvent)
-                ? props.trackingEvent
-                : [props.trackingEvent as TrackingEvent];
-        }
-
-        if (!props.trackingComponentType || props.disabled || props['aria-disabled']) {
-            return [];
-        }
-
-        const componentCopy =
-            props.trackingComponentCopy ??
-            (getAriaLabelledByText(element) || props['aria-label'] || element.textContent || '');
-        const defaultTrackingEvent = getDefaultTrackingEvent({
-            componentType: props.trackingComponentType,
-            componentCopy,
-            trackEvent: props.trackEvent,
-        });
-
-        return defaultTrackingEvent ? [defaultTrackingEvent] : [];
+        const trackingEvent =
+            typeof props.trackingEvent === 'function' ? props.trackingEvent(element) : props.trackingEvent;
+        if (!trackingEvent) return [];
+        return Array.isArray(trackingEvent) ? trackingEvent : [trackingEvent as TrackingEvent];
     };
 
     const children = props.children;
@@ -361,12 +344,23 @@ const RawTouchable = React.forwardRef<TouchableElement, TouchableProps>((props, 
     );
 });
 
-const Touchable = React.forwardRef<TouchableElement, TouchableProps>((props, ref) => {
+const Touchable = React.forwardRef<TouchableElement, TouchableProps>(({trackEvent, ...props}, ref) => {
+    const getDefaultTrackingEvent = useDefaultTracking();
     return (
         <RawTouchable
             {...props}
-            trackingComponentType={
-                props.trackingComponentType ?? (props.href || props.to ? 'link' : 'button')
+            trackingEvent={
+                props.trackingEvent ??
+                ((element) =>
+                    getDefaultTrackingEvent({
+                        componentType: props.href || props.to ? 'link' : 'button',
+                        componentCopy:
+                            getAriaLabelledByText(element) ||
+                            props['aria-label'] ||
+                            element.textContent ||
+                            '',
+                        trackEvent: props.disabled || props['aria-disabled'] ? false : trackEvent,
+                    }))
             }
             className={classnames(classes.touchable, props.className)}
             ref={ref}
@@ -375,7 +369,7 @@ const Touchable = React.forwardRef<TouchableElement, TouchableProps>((props, ref
 });
 
 // Used internally by Mística's components to avoid styles collisions
-export const BaseTouchable = React.forwardRef<TouchableElement, TouchableProps & {resetMargin?: boolean}>(
+export const BaseTouchable = React.forwardRef<TouchableElement, RawTouchableProps & {resetMargin?: boolean}>(
     ({resetMargin = true, ...props}, ref) => {
         return (
             <RawTouchable

@@ -15,6 +15,7 @@ import {useThemeVariant} from './theme-variant-context';
 import {CSSTransition} from 'react-transition-group';
 import {isRunningAcceptanceTest} from './utils/platform';
 import Inline from './inline';
+import {useDefaultTracking} from './utils/analytics';
 
 import type {ExclusifyUnion} from './utils/utility-types';
 import type {DataAttributes, TrackingEvent} from './utils/types';
@@ -138,6 +139,7 @@ const AccordionItemContent = React.forwardRef<TouchableElement, AccordionItemCon
         },
         ref
     ) => {
+        const getDefaultTrackingEvent = useDefaultTracking();
         const panelContainerRef = React.useRef<HTMLDivElement | null>(null);
         const itemRef = React.useRef<HTMLDivElement | null>(null);
         const {index, toggle} = useAccordionContext();
@@ -173,10 +175,14 @@ const AccordionItemContent = React.forwardRef<TouchableElement, AccordionItemCon
                     onPress={() => {
                         if (itemIndex !== undefined) toggle(itemIndex);
                     }}
-                    trackingEvent={trackingEvent}
-                    trackingComponentType="accordion"
-                    trackingComponentCopy={props.title}
-                    trackEvent={trackEvent}
+                    trackingEvent={
+                        trackingEvent ??
+                        getDefaultTrackingEvent({
+                            componentType: 'accordion',
+                            componentCopy: props.title,
+                            trackEvent,
+                        })
+                    }
                     aria-expanded={isOpen}
                     aria-controls={panelId}
                     aria-label={ariaLabel}
