@@ -258,8 +258,8 @@ export const ImageContent = React.forwardRef<HTMLImageElement, ImageProps>(
                     decoding="async"
                 />
                 {/* When using SSR, we render a small script that makes the img visible as soon as it finishes loading, without waiting for React client hydrate. */}
-                {/* Note that this <script> does nothing when rendering client side (the browser only execute scripts injected inside <head>), it's only executed when the browser receives the SSRed html */}
-                {withLoadingFallback && (
+                {/* The script is only rendered on the server: it does nothing when rendering client side (scripts rendered by a component are never executed on the client, and React warns about them), it's only executed when the browser receives the SSRed html */}
+                {withLoadingFallback && isServerSide() && (
                     <script
                         // eslint-disable-next-line react/no-danger
                         dangerouslySetInnerHTML={{
