@@ -9,7 +9,7 @@ import {getPrefixedDataAttributes} from './utils/dom';
 
 import type {DataAttributes} from './utils/types';
 
-const DEFAULT_DURATION_IN_MS = 300;
+const DEFAULT_DURATION = '0.3s';
 const OFFSET = '2rem';
 const ANNOUNCEMENT_DURATION_IN_MS = 1000;
 
@@ -27,11 +27,14 @@ type Props = {
     direction?: 'up' | 'down';
     /** horizontal alignment of the narrower content inside the container. Defaults to 'center' */
     align?: 'left' | 'center' | 'right';
-    /** transition duration in milliseconds. Defaults to 300. Use 0 to swap with no transition */
-    durationInMs?: number;
+    /**
+     * The length of the transition. Use a CSS time value, for example '0.3s' or '300ms'.
+     * The default value is '0.3s'. Use '0s' to swap with no transition
+     */
+    duration?: string;
     /**
      * Called once the swap transition ends (in both directions). Useful to unmount expensive content
-     * (like a Spinner) once it is hidden. Not called when `duration` is 0, as there is no transition.
+     * (like a Spinner) once it is hidden. Not called when `duration` is '0s', as there is no transition.
      */
     onTransitionEnd?: () => void;
     /**
@@ -70,8 +73,8 @@ type Props = {
  * @param props.showSwappedContent - shows `swappedContent` when true. Every change runs the transition
  * @param props.direction - 'up' (default) or 'down', the direction in which `children` leaves
  * @param props.align - 'left', 'center' (default) or 'right', the alignment of the narrower content
- * @param props.durationInMs - transition duration in milliseconds, 300 by default. 0 swaps with no transition
- * @param props.onTransitionEnd - called once each swap transition ends. Not called when `duration` is 0
+ * @param props.duration - CSS time value for the transition length, '0.3s' by default. '0s' swaps with no transition
+ * @param props.onTransitionEnd - called once each swap transition ends. Not called when `duration` is '0s'
  * @param props.announcements - texts for the polite `role="status"` live region, one per content. A
  * content with an assertive live region (e.g. `role="alert"`) overrides them
  * @param props.className - class of the container. Set a width here to make it fill its parent
@@ -83,7 +86,7 @@ const SlideSwap = ({
     showSwappedContent,
     direction = 'up',
     align = 'center',
-    durationInMs = DEFAULT_DURATION_IN_MS,
+    duration = DEFAULT_DURATION,
     onTransitionEnd,
     announcements,
     className,
@@ -142,7 +145,7 @@ const SlideSwap = ({
                 [styles.isSwapped]: showSwappedContent,
             })}
             style={applyCssVars({
-                [styles.vars.duration]: `${durationInMs}ms`,
+                [styles.vars.duration]: duration,
                 [styles.vars.offset]: direction === 'up' ? OFFSET : `-${OFFSET}`,
             })}
         >

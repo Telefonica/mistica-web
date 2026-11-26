@@ -29,7 +29,7 @@ export default {
             control: {type: 'select'},
         },
         duration: {
-            control: {type: 'range', min: 0, max: 2000, step: 100},
+            control: {type: 'text'},
         },
         primaryAnnouncement: {
             control: {type: 'text'},
@@ -53,7 +53,7 @@ export default {
 type Args = {
     direction: 'up' | 'down';
     align: 'left' | 'center' | 'right';
-    duration: number;
+    duration: string;
     primaryAnnouncement: string;
     swappedAnnouncement: string;
 };
@@ -81,7 +81,7 @@ export const Default: StoryComponent<Args> = ({
                         showSwappedContent={showSwappedContent}
                         direction={direction}
                         align={align}
-                        durationInMs={duration}
+                        duration={duration}
                         announcements={{primary: primaryAnnouncement, swapped: swappedAnnouncement}}
                         onTransitionEnd={() => setTransitionEndCount((count) => count + 1)}
                         swappedContent={
@@ -107,7 +107,7 @@ export const Default: StoryComponent<Args> = ({
                         showSwappedContent={showSwappedContent}
                         direction={direction}
                         align={align}
-                        durationInMs={duration}
+                        duration={duration}
                         swappedContent={
                             <Inline space={8} alignItems="center">
                                 <IconCheckRegular color={skinVars.colors.success} size={20} />
@@ -121,7 +121,7 @@ export const Default: StoryComponent<Args> = ({
                         showSwappedContent={showSwappedContent}
                         direction={direction}
                         align={align}
-                        durationInMs={duration}
+                        duration={duration}
                         swappedContent={<IconMoonRegular />}
                     >
                         <IconSunRegular />
@@ -136,7 +136,7 @@ Default.storyName = 'SlideSwap';
 Default.args = {
     direction: 'up',
     align: 'center',
-    duration: 300,
+    duration: '0.3s',
     primaryAnnouncement: '',
     swappedAnnouncement: 'Sending message',
 };
