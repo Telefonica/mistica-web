@@ -109,6 +109,9 @@ jobs:
         runs-on: ubuntu-latest
         needs: [build, build-acceptance]
         if: '!cancelled()'
+        permissions:
+            contents: read
+            actions: write
 
         steps:
             - uses: actions/checkout@v6
@@ -133,14 +136,31 @@ jobs:
             - if: hashFiles('reports/playwright-blob/*.zip') != ''
               run: yarn playwright merge-reports --config playwright.merge.config.ts reports/playwright-blob
 
+            - if: hashFiles('reports/playwright-blob/*.zip') != ''
+              uses: actions/upload-artifact@v4
+              with:
+                  name: playwright-report-html
+                  path: reports/playwright-merged/html/
+
             # The attachment paths of results.json point to the blob resources, not to the files of the HTML report.
             - if: hashFiles('reports/playwright-blob/*.zip') != ''
               uses: actions/upload-artifact@v4
               with:
-                  name: playwright-report
+                  name: playwright-report-json
                   path: |
-                      reports/playwright-merged/
+                      reports/playwright-merged/results.json
                       reports/playwright-blob/resources/
+
+            # The blobs of every job are only an input of the merge, so the run keeps only the two merged reports.
+            # The token of a fork PR cannot delete artifacts, so there the blobs expire after their one day retention.
+            - name: Delete the blob reports
+              continue-on-error: true
+              env:
+                  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              run: |
+                  gh api "repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts" --paginate \
+                      --jq '.artifacts[] | select(.name | startswith("blob-report-")) | .id' |
+                      xargs -r -I{} gh api -X DELETE "repos/${{ github.repository }}/actions/artifacts/{}"
 
     build-upload-failed-screenshots:
         runs-on: ubuntu-latest

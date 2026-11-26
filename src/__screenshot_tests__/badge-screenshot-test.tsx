@@ -5,7 +5,7 @@ const BADGE_VALUE_OPTIONS = ['undefined', '0', '2', '14'];
 
 for (const testCase of BADGE_VALUE_OPTIONS) {
     // TODO WIP temporary failure to check the merged Playwright report, revert before merge
-    const value = testCase === '2' ? '9' : testCase;
+    const value = testCase === '2' ? '14' : testCase;
     test(`Badge - value = ${testCase}`, async () => {
         await openStoryPage({
             id: 'components-badge--default',
