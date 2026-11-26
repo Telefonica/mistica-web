@@ -57,7 +57,7 @@
         "serve-static-storybook": "node ./scripts/serve-static-storybook.js",
         "detect-circular-dependencies": "npx dpdm --circular --exclude \"node_modules\" src/index.tsx packages/mistica-icons/src/generated/index.tsx",
         "audit-accessibility": "playwright test -c .github/actions/audit-accessibility/playwright.config.ts",
-        "audit-accessibility-docker": "docker compose -f .github/actions/audit-accessibility/docker-compose.yaml up -d --wait && cross-env PLAYWRIGHT_WS_ENDPOINT=ws://localhost:3000/ yarn audit-accessibility",
+        "audit-accessibility-docker": "yarn storybook-static && docker compose -f docker-compose.playwright.yml up -d --wait && cross-env PLAYWRIGHT_WS_ENDPOINT=ws://127.0.0.1:3000/ yarn audit-accessibility",
         "circular-dependencies": "yarn dpdm src/index.tsx packages/mistica-icons/src/generated/index.tsx --exclude \"node_modules\" --tree=false --warning=false --exit-code circular:1",
         "prepare": "husky install && node scripts/link-self.js",
         "edit-playroom-patch": "playroom/patch-playroom.sh"

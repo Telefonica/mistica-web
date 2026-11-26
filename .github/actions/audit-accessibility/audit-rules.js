@@ -67,7 +67,7 @@ const disabledRulesByStoryAndSkin = {
 const getDisabledRules = (story, skin) => {
     const disabledRulesForStory = disabledRulesByStoryAndSkin[story] || {};
     const disabledRulesForSkin = disabledRulesForStory[skin] || [];
-    const disabledRulesForAllSkins = disabledRulesForStory['all'] || [];
+    const disabledRulesForAllSkins = disabledRulesForStory.all || [];
     return [...disabledRulesForSkin, ...disabledRulesForAllSkins];
 };
 

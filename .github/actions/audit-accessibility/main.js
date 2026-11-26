@@ -181,7 +181,7 @@ const generateReportForGithub = async (results, missingPages) => {
     }
 
     lines.push('\nℹ️ You can run this locally by executing `yarn audit-accessibility`.');
-    require('../utils/github').commentPullRequest(lines.join('\n'));
+    await require('../utils/github').commentPullRequest(lines.join('\n'));
 };
 
 const main = async () => {

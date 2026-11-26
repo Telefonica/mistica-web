@@ -9,10 +9,10 @@ export default defineConfig({
     testDir: __dirname,
     testMatch: 'audit.spec.ts',
     fullyParallel: true,
-    outputDir: path.join(PATH_REPO_ROOT, 'reports/playwright-results'),
+    outputDir: path.join(PATH_REPO_ROOT, 'reports/playwright-a11y'),
     reporter: [
         ['list'],
-        ['html', {open: 'never', outputFolder: path.join(PATH_REPO_ROOT, 'reports/playwright-html')}],
+        ['html', {open: 'never', outputFolder: path.join(PATH_REPO_ROOT, 'reports/playwright-a11y-html')}],
     ],
     use: {
         baseURL: `http://localhost:${STORYBOOK_PORT}`,
@@ -27,6 +27,6 @@ export default defineConfig({
         command: 'node scripts/serve-static-storybook.js',
         cwd: PATH_REPO_ROOT,
         url: `http://localhost:${STORYBOOK_PORT}/index.json`,
-        reuseExistingServer: true,
+        reuseExistingServer: !process.env.CI && !PLAYWRIGHT_WS_ENDPOINT,
     },
 });

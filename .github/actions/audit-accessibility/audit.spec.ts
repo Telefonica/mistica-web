@@ -9,12 +9,12 @@ import type {AxeResults} from 'axe-core';
 const openStory = async (page: Page, story: string, skin: string) => {
     // Late images and fonts change the color contrast results
     await page.goto(`/iframe.html?viewMode=story&id=${story}&skin=${skin}`, {waitUntil: 'networkidle'});
-    // Some stories legitimately render no content, so a missing root is not a failure
-    await page
-        .locator('#storybook-root > *')
-        .first()
-        .waitFor({state: 'attached', timeout: 5000})
-        .catch(() => {});
+    const storyRoot = page.locator('#storybook-root > *').first();
+    try {
+        await storyRoot.waitFor({state: 'attached', timeout: 5000});
+    } catch {
+        // Some stories legitimately render no content, so a missing root is not a failure
+    }
 };
 
 const runAxe = (page: Page, story: string, skin: string) =>
