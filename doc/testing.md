@@ -31,12 +31,22 @@ run the tests. Use `--headed` to see the browser or `--ui` to open Playwright's 
 `openStoryPage` adds `acceptance-test` to the user agent so `isRunningAcceptanceTest` returns true.
 
 Screenshot differences are saved under `reports/playwright/`. To update the reference images, use the
-`update_screenshots` workflow or run the following commands in the Playwright container used by CI.
+`update_screenshots` workflow or run the tests locally with Docker Desktop running:
 
 ```sh
-yarn storybook-static
-CI=true yarn test-acceptance --update-snapshots
+yarn test-acceptance-docker src/__screenshot_tests__/popover-screenshot-test.tsx
+yarn test-acceptance-docker src/__screenshot_tests__/popover-screenshot-test.tsx --update-snapshots
 ```
+
+This command builds a fresh static Storybook and runs Chromium in the same Linux image and `linux/amd64`
+platform as CI. Test files, `--grep`, `--ui` and snapshot update flags are forwarded to Playwright. Reference
+images keep their existing paths. The tests run on your machine and connect to the browser in Docker. Use this
+command for screenshot comparisons and updates. Restart it after component changes to rebuild the static
+Storybook.
+
+Stop any existing Storybook on port 6006 first, so the tests use the static build from this checkout. The
+browser container stays running for subsequent commands. Stop it with
+`docker compose -f docker-compose.playwright.yml down`.
 
 ## Server rendering
 

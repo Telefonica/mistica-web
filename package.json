@@ -33,6 +33,7 @@
     "scripts": {
         "test": "jest --config jest.unit.config.js",
         "test-acceptance": "playwright test --config playwright.config.ts",
+        "test-acceptance-docker": "yarn storybook-static && docker compose -f docker-compose.playwright.yml up -d --wait && cross-env PLAYWRIGHT_WS_ENDPOINT=ws://127.0.0.1:3000/ yarn test-acceptance",
         "test-ssr": "node scripts/link-self.js && playwright test --config playwright.ssr.config.ts",
         "prettier-check": "prettier --check \"**/*.js\" \"**/*.tsx\" \"**/*.ts\" \"**/*.json\" \"**/*.css\" \"**/*.html\"",
         "lint": "eslint --report-unused-disable-directives .",
