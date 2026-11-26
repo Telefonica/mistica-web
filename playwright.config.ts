@@ -1,5 +1,8 @@
 import {defineConfig} from '@playwright/test';
 
+const PLAYWRIGHT_WS_ENDPOINT = process.env.PLAYWRIGHT_WS_ENDPOINT;
+const useStaticStorybook = Boolean(process.env.CI || PLAYWRIGHT_WS_ENDPOINT);
+
 export default defineConfig({
     testDir: './src',
     testMatch: [
@@ -12,7 +15,7 @@ export default defineConfig({
     timeout: 60000,
     fullyParallel: false,
     forbidOnly: !!process.env.CI,
-    workers: process.env.CI ? 2 : undefined,
+    workers: useStaticStorybook ? 2 : undefined,
     retries: 0,
     updateSnapshots: 'none',
     reporter: [['list'], ['html', {outputFolder: 'reports/playwright-html', open: 'never'}]],
@@ -33,6 +36,9 @@ export default defineConfig({
         locale: 'es-ES',
         timezoneId: 'UTC',
         trace: 'retain-on-failure',
+        connectOptions: PLAYWRIGHT_WS_ENDPOINT
+            ? {wsEndpoint: PLAYWRIGHT_WS_ENDPOINT, exposeNetwork: '<loopback>'}
+            : undefined,
         launchOptions: {
             env: {...process.env, LANG: 'es_ES.UTF-8', LANGUAGE: 'es_ES:es'},
             args: [
@@ -44,9 +50,9 @@ export default defineConfig({
         },
     },
     webServer: {
-        command: process.env.CI ? 'yarn serve-static-storybook' : 'yarn storybook-for-acceptance-tests',
+        command: useStaticStorybook ? 'yarn serve-static-storybook' : 'yarn storybook-for-acceptance-tests',
         port: 6006,
-        reuseExistingServer: !process.env.CI,
+        reuseExistingServer: !useStaticStorybook,
         timeout: 120000,
     },
 });
