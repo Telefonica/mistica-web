@@ -24,6 +24,21 @@ const IconContactBookRegular = ({color, size = 24, ...rest}: IconProps): JSX.Ele
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M12.782 2a3.75 3.75 0 0 1 3.75 3.75v2.502a.75.75 0 0 1-1.5 0V5.75a2.25 2.25 0 0 0-2.02-2.238l-.23-.012H6.958l-.001 17h3.297a.75.75 0 0 1 0 1.5H5.75A3.75 3.75 0 0 1 2 18.25V5.75A3.75 3.75 0 0 1 5.75 2zM3.5 18.25a2.25 2.25 0 0 0 1.957 2.229v-4.577H3.5zm0-3.848h1.958V9.598H3.5zM5.458 3.521A2.25 2.25 0 0 0 3.5 5.75v2.348h1.958zm13.534 14.127A3.01 3.01 0 0 1 22 20.656v.594a.75.75 0 0 1-.75.75h-8.5a.75.75 0 0 1-.75-.75v-.594l.004-.155a3.01 3.01 0 0 1 3.004-2.853zm-4.139 1.508a1.51 1.51 0 0 0-1.345 1.344h6.984a1.51 1.51 0 0 0-1.5-1.352h-3.984z"
+                    />
+                    <path
+                        fill={fillColor}
+                        d="M17.336 9.997a2.55 2.55 0 0 1 2.55 2.55v1.173a2.55 2.55 0 0 1-2.55 2.55h-1.173a2.55 2.55 0 0 1-2.55-2.55v-1.173a2.55 2.55 0 0 1 2.55-2.55zm-1.173 1.5c-.58 0-1.05.47-1.05 1.05v1.173c0 .58.47 1.05 1.05 1.05h1.173c.58 0 1.05-.47 1.05-1.05v-1.173c0-.58-.47-1.05-1.05-1.05z"
+                    />
+                </svg>
+            );
+        }
+
         if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>

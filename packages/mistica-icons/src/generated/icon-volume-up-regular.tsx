@@ -24,6 +24,17 @@ const IconVolumeUpRegular = ({color, size = 24, ...rest}: IconProps): JSX.Elemen
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M11.016 5.483c.696-.563 1.526-.694 2.279-.351V5.13c.894.407 1.26 1.292 1.26 2.104v9.53l-.004.153c-.044.767-.418 1.568-1.254 1.95-.753.343-1.585.212-2.281-.352l-.019-.015-3.059-2.646H5.852A3.86 3.86 0 0 1 2 11.995a3.85 3.85 0 0 1 3.852-3.85h2.086l3.06-2.646zm1.658 1.013c-.18-.082-.411-.093-.715.153l-3.25 2.813a.75.75 0 0 1-.49.182H5.852A2.35 2.35 0 0 0 3.5 11.996a2.36 2.36 0 0 0 2.352 2.36h2.367l.133.011a.75.75 0 0 1 .357.17l3.259 2.82c.3.239.527.228.706.147l.078-.044c.175-.117.303-.344.303-.696V7.235c0-.402-.168-.642-.381-.74m6.607 2.786a.75.75 0 0 1 .75.75v1.219h1.219a.75.75 0 0 1 0 1.5h-1.219v1.219a.75.75 0 0 1-1.5 0v-1.22h-1.218a.75.75 0 0 1 0-1.5h1.218v-1.218a.75.75 0 0 1 .75-.75"
+                    />
+                </svg>
+            );
+        }
+
         if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>

@@ -24,6 +24,21 @@ const IconWaitClockRegular = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M13.75 2A8.25 8.25 0 0 1 22 10.25v3.5A8.25 8.25 0 0 1 13.75 22h-3.5a8.3 8.3 0 0 1-2.083-.266.75.75 0 0 1 .378-1.45 6.8 6.8 0 0 0 1.705.216h3.5a6.75 6.75 0 0 0 6.75-6.75v-3.5a6.75 6.75 0 0 0-6.75-6.75h-3.5a6.75 6.75 0 0 0-6.75 6.75v3.5c0 1.82.721 3.469 1.893 4.684v-1.716a.75.75 0 0 1 1.5 0v2.839c0 .72-.584 1.303-1.304 1.303H2.75a.75.75 0 0 1 0-1.5h1.452A8.22 8.22 0 0 1 2 13.75v-3.5A8.25 8.25 0 0 1 10.25 2z"
+                    />
+                    <path
+                        fill={fillColor}
+                        d="M12 7.53a.75.75 0 0 1 .75.75v3.636l2.878 2.878a.75.75 0 0 1-1.06 1.06l-3.098-3.097-.094-.114a.75.75 0 0 1-.126-.416V8.28a.75.75 0 0 1 .75-.75"
+                    />
+                </svg>
+            );
+        }
+
         if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>

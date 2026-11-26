@@ -24,6 +24,17 @@ const IconChevronUpLight = ({color, size = 24, ...rest}: IconProps): JSX.Element
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M19.53 16.665a.5.5 0 0 0 .022-.707l-7.343-7.8a.5.5 0 0 0-.729 0l-7.344 7.804a.5.5 0 0 0 .728.686l6.982-7.418 6.977 7.414a.5.5 0 0 0 .707.021"
+                    />
+                </svg>
+            );
+        }
+
         if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>

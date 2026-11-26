@@ -24,6 +24,21 @@ const IconLogoutRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element 
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M10.78 2a3.75 3.75 0 0 1 3.697 3.12.75.75 0 1 1-1.479.25A2.25 2.25 0 0 0 10.78 3.5H5.748a2.25 2.25 0 0 0-2.25 2.25v12.5a2.25 2.25 0 0 0 2.25 2.25h5.032a2.25 2.25 0 0 0 2.217-1.86.75.75 0 0 1 1.477.26A3.75 3.75 0 0 1 10.78 22H5.748a3.75 3.75 0 0 1-3.75-3.75V5.75A3.75 3.75 0 0 1 5.748 2z"
+                    />
+                    <path
+                        fill={fillColor}
+                        d="M16.473 7.222a.75.75 0 0 1 1.06 0l4.25 4.248a.74.74 0 0 1 .21.615.74.74 0 0 1-.21.446l-4.25 4.248a.75.75 0 0 1-1.06-1.06l2.968-2.969H10.75a.75.75 0 0 1 0-1.5h8.689l-2.966-2.968a.75.75 0 0 1 0-1.06"
+                    />
+                </svg>
+            );
+        }
+
         if (skinName.match(/^blau/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>

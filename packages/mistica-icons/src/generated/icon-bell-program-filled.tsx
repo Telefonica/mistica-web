@@ -24,6 +24,17 @@ const IconBellProgramFilled = ({color, size = 24, ...rest}: IconProps): JSX.Elem
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M14.963 18.4a.75.75 0 0 1 .75.75c0 .188-.05.362-.1.492q-.081.212-.212.423c-.17.281-.412.584-.717.864-.612.56-1.527 1.07-2.685 1.07s-2.072-.51-2.684-1.07a4 4 0 0 1-.718-.864 2.6 2.6 0 0 1-.211-.423c-.05-.13-.1-.304-.1-.492a.75.75 0 0 1 .75-.75zM12.33 2.001a6.68 6.68 0 0 1 6.682 6.682v3.471l1.063 1.73c.489.794.603 1.842-.05 2.67-.427.541-.995.848-1.731.848H5.707c-.736 0-1.305-.307-1.732-.848-.653-.828-.539-1.876-.05-2.67l1.063-1.73V8.683A6.68 6.68 0 0 1 11.67 2zM12 7.327a.75.75 0 0 0-.75.75v3.25c0 .414.336.75.75.75h3.25a.75.75 0 0 0 0-1.5h-2.5v-2.5a.75.75 0 0 0-.75-.75"
+                    />
+                </svg>
+            );
+        }
+
         if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>

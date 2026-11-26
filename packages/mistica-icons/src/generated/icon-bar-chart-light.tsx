@@ -24,6 +24,17 @@ const IconBarChartLight = ({color, size = 24, ...rest}: IconProps): JSX.Element 
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M4.772 10.001a2.77 2.77 0 0 1 2.771 2.77v6.46a2.771 2.771 0 0 1-5.541 0v-6.46a2.77 2.77 0 0 1 2.77-2.77m0 1a1.77 1.77 0 0 0-1.77 1.77v6.46a1.77 1.77 0 0 0 3.541 0v-6.46a1.77 1.77 0 0 0-1.77-1.77m7.268-5.014a2.75 2.75 0 0 1 2.75 2.75v10.514a2.75 2.75 0 0 1-5.5 0V8.737a2.75 2.75 0 0 1 2.75-2.75m0 1a1.75 1.75 0 0 0-1.75 1.75v10.514a1.75 1.75 0 0 0 3.5 0V8.737a1.75 1.75 0 0 0-1.75-1.75m7.231-4.988a2.727 2.727 0 0 1 2.726 2.728v14.547a2.727 2.727 0 0 1-5.453 0V4.727a2.73 2.73 0 0 1 2.726-2.728m0 1.001c-.954 0-1.727.773-1.727 1.727v14.547a1.727 1.727 0 0 0 3.453 0V4.727c0-.954-.773-1.727-1.727-1.727"
+                    />
+                </svg>
+            );
+        }
+
         if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
