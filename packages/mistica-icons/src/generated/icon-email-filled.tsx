@@ -24,6 +24,21 @@ const IconEmailFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element =>
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="m8.666 11.465.003.004a4.73 4.73 0 0 0 6.686 0l.004-.004 5.55-5.626A3.74 3.74 0 0 1 22 8.484v7.033a3.75 3.75 0 0 1-3.75 3.75H5.75A3.75 3.75 0 0 1 2 15.517V8.484a3.74 3.74 0 0 1 1.094-2.648z"
+                    />
+                    <path
+                        fill={fillColor}
+                        d="M18.25 4.733c.488 0 .954.095 1.382.265l-5.337 5.41a3.23 3.23 0 0 1-4.566 0L4.372 4.996a3.7 3.7 0 0 1 1.378-.263z"
+                    />
+                </svg>
+            );
+        }
+
         if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>

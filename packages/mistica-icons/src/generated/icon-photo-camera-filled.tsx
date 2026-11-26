@@ -24,6 +24,17 @@ const IconPhotoCameraFilled = ({color, size = 24, ...rest}: IconProps): JSX.Elem
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M11.166 3.362c1.53 0 2.77 1.223 2.809 2.743h4.278c2.07 0 3.747 1.68 3.747 3.75v7.033a3.75 3.75 0 0 1-3.747 3.75H5.763a3.75 3.75 0 0 1-3.747-3.748L2 9.856a3.75 3.75 0 0 1 3.747-3.75H7.1a2.81 2.81 0 0 1 2.808-2.744zm-.127 6.222a3.15 3.15 0 0 0-3.15 3.15v1.273a3.15 3.15 0 0 0 3.15 3.15h1.273a3.15 3.15 0 0 0 3.15-3.15v-1.273a3.15 3.15 0 0 0-3.15-3.15zm6.474-.5c-.58 0-1.05.47-1.05 1.05v.4c0 .58.47 1.05 1.05 1.05h.43c.58 0 1.05-.47 1.05-1.05v-.4c0-.58-.47-1.05-1.05-1.05z"
+                    />
+                </svg>
+            );
+        }
+
         if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>

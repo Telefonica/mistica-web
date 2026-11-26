@@ -6,7 +6,7 @@
  */
 
 import * as React from 'react';
-import {useThemeVariant, skinVars as vars, useIconGradient} from '@telefonica/mistica/icon-runtime';
+import {useTheme, useThemeVariant, skinVars as vars, useIconGradient} from '@telefonica/mistica/icon-runtime';
 
 import type {IconProps} from '@telefonica/mistica/icon-runtime';
 
@@ -21,7 +21,24 @@ const IconUserScanRegular = ({color, size = 24, ...rest}: IconProps): JSX.Elemen
 
     const {fillValue: fillColor, gradientDef} = useIconGradient(color ?? defaultColor);
 
+    const {skinName} = useTheme();
+
     const getSvgContent = () => {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M22.002 5.748a3.75 3.75 0 0 0-3.75-3.75h-3.263a.75.75 0 0 0 0 1.5h3.262a2.25 2.25 0 0 1 2.25 2.25V9.01a.75.75 0 0 0 1.5 0zM5.748 1.998a3.75 3.75 0 0 0-3.75 3.75V9.01a.75.75 0 1 0 1.5 0V5.748a2.25 2.25 0 0 1 2.25-2.25H9.01a.75.75 0 0 0 0-1.5zm0 20.004a3.75 3.75 0 0 1-3.75-3.75V14.99a.75.75 0 0 1 1.5 0v3.262a2.25 2.25 0 0 0 2.25 2.25H9.01a.75.75 0 0 1 0 1.5zm12.504 0a3.75 3.75 0 0 0 3.75-3.75V14.99a.75.75 0 0 0-1.5 0v3.262a2.25 2.25 0 0 1-2.25 2.25h-3.263a.75.75 0 0 0 0 1.5zm-9.99-13.63a3.25 3.25 0 0 1 3.25-3.25h.974a3.25 3.25 0 0 1 3.25 3.25v.974a3.25 3.25 0 0 1-3.25 3.25h-.974a3.25 3.25 0 0 1-3.25-3.25zm3.25-1.75a1.75 1.75 0 0 0-1.75 1.75v.974c0 .967.784 1.75 1.75 1.75h.974a1.75 1.75 0 0 0 1.75-1.75v-.974a1.75 1.75 0 0 0-1.75-1.75z"
+                    />
+                    <path
+                        fill={fillColor}
+                        d="M9.835 13.594a3.75 3.75 0 0 0-3.75 3.75v.789c0 .414.335.75.75.75h10.328a.75.75 0 0 0 .75-.75v-.79a3.75 3.75 0 0 0-3.75-3.75zm-2.25 3.75a2.25 2.25 0 0 1 2.25-2.25h4.327a2.25 2.25 0 0 1 2.25 2.25v.039H7.586z"
+                    />
+                </svg>
+            );
+        }
+
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

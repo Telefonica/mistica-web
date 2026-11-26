@@ -24,6 +24,17 @@ const IconPenFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M14.22 3.276c1.73-1.73 4.554-1.681 6.267.032l.205.205c1.713 1.713 1.762 4.537.032 6.267l-10.49 10.489-.013.014c-.276.262-1.118 1.01-2.562 1.245h-.003l-2.568.406-.001-.001c-.636.103-1.68.19-2.445-.575-.766-.767-.678-1.814-.575-2.45l.406-2.564v-.003c.234-1.443.983-2.286 1.245-2.561l.013-.013 8.648-8.65 6.503 6.504 1.061-1.061-6.504-6.503z"
+                    />
+                </svg>
+            );
+        }
+
         if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>

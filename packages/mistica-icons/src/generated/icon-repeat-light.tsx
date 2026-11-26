@@ -24,6 +24,21 @@ const IconRepeatLight = ({color, size = 24, ...rest}: IconProps): JSX.Element =>
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M6.557 9.587a.5.5 0 0 1 .5.5v1.09a6.163 6.163 0 0 0 6.163 6.163h7.33l-1.855-1.854a.5.5 0 0 1 .707-.707l2.267 2.265c.439.44.439 1.152 0 1.591l-2.267 2.267a.5.5 0 1 1-.707-.707l1.855-1.855h-7.33a7.163 7.163 0 0 1-7.163-7.163v-1.09a.5.5 0 0 1 .5-.5"
+                    />
+                    <path
+                        fill={fillColor}
+                        d="M4.598 3.098a.5.5 0 0 1 .707.707L3.45 5.66h7.33a7.163 7.163 0 0 1 7.163 7.163v1.09a.5.5 0 1 1-1 0v-1.09A6.163 6.163 0 0 0 10.78 6.66H3.45l1.855 1.854a.5.5 0 0 1-.707.707L2.33 6.956a1.126 1.126 0 0 1 0-1.591z"
+                    />
+                </svg>
+            );
+        }
+
         if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
