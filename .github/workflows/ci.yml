@@ -57,6 +57,14 @@ jobs:
                   name: failed-screenshots-ssr
                   path: reports/playwright/**/*-diff.png
 
+            - uses: actions/upload-artifact@v4
+              if: always()
+              with:
+                  name: blob-report-ssr
+                  path: reports/playwright-blob/
+                  if-no-files-found: ignore
+                  retention-days: 1
+
     build-acceptance:
         runs-on: ubuntu-latest
         container:
@@ -88,6 +96,51 @@ jobs:
               with:
                   name: failed-screenshots-${{ matrix.shard }}
                   path: reports/playwright/**/*-diff.png
+
+            - uses: actions/upload-artifact@v4
+              if: always()
+              with:
+                  name: blob-report-${{ matrix.shard }}
+                  path: reports/playwright-blob/
+                  if-no-files-found: ignore
+                  retention-days: 1
+
+    build-test-report:
+        runs-on: ubuntu-latest
+        needs: [build, build-acceptance]
+        if: '!cancelled()'
+
+        steps:
+            - uses: actions/checkout@v6
+              with:
+                  persist-credentials: false
+
+            - uses: actions/setup-node@v6
+              with:
+                  node-version: 24
+            - run: corepack enable
+
+            - name: Install dependencies
+              run: yarn install --immutable --immutable-cache
+
+            - uses: actions/download-artifact@v4
+              with:
+                  pattern: blob-report-*
+                  merge-multiple: true
+                  path: reports/playwright-blob/
+
+            # A job that fails before its tests has no blob, so the merge runs only if a blob exists.
+            - if: hashFiles('reports/playwright-blob/*.zip') != ''
+              run: yarn playwright merge-reports --config playwright.merge.config.ts reports/playwright-blob
+
+            # The attachment paths of results.json point to the blob resources, not to the files of the HTML report.
+            - if: hashFiles('reports/playwright-blob/*.zip') != ''
+              uses: actions/upload-artifact@v4
+              with:
+                  name: playwright-report
+                  path: |
+                      reports/playwright-merged/
+                      reports/playwright-blob/resources/
 
     build-upload-failed-screenshots:
         runs-on: ubuntu-latest

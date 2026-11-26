@@ -1,7 +1,23 @@
 import {defineConfig} from '@playwright/test';
 
+import type {ReporterDescription} from '@playwright/test';
+
 const PLAYWRIGHT_WS_ENDPOINT = process.env.PLAYWRIGHT_WS_ENDPOINT;
 const useStaticStorybook = Boolean(process.env.CI || PLAYWRIGHT_WS_ENDPOINT);
+
+/**
+ * A CI job runs only a part of the tests, so it writes a blob that the build-test-report job merges with the
+ * other blobs into one HTML report and one JSON report (see playwright.merge.config.ts).
+ * The JSON report lets scripts and AI agents filter the failures without a read of the full run.
+ */
+export const createReporters = (reportName: string, blobFileName?: string): Array<ReporterDescription> =>
+    process.env.CI
+        ? [['list'], ['blob', {outputDir: 'reports/playwright-blob', fileName: blobFileName}]]
+        : [
+              ['list'],
+              ['html', {outputFolder: `reports/${reportName}-html`, open: 'never'}],
+              ['json', {outputFile: `reports/${reportName}-results.json`}],
+          ];
 
 export default defineConfig({
     testDir: './src',
@@ -18,7 +34,7 @@ export default defineConfig({
     workers: useStaticStorybook ? 2 : undefined,
     retries: 0,
     updateSnapshots: 'none',
-    reporter: [['list'], ['html', {outputFolder: 'reports/playwright-html', open: 'never'}]],
+    reporter: createReporters('playwright'),
     expect: {
         timeout: 10000,
         toHaveScreenshot: {
