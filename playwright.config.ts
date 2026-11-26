@@ -5,6 +5,9 @@ import type {ReporterDescription} from '@playwright/test';
 const PLAYWRIGHT_WS_ENDPOINT = process.env.PLAYWRIGHT_WS_ENDPOINT;
 const useStaticStorybook = Boolean(process.env.CI || PLAYWRIGHT_WS_ENDPOINT);
 
+// Skia rounds colors by 1-2 units on a different CPU (CI runners, Rosetta on a Mac) even with the same image.
+const PIXEL_COLOR_THRESHOLD = 0.01;
+
 /**
  * A CI job runs only a part of the tests, so it writes a blob that the build-test-report job merges with the
  * other blobs into one HTML report and one JSON report (see playwright.merge.config.ts).
@@ -39,12 +42,12 @@ export default defineConfig({
         timeout: 10000,
         toHaveScreenshot: {
             pathTemplate: '{testDir}/{testFileDir}/__image_snapshots__/{arg}{ext}',
-            threshold: 0.01,
+            threshold: PIXEL_COLOR_THRESHOLD,
             animations: 'allow',
             caret: 'initial',
             scale: 'device',
         },
-        toMatchSnapshot: {threshold: 0.01},
+        toMatchSnapshot: {threshold: PIXEL_COLOR_THRESHOLD},
     },
     use: {
         browserName: 'chromium',

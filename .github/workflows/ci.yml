@@ -166,6 +166,10 @@ jobs:
         runs-on: ubuntu-latest
         needs: [build, build-acceptance]
         if: '!cancelled()'
+        permissions:
+            contents: read
+            pull-requests: write
+            actions: write
 
         steps:
             - uses: actions/checkout@v6
@@ -186,6 +190,22 @@ jobs:
                   pattern: failed-screenshots-*
                   merge-multiple: true
                   path: reports/playwright/
+
+            - uses: actions/upload-artifact@v4
+              with:
+                  name: failed-screenshots
+                  path: reports/playwright/**/*-diff.png
+                  if-no-files-found: ignore
+
+            # Every test job uploads its own diffs, so the run keeps only the single zip above.
+            - name: Delete the failed screenshots of every job
+              continue-on-error: true
+              env:
+                  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              run: |
+                  gh api "repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts" --paginate \
+                      --jq '.artifacts[] | select(.name | startswith("failed-screenshots-")) | .id' |
+                      xargs -r -I{} gh api -X DELETE "repos/${{ github.repository }}/actions/artifacts/{}"
 
             - name: 'Upload failed screenshot diffs'
               uses: './.github/actions/upload-failed-screenshots'
