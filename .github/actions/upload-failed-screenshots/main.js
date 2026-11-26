@@ -61,9 +61,9 @@ const main = async () => {
                 '**Screenshot tests report**',
                 '',
                 ...uploads.map(({filename, url}) => {
-                    // src/__screenshot_tests__/__image_snapshots__/__diff_output__/suite-screenshot-test-tsx-name-1-diff.png
+                    // Playwright diff path: reports/playwright/<test-output-dir>/<screenshot-name>-diff.png.
                     const name = basename(filename).replace(/(-1)?-diff.png$/, '');
-                    const [testSuite, testName] = name.split(/-screenshot-test-tsx-/);
+                    const [testSuite, testName = name] = name.split(/-screenshot-test-tsx-/);
 
                     return [
                         `<details>`,

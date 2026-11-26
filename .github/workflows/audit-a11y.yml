@@ -26,8 +26,6 @@ jobs:
             - run: corepack enable
 
             - name: Install dependencies
-              env:
-                  PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: 'true'
               run: yarn install --immutable --immutable-cache
 
             - name: 'Build storybook'

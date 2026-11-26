@@ -1,45 +1,42 @@
+import {test, expectScreenshot} from '../../test-utils/playwright';
 import {openStoryPage, screen} from '../../test-utils';
 
-test.each`
-    actions              | footerImage
-    ${'none'}            | ${false}
-    ${'button'}          | ${false}
-    ${'link'}            | ${false}
-    ${'button and link'} | ${false}
-    ${'none'}            | ${true}
-    ${'button'}          | ${true}
-    ${'link'}            | ${true}
-    ${'button and link'} | ${true}
-`('Advanced Data Card actions: $actions - footerImage: $footerImage', async ({actions, footerImage}) => {
-    await openStoryPage({
-        id: 'community-vivo-advanceddatacard--default',
-        device: 'MOBILE_IOS',
-        args: {actions, footerImage},
+for (const testCase of [
+    {actions: 'none', footerImage: false},
+    {actions: 'button', footerImage: false},
+    {actions: 'link', footerImage: false},
+    {actions: 'button and link', footerImage: false},
+    {actions: 'none', footerImage: true},
+    {actions: 'button', footerImage: true},
+    {actions: 'link', footerImage: true},
+    {actions: 'button and link', footerImage: true},
+] as const) {
+    const {actions, footerImage} = testCase;
+    test(`Advanced Data Card actions: ${testCase.actions} - footerImage: ${testCase.footerImage}`, async () => {
+        await openStoryPage({
+            id: 'community-vivo-advanceddatacard--default',
+            device: 'MOBILE_IOS',
+            args: {actions, footerImage},
+        });
+
+        const element = await screen.findByTestId('advanced-data-card');
+        await expectScreenshot(element);
     });
+}
 
-    const element = await screen.findByTestId('advanced-data-card');
-    const image = await element.screenshot();
+for (const testCase of [{slot: 0}, {slot: 1}, {slot: 3}] as const) {
+    const {slot} = testCase;
+    test(`Advanced Data Card slots: ${testCase.slot}`, async () => {
+        await openStoryPage({
+            id: 'community-vivo-advanceddatacard--default',
+            device: 'MOBILE_IOS',
+            args: {slot},
+        });
 
-    expect(image).toMatchImageSnapshot();
-});
-
-test.each`
-    slot
-    ${0}
-    ${1}
-    ${3}
-`('Advanced Data Card slots: $slot', async ({slot}) => {
-    await openStoryPage({
-        id: 'community-vivo-advanceddatacard--default',
-        device: 'MOBILE_IOS',
-        args: {slot},
+        const element = await screen.findByTestId('advanced-data-card');
+        await expectScreenshot(element);
     });
-
-    const element = await screen.findByTestId('advanced-data-card');
-    const image = await element.screenshot();
-
-    expect(image).toMatchImageSnapshot();
-});
+}
 
 test('Advanced Data Card slots: 3 no divider', async () => {
     await openStoryPage({
@@ -49,9 +46,7 @@ test('Advanced Data Card slots: 3 no divider', async () => {
     });
 
     const element = await screen.findByTestId('advanced-data-card');
-    const image = await element.screenshot();
-
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(element);
 });
 
 test('Advanced Data Card inside Carousel', async () => {
@@ -61,9 +56,7 @@ test('Advanced Data Card inside Carousel', async () => {
     });
 
     const element = await screen.findByTestId('advanced-data-card-carousel');
-    const image = await element.screenshot();
-
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(element);
 });
 
 test('Advanced Data Card without stackingGroup, with top actions and too long title', async () => {
@@ -78,7 +71,5 @@ test('Advanced Data Card without stackingGroup, with top actions and too long ti
         },
     });
 
-    const image = await page.screenshot({fullPage: true});
-
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(page, {...{fullPage: true}});
 });

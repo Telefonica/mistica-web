@@ -1,0 +1,23 @@
+# Adapted from Matteo's accessibility audit PoC (#1836).
+# Keep the image and Playwright version aligned with package.json and .github/workflows/ci.yml.
+services:
+    playwright:
+        image: mcr.microsoft.com/playwright:v1.64.1-noble
+        platform: linux/amd64
+        init: true
+        environment:
+            LANG: es_ES.UTF-8
+            LANGUAGE: es_ES:es
+        # Forward the existing CI launch options, including Chromium's font rendering flags.
+        command: npx -y playwright@1.64.1 run-server --port 3000 --host 0.0.0.0 --unsafe
+        ports:
+            - '127.0.0.1:3000:3000'
+        healthcheck:
+            test:
+                - CMD
+                - node
+                - -e
+                - "require('net').connect(3000).on('connect', () => process.exit(0)).on('error', () => process.exit(1))"
+            interval: 2s
+            retries: 60
+        shm_size: 1gb

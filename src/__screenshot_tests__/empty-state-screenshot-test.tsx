@@ -1,3 +1,4 @@
+import {test, expectScreenshot} from '../test-utils/playwright';
 import {openStoryPage, screen} from '../test-utils';
 
 import type {Device} from '../test-utils';
@@ -17,21 +18,22 @@ const createCases = () => {
     return cases;
 };
 
-test.each(devices)('EmptyState in %s with image', async (device) => {
-    await openStoryPage({
-        id: 'patterns-empty-states-emptystate--with-image',
-        device,
+for (const testCase of devices) {
+    const device = testCase;
+    test(`EmptyState in ${testCase} with image`, async () => {
+        await openStoryPage({
+            id: 'patterns-empty-states-emptystate--with-image',
+            device,
+        });
+
+        const emptyState = await screen.findByTestId('empty-state-with-image');
+        await expectScreenshot(emptyState);
     });
+}
 
-    const emptyState = await screen.findByTestId('empty-state-with-image');
-    const image = await emptyState.screenshot();
-
-    expect(image).toMatchImageSnapshot();
-});
-
-test.each(createCases())(
-    'EmptyState in %s with %s asset and actions = %s',
-    async (device, asset, actions) => {
+for (const testCase of createCases()) {
+    const [device, asset, actions] = testCase;
+    test(`EmptyState in ${testCase[0]} with ${testCase[1]} asset and actions = ${testCase[2]}`, async () => {
         await openStoryPage({
             id: 'patterns-empty-states-emptystate--with-icon',
             device: device as Device,
@@ -39,20 +41,19 @@ test.each(createCases())(
         });
 
         const emptyState = await screen.findByTestId('empty-state-with-icon');
-        const image = await emptyState.screenshot();
-
-        expect(image).toMatchImageSnapshot();
-    }
-);
-
-test.each(devices)('EmptyState in %s with small image', async (device) => {
-    await openStoryPage({
-        id: 'patterns-empty-states-emptystate--with-small-image',
-        device,
+        await expectScreenshot(emptyState);
     });
+}
 
-    const emptyState = await screen.findByTestId('empty-state-with-small-image');
-    const image = await emptyState.screenshot();
+for (const testCase of devices) {
+    const device = testCase;
+    test(`EmptyState in ${testCase} with small image`, async () => {
+        await openStoryPage({
+            id: 'patterns-empty-states-emptystate--with-small-image',
+            device,
+        });
 
-    expect(image).toMatchImageSnapshot();
-});
+        const emptyState = await screen.findByTestId('empty-state-with-small-image');
+        await expectScreenshot(emptyState);
+    });
+}

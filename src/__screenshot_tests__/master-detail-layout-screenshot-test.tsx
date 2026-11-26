@@ -1,22 +1,24 @@
+import {test, expectScreenshot} from '../test-utils/playwright';
 import {openStoryPage, screen} from '../test-utils';
 
 import type {Device} from '../test-utils';
 
 const TESTABLE_DEVICES: Array<Device> = ['MOBILE_IOS', 'DESKTOP'];
 
-test.each(TESTABLE_DEVICES)('MasterDetailLayout in %s', async (device) => {
-    const page = await openStoryPage({
-        id: 'layout-master-detail-layout--default',
-        device,
+for (const testCase of TESTABLE_DEVICES) {
+    const device = testCase;
+    test(`MasterDetailLayout in ${testCase}`, async () => {
+        const page = await openStoryPage({
+            id: 'layout-master-detail-layout--default',
+            device,
+        });
+
+        await expectScreenshot(page);
+
+        await (await screen.findByText('Personal details')).click();
+
+        await screen.findByText('You are inside Personal details section');
+
+        await expectScreenshot(page);
     });
-
-    const masterImage = await page.screenshot();
-    expect(masterImage).toMatchImageSnapshot();
-
-    await page.click(await screen.findByText('Personal details'));
-
-    await screen.findByText('You are inside Personal details section');
-
-    const detailImage = await page.screenshot();
-    expect(detailImage).toMatchImageSnapshot();
-});
+}

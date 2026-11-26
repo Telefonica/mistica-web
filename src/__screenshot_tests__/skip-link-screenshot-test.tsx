@@ -1,6 +1,9 @@
+import {test, expect, expectScreenshot} from '../test-utils/playwright';
 import {openStoryPage, screen} from '../test-utils';
 
 test('SkipLink', async () => {
+    test.setTimeout(100000);
+
     const page = await openStoryPage({
         id: 'components-skiplink--default',
         device: 'DESKTOP',
@@ -12,8 +15,7 @@ test('SkipLink', async () => {
 
     await skipLink.focus();
 
-    const image = await page.screenshot();
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(page);
 
     await skipLink.click();
 
@@ -24,4 +26,4 @@ test('SkipLink', async () => {
     });
 
     expect(await mainContentLink.evaluate((el) => el === document.activeElement)).toBe(true);
-}, 100000);
+});

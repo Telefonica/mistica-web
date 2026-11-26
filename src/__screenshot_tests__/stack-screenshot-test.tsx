@@ -1,18 +1,15 @@
+import {test, expectScreenshot} from '../test-utils/playwright';
 import {openStoryPage} from '../test-utils';
 
-test.each`
-    space
-    ${0}
-    ${32}
-    ${'between'}
-    ${'evenly'}
-`('Stack space: $space', async ({space}) => {
-    const page = await openStoryPage({
-        id: 'layout-stack--default',
-        args: {space},
-        device: 'MOBILE_IOS',
-    });
+for (const testCase of [{space: 0}, {space: 32}, {space: 'between'}, {space: 'evenly'}] as const) {
+    const {space} = testCase;
+    test(`Stack space: ${testCase.space}`, async () => {
+        const page = await openStoryPage({
+            id: 'layout-stack--default',
+            args: {space},
+            device: 'MOBILE_IOS',
+        });
 
-    const image = await page.screenshot({fullPage: true});
-    expect(image).toMatchImageSnapshot();
-});
+        await expectScreenshot(page, {...{fullPage: true}});
+    });
+}
