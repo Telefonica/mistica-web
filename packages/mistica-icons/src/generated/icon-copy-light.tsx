@@ -24,6 +24,17 @@ const IconCopyLight = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M19.502 10.004a2.5 2.5 0 0 0-2.004-2.45v6.442a3.5 3.5 0 0 1-3.5 3.5H7.551a2.5 2.5 0 0 0 2.451 2.008h7a2.5 2.5 0 0 0 2.5-2.5zm1 7a3.5 3.5 0 0 1-3.5 3.5h-7a3.5 3.5 0 0 1-3.47-3.04 3.5 3.5 0 0 1-3.034-3.468v-7a3.5 3.5 0 0 1 3.5-3.5h7a3.5 3.5 0 0 1 3.469 3.04 3.5 3.5 0 0 1 3.035 3.468zM4.498 13.996a2.5 2.5 0 0 0 2.5 2.5h7a2.5 2.5 0 0 0 2.5-2.5v-7a2.5 2.5 0 0 0-2.5-2.5h-7a2.5 2.5 0 0 0-2.5 2.5z"
+                    />
+                </svg>
+            );
+        }
+
         if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>

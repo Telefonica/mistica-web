@@ -24,6 +24,21 @@ const IconGlassRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element =
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M7.65 6.536a.75.75 0 0 0-1.068-1.052l-1.43 1.452a.75.75 0 1 0 1.069 1.052zM10.822 7.8A.75.75 0 0 0 9.75 6.753L6.865 9.705a.75.75 0 0 0 1.073 1.048z"
+                    />
+                    <path
+                        fill={fillColor}
+                        d="m18.25 2-12.484.001a3.75 3.75 0 0 0-3.75 3.75L2 18.249a3.75 3.75 0 0 0 3.75 3.75h12.484a3.75 3.75 0 0 0 3.75-3.75L22 5.752a3.75 3.75 0 0 0-3.75-3.75M5.766 3.501H18.25A2.25 2.25 0 0 1 20.5 5.75l-.016 12.499a2.25 2.25 0 0 1-2.25 2.25H5.75a2.25 2.25 0 0 1-2.25-2.25l.016-12.497a2.25 2.25 0 0 1 2.25-2.25"
+                    />
+                </svg>
+            );
+        }
+
         if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>

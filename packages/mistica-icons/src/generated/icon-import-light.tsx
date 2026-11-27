@@ -24,6 +24,17 @@ const IconImportLight = ({color, size = 24, ...rest}: IconProps): JSX.Element =>
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M2 18.25V14a.5.5 0 0 1 1 0v4.25a3.25 3.25 0 0 0 3.25 3.25h11.5A3.25 3.25 0 0 0 21 18.25V14a.5.5 0 0 1 1 0v4.25a4.25 4.25 0 0 1-4.25 4.25H6.25A4.25 4.25 0 0 1 2 18.25m13.25-12.5a3.25 3.25 0 0 0-6.5 0v2.5a.5.5 0 0 1-.5.5h-1.1c-1.21 0-1.825 1.47-.964 2.338h-.001l4.84 4.88h.001a1.353 1.353 0 0 0 1.948 0l4.841-4.88c.86-.868.245-2.338-.965-2.338h-1.1a.5.5 0 0 1-.5-.5zm1 2h.6c2.109 0 3.155 2.55 1.675 4.042l-4.84 4.878a2.353 2.353 0 0 1-3.37 0l-4.84-4.878C3.995 10.3 5.04 7.75 7.15 7.75h.6v-2a4.25 4.25 0 0 1 8.5 0z"
+                    />
+                </svg>
+            );
+        }
+
         if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>

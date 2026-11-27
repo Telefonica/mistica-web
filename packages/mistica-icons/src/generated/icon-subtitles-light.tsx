@@ -24,6 +24,21 @@ const IconSubtitlesLight = ({color, size = 24, ...rest}: IconProps): JSX.Element
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M13.327 14.01a.5.5 0 0 1 0 .98l-.1.01H6.484a.5.5 0 0 1 0-1h6.743zM17.523 11a.5.5 0 1 1 0 1H6.484a.5.5 0 0 1 0-1z"
+                    />
+                    <path
+                        fill={fillColor}
+                        d="M14.127 2.01A8.3 8.3 0 0 1 22 10.3v3.4a8.3 8.3 0 0 1-8.3 8.3h-3.4a8.3 8.3 0 0 1-8.29-7.873L2 13.7v-3.4A8.3 8.3 0 0 1 10.3 2h3.4zM10.3 3A7.3 7.3 0 0 0 3 10.3v3.4l.01.375A7.3 7.3 0 0 0 10.3 21h3.4a7.3 7.3 0 0 0 7.3-7.3v-3.4a7.3 7.3 0 0 0-6.925-7.29L13.7 3z"
+                    />
+                </svg>
+            );
+        }
+
         if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>

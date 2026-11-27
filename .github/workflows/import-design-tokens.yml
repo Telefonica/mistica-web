@@ -15,6 +15,26 @@ on:
                 description: 'Branch name for the PR. By default it is "import-design-tokens-production"'
                 required: false
                 default: 'import-design-tokens-production'
+            include-skins:
+                type: boolean
+                description: 'Include the TS skins (src/skins)'
+                required: false
+                default: true
+            include-community-skins:
+                type: boolean
+                description: 'Include the community TS skins (src/community/skins)'
+                required: false
+                default: false
+            include-css:
+                type: boolean
+                description: 'Include the CSS files (css/*.css)'
+                required: false
+                default: false
+            include-community-css:
+                type: boolean
+                description: 'Include the community CSS files (css/community)'
+                required: false
+                default: false
 
 permissions:
     contents: write
@@ -64,16 +84,57 @@ jobs:
             - name: Generate skins from design tokens
               run: cd packages/generate-design-tokens && yarn && yarn generate
 
-            # todo https://github.com/Telefonica/mistica-web/issues/1822 format css and community skins too
+            - name: Select outputs
+              id: outputs
+              env:
+                  INCLUDE_SKINS: ${{ inputs.include-skins }}
+                  INCLUDE_COMMUNITY_SKINS: ${{ inputs.include-community-skins }}
+                  INCLUDE_CSS: ${{ inputs.include-css }}
+                  INCLUDE_COMMUNITY_CSS: ${{ inputs.include-community-css }}
+              run: |
+                  prettier_paths=()
+                  add_paths=()
+                  if [ "$INCLUDE_SKINS" = "true" ]; then
+                    prettier_paths+=("src/skins")
+                    add_paths+=("src/skins")
+                  fi
+                  if [ "$INCLUDE_COMMUNITY_SKINS" = "true" ]; then
+                    prettier_paths+=("src/community/skins")
+                    add_paths+=("src/community/skins")
+                  fi
+                  # css/community is a separate output, so these globs must not reach the subfolder
+                  if [ "$INCLUDE_CSS" = "true" ]; then
+                    prettier_paths+=("css/*.css")
+                    add_paths+=(":(glob)css/*.css")
+                  fi
+                  if [ "$INCLUDE_COMMUNITY_CSS" = "true" ]; then
+                    prettier_paths+=("css/community")
+                    add_paths+=("css/community")
+                  fi
+                  if [ ${#add_paths[@]} -eq 0 ]; then
+                    echo "Error: select at least one output"
+                    exit 1
+                  fi
+                  echo "prettier-paths=${prettier_paths[*]}" >> $GITHUB_OUTPUT
+                  {
+                    echo "add-paths<<EOF"
+                    printf '%s\n' "${add_paths[@]}"
+                    echo "EOF"
+                  } >> $GITHUB_OUTPUT
+
             - name: Prettier
-              run: yarn prettier src/skins --write
+              env:
+                  PRETTIER_PATHS: ${{ steps.outputs.outputs.prettier-paths }}
+              # Unquoted on purpose: the shell splits the list and prettier expands the globs
+              run: |
+                  set -f
+                  yarn prettier $PRETTIER_PATHS --write
 
             - name: Create Pull Request
               uses: peter-evans/create-pull-request@v5
               with:
                   token: ${{ secrets.GH_TOKEN_MISTICA }}
-                  # todo https://github.com/Telefonica/mistica-web/issues/1822 add css and community skins
-                  add-paths: 'src/skins'
+                  add-paths: ${{ steps.outputs.outputs.add-paths }}
                   commit-message: 'feat(skin): update design tokens'
                   title: 'feat(skin): update design tokens'
                   branch: ${{github.event.inputs.branch}}

@@ -24,6 +24,17 @@ const IconGlassFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element =>
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M18.25 2A3.75 3.75 0 0 1 22 5.75l-.016 12.5a3.75 3.75 0 0 1-3.75 3.75H5.75A3.75 3.75 0 0 1 2 18.25l.016-12.5a3.75 3.75 0 0 1 3.75-3.749zm-7.441 4.74a.75.75 0 0 0-1.061.012L6.864 9.706a.75.75 0 0 0 1.074 1.047L10.82 7.8a.75.75 0 0 0-.012-1.06M7.642 5.476a.75.75 0 0 0-1.061.008l-1.43 1.452A.75.75 0 0 0 6.22 7.989l1.43-1.452a.75.75 0 0 0-.008-1.06"
+                    />
+                </svg>
+            );
+        }
+
         if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>

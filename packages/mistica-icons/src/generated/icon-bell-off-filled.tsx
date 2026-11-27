@@ -24,6 +24,17 @@ const IconBellOffFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element 
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M14.775 18.911a.752.752 0 0 1 .635 1.148c-.723 1.157-1.949 1.94-3.412 1.94-1.47 0-2.687-.799-3.407-1.951a.75.75 0 0 1 .636-1.148zm7.005 1.808a.75.75 0 0 1-1.06 1.06l-3.866-3.865h1.44a2.3 2.3 0 0 0 .6-.08zm-4.926-2.805H5.705c-.736 0-1.305-.307-1.732-.849-.653-.827-.539-1.875-.05-2.67l1.063-1.729V8.683c0-.789.137-1.545.388-2.247zM12.331 2.001a6.68 6.68 0 0 1 6.682 6.682v3.983l1.063 1.73c.489.794.603 1.842-.05 2.67a2.13 2.13 0 0 1-1.131.768L6.08 5.021A6.68 6.68 0 0 1 11.668 2zM2.22 2.22a.75.75 0 0 1 1.06 0l2.8 2.8a6.7 6.7 0 0 0-.706 1.416L2.22 3.28a.75.75 0 0 1 0-1.06"
+                    />
+                </svg>
+            );
+        }
+
         if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>

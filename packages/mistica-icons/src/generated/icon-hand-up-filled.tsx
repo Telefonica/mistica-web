@@ -24,6 +24,17 @@ const IconHandUpFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element =
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="m14.522 7.57 1.489-.001c1.752 0 3.173 1.469 3.174 3.243v5.195h-.003c0 .606-.217.94-.46 1.137-.268.219-.638.325-.984.325H9.594c-.28 0-.408-.02-.583-.11-.221-.11-.54-.346-1.118-.888l-2.462-2.283-.02-.02c-.815-.814-.781-2.143.028-2.953.812-.812 2.138-.784 2.95.022l.44.43q.002-.265 0-.587V4.156h.001a2.225 2.225 0 0 1 4.448.07h-.003v3.343h1.247m4.661 12.461v-.31a.75.75 0 0 0-.75-.75H9.61a.75.75 0 0 0-.748.695v.227c0 1.147.92 2.107 2.07 2.107h6.146c1.113 0 2.05-.866 2.105-1.968"
+                    />
+                </svg>
+            );
+        }
+
         if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>

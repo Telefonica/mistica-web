@@ -24,6 +24,21 @@ const IconVideoLight = ({color, size = 24, ...rest}: IconProps): JSX.Element => 
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M9.628 9.8a1.87 1.87 0 0 1 1.835.006v-.001l3.698 2.125h.001c.598.347.928.977.921 1.62l-.001.122a1.85 1.85 0 0 1-.92 1.52l-.002.001-3.696 2.125h-.001a1.87 1.87 0 0 1-1.835.005 1.88 1.88 0 0 1-.973-1.499l-.005-.13V11.43c0-.707.414-1.321.978-1.63m1.337.872a.87.87 0 0 0-.857.005.88.88 0 0 0-.458.753v4.263l.01.116a.89.89 0 0 0 .448.637c.27.148.593.157.857.005l3.697-2.125a.85.85 0 0 0 .421-.753v-.023a.85.85 0 0 0-.422-.754z"
+                    />
+                    <path
+                        fill={fillColor}
+                        d="M18.2 2A3.8 3.8 0 0 1 22 5.8v12.4a3.8 3.8 0 0 1-3.8 3.8H5.8A3.8 3.8 0 0 1 2 18.2V5.8A3.8 3.8 0 0 1 5.8 2zM3 7.042V18.2A2.8 2.8 0 0 0 5.8 21h12.4a2.8 2.8 0 0 0 2.8-2.8V7.042zm14.403-1H21V5.8a2.8 2.8 0 0 0-1.924-2.658zM5.8 3A2.8 2.8 0 0 0 3 5.8v.242h2.16l.035-.076L6.907 3zm2.26.001L6.307 6.042H8.86l.036-.076L10.606 3zm3.7 0-1.755 3.041h2.554l.035-.076L14.306 3zm3.699 0-1.755 3.041h2.554l.035-.076L18.005 3z"
+                    />
+                </svg>
+            );
+        }
+
         if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>

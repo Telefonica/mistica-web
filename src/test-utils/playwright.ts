@@ -82,7 +82,7 @@ export const expectScreenshot = async (
         expect(target).toMatchSnapshot(name, options);
         return;
     }
-    await expect(target).toHaveScreenshot(name, {caret: 'initial', animations: 'allow', ...options});
+    await expect(target).toHaveScreenshot(name, {animations: 'allow', ...options});
 };
 
 export const renderingTolerance = {maxDiffPixelRatio: 0.001};

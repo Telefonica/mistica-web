@@ -24,6 +24,17 @@ const IconDumbbellRegular = ({color, size = 24, ...rest}: IconProps): JSX.Elemen
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M17.722 5.283c.968 0 1.767.721 1.893 1.655q.219-.053.452-.054c1.068 0 1.933.865 1.933 1.932v6.377a1.933 1.933 0 0 1-2.387 1.877 1.911 1.911 0 0 1-3.804-.266V14.58H8.19v2.223a1.912 1.912 0 0 1-3.806.267A1.933 1.933 0 0 1 2 15.193V8.815a1.933 1.933 0 0 1 2.385-1.878 1.913 1.913 0 0 1 3.807.26v2.23h7.618v-2.23c0-1.057.856-1.915 1.913-1.915M6.278 6.784a.413.413 0 0 0-.413.413v9.607a.414.414 0 0 0 .826 0V7.197a.413.413 0 0 0-.413-.413m11.444 0a.413.413 0 0 0-.413.413v9.607a.414.414 0 0 0 .826 0V7.197a.413.413 0 0 0-.413-.413m-13.79 1.6a.433.433 0 0 0-.432.432v6.377a.433.433 0 0 0 .865 0V8.816a.433.433 0 0 0-.432-.432m16.135 0a.433.433 0 0 0-.432.432v6.377a.433.433 0 0 0 .865 0V8.816a.433.433 0 0 0-.433-.432M8.191 13.08h7.616v-2.15H8.19z"
+                    />
+                </svg>
+            );
+        }
+
         if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>

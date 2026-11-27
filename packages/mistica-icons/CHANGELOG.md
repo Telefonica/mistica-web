@@ -1,3 +1,10 @@
+# [18.3.0](https://github.com/Telefonica/mistica-web/compare/v18.2.0...v18.3.0) (2026-11-27)
+
+
+### Features
+
+* **Icons:** include new icons for vivo evolution ([#1823](https://github.com/Telefonica/mistica-web/issues/1823)) ([93a4027](https://github.com/Telefonica/mistica-web/commit/93a402716f348ca80b1960ab2bad94d94673d9f2))
+
 # [18.1.0](https://github.com/Telefonica/mistica-web/compare/v18.0.0...v18.1.0) (2026-11-20)
 
 # [18.0.0](https://github.com/Telefonica/mistica-web/compare/v17.12.0...v18.0.0) (2026-11-13)
