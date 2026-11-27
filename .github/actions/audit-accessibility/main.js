@@ -88,11 +88,16 @@ const findMissingPages = (results) => {
 /**
  * @param {Array<AuditResult>} results
  * @param {Array<string>} missingPages
+ * @param {number} exitCode
  */
-const generateReportForStepSummary = (results, missingPages) => {
+const generateReportForStepSummary = (results, missingPages, exitCode) => {
     const problemsCount = countProblems(results);
 
     const lines = ['## Accessibility report', ''];
+
+    if (exitCode !== 0) {
+        lines.push(`❌ Playwright exited with code ${exitCode}. Check the audit logs for details.`, '');
+    }
 
     if (problemsCount > 0) {
         lines.push(`❌ **${problemsCount}** problems detected`, '');
@@ -116,7 +121,7 @@ const generateReportForStepSummary = (results, missingPages) => {
         core.setFailed('Some pages were not audited');
     }
 
-    if (problemsCount === 0 && missingPages.length === 0) {
+    if (problemsCount === 0 && missingPages.length === 0 && exitCode === 0) {
         lines.push('✔️ No issues found');
     }
 
@@ -131,9 +136,14 @@ const generateReportForStepSummary = (results, missingPages) => {
 /**
  * @param {Array<AuditResult>} results
  * @param {Array<string>} missingPages
+ * @param {number} exitCode
  */
-const generateReportForGithub = async (results, missingPages) => {
+const generateReportForGithub = async (results, missingPages, exitCode) => {
     const lines = ['**Accessibility report**'];
+
+    if (exitCode !== 0) {
+        lines.push(`❌ Playwright exited with code ${exitCode}. Check the audit logs for details.`, '');
+    }
 
     const problemsCount = countProblems(results);
 
@@ -176,7 +186,7 @@ const generateReportForGithub = async (results, missingPages) => {
         );
     }
 
-    if (problemsCount === 0 && missingPages.length === 0) {
+    if (problemsCount === 0 && missingPages.length === 0 && exitCode === 0) {
         lines.push('✔️ No issues found');
     }
 
@@ -195,15 +205,14 @@ const main = async () => {
     // Every page has a result and none has violations, so the run broke after the audit
     if (exitCode !== 0 && countProblems(results) === 0 && missingPages.length === 0) {
         core.setFailed(`The accessibility audit failed with exit code ${exitCode}`);
-        return;
     }
 
     const isForkPr = core.getInput('fork-pr') === 'true';
     if (isForkPr) {
-        generateReportForStepSummary(results, missingPages);
+        generateReportForStepSummary(results, missingPages, exitCode);
         return;
     }
-    await generateReportForGithub(results, missingPages);
+    await generateReportForGithub(results, missingPages, exitCode);
 };
 
 main();
