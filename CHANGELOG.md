@@ -1,3 +1,16 @@
+# [18.3.0](https://github.com/Telefonica/mistica-web/compare/v18.2.0...v18.3.0) (2026-11-27)
+
+
+### Bug Fixes
+
+* **slideSwap:** keep consistency in duration prop with fadein fadeout ([#1839](https://github.com/Telefonica/mistica-web/issues/1839)) ([3cdafe7](https://github.com/Telefonica/mistica-web/commit/3cdafe7fec24bc1e6d127889bcaf4ba728cfdd5d))
+
+
+### Features
+
+* **Icons:** include new icons for vivo evolution ([#1823](https://github.com/Telefonica/mistica-web/issues/1823)) ([93a4027](https://github.com/Telefonica/mistica-web/commit/93a402716f348ca80b1960ab2bad94d94673d9f2))
+* **SlideSwap:** add new animation component ([#1732](https://github.com/Telefonica/mistica-web/issues/1732)) ([7e06b9a](https://github.com/Telefonica/mistica-web/commit/7e06b9a501239d18609f710a70c32edb24b044ae))
+
 # [18.2.0](https://github.com/Telefonica/mistica-web/compare/v18.1.0...v18.2.0) (2026-11-25)
 
 

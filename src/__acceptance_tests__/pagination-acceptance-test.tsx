@@ -19,8 +19,7 @@ test('Pagination page items are clickable across their mobile target area', asyn
 
     await page.click({position: MOBILE_TARGET_EDGE_OFFSET});
 
-    // TODO WIP temporary failure to check the merged Playwright report, revert before merge
-    await screen.findByRole('button', {name: 'Página 7, página actual'});
+    await screen.findByRole('button', {name: 'Página 2, página actual'});
 });
 
 test('Pagination ellipses are non-interactive', async () => {

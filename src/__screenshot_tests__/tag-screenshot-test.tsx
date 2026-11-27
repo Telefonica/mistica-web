@@ -7,8 +7,6 @@ test('Tags', async () => {
     await openStoryPage({
         id: 'components-tag--default',
         device: 'DESKTOP',
-        // TODO WIP temporary failure to check the merged Playwright report, revert before merge
-        isDarkMode: true,
     });
 
     const tag = await screen.findByTestId('tags');

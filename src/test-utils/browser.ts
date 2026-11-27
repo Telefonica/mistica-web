@@ -137,6 +137,7 @@ export const openPage = async ({
     }, safeAreaInset);
     await page.goto(url || `http://localhost:6006${path}`, {waitUntil});
     await page.evaluate(() => document.fonts.ready.then(() => undefined));
+    // Prevent screenshot capture from rewriting inline styles before hydration.
     const screenshot = page.screenshot.bind(page);
     page.screenshot = (options) => screenshot({caret: 'initial', ...options});
     return page;

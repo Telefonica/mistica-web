@@ -52,6 +52,7 @@ export default defineConfig({
     use: {
         browserName: 'chromium',
         headless: true,
+        // TODO https://github.com/Telefonica/mistica-web/issues/1840 switch to English.
         locale: 'es-ES',
         timezoneId: 'UTC',
         trace: 'retain-on-failure',

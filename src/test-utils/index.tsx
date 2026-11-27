@@ -224,7 +224,7 @@ const checkHydrationMismatch = async (page: PageApi, screenshotConfig?: Screensh
     await expect
         .poll(
             async () => {
-                const current = await page.screenshot({caret: 'initial'});
+                const current = await page.screenshot();
                 const stable = current.equals(baseline);
                 baseline = current;
                 return stable;
@@ -236,7 +236,7 @@ const checkHydrationMismatch = async (page: PageApi, screenshotConfig?: Screensh
     await hydrateSSRPage(page);
     await page.evaluate(() => document.fonts.ready.then(() => undefined));
     try {
-        await expect(page).toHaveScreenshot(name, {caret: 'initial', ...screenshotConfig});
+        await expect(page).toHaveScreenshot(name, screenshotConfig);
     } finally {
         fs.unlinkSync(baselineImagePath);
     }
