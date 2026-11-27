@@ -56,7 +56,8 @@
         "storybook-static": "storybook build -o public --quiet",
         "serve-static-storybook": "node ./scripts/serve-static-storybook.js",
         "detect-circular-dependencies": "npx dpdm --circular --exclude \"node_modules\" src/index.tsx packages/mistica-icons/src/generated/index.tsx",
-        "audit-accessibility": "node .github/actions/audit-accessibility/main.js",
+        "audit-accessibility": "playwright test -c .github/actions/audit-accessibility/playwright.config.ts",
+        "audit-accessibility-docker": "yarn storybook-static && docker compose -f docker-compose.playwright.yml up -d --wait && cross-env PLAYWRIGHT_WS_ENDPOINT=ws://127.0.0.1:3000/ yarn audit-accessibility",
         "circular-dependencies": "yarn dpdm src/index.tsx packages/mistica-icons/src/generated/index.tsx --exclude \"node_modules\" --tree=false --warning=false --exit-code circular:1",
         "prepare": "husky install && node scripts/link-self.js",
         "edit-playroom-patch": "playroom/patch-playroom.sh"
@@ -110,7 +111,6 @@
         "cross-env": "^7.0.3",
         "detect-port": "^1.3.0",
         "dpdm": "^3.8.0",
-        "es6-promise-pool": "^2.5.0",
         "eslint": "^8.57.0",
         "eslint-plugin-mistica-local-rules": "workspace:*",
         "eslint-plugin-storybook": "^10.2.8",

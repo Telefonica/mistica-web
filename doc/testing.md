@@ -48,6 +48,18 @@ Stop any existing Storybook on port 6006 first, so the tests use the static buil
 browser container stays running for subsequent commands. Stop it with
 `docker compose -f docker-compose.playwright.yml down`.
 
+## Accessibility audit
+
+Build Storybook with `yarn storybook-static`, then run `yarn audit-accessibility`. Use
+`yarn audit-accessibility --grep "components-switch"` to audit only the Switch stories, or add `--ui` to open
+the test explorer and filter there.
+
+`yarn audit-accessibility-docker` builds a fresh static Storybook and uses the same Docker browser as the
+screenshot tests. It also accepts `--grep` and `--ui`.
+
+The Playwright HTML report is in `reports/playwright-a11y-html/`, failure traces are in
+`reports/playwright-a11y/`, and axe JSON results are in `reports/accessibility/`.
+
 ## Server rendering
 
 `yarn test-ssr` builds the library and checks the server-rendered pages before and after hydration. Run
