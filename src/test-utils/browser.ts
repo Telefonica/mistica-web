@@ -137,7 +137,5 @@ export const openPage = async ({
     }, safeAreaInset);
     await page.goto(url || `http://localhost:6006${path}`, {waitUntil});
     await page.evaluate(() => document.fonts.ready.then(() => undefined));
-    const screenshot = page.screenshot.bind(page);
-    page.screenshot = (options) => screenshot({caret: 'initial', ...options});
     return page;
 };
