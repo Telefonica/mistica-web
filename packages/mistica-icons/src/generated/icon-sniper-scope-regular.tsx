@@ -24,6 +24,17 @@ const IconSniperScopeRegular = ({color, size = 24, ...rest}: IconProps): JSX.Ele
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M12 2.001a.75.75 0 0 1 .75.75v1.427h.323a6.75 6.75 0 0 1 6.75 6.75v.322h1.427a.75.75 0 0 1 0 1.5h-1.427v.322a6.75 6.75 0 0 1-6.75 6.75h-.322v1.427a.75.75 0 0 1-1.5 0v-1.427h-.323a6.75 6.75 0 0 1-6.75-6.75v-.322H2.751a.75.75 0 0 1 0-1.5h1.427v-.322a6.75 6.75 0 0 1 6.75-6.75h.322V2.75A.75.75 0 0 1 12 2m-1.072 3.677a5.25 5.25 0 0 0-5.25 5.25v.322H7.46a.75.75 0 0 1 0 1.5H5.68v.322c0 2.9 2.35 5.25 5.25 5.25h.322V16.54a.75.75 0 0 1 1.5 0v1.781h.322c2.9 0 5.25-2.35 5.25-5.25v-.322h-1.78a.75.75 0 0 1 0-1.5h1.78v-.322c0-2.9-2.35-5.25-5.25-5.25h-.322v1.781a.75.75 0 0 1-1.5 0v-1.78z"
+                    />
+                </svg>
+            );
+        }
+
         if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>

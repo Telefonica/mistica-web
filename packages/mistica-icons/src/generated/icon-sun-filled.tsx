@@ -24,6 +24,17 @@ const IconSunFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M12 19.186a.75.75 0 0 1 .75.75v1.313a.75.75 0 0 1-1.5.001v-1.314a.75.75 0 0 1 .75-.75m-6.373-1.871a.75.75 0 0 1 1.06 1.061l-.928.929a.75.75 0 0 1-1.06-1.06zm11.725 0a.75.75 0 0 1 1.06 0l.929.93a.75.75 0 1 1-1.06 1.06l-.93-.929a.75.75 0 0 1 0-1.06M12.84 6.21a4.95 4.95 0 0 1 4.95 4.95v1.68a4.95 4.95 0 0 1-4.95 4.951h-1.68a4.95 4.95 0 0 1-4.951-4.95v-1.68a4.95 4.95 0 0 1 4.95-4.951zm-8.777 5.04a.75.75 0 0 1 0 1.5H2.75a.75.75 0 0 1 0-1.5zm17.188 0a.75.75 0 0 1 0 1.5h-1.314a.75.75 0 0 1 0-1.5zM4.679 4.678a.75.75 0 0 1 1.06 0l.929.928a.75.75 0 0 1-1.06 1.061l-.93-.929a.75.75 0 0 1 0-1.06m13.582 0a.75.75 0 0 1 1.061 1.06l-.928.929a.75.75 0 0 1-1.061-1.06zM12 2.001a.75.75 0 0 1 .75.75v1.313a.75.75 0 0 1-1.5 0V2.751a.75.75 0 0 1 .75-.75"
+                    />
+                </svg>
+            );
+        }
+
         if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>

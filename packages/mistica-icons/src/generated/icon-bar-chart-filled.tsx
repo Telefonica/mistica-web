@@ -24,6 +24,17 @@ const IconBarChartFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M4.75 9.999a2.75 2.75 0 0 1 2.75 2.75v6.5a2.75 2.75 0 1 1-5.5 0v-6.5a2.75 2.75 0 0 1 2.75-2.75m7.25-4a2.75 2.75 0 0 1 2.75 2.75v10.5a2.75 2.75 0 1 1-5.5 0v-10.5A2.75 2.75 0 0 1 12 5.999m7.25-3.998A2.75 2.75 0 0 1 22 4.751v14.498a2.75 2.75 0 1 1-5.5 0V4.751a2.75 2.75 0 0 1 2.75-2.75"
+                    />
+                </svg>
+            );
+        }
+
         if (skinName.match(/^blau/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>

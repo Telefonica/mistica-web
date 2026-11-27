@@ -24,6 +24,17 @@ const IconPuzzleFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element =
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M13.001 5.75c0 .26-.037.51-.103.748l.853.001.192.005a3.75 3.75 0 0 1 3.558 3.745l-.001.663q.359-.102.751-.103h.999a2.75 2.75 0 0 1 2.751 2.75v.999a2.75 2.75 0 0 1-2.751 2.75h-.999a2.8 2.8 0 0 1-.75-.104v1.046a3.75 3.75 0 0 1-3.75 3.749h-8a3.75 3.75 0 0 1-3.75-3.749l-.002-1.774a.75.75 0 0 1 .938-.727q.15.04.314.04h.999c.69 0 1.251-.56 1.251-1.25v-1c0-.69-.56-1.25-1.251-1.25h-.999q-.165 0-.313.04A.75.75 0 0 1 2 11.601v-1.353a3.75 3.75 0 0 1 3.749-3.75h.854A2.8 2.8 0 0 1 6.5 5.75v-.998a2.75 2.75 0 0 1 2.75-2.751h.999A2.75 2.75 0 0 1 13 4.752z"
+                    />
+                </svg>
+            );
+        }
+
         if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>

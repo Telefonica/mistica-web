@@ -24,6 +24,21 @@ const IconWaterDropRegular = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M4.85 14.666c.001 4.033 3.23 7.333 7.15 7.333 3.922 0 7.15-3.3 7.152-7.333l-1.5-.001c0 3.239-2.592 5.834-5.651 5.834-3.06 0-5.65-2.595-5.651-5.834z"
+                    />
+                    <path
+                        fill={fillColor}
+                        d="M7.72 10.164c.855-1.754 2.025-3.596 3.262-5.18L12 3.653l1.02 1.333c1.237 1.583 2.407 3.425 3.263 5.18.867 1.777 1.37 3.376 1.37 4.5h1.5c0-1.474-.628-3.326-1.522-5.159-.906-1.855-2.131-3.784-3.427-5.442l-.922-1.202a2.4 2.4 0 0 0-.547-.59C12.555 2.139 12.297 2 12 2s-.554.138-.732.27a2.4 2.4 0 0 0-.548.591l-.922 1.202C8.502 5.722 7.277 7.65 6.37 9.506c-.894 1.833-1.521 3.685-1.521 5.16l1.5-.001c0-1.124.502-2.723 1.37-4.5"
+                    />
+                </svg>
+            );
+        }
+
         if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>

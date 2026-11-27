@@ -24,6 +24,25 @@ const IconAppointmentFilled = ({color, size = 24, ...rest}: IconProps): JSX.Elem
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M11.155 10.443a6.3 6.3 0 0 0-2.225 4.813v1.5a6.31 6.31 0 0 0 2.79 5.243H5.75A3.75 3.75 0 0 1 2 18.249v-7.806z"
+                    />
+                    <path
+                        fill={fillColor}
+                        d="M16.92 10.001a5.08 5.08 0 0 1 5.08 5.08v1.838a5.08 5.08 0 0 1-5.08 5.08h-1.838a5.08 5.08 0 0 1-5.08-5.08V15.08a5.08 5.08 0 0 1 5.08-5.08zm-.918 2.915a.75.75 0 0 0-.75.75v2.333c0 .414.336.75.75.75h2.333a.75.75 0 0 0 0-1.5h-1.583v-1.583a.75.75 0 0 0-.75-.75"
+                    />
+                    <path
+                        fill={fillColor}
+                        d="M7.4 5.746a.75.75 0 1 0 1.5 0V3.251h6.28v2.495a.75.75 0 0 0 1.5 0V3.251h1.57A3.75 3.75 0 0 1 22 7.001v4.735a6.31 6.31 0 0 0-5.25-2.8h-1.5q-.164 0-.325.007H2V7.001a3.75 3.75 0 0 1 3.75-3.75H7.4zm.75-3.745a.75.75 0 0 1 .75.75v.5H7.4v-.5a.75.75 0 0 1 .75-.75m7.78 0a.75.75 0 0 1 .75.75v.5h-1.5v-.5a.75.75 0 0 1 .75-.75"
+                    />
+                </svg>
+            );
+        }
+
         if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>

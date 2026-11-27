@@ -24,6 +24,17 @@ const IconMoonLight = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M6.934 9.282A7.77 7.77 0 0 1 9.762 3.28a9 9 0 1 0 10.957 10.957A7.784 7.784 0 0 1 6.934 9.282m1 0a6.784 6.784 0 0 0 13.1 2.48l.04-.078a.5.5 0 0 1 .926.258V12c0 5.523-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2h.058a.5.5 0 0 1 .18.966 6.79 6.79 0 0 0-4.304 6.316"
+                    />
+                </svg>
+            );
+        }
+
         if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
