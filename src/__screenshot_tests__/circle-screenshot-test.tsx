@@ -1,3 +1,4 @@
+import {test, expectScreenshot} from '../test-utils/playwright';
 import {openStoryPage, screen} from '../test-utils';
 
 const CASES = [
@@ -9,13 +10,16 @@ const CASES = [
     {size: 40, background: 'custom', children: true},
 ] as const;
 
-test.each(CASES)('Circle - %s', async (args) => {
-    await openStoryPage({
-        id: 'components-primitives-circle--default',
-        args,
+for (const testCase of CASES) {
+    const args = testCase;
+    test(`Circle - ${JSON.stringify(testCase)}`, async () => {
+        await openStoryPage({
+            id: 'components-primitives-circle--default',
+            args,
+        });
+
+        const story = await screen.findByTestId('circle');
+
+        await expectScreenshot(story);
     });
-
-    const story = await screen.findByTestId('circle');
-
-    expect(await story.screenshot()).toMatchImageSnapshot();
-});
+}

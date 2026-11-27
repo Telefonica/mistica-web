@@ -1,28 +1,33 @@
+import {test, expectScreenshot} from '../test-utils/playwright';
 import {openStoryPage, screen} from '../test-utils';
 
 const DEVICES = ['DESKTOP', 'MOBILE_ANDROID', 'MOBILE_IOS'] as const;
 
-test.each(DEVICES)('Spinner - default %s', async (device) => {
-    await openStoryPage({
-        id: 'components-spinner--default',
-        device,
+for (const testCase of DEVICES) {
+    const device = testCase;
+    test(`Spinner - default ${testCase}`, async () => {
+        await openStoryPage({
+            id: 'components-spinner--default',
+            device,
+        });
+
+        const spinner = await screen.findByLabelText('Cargando');
+
+        await expectScreenshot(spinner);
     });
+}
 
-    const spinner = await screen.findByLabelText('Cargando');
+for (const testCase of DEVICES) {
+    const device = testCase;
+    test(`Spinner - inverse ${testCase}`, async () => {
+        await openStoryPage({
+            id: 'components-spinner--default',
+            device,
+            args: {variantOutside: 'brand'},
+        });
 
-    const image = await spinner.screenshot();
-    expect(image).toMatchImageSnapshot();
-});
+        const spinner = await screen.findByLabelText('Cargando');
 
-test.each(DEVICES)('Spinner - inverse %s', async (device) => {
-    await openStoryPage({
-        id: 'components-spinner--default',
-        device,
-        args: {variantOutside: 'brand'},
+        await expectScreenshot(spinner);
     });
-
-    const spinner = await screen.findByLabelText('Cargando');
-
-    const image = await spinner.screenshot();
-    expect(image).toMatchImageSnapshot();
-});
+}

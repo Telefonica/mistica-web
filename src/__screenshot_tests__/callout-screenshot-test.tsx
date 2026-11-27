@@ -1,58 +1,147 @@
+import {test, expectScreenshot} from '../test-utils/playwright';
 import {openStoryPage, screen} from '../test-utils';
 import {normalizeVariant} from '../theme-variant-context';
 
-test.each`
-    actions              | title           | variant      | variantOutside   | closable | asset    | case
-    ${'button and link'} | ${'Some title'} | ${'default'} | ${'default'}     | ${true}  | ${true}  | ${''}
-    ${'button and link'} | ${'Some title'} | ${'default'} | ${'inverse'}     | ${true}  | ${true}  | ${'over inverse'}
-    ${'button and link'} | ${'Some title'} | ${'default'} | ${'alternative'} | ${true}  | ${true}  | ${'over alternative'}
-    ${'button and link'} | ${'Some title'} | ${'inverse'} | ${'default'}     | ${true}  | ${true}  | ${'inverse'}
-    ${'button and link'} | ${'Some title'} | ${'inverse'} | ${'inverse'}     | ${true}  | ${true}  | ${'inverse over inverse'}
-    ${'button and link'} | ${'Some title'} | ${'inverse'} | ${'alternative'} | ${true}  | ${true}  | ${'inverse over alternative'}
-    ${'button and link'} | ${'Some title'} | ${'default'} | ${'default'}     | ${false} | ${true}  | ${'not closable'}
-    ${'link'}            | ${'Some title'} | ${'default'} | ${'default'}     | ${true}  | ${true}  | ${'with button link'}
-    ${'none'}            | ${'Some title'} | ${'default'} | ${'default'}     | ${true}  | ${true}  | ${'without actions'}
-    ${'none'}            | ${''}           | ${'default'} | ${'default'}     | ${false} | ${false} | ${'only description'}
-    ${'none'}            | ${''}           | ${'default'} | ${'default'}     | ${true}  | ${false} | ${'only description and closable'}
-`('Callout $case', async ({actions, title, variant, variantOutside, closable, asset}) => {
-    await openStoryPage({
-        id: 'components-callout--default',
-        args: {
-            actions,
-            title,
-            variant: normalizeVariant(variant),
-            variantOutside: normalizeVariant(variantOutside),
-            closable,
-            asset,
-        },
+for (const testCase of [
+    {
+        actions: 'button and link',
+        title: 'Some title',
+        variant: 'default',
+        variantOutside: 'default',
+        closable: true,
+        asset: true,
+        case: '',
+    },
+    {
+        actions: 'button and link',
+        title: 'Some title',
+        variant: 'default',
+        variantOutside: 'inverse',
+        closable: true,
+        asset: true,
+        case: 'over inverse',
+    },
+    {
+        actions: 'button and link',
+        title: 'Some title',
+        variant: 'default',
+        variantOutside: 'alternative',
+        closable: true,
+        asset: true,
+        case: 'over alternative',
+    },
+    {
+        actions: 'button and link',
+        title: 'Some title',
+        variant: 'inverse',
+        variantOutside: 'default',
+        closable: true,
+        asset: true,
+        case: 'inverse',
+    },
+    {
+        actions: 'button and link',
+        title: 'Some title',
+        variant: 'inverse',
+        variantOutside: 'inverse',
+        closable: true,
+        asset: true,
+        case: 'inverse over inverse',
+    },
+    {
+        actions: 'button and link',
+        title: 'Some title',
+        variant: 'inverse',
+        variantOutside: 'alternative',
+        closable: true,
+        asset: true,
+        case: 'inverse over alternative',
+    },
+    {
+        actions: 'button and link',
+        title: 'Some title',
+        variant: 'default',
+        variantOutside: 'default',
+        closable: false,
+        asset: true,
+        case: 'not closable',
+    },
+    {
+        actions: 'link',
+        title: 'Some title',
+        variant: 'default',
+        variantOutside: 'default',
+        closable: true,
+        asset: true,
+        case: 'with button link',
+    },
+    {
+        actions: 'none',
+        title: 'Some title',
+        variant: 'default',
+        variantOutside: 'default',
+        closable: true,
+        asset: true,
+        case: 'without actions',
+    },
+    {
+        actions: 'none',
+        title: '',
+        variant: 'default',
+        variantOutside: 'default',
+        closable: false,
+        asset: false,
+        case: 'only description',
+    },
+    {
+        actions: 'none',
+        title: '',
+        variant: 'default',
+        variantOutside: 'default',
+        closable: true,
+        asset: false,
+        case: 'only description and closable',
+    },
+] as const) {
+    const {actions, title, variant, variantOutside, closable, asset} = testCase;
+    test(`Callout ${testCase.case}`, async () => {
+        await openStoryPage({
+            id: 'components-callout--default',
+            args: {
+                actions,
+                title,
+                variant: normalizeVariant(variant),
+                variantOutside: normalizeVariant(variantOutside),
+                closable,
+                asset,
+            },
+        });
+
+        const callout = await screen.findByRole('region');
+        await expectScreenshot(callout);
     });
+}
 
-    const callout = await screen.findByRole('region');
-    const image = await callout.screenshot();
+for (const testCase of [
+    {actions: 'button and link', title: 'Some title', closable: true, asset: true, case: 'small'},
+    {actions: 'none', title: '', closable: false, asset: false, case: 'small only description'},
+] as const) {
+    const {actions, title, closable, asset} = testCase;
+    test(`Callout ${testCase.case}`, async () => {
+        await openStoryPage({
+            id: 'components-callout--default',
+            args: {
+                actions,
+                title,
+                variant: normalizeVariant('default'),
+                variantOutside: normalizeVariant('default'),
+                closable,
+                asset,
+                small: true,
+            },
+        });
 
-    expect(image).toMatchImageSnapshot();
-});
-
-test.each`
-    actions              | title           | closable | asset    | case
-    ${'button and link'} | ${'Some title'} | ${true}  | ${true}  | ${'small'}
-    ${'none'}            | ${''}           | ${false} | ${false} | ${'small only description'}
-`('Callout $case', async ({actions, title, closable, asset}) => {
-    await openStoryPage({
-        id: 'components-callout--default',
-        args: {
-            actions,
-            title,
-            variant: normalizeVariant('default'),
-            variantOutside: normalizeVariant('default'),
-            closable,
-            asset,
-            small: true,
-        },
+        const callout = await screen.findByRole('region');
+        await expectScreenshot(callout);
     });
-
-    const callout = await screen.findByRole('region');
-    const image = await callout.screenshot();
-
-    expect(image).toMatchImageSnapshot();
-});
+}

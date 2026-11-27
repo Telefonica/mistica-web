@@ -1,3 +1,4 @@
+import {test, expectScreenshot} from '../test-utils/playwright';
 import {openStoryPage, screen} from '../test-utils';
 
 const CHIP_OPTIONS = [
@@ -9,67 +10,75 @@ const CHIP_OPTIONS = [
     'with icon and closable',
 ];
 
-test.each(CHIP_OPTIONS)('Chip - %s', async (option) => {
-    await openStoryPage({
-        id: 'components-chip--default',
-        device: 'DESKTOP',
-        args: {
-            badge: option.includes('badge') ? '2' : 'undefined',
-            icon: option.includes('icon'),
-            closable: option.includes('closable'),
-        },
+for (const testCase of CHIP_OPTIONS) {
+    const option = testCase;
+    test(`Chip - ${testCase}`, async () => {
+        await openStoryPage({
+            id: 'components-chip--default',
+            device: 'DESKTOP',
+            args: {
+                badge: option.includes('badge') ? '2' : 'undefined',
+                icon: option.includes('icon'),
+                closable: option.includes('closable'),
+            },
+        });
+
+        const story = await screen.findByTestId('chip');
+
+        await expectScreenshot(story);
     });
+}
 
-    const story = await screen.findByTestId('chip');
+for (const testCase of CHIP_OPTIONS) {
+    const option = testCase;
+    test(`Chip small - ${testCase}`, async () => {
+        await openStoryPage({
+            id: 'components-chip--default',
+            device: 'DESKTOP',
+            args: {
+                badge: option.includes('badge') ? '2' : 'undefined',
+                icon: option.includes('icon'),
+                closable: option.includes('closable'),
+                small: true,
+            },
+        });
 
-    expect(await story.screenshot()).toMatchImageSnapshot();
-});
+        const story = await screen.findByTestId('chip');
 
-test.each(CHIP_OPTIONS)('Chip small - %s', async (option) => {
-    await openStoryPage({
-        id: 'components-chip--default',
-        device: 'DESKTOP',
-        args: {
-            badge: option.includes('badge') ? '2' : 'undefined',
-            icon: option.includes('icon'),
-            closable: option.includes('closable'),
-            small: true,
-        },
+        await expectScreenshot(story);
     });
+}
 
-    const story = await screen.findByTestId('chip');
+for (const testCase of [
+    {selection: 'single', inverse: false, badge: undefined},
+    {selection: 'single', inverse: true, badge: undefined},
+    {selection: 'multiple', inverse: false, badge: undefined},
+    {selection: 'multiple', inverse: true, badge: undefined},
+    {selection: 'single', inverse: false, badge: 2},
+    {selection: 'single', inverse: true, badge: 2},
+    {selection: 'multiple', inverse: false, badge: 2},
+    {selection: 'multiple', inverse: true, badge: 2},
+] as const) {
+    const {selection, inverse, badge} = testCase;
+    test(`Chip - ${testCase.selection} selection (inverse = ${testCase.inverse}, badge = ${testCase.badge})`, async () => {
+        await openStoryPage({
+            id: `components-chip--${selection}-selection`,
+            device: 'DESKTOP',
+            args: {variantOutside: inverse ? 'brand' : 'default', icon: true, badge},
+        });
 
-    expect(await story.screenshot()).toMatchImageSnapshot();
-});
+        const story = await screen.findByTestId(`chip-${selection}-selection`);
 
-test.each`
-    selection     | inverse  | badge
-    ${'single'}   | ${false} | ${undefined}
-    ${'single'}   | ${true}  | ${undefined}
-    ${'multiple'} | ${false} | ${undefined}
-    ${'multiple'} | ${true}  | ${undefined}
-    ${'single'}   | ${false} | ${2}
-    ${'single'}   | ${true}  | ${2}
-    ${'multiple'} | ${false} | ${2}
-    ${'multiple'} | ${true}  | ${2}
-`('Chip - $selection selection (inverse = $inverse, badge = $badge)', async ({selection, inverse, badge}) => {
-    const page = await openStoryPage({
-        id: `components-chip--${selection}-selection`,
-        device: 'DESKTOP',
-        args: {variantOutside: inverse ? 'brand' : 'default', icon: true, badge},
+        await expectScreenshot(story);
+
+        const chips = await screen.findAllByRole(selection === 'single' ? 'radio' : 'checkbox');
+
+        await chips[1].click();
+        await chips[2].click();
+
+        await expectScreenshot(story);
     });
-
-    const story = await screen.findByTestId(`chip-${selection}-selection`);
-
-    expect(await story.screenshot()).toMatchImageSnapshot();
-
-    const chips = await screen.findAllByRole(selection === 'single' ? 'radio' : 'checkbox');
-
-    await page.click(chips[1]);
-    await page.click(chips[2]);
-
-    expect(await story.screenshot()).toMatchImageSnapshot();
-});
+}
 
 test('Chip - should expand when inside a grid', async () => {
     await openStoryPage({
@@ -78,7 +87,7 @@ test('Chip - should expand when inside a grid', async () => {
 
     const story = await screen.findByTestId('chips');
 
-    expect(await story.screenshot()).toMatchImageSnapshot();
+    await expectScreenshot(story);
 });
 test('Chip - navigable with href and active', async () => {
     await openStoryPage({
@@ -91,7 +100,7 @@ test('Chip - navigable with href and active', async () => {
 
     const story = await screen.findByTestId('navigable-chip');
 
-    expect(await story.screenshot()).toMatchImageSnapshot();
+    await expectScreenshot(story);
 });
 test('Chip - navigable with href and active and inverse', async () => {
     await openStoryPage({
@@ -105,5 +114,5 @@ test('Chip - navigable with href and active and inverse', async () => {
 
     const story = await screen.findByTestId('navigable-chip');
 
-    expect(await story.screenshot()).toMatchImageSnapshot();
+    await expectScreenshot(story);
 });

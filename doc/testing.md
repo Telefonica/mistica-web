@@ -23,19 +23,35 @@ different layouts in mobile and desktop, and there are cases in which we use CSS
 result. If you are trying to test something that depends on these styles, you can either import `mistica.css`
 classes in the HTML content you render in the test or write acceptance/screenshot tests instead.
 
-## Acceptance tests
+## Acceptance and screenshot tests
 
-To change some behaviors to facilitate acceptance tests (tests that run in a browser), a helper function is
-used.
+Install Chromium with `yarn playwright install chromium`. Run `yarn test-acceptance` to start Storybook and
+run the tests. Use `--headed` to see the browser or `--ui` to open Playwright's test explorer.
 
-`isRunningAcceptanceTest` returns true if the user agent includes the `'acceptance-test'` string.
+`openStoryPage` adds `acceptance-test` to the user agent so `isRunningAcceptanceTest` returns true.
 
-To make this work in your test environment, you should add that string to the browser's user agent. For
-example in `Puppeteer`:
+Screenshot differences are saved under `reports/playwright/`. To update the reference images, use the
+`update_screenshots` workflow or run the tests locally with Docker Desktop running:
 
-```js
-await page.setUserAgent(`${currentUserAgent} acceptance-test`);
+```sh
+yarn test-acceptance-docker src/__screenshot_tests__/popover-screenshot-test.tsx
+yarn test-acceptance-docker src/__screenshot_tests__/popover-screenshot-test.tsx --update-snapshots
 ```
+
+This command builds a fresh static Storybook and runs Chromium in the same Linux image and `linux/amd64`
+platform as CI. Test files, `--grep`, `--ui` and snapshot update flags are forwarded to Playwright. Reference
+images keep their existing paths. The tests run on your machine and connect to the browser in Docker. Use this
+command for screenshot comparisons and updates. Restart it after component changes to rebuild the static
+Storybook.
+
+Stop any existing Storybook on port 6006 first, so the tests use the static build from this checkout. The
+browser container stays running for subsequent commands. Stop it with
+`docker compose -f docker-compose.playwright.yml down`.
+
+## Server rendering
+
+`yarn test-ssr` builds the library and checks the server-rendered pages before and after hydration. Run
+`NO_BUILD=true yarn test-ssr` to reuse the output of `yarn build`.
 
 ## Questions?
 

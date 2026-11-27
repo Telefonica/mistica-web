@@ -1,3 +1,4 @@
+import {test, expectScreenshot} from '../test-utils/playwright';
 import {openStoryPage, screen} from '../test-utils';
 
 const cases = [
@@ -220,17 +221,19 @@ const cases = [
     ],
 ] as const;
 
-test.each(cases)('CoverHero %s', async (_name, {device, args}) => {
-    await openStoryPage({
-        id: 'components-hero-coverhero--default',
-        device,
-        args,
-    });
+for (const testCase of cases) {
+    const [, {device, args}] = testCase;
+    test(`CoverHero ${testCase[0]}`, async () => {
+        await openStoryPage({
+            id: 'components-hero-coverhero--default',
+            device,
+            args,
+        });
 
-    const coverHero = await screen.findByTestId('cover-hero');
-    const image = await coverHero.screenshot();
-    expect(image).toMatchImageSnapshot();
-});
+        const coverHero = await screen.findByTestId('cover-hero');
+        await expectScreenshot(coverHero);
+    });
+}
 
 test('CoverHero inside a Slideshow', async () => {
     await openStoryPage({
@@ -241,6 +244,5 @@ test('CoverHero inside a Slideshow', async () => {
     });
 
     const coverHero = await screen.findByTestId('slideshow');
-    const image = await coverHero.screenshot();
-    expect(image).toMatchImageSnapshot();
+    await expectScreenshot(coverHero);
 });
