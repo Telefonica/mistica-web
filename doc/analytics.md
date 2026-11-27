@@ -88,6 +88,51 @@ all components that support `trackEvent`. The setting defaults to `false`, so ea
 with `trackEvent`. Set `trackEvent={false}` on a component to suppress its default event. A custom
 `trackingEvent` always takes precedence.
 
+The following components support `trackEvent` and `theme.analytics.trackEventsByDefault`. Each event uses the
+corresponding GA4 `component_type` and event copy described below.
+
+- `ButtonPrimary`, `ButtonSecondary` and `ButtonDanger` track button presses with the corresponding
+  `primary_button`, `secondary_button` or `danger_button` type and the button text.
+- `ButtonLink` and `TextLink` track link presses with the `link` type (or the corresponding `ButtonLink`
+  variant) and the link text.
+- `IconButton` and `ToggleIconButton` track icon presses with the `icon` type and the current `aria-label` or
+  text referenced by `aria-labelledby`.
+- `Row` and `BoxedRow` track presses on their link or button with the `row` type and the row title.
+- `Tabs` tracks tab presses with the `tab` type and the tab text.
+- `AccordionItem` and `BoxedAccordionItem` track header presses to expand or collapse with the `accordion`
+  type and the item title.
+- `DataCard`, `MediaCard`, `CoverCard`, `NakedCard` and community `AdvancedDataCard` track presses on their
+  link or button with the `card` type and the title, falling back to the pretitle and then `not_apply`.
+- `Chip` tracks its link or button with the `chip` type and its text. Its close button uses the `icon` type
+  and the close button label.
+- Community `AiCard` tracks its link or button with the `card` type and its static text followed by the final
+  animated word, falling back to `not_apply` when both are empty.
+- Interactive `Logo` variants and `Message` bubbles inherit the generic `link` or `button` event from
+  `Touchable`, using their referenced labels or `aria-label` as the copy.
+- `Popover` tracks close button presses with the `icon` type and the close button label.
+- `Touchable` generates `link` events when using `href` or `to`, and `button` events for `onPress`, using
+  `aria-label`, text referenced by `aria-labelledby` or its text children as the event copy. Pass a custom
+  `trackingEvent` to override the generated event.
+
+For these new events, Universal Analytics uses `category: 'user_interaction'`,
+`action: '<component_type>_tapped'` and `label` containing the event copy. GA4 uses
+`name: 'user_interaction'`, `component_type` and `component_copy`.
+
+For `Tabs`, set `trackEvent` on each entry in the `tabs` array. For an accordion, set it on the item. Card top
+actions and a row's `iconButton` accept their own `trackEvent` setting. Buttons inside `Drawer`,
+`ActionsSheet` and cards inherit the behavior of their corresponding button component.
+
+Custom `trackingEvent` values, including event arrays, take precedence even when `trackEvent={false}`. An
+empty array suppresses all events for that interaction. Row and card content events apply to their link or
+button interactions. `Message` also applies its `trackEvent` setting to its interactive asset and actions;
+actions can override it with their own `trackEvent`. A closable `Chip` accepts a custom `trackingEvent` for
+its close button.
+
+These defaults cover press interactions. Form control changes, media playback and visibility are not tracked
+automatically. A decorative chevron or image inside a tracked component uses that component's event; it does
+not generate an additional event of its own. Chips used as labels inside checkbox or radio controls do not
+generate a chip press event.
+
 ## Firebase / Google Analytics 4 events
 
 Firebase and the new Google Analytics 4 events have a different shape. Instead of `category`, `action`,

@@ -13,10 +13,11 @@ import {useThemeVariant} from './theme-variant-context';
 import Touchable, {BaseTouchable} from './touchable';
 import * as tokens from './text-tokens';
 import {getPrefixedDataAttributes} from './utils/dom';
+import {useDefaultTracking} from './utils/analytics';
 
 import type {TouchableComponentProps} from './touchable';
 import type {ExclusifyUnion} from './utils/utility-types';
-import type {DataAttributes, IconProps} from './utils/types';
+import type {DataAttributes, IconProps, TrackingEvent} from './utils/types';
 
 interface SimpleChipProps {
     children: string;
@@ -25,11 +26,13 @@ interface SimpleChipProps {
     dataAttributes?: DataAttributes;
     badge?: boolean | number;
     small?: boolean;
+    trackEvent?: boolean;
 }
 
 interface ClosableChipProps extends SimpleChipProps {
     onClose: () => void;
     closeButtonLabel?: string;
+    trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
 }
 
 interface ToggleChipProps extends SimpleChipProps {
@@ -47,6 +50,7 @@ type ChipProps = ExclusifyUnion<ClosableChipProps | ToggleChipProps | ClickableC
 const Chip = (props: ChipProps): JSX.Element => {
     const {Icon, children, id, dataAttributes, badge, active, onClose, closeButtonLabel} = props;
     const {texts, textPresets, t} = useTheme();
+    const getDefaultTrackingEvent = useDefaultTracking();
     const themeVariant = useThemeVariant();
     const isOverAlternative = themeVariant === 'alternative';
     const isOverBrand = themeVariant === 'brand' || themeVariant === 'media' || themeVariant === 'negative';
@@ -108,6 +112,16 @@ const Chip = (props: ChipProps): JSX.Element => {
             >
                 {body}
                 <Touchable
+                    trackingEvent={
+                        props.trackingEvent ??
+                        getDefaultTrackingEvent({
+                            componentType: 'icon',
+                            componentCopy:
+                                closeButtonLabel || texts.closeButtonLabel || t(tokens.closeButtonLabel),
+                            trackEvent: props.trackEvent,
+                        }) ??
+                        []
+                    }
                     style={{
                         display: 'flex',
                         justifyContent: 'center',
@@ -179,6 +193,14 @@ const Chip = (props: ChipProps): JSX.Element => {
         return (
             <BaseTouchable
                 {...props}
+                trackingEvent={
+                    props.trackingEvent ??
+                    getDefaultTrackingEvent({
+                        componentType: 'chip',
+                        componentCopy: children,
+                        trackEvent: props.trackEvent,
+                    })
+                }
                 className={classnames(styles.chipWrapper, styles.button)}
                 dataAttributes={chipDataAttributes}
             >

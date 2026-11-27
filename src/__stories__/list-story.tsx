@@ -56,6 +56,7 @@ export default {
 };
 
 type Args = {
+    trackEvent?: boolean;
     headline: string;
     title: string;
     subtitle: string;
@@ -81,6 +82,7 @@ const Template: StoryComponent<
         variant?: 'default' | 'brand';
     }
 > = ({
+    trackEvent,
     boxed,
     headline,
     title,
@@ -251,7 +253,7 @@ const Template: StoryComponent<
             default:
                 controlProps = {};
         }
-        return controlProps;
+        return {...controlProps, trackEvent};
     };
 
     const ListComponent = boxed ? BoxedRowList : RowList;
@@ -446,6 +448,7 @@ const Template: StoryComponent<
 };
 
 const defaultArgs = {
+    trackEvent: undefined,
     headline: '',
     title: 'Title',
     subtitle: '',
@@ -469,6 +472,7 @@ export const RowListStory: StoryComponent<Args> = (args) => <Template {...args} 
 RowListStory.storyName = 'RowList';
 RowListStory.args = defaultArgs;
 RowListStory.argTypes = {
+    trackEvent: {options: [undefined, true, false], control: {type: 'select'}},
     control: {
         options: [
             'chevron',

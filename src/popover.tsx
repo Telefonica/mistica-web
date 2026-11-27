@@ -24,6 +24,7 @@ type Props = {
     alignment?: 'start' | 'middle' | 'end';
     width?: number;
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
+    trackEvent?: boolean;
     open?: boolean;
     children?: React.ReactNode;
     slot?: React.ReactNode;
@@ -38,6 +39,7 @@ const Popover = ({
     closeButtonLabel,
     dataAttributes,
     trackingEvent,
+    trackEvent,
     title,
     description,
     asset,
@@ -77,6 +79,7 @@ const Popover = ({
             onClose={onClose}
             closeButtonLabel={closeButtonLabel}
             trackingEvent={trackingEvent}
+            trackEvent={trackEvent}
             dataAttributes={{testid: 'Popover', ...dataAttributes}}
             {...props}
         />

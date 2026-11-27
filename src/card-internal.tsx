@@ -32,6 +32,7 @@ import classnames from 'classnames';
 import ButtonGroup from './button-group';
 import {isBiggerHeading} from './utils/headings';
 import {applyAlpha} from './utils/color';
+import {useDefaultTracking} from './utils/analytics';
 
 import type {
     DataAttributes,
@@ -261,6 +262,7 @@ type CardProps = ContainerProps &
 
 type TouchableProps = {
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
+    trackEvent?: boolean;
     role?: string;
     'aria-current'?: React.AriaAttributes['aria-current'];
     /**
@@ -684,6 +686,7 @@ type ToggleIconButtonAction = {
 export type CardAction = {
     disabled?: boolean;
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
+    trackEvent?: boolean;
 } & ExclusifyUnion<IconButtonAction | ToggleIconButtonAction>;
 
 export type TopActionsArray = ReadonlyArray<CardAction | React.ReactElement>;
@@ -1479,6 +1482,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, CardInteractionProp
             radioValue,
             segregateTouchableContent = false,
             touchableAriaLabel: touchableAriaLabelProp,
+            trackEvent,
             ...touchableProps
         },
         ref
@@ -1495,6 +1499,20 @@ export const InternalCard = React.forwardRef<HTMLDivElement, CardInteractionProp
         const {text: slotText, ref: slotRef} = useInnerText();
         const {text: headlineText, ref: headlineRef} = useInnerText();
         const touchableContentRef = React.useRef<TouchableElement>(null);
+        const titleText = typeof title === 'string' ? title : title?.text;
+        const pretitleText = typeof pretitle === 'string' ? pretitle : pretitle?.text;
+        const getDefaultTrackingEvent = useDefaultTracking();
+        const cardTouchableProps = {
+            ...touchableProps,
+            trackingEvent:
+                touchableProps.trackingEvent ??
+                getDefaultTrackingEvent({
+                    componentType: 'card',
+                    componentCopy: titleText || pretitleText || 'not_apply',
+                    trackEvent,
+                }),
+        };
+
         const isTouchable =
             isSelectable || !!(touchableProps.href || touchableProps.to || touchableProps.onPress);
         const hasTouchableInContent = !!(
@@ -1673,7 +1691,7 @@ export const InternalCard = React.forwardRef<HTMLDivElement, CardInteractionProp
                     ariaLabeledByProp={ariaLabeledByProp}
                     ariaDescriptionProp={ariaDescriptionProp}
                     ariaDescribedByProp={ariaDescribedByProp}
-                    touchableProps={touchableProps}
+                    touchableProps={cardTouchableProps}
                     segregateTouchableContent={isSelectable ? false : segregateTouchableContent}
                     hasTouchableInContent={hasTouchableInContent}
                     overlayClassname={overlayStyle}
@@ -1777,7 +1795,10 @@ export const InternalCard = React.forwardRef<HTMLDivElement, CardInteractionProp
                                         descriptionLinesMax={descriptionLinesMax}
                                         withTextShadow={hasBackgroundImageOrVideo}
                                         {...(hasTouchableInContent
-                                            ? {touchableRef: touchableContentRef, touchableProps}
+                                            ? {
+                                                  touchableRef: touchableContentRef,
+                                                  touchableProps: cardTouchableProps,
+                                              }
                                             : {})}
                                     />
                                 </div>

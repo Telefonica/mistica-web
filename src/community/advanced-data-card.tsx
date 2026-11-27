@@ -21,6 +21,7 @@ import {isBiggerHeading} from '../utils/headings';
 import {TopActions, useControlState, CardWithControl} from '../card-internal';
 import {useRadioContext} from '../radio-button';
 import * as cardStyles from '../card-internal.css';
+import {useDefaultTracking} from '../utils/analytics';
 
 import type {CardSelectionProps, CardAction} from '../card-internal';
 import type {PressHandler} from '../touchable';
@@ -41,6 +42,7 @@ import type {
 
 type TouchableProps = {
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
+    trackEvent?: boolean;
     role?: string;
 } & ExclusifyUnion<
     | {
@@ -332,10 +334,12 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
             actions,
             'aria-label': ariaLabelProp,
             onClose,
+            trackEvent,
             ...touchableProps
         },
         ref
     ) => {
+        const getDefaultTrackingEvent = useDefaultTracking();
         const {isChecked, toggleChecked} = useControlState(switchProps || checkbox);
         const radioContext = useRadioContext();
         const isSelectable = !!switchProps || !!checkbox || radioValue !== undefined;
@@ -464,6 +468,15 @@ export const AdvancedDataCard = React.forwardRef<HTMLDivElement, AdvancedDataCar
                         <Touchable
                             maybe
                             {...touchableProps}
+                            trackingEvent={
+                                touchableProps.trackingEvent ??
+                                getDefaultTrackingEvent({
+                                    componentType: 'card',
+                                    componentCopy: title || pretitle || 'not_apply',
+                                    trackEvent,
+                                }) ??
+                                []
+                            }
                             aria-label={isTouchable ? ariaLabel : undefined}
                             className={styles.touchable}
                         >

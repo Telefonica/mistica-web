@@ -3,7 +3,7 @@ import {Box, Checkbox, Chip, Inline, RadioButton, RadioGroup, ResponsiveLayout} 
 import IconLightningFilled from '@telefonica/mistica-icons/icon-lightning-filled';
 
 import type {Variant} from '../theme-variant-context';
-import type {DataAttributes} from '../utils/types';
+import type {TrackingEvent, DataAttributes} from '../utils/types';
 
 const badgeOptions = ['0', '2', '14', 'undefined'];
 
@@ -11,6 +11,8 @@ export default {
     title: 'Components/Chip',
     parameters: {fullScreen: true},
     argTypes: {
+        trackEvent: {options: [undefined, true, false], control: {type: 'select'}},
+        trackingEvent: {control: {type: 'object'}},
         variantOutside: {
             options: ['default', 'brand', 'negative', 'alternative'],
             control: {type: 'select'},
@@ -19,6 +21,8 @@ export default {
 };
 
 type Args = {
+    trackEvent?: boolean;
+    trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
     variantOutside: Variant;
     icon: boolean;
     closable: boolean;
@@ -58,6 +62,8 @@ export const Default: StoryComponent<Args> = ({
     active: chipActive,
     href: hrefProp,
     small,
+    trackEvent,
+    trackingEvent,
 }) => {
     const props = {
         Icon: icon ? IconLightningFilled : undefined,
@@ -65,6 +71,8 @@ export const Default: StoryComponent<Args> = ({
         href: hrefProp !== 'undefined' ? hrefProp : '',
         active: chipActive,
         small,
+        trackEvent,
+        trackingEvent,
     };
 
     const {href, active, ...rest} = props;
@@ -179,13 +187,17 @@ export const NavigableChip: StoryComponent<{
     icon: boolean;
     badge: string;
     small: boolean;
-}> = ({variantOutside, icon, badge, small}) => {
+    trackEvent?: boolean;
+    trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
+}> = ({variantOutside, icon, badge, small, trackEvent, trackingEvent}) => {
     const props = {
         Icon: icon ? IconLightningFilled : undefined,
         badge: badge !== 'undefined' ? +badge : undefined,
         href: 'https://example.com',
         active: true,
         small,
+        trackEvent,
+        trackingEvent,
     };
 
     return (
@@ -196,6 +208,8 @@ export const NavigableChip: StoryComponent<{
 };
 
 const defaultArgs = {
+    trackEvent: undefined,
+    trackingEvent: undefined,
     variantOutside: 'default',
     active: false,
     badge: '0',
@@ -206,6 +220,8 @@ const defaultArgs = {
 } as const;
 
 const navigableArgs = {
+    trackEvent: undefined,
+    trackingEvent: undefined,
     variantOutside: 'default',
     badge: '0',
     icon: false,

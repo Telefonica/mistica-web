@@ -1,7 +1,9 @@
 'use client';
 import * as React from 'react';
+import {useTheme} from '../hooks';
 
 import type {EventFormat} from '../theme';
+import type {TrackingEvent} from './types';
 
 // Universal Analytics (legacy)
 export const eventCategories = {userInteraction: 'user_interaction'} as const;
@@ -26,3 +28,39 @@ export const TrackingConfig = ({children, eventFormat}: TrackingConfigProps): JS
 };
 
 export const useTrackingConfig = (): {eventFormat: EventFormat} => React.useContext(TrackingContext);
+
+type TrackingComponentType = 'icon' | 'row' | 'tab' | 'accordion' | 'card' | 'chip' | 'link' | 'button';
+
+type DefaultTrackingOptions = {
+    componentType: TrackingComponentType;
+    componentCopy: string;
+    trackEvent?: boolean;
+};
+
+export const useDefaultTracking = (): ((options: DefaultTrackingOptions) => TrackingEvent | undefined) => {
+    const {analytics} = useTheme();
+    const {eventFormat} = useTrackingConfig();
+
+    return ({
+        componentType,
+        componentCopy,
+        trackEvent,
+    }: DefaultTrackingOptions): TrackingEvent | undefined => {
+        const shouldTrackEvent = trackEvent ?? analytics.trackEventsByDefault;
+        if (!shouldTrackEvent) {
+            return undefined;
+        }
+
+        return eventFormat === 'google-analytics-4'
+            ? {
+                  name: eventNames.userInteraction,
+                  component_type: componentType,
+                  component_copy: componentCopy,
+              }
+            : {
+                  category: eventCategories.userInteraction,
+                  action: `${componentType}_tapped`,
+                  label: componentCopy,
+              };
+    };
+};

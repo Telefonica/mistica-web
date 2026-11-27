@@ -6,9 +6,10 @@ import * as classes from './touchable.css';
 import {useTheme} from './hooks';
 import {isInsideNovumNativeApp} from './utils/platform';
 import {ENTER, SPACE} from './utils/keys';
-import {getPrefixedDataAttributes} from './utils/dom';
+import {getAriaLabelledByText, getPrefixedDataAttributes} from './utils/dom';
 import {redirect} from './utils/browser';
 import * as tokens from './text-tokens';
+import {useDefaultTracking} from './utils/analytics';
 
 import type {ExclusifyUnion} from './utils/utility-types';
 import type {DataAttributes, TrackingEvent} from './utils/types';
@@ -82,7 +83,7 @@ export type AlwaysTouchableComponentProps = ExclusifyUnion<OnPressProps | HrefPr
         | 'aria-description'
         | 'aria-describedby'
         | 'aria-current'
-    >;
+    > & {trackEvent?: boolean};
 
 export type TouchableComponentProps<Props> = ExclusifyUnion<
     Props | (OnPressProps & Props) | (HrefProps & Props) | (ToProps & Props)
@@ -97,7 +98,7 @@ export type TouchableComponentProps<Props> = ExclusifyUnion<
         | 'aria-description'
         | 'aria-describedby'
         | 'aria-current'
-    >;
+    > & {trackEvent?: boolean};
 
 type Maybe<T, K extends keyof T> = Pick<Partial<T>, K> & Omit<T, K> & {maybe: true};
 
@@ -110,22 +111,26 @@ export type TouchableProps = ExclusifyUnion<
     | Maybe<ToProps, 'to'>
     | SubmitProps
 > &
-    CommonProps;
+    CommonProps & {trackEvent?: boolean};
+
+type TrackingEventValue = TrackingEvent | ReadonlyArray<TrackingEvent>;
+
+type RawTouchableProps = Omit<TouchableProps, 'trackEvent' | 'trackingEvent'> & {
+    trackingEvent?: TrackingEventValue | ((element: HTMLElement) => TrackingEventValue | undefined);
+};
 
 export type TouchableElement = HTMLDivElement | HTMLAnchorElement | HTMLButtonElement;
 
-const RawTouchable = React.forwardRef<TouchableElement, TouchableProps>((props, ref) => {
+const RawTouchable = React.forwardRef<TouchableElement, RawTouchableProps>((props, ref) => {
     const {texts, analytics, platformOverrides, Link, useHrefDecorator, t} = useTheme();
     const hrefDecorator = useHrefDecorator();
     const isClicked = React.useRef(false);
-    let trackingEvents: ReadonlyArray<TrackingEvent> = [];
-    if (props.trackingEvent) {
-        if (Array.isArray(props.trackingEvent)) {
-            trackingEvents = props.trackingEvent;
-        } else {
-            trackingEvents = [props.trackingEvent as TrackingEvent];
-        }
-    }
+    const getTrackingEvents = (element: HTMLElement): ReadonlyArray<TrackingEvent> => {
+        const trackingEvent =
+            typeof props.trackingEvent === 'function' ? props.trackingEvent(element) : props.trackingEvent;
+        if (!trackingEvent) return [];
+        return Array.isArray(trackingEvent) ? trackingEvent : [trackingEvent as TrackingEvent];
+    };
 
     const children = props.children;
 
@@ -191,13 +196,14 @@ const RawTouchable = React.forwardRef<TouchableElement, TouchableProps>((props, 
         return '';
     };
 
-    const trackEvent = () => Promise.all(trackingEvents.map((event) => analytics.logEvent(event)));
+    const trackEvents = (events: ReadonlyArray<TrackingEvent>) =>
+        Promise.all(events.map((event) => analytics.logEvent(event)));
 
-    const trackOnce = (callback: () => void) => {
+    const trackOnce = (events: ReadonlyArray<TrackingEvent>, callback: () => void) => {
         if (isClicked.current) return;
         isClicked.current = true;
 
-        trackEvent().finally(() => {
+        trackEvents(events).finally(() => {
             isClicked.current = false;
             callback();
         });
@@ -205,17 +211,19 @@ const RawTouchable = React.forwardRef<TouchableElement, TouchableProps>((props, 
 
     const handleButtonClick = (event: React.MouseEvent<HTMLElement>) => {
         stopPropagationIfNeeded(event);
+        const trackingEvents = getTrackingEvents(event.currentTarget);
         // synchronously execute handler when no tracking is needed
         if (!trackingEvents.length) {
             onPress(event);
             return;
         }
 
-        trackOnce(() => onPress(event));
+        trackOnce(trackingEvents, () => onPress(event));
     };
 
     const handleHrefClick = (event: React.MouseEvent<HTMLElement>) => {
         stopPropagationIfNeeded(event);
+        const trackingEvents = getTrackingEvents(event.currentTarget);
 
         const hasOnNavigate = !!(props.href && props.onNavigate);
 
@@ -225,16 +233,17 @@ const RawTouchable = React.forwardRef<TouchableElement, TouchableProps>((props, 
         event.preventDefault();
 
         Promise.resolve(hasOnNavigate ? props.onNavigate?.() : undefined).finally(() => {
-            trackOnce(() => redirect(getHref(), openNewTab, loadOnTop));
+            trackOnce(trackingEvents, () => redirect(getHref(), openNewTab, loadOnTop));
         });
     };
 
     const handleToClick = (event: React.MouseEvent<HTMLElement>) => {
         stopPropagationIfNeeded(event);
+        const trackingEvents = getTrackingEvents(event.currentTarget);
         if (props.to && props.onNavigate) {
             props.onNavigate();
         }
-        trackEvent();
+        trackEvents(trackingEvents);
     };
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLElement>) => {
@@ -335,12 +344,32 @@ const RawTouchable = React.forwardRef<TouchableElement, TouchableProps>((props, 
     );
 });
 
-const Touchable = React.forwardRef<TouchableElement, TouchableProps>((props, ref) => {
-    return <RawTouchable {...props} className={classnames(classes.touchable, props.className)} ref={ref} />;
+const Touchable = React.forwardRef<TouchableElement, TouchableProps>(({trackEvent, ...props}, ref) => {
+    const getDefaultTrackingEvent = useDefaultTracking();
+    return (
+        <RawTouchable
+            {...props}
+            trackingEvent={
+                props.trackingEvent ??
+                ((element) =>
+                    getDefaultTrackingEvent({
+                        componentType: props.href || props.to ? 'link' : 'button',
+                        componentCopy:
+                            getAriaLabelledByText(element) ||
+                            props['aria-label'] ||
+                            element.textContent ||
+                            '',
+                        trackEvent: props.disabled || props['aria-disabled'] ? false : trackEvent,
+                    }))
+            }
+            className={classnames(classes.touchable, props.className)}
+            ref={ref}
+        />
+    );
 });
 
 // Used internally by Mística's components to avoid styles collisions
-export const BaseTouchable = React.forwardRef<TouchableElement, TouchableProps & {resetMargin?: boolean}>(
+export const BaseTouchable = React.forwardRef<TouchableElement, RawTouchableProps & {resetMargin?: boolean}>(
     ({resetMargin = true, ...props}, ref) => {
         return (
             <RawTouchable

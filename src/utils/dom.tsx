@@ -72,6 +72,14 @@ export const getPrefixedDataAttributes = (attrs?: DataAttributes): DataAttribute
     return result;
 };
 
+export const getAriaLabelledByText = (element: HTMLElement): string =>
+    element
+        .getAttribute('aria-labelledby')
+        ?.split(/\s+/)
+        .map((id) => element.ownerDocument.getElementById(id)?.textContent)
+        .filter(Boolean)
+        .join(' ') || '';
+
 type ScrollAxis = 'X' | 'Y';
 
 const isScrollable = (el: Element, axis: ScrollAxis): boolean => {

@@ -11,6 +11,7 @@ export default {
     component: Tabs,
     parameters: {fullScreen: true},
     argTypes: {
+        trackEvent: {options: [undefined, true, false], control: {type: 'select'}},
         tabCount: {
             control: {type: 'range', min: 1, max: 5, step: 1},
         },
@@ -26,13 +27,14 @@ export default {
 };
 
 type Args = {
+    trackEvent?: boolean;
     tabCount: number;
     text: string;
     variantOutside: Variant;
     icon: boolean;
 };
 
-export const Default: StoryComponent<Args> = ({tabCount, text, variantOutside, icon}) => {
+export const Default: StoryComponent<Args> = ({tabCount, text, variantOutside, icon, trackEvent}) => {
     const [selectedIndex, setSelectedIndex] = React.useState(0);
     return (
         <ResponsiveLayout fullWidth variant={variantOutside}>
@@ -41,6 +43,7 @@ export const Default: StoryComponent<Args> = ({tabCount, text, variantOutside, i
                     selectedIndex={selectedIndex}
                     onChange={setSelectedIndex}
                     tabs={Array.from({length: tabCount}).map((_, index) => ({
+                        trackEvent,
                         text: `${text} ${index + 1}`,
                         Icon: icon
                             ? [IconAppointmentRegular, IconBrainRegular, IconBusRegular][index]
@@ -59,6 +62,7 @@ export const Default: StoryComponent<Args> = ({tabCount, text, variantOutside, i
 
 Default.storyName = 'Tabs';
 Default.args = {
+    trackEvent: undefined,
     tabCount: 3,
     text: 'Tab',
     variantOutside: 'default',

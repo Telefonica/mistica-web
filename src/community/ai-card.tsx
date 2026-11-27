@@ -8,6 +8,7 @@ import {useIsInViewport} from '../hooks';
 import {isClientSide} from '../utils/environment';
 import {applyCssVars} from '../utils/css';
 import * as styles from './ai-card.css';
+import {useDefaultTracking} from '../utils/analytics';
 
 import type {TouchableComponentProps} from '../touchable';
 
@@ -143,8 +144,10 @@ const AiCard = ({
     asset,
     dataAttributes,
     'aria-label': ariaLabel,
+    trackEvent,
     ...touchableProps
 }: AiCardProps): JSX.Element => {
+    const getDefaultTrackingEvent = useDefaultTracking();
     const textLineRef = React.useRef<HTMLDivElement>(null);
     const prefersReducedMotion = getPrefersReducedMotion();
     const isInViewport = useIsInViewport(textLineRef, false);
@@ -193,6 +196,14 @@ const AiCard = ({
             }
             dataAttributes={{testid: 'AiCard', ...dataAttributes}}
             {...(touchableProps as any)}
+            trackingEvent={
+                touchableProps.trackingEvent ??
+                getDefaultTrackingEvent({
+                    componentType: 'card',
+                    componentCopy: autoAriaLabel || 'not_apply',
+                    trackEvent,
+                })
+            }
             aria-label={ariaLabel ?? autoAriaLabel}
         >
             {asset && (
