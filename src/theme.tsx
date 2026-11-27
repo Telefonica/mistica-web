@@ -81,7 +81,7 @@ const getNext12Link =
         </NextLink>
     );
 
-const getNext13Or14Link =
+const getModernNextLink =
     (NextLink: React.ComponentType<any>): LinkComponent =>
     ({to, innerRef, children, ...props}) => (
         <NextLink href={to} ref={innerRef} {...props}>
@@ -110,8 +110,9 @@ export const getMisticaLinkComponent = (Link?: ThemeConfig['Link']): LinkCompone
             return getNext12Link(Link.Component);
         case 'Next13':
         case 'Next14':
+        case 'Next16':
             // hello-world-web, global-checkout-webview
-            return getNext13Or14Link(Link.Component);
+            return getModernNextLink(Link.Component);
         default:
             const exhaustiveCheck: never = Link.type;
             throw new Error(`Invalid Link type: ${exhaustiveCheck}`);
@@ -145,7 +146,7 @@ export type ThemeConfig = Readonly<{
     Link?:
         | LinkComponent
         | {
-              type: 'ReactRouter5' | 'ReactRouter6' | 'Next12' | 'Next13' | 'Next14';
+              type: 'ReactRouter5' | 'ReactRouter6' | 'Next12' | 'Next13' | 'Next14' | 'Next16';
               Component: React.ComponentType<any>;
           };
     useHrefDecorator?: () => (href: string) => string;
