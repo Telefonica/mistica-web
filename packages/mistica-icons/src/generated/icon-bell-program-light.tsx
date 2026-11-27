@@ -24,6 +24,21 @@ const IconBellProgramLight = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M12.001 7.995a.5.5 0 0 1 .5.5v3.004h3a.5.5 0 0 1 0 1h-3.5a.5.5 0 0 1-.5-.5V8.495a.5.5 0 0 1 .5-.5"
+                    />
+                    <path
+                        fill={fillColor}
+                        d="M12.338 2c3.634 0 6.676 2.953 6.676 6.602v4.545l1.095 1.799.084.148c.39.761.369 1.78-.162 2.453-.37.468-.943.855-1.641.855h-2.394C15.774 20.366 14.006 22 12 22s-3.775-1.634-3.997-3.598H5.61c-.699 0-1.273-.387-1.642-.855-.566-.718-.552-1.828-.078-2.6l1.096-1.8V8.602C4.986 4.953 8.027 2 11.66 2zM9.012 18.402C9.232 19.816 10.544 21 11.999 21s2.768-1.184 2.989-2.598zM11.661 3C8.564 3 5.986 5.52 5.986 8.602v4.825l-1.243 2.04v.002c-.29.471-.258 1.12.01 1.46.236.298.545.473.857.473h12.78c.312 0 .62-.175.855-.474.269-.34.302-.988.012-1.459v-.002l-1.17-1.92-.073-.12V8.602c0-3.081-2.58-5.602-5.676-5.602z"
+                    />
+                </svg>
+            );
+        }
+
         if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>

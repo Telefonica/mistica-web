@@ -6,7 +6,7 @@
  */
 
 import * as React from 'react';
-import {useThemeVariant, skinVars as vars, useIconGradient} from '@telefonica/mistica/icon-runtime';
+import {useTheme, useThemeVariant, skinVars as vars, useIconGradient} from '@telefonica/mistica/icon-runtime';
 
 import type {IconProps} from '@telefonica/mistica/icon-runtime';
 
@@ -21,7 +21,24 @@ const IconWaitClockFilled = ({color, size = 24, ...rest}: IconProps): JSX.Elemen
 
     const {fillValue: fillColor, gradientDef} = useIconGradient(color ?? defaultColor);
 
+    const {skinName} = useTheme();
+
     const getSvgContent = () => {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M13.5 2a8.5 8.5 0 0 1 8.5 8.5v3a8.5 8.5 0 0 1-8.5 8.5h-3q-.673 0-1.32-.102a1 1 0 0 1 .31-1.976q.493.077 1.01.078h3a6.5 6.5 0 0 0 6.5-6.5v-3A6.5 6.5 0 0 0 13.5 4h-3A6.5 6.5 0 0 0 4 10.5v3a6.47 6.47 0 0 0 1.53 4.186l.001-.742a1 1 0 0 1 2 .004l-.005 2.436c-.002.886-.755 1.473-1.515 1.471l-2.634-.004a1 1 0 0 1 .004-2h.516A8.47 8.47 0 0 1 2 13.5v-3A8.5 8.5 0 0 1 10.5 2z"
+                    />
+                    <path
+                        fill={fillColor}
+                        d="M12 7.28a1 1 0 0 1 1 1v3.533l2.805 2.804a1 1 0 0 1-1.414 1.414l-3.098-3.097-.066-.074a1 1 0 0 1-.227-.633V8.28a1 1 0 0 1 1-1"
+                    />
+                </svg>
+            );
+        }
+
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

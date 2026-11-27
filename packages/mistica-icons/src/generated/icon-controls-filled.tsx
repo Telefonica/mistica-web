@@ -24,6 +24,17 @@ const IconControlsFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M9.865 15.598a2.32 2.32 0 0 1 2.291 1.95h9.094a.75.75 0 1 1 0 1.5h-9.094a2.32 2.32 0 0 1-2.29 1.951H9.11a2.32 2.32 0 0 1-2.29-1.951H2.75a.75.75 0 0 1 0-1.5h4.07a2.32 2.32 0 0 1 2.29-1.95zm7.707-6.308a2.32 2.32 0 0 1 2.291 1.954h1.387a.75.75 0 0 1 0 1.5h-1.388a2.32 2.32 0 0 1-2.29 1.947h-.755a2.32 2.32 0 0 1-2.29-1.947H2.75a.75.75 0 1 1 0-1.5h11.776a2.32 2.32 0 0 1 2.291-1.954zM7.207 3.001c1.156 0 2.113.845 2.291 1.951H21.25a.75.75 0 0 1 0 1.5H9.498a2.32 2.32 0 0 1-2.291 1.951h-.755a2.32 2.32 0 0 1-2.29-1.95H2.75a.75.75 0 0 1 0-1.5h1.411A2.32 2.32 0 0 1 6.452 3z"
+                    />
+                </svg>
+            );
+        }
+
         if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>

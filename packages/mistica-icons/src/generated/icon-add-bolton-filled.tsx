@@ -6,7 +6,7 @@
  */
 
 import * as React from 'react';
-import {useThemeVariant, skinVars as vars, useIconGradient} from '@telefonica/mistica/icon-runtime';
+import {useTheme, useThemeVariant, skinVars as vars, useIconGradient} from '@telefonica/mistica/icon-runtime';
 
 import type {IconProps} from '@telefonica/mistica/icon-runtime';
 
@@ -21,7 +21,20 @@ const IconAddBoltonFilled = ({color, size = 24, ...rest}: IconProps): JSX.Elemen
 
     const {fillValue: fillColor, gradientDef} = useIconGradient(color ?? defaultColor);
 
+    const {skinName} = useTheme();
+
     const getSvgContent = () => {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M5.75 4.453c.72-1.142 1.906-1.866 3.34-1.866h5.82c1.434 0 2.62.724 3.34 1.866l.007.011 3.211 5.53c.717 1.243.683 2.632.054 3.826l-.006.011-3.258 5.703-.008.013c-.72 1.142-1.906 1.866-3.34 1.866H9.09c-1.434 0-2.62-.724-3.34-1.866l-.008-.014-3.258-5.702-.006-.011c-.63-1.194-.663-2.583.054-3.825v-.002l3.211-5.529zm6.248 2.797a.75.75 0 0 0-.75.75v3.25H8a.75.75 0 0 0 0 1.5h3.249V16a.75.75 0 1 0 1.5 0v-3.25H16a.75.75 0 1 0 0-1.5h-3.252V8a.75.75 0 0 0-.75-.75"
+                    />
+                </svg>
+            );
+        }
+
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

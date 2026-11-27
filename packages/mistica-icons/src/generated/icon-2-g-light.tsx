@@ -6,7 +6,7 @@
  */
 
 import * as React from 'react';
-import {useThemeVariant, skinVars as vars, useIconGradient} from '@telefonica/mistica/icon-runtime';
+import {useTheme, useThemeVariant, skinVars as vars, useIconGradient} from '@telefonica/mistica/icon-runtime';
 
 import type {IconProps} from '@telefonica/mistica/icon-runtime';
 
@@ -21,7 +21,20 @@ const Icon2GLight = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
 
     const {fillValue: fillColor, gradientDef} = useIconGradient(color ?? defaultColor);
 
+    const {skinName} = useTheme();
+
     const getSvgContent = () => {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M19.249 1.998a2.75 2.75 0 0 0-2.75 2.75v14.5a2.75 2.75 0 0 0 5.5 0v-14.5a2.75 2.75 0 0 0-2.75-2.75m-1.75 2.75a1.75 1.75 0 1 1 3.5 0v14.5a1.75 1.75 0 1 1-3.5 0zM2.084 6.82q0-.533.23-.914t.553-.623q.326-.243.842-.532.385-.219.604-.37.218-.15.361-.35a.74.74 0 0 0 .147-.452.7.7 0 0 0-.223-.532q-.218-.207-.655-.207-.79 0-1.39.54l-.552-.675q.378-.345.886-.524a3.4 3.4 0 0 1 1.14-.183q.591 0 .992.195.402.195.6.552.203.354.203.834 0 .45-.223.786-.222.335-.54.56a10 10 0 0 1-.822.505 9 9 0 0 0-.627.381q-.226.15-.382.35-.15.198-.15.44v.044h2.704v.882H2.084zm6.828.786a2.8 2.8 0 0 1-1.35-.317 2.27 2.27 0 0 1-.93-.954Q6.3 5.705 6.3 4.802q0-.878.341-1.509.341-.636.95-.965.61-.33 1.401-.33.93 0 1.466.382.536.38.77.925l-.893.405q-.15-.381-.48-.623-.326-.247-.863-.247-.551 0-.929.243-.377.237-.568.679-.186.437-.187 1.04 0 .64.195 1.08.198.438.568.66t.882.222q.73 0 1.072-.357.346-.357.346-1.001v-.091H9.03v-.882h2.081q.132 0 .183.056.056.051.056.182v.576q0 .704-.259 1.231-.254.53-.798.83t-1.382.298m-4.16 4.896a2.75 2.75 0 0 0-2.748 2.749v4.003a2.748 2.748 0 0 0 5.496 0V15.25a2.75 2.75 0 0 0-2.748-2.748m-1.748 2.749a1.748 1.748 0 0 1 3.496 0v4.003a1.748 1.748 0 0 1-3.496 0zm6.246-3.999a2.75 2.75 0 0 1 5.5 0v8a2.75 2.75 0 1 1-5.5 0zm2.75-1.75a1.75 1.75 0 0 0-1.75 1.75v8a1.75 1.75 0 1 0 3.5 0v-8a1.75 1.75 0 0 0-1.75-1.75"
+                    />
+                </svg>
+            );
+        }
+
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

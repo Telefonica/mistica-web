@@ -24,6 +24,17 @@ const IconAddMoreRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M11.251 21.247a.75.75 0 1 0 1.5 0V12.75h8.496a.75.75 0 0 0 0-1.5h-8.496V2.753a.75.75 0 0 0-1.5 0v8.497H2.753a.75.75 0 0 0 0 1.5h8.498z"
+                    />
+                </svg>
+            );
+        }
+
         if (skinName.match(/^blau/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>

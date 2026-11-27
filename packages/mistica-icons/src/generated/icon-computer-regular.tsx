@@ -24,6 +24,17 @@ const IconComputerRegular = ({color, size = 24, ...rest}: IconProps): JSX.Elemen
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M21.25 18.749a.75.75 0 0 1 0 1.5H2.75a.75.75 0 0 1 0-1.5zm-3-14.998A3.75 3.75 0 0 1 22 7.501v7a3.75 3.75 0 0 1-3.75 3.75H5.75A3.75 3.75 0 0 1 2 14.501v-7a3.75 3.75 0 0 1 3.75-3.75zm-12.5 1.5a2.25 2.25 0 0 0-2.25 2.25v7a2.25 2.25 0 0 0 2.25 2.25h12.5a2.25 2.25 0 0 0 2.25-2.25v-7a2.25 2.25 0 0 0-2.25-2.25z"
+                    />
+                </svg>
+            );
+        }
+
         if (skinName.match(/^blau/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
