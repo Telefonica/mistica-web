@@ -188,6 +188,8 @@ If `node_modules/@telefonica/mistica` is **not** available, fall back to the Git
 ## Development
 
 - `yarn test`: run tests
+- `yarn test-acceptance-docker`: run browser tests with the same Docker browser as CI (recommended for
+  screenshots)
 - `yarn test-acceptance`: run browser tests (starts Storybook)
 - `yarn test-acceptance --ui`: open Playwright's test explorer
 - `yarn lint`: check codestyle

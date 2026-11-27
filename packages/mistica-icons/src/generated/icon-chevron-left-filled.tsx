@@ -24,6 +24,17 @@ const IconChevronLeftFilled = ({color, size = 24, ...rest}: IconProps): JSX.Elem
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M14.739 4.322a1 1 0 0 0-1.414-.043l-7.443 7.003a1 1 0 0 0 .001 1.457l7.443 6.987a1 1 0 0 0 1.368-1.458L8.028 12.01l6.668-6.274a1 1 0 0 0 .043-1.414"
+                    />
+                </svg>
+            );
+        }
+
         if (skinName.match(/^blau/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>

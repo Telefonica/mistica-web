@@ -24,6 +24,25 @@ const Icon4GLight = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M15.186 9.464a2.551 2.551 0 1 0 2.502 3.051h-2.173a.5.5 0 0 1 0-1h2.722a.5.5 0 0 1 .5.5 3.551 3.551 0 1 1-3.551-3.55c1.042 0 2.144.45 2.838 1.408a.5.5 0 0 1-.809.587c-.48-.663-1.26-.996-2.03-.996"
+                    />
+                    <path
+                        fill={fillColor}
+                        d="M9.703 8.597a.5.5 0 0 1 .33.47v3.895h1.037a.5.5 0 1 1 0 1h-1.037v1.104a.5.5 0 0 1-1 0v-1.104H5.871a.5.5 0 0 1-.384-.82l3.662-4.395a.5.5 0 0 1 .554-.15m-.67 4.365v-2.514L6.94 12.962z"
+                    />
+                    <path
+                        fill={fillColor}
+                        d="M10.3 2A8.3 8.3 0 0 0 2 10.3v3.4a8.3 8.3 0 0 0 8.3 8.3h3.4a8.3 8.3 0 0 0 8.3-8.3v-3.4A8.3 8.3 0 0 0 13.7 2zM3 10.3A7.3 7.3 0 0 1 10.3 3h3.4a7.3 7.3 0 0 1 7.3 7.3v3.4a7.3 7.3 0 0 1-7.3 7.3h-3.4A7.3 7.3 0 0 1 3 13.7z"
+                    />
+                </svg>
+            );
+        }
+
         if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>

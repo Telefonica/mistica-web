@@ -24,6 +24,21 @@ const IconGlassLight = ({color, size = 24, ...rest}: IconProps): JSX.Element => 
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M10.132 6.768a.501.501 0 0 1 .708.707L7.565 10.75a.5.5 0 1 1-.707-.708zm-3.19-1.3a.5.5 0 0 1 .707.707L5.847 7.98a.5.5 0 0 1-.707-.708z"
+                    />
+                    <path
+                        fill={fillColor}
+                        d="M18.2 1.999a3.8 3.8 0 0 1 3.799 3.8v12.402a3.8 3.8 0 0 1-3.8 3.8H5.801a3.8 3.8 0 0 1-3.8-3.8V5.799a3.8 3.8 0 0 1 3.8-3.8zm-12.4 1a2.8 2.8 0 0 0-2.799 2.8v12.402a2.8 2.8 0 0 0 2.8 2.8h12.398a2.8 2.8 0 0 0 2.8-2.8V5.799a2.8 2.8 0 0 0-2.8-2.8z"
+                    />
+                </svg>
+            );
+        }
+
         if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>

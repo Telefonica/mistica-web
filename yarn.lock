@@ -4467,11 +4467,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@telefonica/mistica-icons@^18.1.0, @telefonica/mistica-icons@workspace:packages/mistica-icons":
+"@telefonica/mistica-icons@^18.3.0, @telefonica/mistica-icons@workspace:packages/mistica-icons":
   version: 0.0.0-use.local
   resolution: "@telefonica/mistica-icons@workspace:packages/mistica-icons"
   peerDependencies:
-    "@telefonica/mistica": ^18.1.0
+    "@telefonica/mistica": ^18.3.0
     react: ^18.0.0 || ^19.2.0
     react-dom: ^18.0.0 || ^19.2.0
   languageName: unknown
@@ -4498,7 +4498,7 @@ __metadata:
     "@tef-novum/webview-bridge": ^5.1.0
     "@telefonica/eslint-config": ^2.2.0
     "@telefonica/libphonenumber": ^2.9.1
-    "@telefonica/mistica-icons": ^18.1.0
+    "@telefonica/mistica-icons": ^18.3.0
     "@telefonica/prettier-config": ^2.0.0
     "@testing-library/dom": ^10.2.0
     "@testing-library/jest-dom": ^6.4.6

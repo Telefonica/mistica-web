@@ -24,6 +24,21 @@ const IconCopyFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => 
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M19.083 6.885a3.75 3.75 0 0 1 1.669 3.12v7a3.75 3.75 0 0 1-3.75 3.75h-7a3.75 3.75 0 0 1-3.083-1.614l-.132-.19h8.411c2.07 0 3.75-1.68 3.75-3.75V6.794z"
+                    />
+                    <path
+                        fill={fillColor}
+                        d="M13.998 3.245a3.75 3.75 0 0 1 3.75 3.751v7a3.75 3.75 0 0 1-3.75 3.75h-7a3.75 3.75 0 0 1-3.75-3.75v-7a3.75 3.75 0 0 1 3.75-3.75z"
+                    />
+                </svg>
+            );
+        }
+
         if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>

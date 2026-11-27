@@ -1,3 +1,33 @@
+# [18.3.0](https://github.com/Telefonica/mistica-web/compare/v18.2.0...v18.3.0) (2026-11-27)
+
+
+### Bug Fixes
+
+* **slideSwap:** keep consistency in duration prop with fadein fadeout ([#1839](https://github.com/Telefonica/mistica-web/issues/1839)) ([3cdafe7](https://github.com/Telefonica/mistica-web/commit/3cdafe7fec24bc1e6d127889bcaf4ba728cfdd5d))
+
+
+### Features
+
+* **Icons:** include new icons for vivo evolution ([#1823](https://github.com/Telefonica/mistica-web/issues/1823)) ([93a4027](https://github.com/Telefonica/mistica-web/commit/93a402716f348ca80b1960ab2bad94d94673d9f2))
+* **SlideSwap:** add new animation component ([#1732](https://github.com/Telefonica/mistica-web/issues/1732)) ([7e06b9a](https://github.com/Telefonica/mistica-web/commit/7e06b9a501239d18609f710a70c32edb24b044ae))
+
+# [18.2.0](https://github.com/Telefonica/mistica-web/compare/v18.1.0...v18.2.0) (2026-11-25)
+
+
+### Bug Fixes
+
+* **Autocomplete:** close suggestions when disabled ([#1806](https://github.com/Telefonica/mistica-web/issues/1806)) ([2c0a363](https://github.com/Telefonica/mistica-web/commit/2c0a3636b3549dae8e20d9edc0db3197368bf79a)), closes [#1805](https://github.com/Telefonica/mistica-web/issues/1805) [#1805](https://github.com/Telefonica/mistica-web/issues/1805)
+* **portal:** set theme scope on portals of scoped ThemeContextProvider ([#1827](https://github.com/Telefonica/mistica-web/issues/1827)) ([323caf9](https://github.com/Telefonica/mistica-web/commit/323caf9e061fd4627565cd43a4624f8e073640c2)), closes [#1821](https://github.com/Telefonica/mistica-web/issues/1821)
+* **Select:** ignore selection while disabled ([#1802](https://github.com/Telefonica/mistica-web/issues/1802)) ([233b626](https://github.com/Telefonica/mistica-web/commit/233b626f19681805cde4f521ed9631ed69640600)), closes [#1801](https://github.com/Telefonica/mistica-web/issues/1801)
+
+
+### Features
+
+* **ci:** let import-design-tokens select which outputs to format and commit ([#1826](https://github.com/Telefonica/mistica-web/issues/1826)) ([850814a](https://github.com/Telefonica/mistica-web/commit/850814a59342342ad17bdf4b0e333836f7738b6e))
+* **density:** add cozy and compact density support to skins and css ([#1800](https://github.com/Telefonica/mistica-web/issues/1800)) ([c56f544](https://github.com/Telefonica/mistica-web/commit/c56f5443936bcf32f2e1370bc0c77a3173b1b033))
+* **skin:** add border to floating surfaces in dark mode ([#1791](https://github.com/Telefonica/mistica-web/issues/1791)) ([0fd6604](https://github.com/Telefonica/mistica-web/commit/0fd66045b47379daa507f9349bc28932efcaa3dd)), closes [#1790](https://github.com/Telefonica/mistica-web/issues/1790)
+* **ThemeContextProvider:** add opt-in default analytics tracking ([#1812](https://github.com/Telefonica/mistica-web/issues/1812)) ([16f00d5](https://github.com/Telefonica/mistica-web/commit/16f00d542c585566941732a7be5b44db4be424d3)), closes [#1762](https://github.com/Telefonica/mistica-web/issues/1762)
+
 # [18.1.0](https://github.com/Telefonica/mistica-web/compare/v18.0.0...v18.1.0) (2026-11-20)
 
 

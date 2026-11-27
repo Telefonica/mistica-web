@@ -24,6 +24,17 @@ const IconArrowLineUpLight = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M12 21a.5.5 0 0 1-.5-.5V4.707l-7.644 7.647a.5.5 0 0 1-.708-.707l8.499-8.5a.5.5 0 0 1 .707 0l8.498 8.5a.5.5 0 1 1-.707.707L12.5 4.707V20.5a.5.5 0 0 1-.5.5"
+                    />
+                </svg>
+            );
+        }
+
         if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>

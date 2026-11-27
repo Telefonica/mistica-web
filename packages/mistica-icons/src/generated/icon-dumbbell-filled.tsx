@@ -24,6 +24,17 @@ const IconDumbbellFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M17.722 5.283c.968 0 1.767.721 1.893 1.655q.219-.053.452-.054c1.068 0 1.933.865 1.933 1.932v6.377a1.933 1.933 0 0 1-2.387 1.877 1.911 1.911 0 0 1-3.804-.266v-2.948H8.19v2.948a1.912 1.912 0 0 1-3.806.267A1.933 1.933 0 0 1 2 15.193V8.815a1.933 1.933 0 0 1 2.385-1.878 1.913 1.913 0 0 1 3.807.26v2.957h7.618V7.197c0-1.056.856-1.914 1.913-1.914"
+                    />
+                </svg>
+            );
+        }
+
         if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>

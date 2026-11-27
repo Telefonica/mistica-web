@@ -6,7 +6,7 @@
  */
 
 import * as React from 'react';
-import {useThemeVariant, skinVars as vars, useIconGradient} from '@telefonica/mistica/icon-runtime';
+import {useTheme, useThemeVariant, skinVars as vars, useIconGradient} from '@telefonica/mistica/icon-runtime';
 
 import type {IconProps} from '@telefonica/mistica/icon-runtime';
 
@@ -21,7 +21,24 @@ const IconUserScanLight = ({color, size = 24, ...rest}: IconProps): JSX.Element 
 
     const {fillValue: fillColor, gradientDef} = useIconGradient(color ?? defaultColor);
 
+    const {skinName} = useTheme();
+
     const getSvgContent = () => {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M2.502 14.26a.5.5 0 0 1 .5.5v3.482c0 1.584 1.307 2.759 2.697 2.759h3.567a.5.5 0 1 1 0 1H5.699c-1.924 0-3.697-1.605-3.697-3.759v-3.481a.5.5 0 0 1 .5-.5m18.996-.024a.5.5 0 0 1 .5.5v3.567c0 1.924-1.605 3.697-3.759 3.697h-3.481a.5.5 0 0 1 0-1h3.481c1.584 0 2.759-1.308 2.759-2.697v-3.567a.5.5 0 0 1 .5-.5"
+                    />
+                    <path
+                        fill={fillColor}
+                        d="M14.164 13.842a3.5 3.5 0 0 1 3.5 3.5v.789a.5.5 0 0 1-.5.5H6.836a.5.5 0 0 1-.5-.5v-.79a3.5 3.5 0 0 1 3.5-3.5zm-4.328 1a2.5 2.5 0 0 0-2.5 2.5v.289h9.328v-.29a2.5 2.5 0 0 0-2.5-2.5zm2.651-9.472a3 3 0 0 1 3 3v.974a3 3 0 0 1-3 3h-.973a3 3 0 0 1-3-3V8.37a3 3 0 0 1 3-3zm-.973 1a2 2 0 0 0-2 2v.974a2 2 0 0 0 2 2h.973a2 2 0 0 0 2-2V8.37a2 2 0 0 0-2-2zM9.242 2a.5.5 0 0 1 0 1H5.761C4.177 3 3 4.308 3 5.697v3.567a.5.5 0 0 1-.999 0V5.697C2.002 3.773 3.607 2 5.76 2zm9.058-.001c1.925 0 3.698 1.606 3.698 3.76V9.24a.5.5 0 0 1-1 0V5.757c0-1.584-1.308-2.759-2.697-2.759h-3.567a.5.5 0 1 1 0-1z"
+                    />
+                </svg>
+            );
+        }
+
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

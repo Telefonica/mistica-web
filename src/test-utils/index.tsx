@@ -224,6 +224,7 @@ const checkHydrationMismatch = async (page: PageApi, screenshotConfig?: Screensh
     await expect
         .poll(
             async () => {
+                // Playwright's caret hiding rewrites inline styles before React hydrates.
                 const current = await page.screenshot({caret: 'initial'});
                 const stable = current.equals(baseline);
                 baseline = current;
@@ -236,7 +237,7 @@ const checkHydrationMismatch = async (page: PageApi, screenshotConfig?: Screensh
     await hydrateSSRPage(page);
     await page.evaluate(() => document.fonts.ready.then(() => undefined));
     try {
-        await expect(page).toHaveScreenshot(name, {caret: 'initial', ...screenshotConfig});
+        await expect(page).toHaveScreenshot(name, screenshotConfig);
     } finally {
         fs.unlinkSync(baselineImagePath);
     }

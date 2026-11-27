@@ -5,7 +5,7 @@ import {DialogRoot} from './dialog-context';
 import ScreenSizeContextProvider from './screen-size-context-provider';
 import {dimensions, getMisticaLinkComponent, NAVBAR_HEIGHT_MOBILE} from './theme';
 import {getPlatform, isInsideNovumNativeApp} from './utils/platform';
-import ThemeContext from './theme-context';
+import ThemeContext, {THEME_SCOPE_ATTRIBUTE, ThemeScopeContext} from './theme-context';
 import {useIsomorphicLayoutEffect} from './hooks';
 import ModalContextProvider from './modal-context-provider';
 import TooltipContextProvider from './tooltip-context-provider';
@@ -253,9 +253,11 @@ const buildDensityStyles = (selector: string, skinByDensity: Record<Density, Ski
 
     return densityVars
         .map(({density, desktop, mobile}) => {
-            // Only the DensityProvider wrappers and the portal containers have the attribute
-            // todo https://github.com/Telefonica/mistica-web/issues/1821 match portal containers of a scoped theme
-            const densitySelector = `${selector} [${DENSITY_ATTRIBUTE}="${density}"]`;
+            // Only the DensityProvider wrappers and the elements out of the theme subtree (the portal containers)
+            // have the attribute. Such an element of a scoped theme has the scope attribute itself, so the second
+            // selector matches it. For :root, the second selector matches nothing.
+            const densityAttribute = `[${DENSITY_ATTRIBUTE}="${density}"]`;
+            const densitySelector = `${selector} ${densityAttribute}, ${selector}${densityAttribute}`;
             // The desktop rule matches the same element on mobile too, so a mobile value equal to the desktop one
             // needs no declaration
             const mobileVarNames = varNamesThatChange.filter(
@@ -286,6 +288,7 @@ const ThemeContextProvider = ({
     withoutStyles = false,
 }: Props): JSX.Element => {
     const themeScopeId = React.useId();
+    const parentThemeScope = React.useContext(ThemeScopeContext);
     const isOsDarkModeEnabled = useIsOsDarkModeEnabled();
 
     const colorScheme = theme.colorScheme ?? 'auto';
@@ -384,13 +387,18 @@ const ThemeContextProvider = ({
         };
     }, [colors, theme, isDarkModeEnabled, translate, density, skinConfigForDensity]);
 
-    const styleSelector = as ? `[data-mistica-theme="${themeScopeId}"]` : ':root';
+    const isScoped = !!as;
+    const styleSelector = isScoped ? `[${THEME_SCOPE_ATTRIBUTE}="${themeScopeId}"]` : ':root';
 
     // The density rules change only with the skin, not with the color scheme or the density of the theme
     const densityStyles = React.useMemo(
         () => buildDensityStyles(styleSelector, skinByDensity),
         [styleSelector, skinByDensity]
     );
+
+    // A provider without `as`, or without styles, writes no scoped css vars. Inside a scoped provider, its
+    // descendants still take the vars of the outer scope, so an element out of its subtree keeps that scope too.
+    const themeScope = isScoped && !withoutStyles ? themeScopeId : parentThemeScope;
 
     const renderStyles = (selector: string) => {
         if (withoutStyles || (process.env.NODE_ENV === 'test' && !process.env.SSR_TEST)) {
@@ -442,42 +450,44 @@ const ThemeContextProvider = ({
             <ModalContextProvider>
                 <TooltipContextProvider>
                     <ThemeContext.Provider value={contextTheme}>
-                        <MaybeDensitySkinConfigContext.Provider value={maybeDensitySkinConfig}>
-                            <TrackingConfig eventFormat={contextTheme.analytics.eventFormat}>
-                                <AspectRatioSupportProvider>
-                                    <DocumentVisibilityProvider>
-                                        <ScreenSizeContextProvider>
-                                            <DialogRoot>
-                                                <SnackbarRoot>
-                                                    {as ? (
-                                                        <>
-                                                            {renderStyles(styleSelector)}
-                                                            {React.createElement(
-                                                                as,
-                                                                {
-                                                                    style: {
-                                                                        isolation: 'isolate',
+                        <ThemeScopeContext.Provider value={themeScope}>
+                            <MaybeDensitySkinConfigContext.Provider value={maybeDensitySkinConfig}>
+                                <TrackingConfig eventFormat={contextTheme.analytics.eventFormat}>
+                                    <AspectRatioSupportProvider>
+                                        <DocumentVisibilityProvider>
+                                            <ScreenSizeContextProvider>
+                                                <DialogRoot>
+                                                    <SnackbarRoot>
+                                                        {as ? (
+                                                            <>
+                                                                {renderStyles(styleSelector)}
+                                                                {React.createElement(
+                                                                    as,
+                                                                    {
+                                                                        style: {
+                                                                            isolation: 'isolate',
+                                                                        },
+                                                                        [THEME_SCOPE_ATTRIBUTE]: withoutStyles
+                                                                            ? undefined
+                                                                            : themeScopeId,
                                                                     },
-                                                                    'data-mistica-theme': withoutStyles
-                                                                        ? undefined
-                                                                        : themeScopeId,
-                                                                },
-                                                                children
-                                                            )}
-                                                        </>
-                                                    ) : (
-                                                        <>
-                                                            {renderStyles(styleSelector)}
-                                                            {children}
-                                                        </>
-                                                    )}
-                                                </SnackbarRoot>
-                                            </DialogRoot>
-                                        </ScreenSizeContextProvider>
-                                    </DocumentVisibilityProvider>
-                                </AspectRatioSupportProvider>
-                            </TrackingConfig>
-                        </MaybeDensitySkinConfigContext.Provider>
+                                                                    children
+                                                                )}
+                                                            </>
+                                                        ) : (
+                                                            <>
+                                                                {renderStyles(styleSelector)}
+                                                                {children}
+                                                            </>
+                                                        )}
+                                                    </SnackbarRoot>
+                                                </DialogRoot>
+                                            </ScreenSizeContextProvider>
+                                        </DocumentVisibilityProvider>
+                                    </AspectRatioSupportProvider>
+                                </TrackingConfig>
+                            </MaybeDensitySkinConfigContext.Provider>
+                        </ThemeScopeContext.Provider>
                     </ThemeContext.Provider>
                 </TooltipContextProvider>
             </ModalContextProvider>

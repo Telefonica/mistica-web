@@ -24,6 +24,21 @@ const IconMuteFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element => 
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M18.03 5.614a.75.75 0 0 1 1.058-.066A8.6 8.6 0 0 1 22 12a8.58 8.58 0 0 1-2.692 6.246l2.472 2.473a.75.75 0 0 1-1.06 1.06l-6.165-6.165v-2.12l1.654 1.654A5.2 5.2 0 0 0 17.262 12a5.22 5.22 0 0 0-1.49-3.659.75.75 0 1 1 1.074-1.047A6.72 6.72 0 0 1 18.762 12a6.7 6.7 0 0 1-1.484 4.217l.97.969A7.08 7.08 0 0 0 20.5 12a7.1 7.1 0 0 0-2.404-5.327.75.75 0 0 1-.067-1.059m-3.474 10v1.15l-.004.154c-.044.768-.418 1.569-1.254 1.95-.753.344-1.585.212-2.281-.351l-.019-.016-3.059-2.645H5.852A3.86 3.86 0 0 1 2 11.996a3.853 3.853 0 0 1 3.852-3.851h1.232L2.22 3.28a.75.75 0 0 1 1.06-1.06l5.337 5.336-.679.588h-.854z"
+                    />
+                    <path
+                        fill={fillColor}
+                        d="M11.016 5.484c.696-.564 1.526-.695 2.279-.352v-.001c.893.407 1.26 1.292 1.26 2.105v6.257L8.617 7.557l2.38-2.058z"
+                    />
+                </svg>
+            );
+        }
+
         if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
