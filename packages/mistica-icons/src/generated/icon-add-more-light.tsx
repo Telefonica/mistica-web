@@ -24,6 +24,17 @@ const IconAddMoreLight = ({color, size = 24, ...rest}: IconProps): JSX.Element =
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M11.5 21.5a.5.5 0 1 0 1 0v-9h8.998a.5.5 0 1 0 0-1H12.5v-9a.5.5 0 0 0-1 0v9H2.502a.5.5 0 0 0 0 1H11.5z"
+                    />
+                </svg>
+            );
+        }
+
         if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>

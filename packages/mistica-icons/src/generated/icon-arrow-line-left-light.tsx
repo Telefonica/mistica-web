@@ -24,6 +24,17 @@ const IconArrowLineLeftLight = ({color, size = 24, ...rest}: IconProps): JSX.Ele
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M21 12a.5.5 0 0 1-.5.5H4.707l7.647 7.645a.5.5 0 0 1-.707.707l-8.5-8.498a.5.5 0 0 1 0-.707l8.5-8.499a.5.5 0 1 1 .707.708L4.707 11.5H20.5a.5.5 0 0 1 .5.5"
+                    />
+                </svg>
+            );
+        }
+
         if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>

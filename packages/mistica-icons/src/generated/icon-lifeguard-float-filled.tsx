@@ -24,6 +24,17 @@ const IconLifeguardFloatFilled = ({color, size = 24, ...rest}: IconProps): JSX.E
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M11.33 16.469h1.34q.054 0 .104-.003l1.093 5.53-.117.004h-3.5l-.132-.004 1.093-5.531.118.004m10.502-1.056a8.26 8.26 0 0 1-6.466 6.427l-1.128-5.71a3.8 3.8 0 0 0 1.873-1.847zM7.889 14.282a3.8 3.8 0 0 0 1.861 1.842l-1.129 5.714a8.26 8.26 0 0 1-6.454-6.426zM22 10.25v3.5l-.005.167-5.528-1.093q.004-.077.004-.155v-1.342q0-.074-.004-.147l5.528-1.092zm-14.467.92-.004.157v1.342q0 .078.003.154l-5.528 1.093Q2 13.834 2 13.75v-3.5l.004-.173zm7.831-9.01a8.26 8.26 0 0 1 6.468 6.432L16.114 9.72a3.8 3.8 0 0 0-1.877-1.856zM9.759 7.866a3.8 3.8 0 0 0-1.87 1.846l-5.72-1.13a8.26 8.26 0 0 1 6.464-6.423zm4.108-5.863-1.093 5.526-.103-.002h-1.342l-.107.002-1.092-5.526.12-.003h3.5q.06 0 .117.003"
+                    />
+                </svg>
+            );
+        }
+
         if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>

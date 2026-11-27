@@ -24,6 +24,17 @@ const IconArrowUpRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M12.006 20.5a3.387 3.387 0 0 1-3.387-3.378v-5.2a.75.75 0 0 0-.75-.75H6.136c-.542 0-.911-.228-1.067-.57-.128-.282-.128-.627.19-1.035l5.261-5.339.023-.024C10.94 3.764 11.55 3.5 12 3.5s1.06.263 1.457.704l.023.024 5.26 5.339c.32.408.32.753.19 1.035-.155.342-.524.57-1.066.57h-1.733a.75.75 0 0 0-.75.75v5.2a3.38 3.38 0 0 1-3.376 3.378m-4.887-3.378c0 2.696 2.197 4.878 4.887 4.878a4.88 4.88 0 0 0 4.876-4.878v-4.45h.982c.953 0 1.967-.427 2.432-1.448.392-.861.247-1.815-.41-2.627l-.049-.055-5.277-5.356C13.907 2.47 12.912 2 12 2s-1.907.47-2.56 1.186L4.164 8.542l-.049.055c-.657.812-.802 1.766-.41 2.627.465 1.02 1.48 1.448 2.432 1.448h.983z"
+                    />
+                </svg>
+            );
+        }
+
         if (skinName.match(/^blau/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>

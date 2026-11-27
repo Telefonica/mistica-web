@@ -112,6 +112,141 @@ test('a Portal takes the density of the nearest DensityProvider', async () => {
     expect(cozyPortal).toHaveAttribute('data-mistica-density', 'cozy');
 });
 
+test('a Portal takes the theme scope of the nearest ThemeContextProvider with as', async () => {
+    render(
+        <ThemeContextProvider theme={theme} density="compact">
+            <Portal>
+                <DensityReport name="global portal" />
+            </Portal>
+            <ThemeContextProvider theme={makeTheme({skin: getVivoSkin()})} density="cozy" as="div">
+                <p>scoped content</p>
+                <Portal>
+                    <DensityReport name="scoped portal" />
+                </Portal>
+            </ThemeContextProvider>
+        </ThemeContextProvider>
+    );
+
+    // The theme element and the portal containers have no role, and data-mistica-theme has no Testing Library query
+    /* eslint-disable testing-library/no-node-access */
+    const themeScope = screen.getByText('scoped content').closest('[data-mistica-theme]');
+    const globalPortal = (await screen.findByText('global portal: compact 8')).parentElement;
+    const scopedPortal = (await screen.findByText(/^scoped portal: cozy/)).parentElement;
+    /* eslint-enable testing-library/no-node-access */
+    const themeScopeId = themeScope?.getAttribute('data-mistica-theme');
+    expect(themeScopeId).toBeTruthy();
+    expect(scopedPortal).toHaveAttribute('data-mistica-theme', themeScopeId);
+    expect(scopedPortal).toHaveAttribute('data-mistica-density', 'cozy');
+    expect(globalPortal).not.toHaveAttribute('data-mistica-theme');
+});
+
+test('the children of a Portal see the theme scope and the density in their first layout effect', async () => {
+    const attributesInFirstLayoutEffect: Array<{themeScope?: string | null; density?: string | null}> = [];
+    const LayoutEffectReport = (): JSX.Element => {
+        const ref = React.useRef<HTMLParagraphElement>(null);
+        React.useLayoutEffect(() => {
+            // The attributes are on an ancestor with no role, and they have no Testing Library query
+            /* eslint-disable testing-library/no-node-access */
+            attributesInFirstLayoutEffect.push({
+                themeScope: ref.current?.closest('[data-mistica-theme]')?.getAttribute('data-mistica-theme'),
+                density: ref.current?.closest('[data-mistica-density]')?.getAttribute('data-mistica-density'),
+            });
+            /* eslint-enable testing-library/no-node-access */
+        }, []);
+        return <p ref={ref}>portal content</p>;
+    };
+
+    render(
+        <ThemeContextProvider theme={theme} density="compact" as="div">
+            <p>scoped content</p>
+            <Portal>
+                <LayoutEffectReport />
+            </Portal>
+        </ThemeContextProvider>
+    );
+
+    await screen.findByText('portal content');
+    // The theme element has no role, and data-mistica-theme has no Testing Library query
+    const themeScopeId = screen
+        .getByText('scoped content')
+        // eslint-disable-next-line testing-library/no-node-access
+        .closest('[data-mistica-theme]')
+        ?.getAttribute('data-mistica-theme');
+    expect(themeScopeId).toBeTruthy();
+    expect(attributesInFirstLayoutEffect).toEqual([{themeScope: themeScopeId, density: 'compact'}]);
+});
+
+test('a Portal takes no theme scope from a ThemeContextProvider with as and withoutStyles', async () => {
+    render(
+        <ThemeContextProvider theme={theme} as="div" withoutStyles>
+            <Portal>
+                <DensityReport name="portal" />
+            </Portal>
+        </ThemeContextProvider>
+    );
+
+    // The portal container has no role, and data-mistica-theme has no Testing Library query
+    // eslint-disable-next-line testing-library/no-node-access
+    const portal = (await screen.findByText('portal: cozy 12')).parentElement;
+    expect(portal).not.toHaveAttribute('data-mistica-theme');
+});
+
+test.each([
+    ['without as', {}],
+    ['with as and withoutStyles', {as: 'div', withoutStyles: true}],
+])('a Portal keeps the outer theme scope through a nested ThemeContextProvider %s', async (_, innerProps) => {
+    render(
+        <ThemeContextProvider theme={theme} as="div">
+            <p>scoped content</p>
+            <ThemeContextProvider theme={theme} {...innerProps}>
+                <Portal>
+                    <DensityReport name="portal" />
+                </Portal>
+            </ThemeContextProvider>
+        </ThemeContextProvider>
+    );
+
+    // The theme element and the portal container have no role, and data-mistica-theme has no Testing Library
+    // query
+    /* eslint-disable testing-library/no-node-access */
+    const outerThemeScopeId = screen
+        .getByText('scoped content')
+        .closest('[data-mistica-theme]')
+        ?.getAttribute('data-mistica-theme');
+    const portal = (await screen.findByText('portal: cozy 12')).parentElement;
+    /* eslint-enable testing-library/no-node-access */
+    expect(outerThemeScopeId).toBeTruthy();
+    expect(portal).toHaveAttribute('data-mistica-theme', outerThemeScopeId);
+});
+
+test('the density rules of a ThemeContextProvider with as match the portal containers of its scope', () => {
+    // ThemeContextProvider skips its styles in unit tests, except in the SSR ones
+    const previousSsrTest = process.env.SSR_TEST;
+    process.env.SSR_TEST = 'true';
+    try {
+        const {container} = render(
+            <ThemeContextProvider theme={theme} as="div">
+                <p>scoped content</p>
+            </ThemeContextProvider>
+        );
+        /* eslint-disable testing-library/no-node-access */
+        const themeScopeId = screen
+            .getByText('scoped content')
+            .closest('[data-mistica-theme]')
+            ?.getAttribute('data-mistica-theme');
+        // A style element has no role
+        const styles = container.querySelector('style')?.textContent ?? '';
+        /* eslint-enable testing-library/no-node-access */
+        const scope = `[data-mistica-theme="${themeScopeId}"]`;
+
+        expect(styles).toContain(
+            `${scope} [data-mistica-density="compact"], ${scope}[data-mistica-density="compact"] {`
+        );
+    } finally {
+        process.env.SSR_TEST = previousSsrTest;
+    }
+});
+
 // The layer container has no role, and data-mistica-density has no Testing Library query
 const getLayerDensity = (element: HTMLElement) =>
     // eslint-disable-next-line testing-library/no-node-access
@@ -204,11 +339,11 @@ test('ThemeContextProvider writes density rules only for the vars that change wi
         // eslint-disable-next-line testing-library/no-node-access
         const styles = container.querySelector('style')?.textContent ?? '';
 
-        const compactRule = styles.match(/:root \[data-mistica-density="compact"\] \{([^}]*)\}/)?.[1] ?? '';
+        const compactRule = styles.match(/:root\[data-mistica-density="compact"\] \{([^}]*)\}/)?.[1] ?? '';
         expect(compactRule).toMatch(/iconButtonDefaultPadding[^:]*:8px/);
         expect(compactRule).not.toMatch(/buttonDefaultPadding-left/);
 
-        const cozyRule = styles.match(/:root \[data-mistica-density="cozy"\] \{([^}]*)\}/)?.[1] ?? '';
+        const cozyRule = styles.match(/:root\[data-mistica-density="cozy"\] \{([^}]*)\}/)?.[1] ?? '';
         expect(cozyRule).toMatch(/iconButtonDefaultPadding[^:]*:12px/);
     } finally {
         process.env.SSR_TEST = previousSsrTest;
@@ -229,13 +364,13 @@ test('ThemeContextProvider writes a mobile density rule only for the values that
         // eslint-disable-next-line testing-library/no-node-access
         const styles = container.querySelector('style')?.textContent ?? '';
         const countRules = (density: string) =>
-            styles.split(`:root [data-mistica-density="${density}"] {`).length - 1;
+            styles.split(
+                `:root [data-mistica-density="${density}"], :root[data-mistica-density="${density}"] {`
+            ).length - 1;
 
         // Compact uses the mobile values, so its desktop rule is enough on mobile too
         expect(countRules('compact')).toBe(1);
         expect(countRules('cozy')).toBe(2);
-        // The theme element never has the density attribute itself
-        expect(styles).not.toMatch(/:root\[data-mistica-density/);
     } finally {
         process.env.SSR_TEST = previousSsrTest;
     }

@@ -24,6 +24,21 @@ const IconDisabledFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M7.68 9.464a.75.75 0 0 1 .699 1.328 5.149 5.149 0 1 0 7.396 5.784.75.75 0 0 1 1.457.356A6.648 6.648 0 1 1 7.68 9.464"
+                    />
+                    <path
+                        fill={fillColor}
+                        d="M14.1 8.379c.457 1.106 1.527 1.872 2.722 1.872a.751.751 0 0 1 0 1.5 4.34 4.34 0 0 1-2.272-.644l.39 1.899h.172a4.76 4.76 0 0 1 4.76 4.759v1.272a.75.75 0 0 1-1.497.075l-.004-.076.001-1.271a3.26 3.26 0 0 0-3.26-3.26h-.378V14.5l-1.887.008h-.003c-.973 0-1.84-.327-2.456-.947-.62-.623-.928-1.482-.888-2.43v-.016l.002-.016.22-2.612a2.64 2.64 0 0 0 1.332.362H12.6c.557 0 1.074-.175 1.5-.47m-1.874-6.378a2.65 2.65 0 0 1 2.649 2.65v.8a2.65 2.65 0 0 1-2.65 2.65h-.8a2.65 2.65 0 0 1-2.65-2.65v-.8a2.65 2.65 0 0 1 2.65-2.65z"
+                    />
+                </svg>
+            );
+        }
+
         if (skinName.match(/^o2/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>

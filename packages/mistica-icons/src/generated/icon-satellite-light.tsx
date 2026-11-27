@@ -6,7 +6,7 @@
  */
 
 import * as React from 'react';
-import {useThemeVariant, skinVars as vars, useIconGradient} from '@telefonica/mistica/icon-runtime';
+import {useTheme, useThemeVariant, skinVars as vars, useIconGradient} from '@telefonica/mistica/icon-runtime';
 
 import type {IconProps} from '@telefonica/mistica/icon-runtime';
 
@@ -21,7 +21,20 @@ const IconSatelliteLight = ({color, size = 24, ...rest}: IconProps): JSX.Element
 
     const {fillValue: fillColor, gradientDef} = useIconGradient(color ?? defaultColor);
 
+    const {skinName} = useTheme();
+
     const getSvgContent = () => {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M21.437 16.642a.5.5 0 0 1 .544.452 4.49 4.49 0 0 1-1.296 3.59 4.48 4.48 0 0 1-3.589 1.298.5.5 0 0 1 .092-.996 3.48 3.48 0 0 0 2.79-1.008 3.49 3.49 0 0 0 1.007-2.792.5.5 0 0 1 .452-.544m-2.549-.493a.5.5 0 0 1 .503.498 2.73 2.73 0 0 1-2.866 2.745.5.5 0 1 1 .048-.998 1.73 1.73 0 0 0 1.31-.507c.34-.341.51-.788.508-1.236a.5.5 0 0 1 .497-.502M13.843 2.512a1.75 1.75 0 0 1 2.473 0l1.414 1.414a1.75 1.75 0 0 1 0 2.475l-3.014 3.014 1.023 1.025a2.55 2.55 0 0 1 0 3.605l-.492.492 1.414 1.415a.5.5 0 0 1-.708.707l-1.414-1.415-.493.495a2.547 2.547 0 0 1-3.604 0l-1.024-1.025-3.015 3.019a1.75 1.75 0 0 1-2.474 0l-1.414-1.415a1.75 1.75 0 0 1 0-2.474l3.016-3.02-1.02-1.02a2.55 2.55 0 0 1 0-3.606l1.693-1.694a2.55 2.55 0 0 1 3.604 0l1.022 1.023zM3.223 14.55a.75.75 0 0 0 0 1.06l1.413 1.415a.75.75 0 0 0 1.059 0l3.003-3.006-2.473-2.475zM9.1 5.211a1.55 1.55 0 0 0-2.19 0L5.218 6.905a1.55 1.55 0 0 0 0 2.192l5.932 5.935a1.55 1.55 0 0 0 2.19 0l1.693-1.694a1.55 1.55 0 0 0 0-2.191zm6.51-1.991a.75.75 0 0 0-1.059 0l-3.004 3.005 2.473 2.473 3.003-3.003a.75.75 0 0 0 0-1.061z"
+                    />
+                </svg>
+            );
+        }
+
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

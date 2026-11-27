@@ -24,6 +24,17 @@ const IconMuseumFilled = ({color, size = 24, ...rest}: IconProps): JSX.Element =
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M12.32 2.016q.316.03.628.113l.312.098.002.001 5.062 1.861.011.004 1.934.742c.987.38 1.733 1.274 1.733 2.42 0 .693-.343 1.303-.799 1.723a2.63 2.63 0 0 1-1.76.708h-.978v8.015h1.384a2.15 2.15 0 0 1 0 4.299H4.147a2.15 2.15 0 0 1 0-4.3h1.384V9.687h-.973a2.63 2.63 0 0 1-1.761-.708c-.456-.42-.799-1.03-.799-1.724 0-1.145.746-2.04 1.733-2.419l1.934-.742.01-.004 5.063-1.861.002-.001c.413-.15.836-.223 1.254-.227h.012zm-5.29 7.67v8.015h4.217V9.686zm5.717 0v8.015h4.217V9.686z"
+                    />
+                </svg>
+            );
+        }
+
         if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>

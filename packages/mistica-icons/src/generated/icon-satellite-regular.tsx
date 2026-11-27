@@ -6,7 +6,7 @@
  */
 
 import * as React from 'react';
-import {useThemeVariant, skinVars as vars, useIconGradient} from '@telefonica/mistica/icon-runtime';
+import {useTheme, useThemeVariant, skinVars as vars, useIconGradient} from '@telefonica/mistica/icon-runtime';
 
 import type {IconProps} from '@telefonica/mistica/icon-runtime';
 
@@ -21,7 +21,24 @@ const IconSatelliteRegular = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
 
     const {fillValue: fillColor, gradientDef} = useIconGradient(color ?? defaultColor);
 
+    const {skinName} = useTheme();
+
     const getSvgContent = () => {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M21.195 16.523a.75.75 0 0 1 .796.702 4.5 4.5 0 0 1-1.308 3.458 4.5 4.5 0 0 1-3.458 1.307.75.75 0 0 1 .093-1.497 3 3 0 0 0 2.305-.87 3 3 0 0 0 .87-2.305.75.75 0 0 1 .702-.795"
+                    />
+                    <path
+                        fill={fillColor}
+                        d="M18.803 16.116a.75.75 0 0 1 .74.759 2.78 2.78 0 0 1-2.753 2.753.75.75 0 1 1-.018-1.5 1.28 1.28 0 0 0 1.27-1.27.75.75 0 0 1 .76-.742M13.827 2.514a1.75 1.75 0 0 1 2.475 0l1.415 1.414a1.75 1.75 0 0 1 0 2.474L14.71 9.407l1.025 1.027a2.55 2.55 0 0 1 0 3.605l-.318.318 1.237 1.238a.75.75 0 0 1-1.06 1.06l-1.238-1.237-.318.318a2.55 2.55 0 0 1-3.606 0l-1.026-1.025-3.005 3.006a1.75 1.75 0 0 1-2.474 0l-1.415-1.415a1.75 1.75 0 0 1 0-2.475l3.005-3.006-1.025-1.024a2.55 2.55 0 0 1 0-3.607L6.19 4.493a2.55 2.55 0 0 1 3.607 0L10.82 5.52zM3.574 14.888a.25.25 0 0 0 0 .353l1.414 1.414a.25.25 0 0 0 .354 0l3.004-3.005-1.767-1.768zm5.162-9.334a1.05 1.05 0 0 0-1.485 0L5.554 7.25a1.05 1.05 0 0 0 0 1.485l5.94 5.94c.41.41 1.074.41 1.484 0l1.698-1.697a1.05 1.05 0 0 0 0-1.485zm6.505-1.98a.25.25 0 0 0-.354 0L11.883 6.58l1.768 1.768 3.005-3.005a.25.25 0 0 0 0-.354z"
+                    />
+                </svg>
+            );
+        }
+
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

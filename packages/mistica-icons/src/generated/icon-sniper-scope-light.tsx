@@ -24,6 +24,17 @@ const IconSniperScopeLight = ({color, size = 24, ...rest}: IconProps): JSX.Eleme
     const {skinName} = useTheme();
 
     const getSvgContent = () => {
+        if (skinName.match(/^vivo-evolution/i)) {
+            return (
+                <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                    <path
+                        fill={fillColor}
+                        d="M12.002 1.999a.5.5 0 0 1 .5.5v1.929h.572a6.5 6.5 0 0 1 6.5 6.5v.572h1.925a.5.5 0 1 1 0 1h-1.925v.572a6.5 6.5 0 0 1-6.5 6.5h-.572v1.929a.5.5 0 0 1-1 0v-1.929h-.573a6.5 6.5 0 0 1-6.5-6.5V12.5H2.502a.5.5 0 0 1 0-1H4.43v-.572a6.5 6.5 0 0 1 6.5-6.5h.572V2.5a.5.5 0 0 1 .5-.501m-1.073 3.429a5.5 5.5 0 0 0-5.5 5.5v.572h2.274a.5.5 0 0 1 0 1H5.429v.572a5.5 5.5 0 0 0 5.5 5.5h.572v-2.271a.5.5 0 0 1 1 0v2.271h.573a5.5 5.5 0 0 0 5.5-5.5V12.5h-2.275a.5.5 0 0 1 0-1h2.275v-.572a5.5 5.5 0 0 0-5.5-5.5h-.572v2.271a.5.5 0 0 1-1 .001V5.428z"
+                    />
+                </svg>
+            );
+        }
+
         if (skinName.match(/^vivo/i)) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
