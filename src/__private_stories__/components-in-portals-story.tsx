@@ -39,7 +39,11 @@ export const Default: StoryComponent = () => {
                     <Inline space={8}>
                         <Menu
                             renderTarget={({ref, onPress}) => (
-                                <ButtonPrimary onPress={onPress} ref={ref} aria-label="dialog-menu-button">
+                                <ButtonPrimary
+                                    onPress={onPress}
+                                    ref={ref}
+                                    dataAttributes={{testid: 'dialog-menu-button'}}
+                                >
                                     Open Menu
                                 </ButtonPrimary>
                             )}
@@ -53,7 +57,7 @@ export const Default: StoryComponent = () => {
 
                         <ButtonPrimary
                             onPress={() => setIsDialogSheetOpen(true)}
-                            aria-label="dialog-sheet-button"
+                            dataAttributes={{testid: 'dialog-sheet-button'}}
                         >
                             Open sheet
                         </ButtonPrimary>
@@ -79,7 +83,7 @@ export const Default: StoryComponent = () => {
                     onPress={() =>
                         openSnackbar({message: 'Snackbar', withDismiss: true, duration: 'PERSISTENT'})
                     }
-                    aria-label="snackbar-button"
+                    dataAttributes={{testid: 'snackbar-button'}}
                 >
                     Open snackbar
                 </ButtonPrimary>
@@ -99,7 +103,7 @@ export const Default: StoryComponent = () => {
                         <ButtonPrimary
                             aria-haspopup="dialog"
                             onPress={dialogButtonOnPress}
-                            aria-label="dialog-button"
+                            dataAttributes={{testid: 'dialog-button'}}
                         >
                             Open Dialog
                         </ButtonPrimary>
@@ -107,7 +111,7 @@ export const Default: StoryComponent = () => {
                         <ButtonPrimary
                             aria-haspopup="dialog"
                             onPress={() => setIsSheetOpen(true)}
-                            aria-label="sheet-button"
+                            dataAttributes={{testid: 'sheet-button'}}
                         >
                             Open Sheet
                         </ButtonPrimary>
@@ -140,14 +144,14 @@ export const Default: StoryComponent = () => {
                                                 <ButtonPrimary
                                                     aria-haspopup="dialog"
                                                     onPress={dialogButtonOnPress}
-                                                    aria-label="sheet-dialog-button"
+                                                    dataAttributes={{testid: 'sheet-dialog-button'}}
                                                 >
                                                     Open Dialog
                                                 </ButtonPrimary>
 
                                                 <ButtonPrimary
                                                     onPress={closeModal}
-                                                    aria-label="sheet-close-button"
+                                                    dataAttributes={{testid: 'sheet-close-button'}}
                                                 >
                                                     Close sheet
                                                 </ButtonPrimary>
@@ -170,7 +174,7 @@ export const Default: StoryComponent = () => {
                                                             duration: 'PERSISTENT',
                                                         })
                                                     }
-                                                    aria-label="sheet-snackbar-button"
+                                                    dataAttributes={{testid: 'sheet-snackbar-button'}}
                                                 >
                                                     Open snackbar
                                                 </ButtonPrimary>
@@ -193,7 +197,7 @@ export const Default: StoryComponent = () => {
                                             <Stack space={8}>
                                                 <ButtonPrimary
                                                     onPress={closeModal}
-                                                    aria-label="sheet-close-button"
+                                                    dataAttributes={{testid: 'sheet-close-button'}}
                                                 >
                                                     Close sheet
                                                 </ButtonPrimary>
@@ -207,7 +211,7 @@ export const Default: StoryComponent = () => {
                                                             duration: 'PERSISTENT',
                                                         })
                                                     }
-                                                    aria-label="sheet-snackbar-button"
+                                                    dataAttributes={{testid: 'sheet-snackbar-button'}}
                                                 >
                                                     Open snackbar
                                                 </ButtonPrimary>
