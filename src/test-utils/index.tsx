@@ -224,8 +224,7 @@ const checkHydrationMismatch = async (page: PageApi, screenshotConfig?: Screensh
     await expect
         .poll(
             async () => {
-                // Playwright's caret hiding rewrites inline styles before React hydrates.
-                const current = await page.screenshot({caret: 'initial'});
+                const current = await page.screenshot();
                 const stable = current.equals(baseline);
                 baseline = current;
                 return stable;
