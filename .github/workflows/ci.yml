@@ -107,6 +107,7 @@ jobs:
 
     build-test-report:
         runs-on: ubuntu-latest
+        timeout-minutes: 10
         needs: [build, build-acceptance]
         if: '!cancelled()'
         permissions:
@@ -142,14 +143,14 @@ jobs:
                   name: playwright-report-html
                   path: reports/playwright-merged/html/
 
-            # The attachment paths of results.json point to the blob resources, not to the files of the HTML report.
+            - if: hashFiles('reports/playwright-blob/*.zip') != ''
+              run: node scripts/prepare-playwright-json-report.js
+
             - if: hashFiles('reports/playwright-blob/*.zip') != ''
               uses: actions/upload-artifact@v4
               with:
                   name: playwright-report-json
-                  path: |
-                      reports/playwright-merged/results.json
-                      reports/playwright-blob/resources/
+                  path: reports/playwright-merged/json/
 
             # The blobs of every job are only an input of the merge, so the run keeps only the two merged reports.
             # The token of a fork PR cannot delete artifacts, so there the blobs expire after their one day retention.
